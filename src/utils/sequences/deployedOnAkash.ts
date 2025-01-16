@@ -4,12 +4,14 @@ export const deployedOnAkash = [
   "Prime Intellect",
   "University of Texas at Austin",
   "Nous Research",
+  "Eliza",
   "Morpheus",
   "Flock.io",
-  "Eliza",
   "Akash Chat API",
   "Akash Chat",
   "Auki",
+  "Bagel",
+  "Levangie Laboratories",
 ];
 
 export function getPriorityIndex(title: any) {
