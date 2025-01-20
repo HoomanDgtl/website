@@ -9,6 +9,10 @@ on:
   push:
     branches: ["main"]
 
+  # Runs when spec updates are detected
+  repository_dispatch:
+    types: [spec-update]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
