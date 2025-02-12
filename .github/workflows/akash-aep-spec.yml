@@ -1,9 +1,9 @@
 name: Update AEP Specs
 
 on:
-  schedule:
-    - cron: "0 */6 * * *" # Check every 6 hours
-  workflow_dispatch:
+  repository_dispatch:
+    types: [aep-spec-changed]
+  workflow_dispatch: # Allow manual triggers
 
 jobs:
   update-specs:
@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0 # Fetch all history for all branches
+          fetch-depth: 0
 
       - name: Check for existing PR
         id: check-pr
