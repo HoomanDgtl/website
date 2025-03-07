@@ -3,6 +3,7 @@ import Logo from "@/components/ui/logo.astro";
 import DarkModeToggle from "../dark-mode-toggle.astro";
 import { DiscordIcon, GithubIcon, TwitterIcon } from "../header/icons";
 import SpeakToExpert from "../pricing-page/SpeakToExpert";
+import ButtonLink from "../ui/button-link.astro";
 import AlgoliaSearch from "./algolia-search.jsx";
 ---
 
@@ -45,13 +46,17 @@ import AlgoliaSearch from "./algolia-search.jsx";
 
       <div class="flex items-center md:gap-x-3">
         <SpeakToExpert size="extra-small" variant="secondary" />
-        <a
+
+        <ButtonLink
           id="console-header"
-          href="https://console.akash.network/"
-          class="flex items-center justify-center rounded-[4px] bg-primary px-[11px] py-[7px] text-xs font-medium leading-[16px] text-white hover:bg-darkGray"
+          variant="primary"
+          size="sm"
+          link="https://console.akash.network/"
+          target="_blank"
+          className="flex items-center justify-center rounded-[4px] bg-primary px-[11px] py-[7px] text-xs font-medium leading-[16px] text-white "
         >
           Deploy Now
-        </a>
+        </ButtonLink>
       </div>
     </div>
   </div>

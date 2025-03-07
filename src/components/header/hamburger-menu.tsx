@@ -21,6 +21,7 @@ import clsx from "clsx";
 import { ArrowRightCircle, ChevronDown } from "lucide-react";
 import { Fragment } from "react";
 import SpeakToExpert from "../pricing-page/SpeakToExpert";
+import { buttonVariants } from "../ui/button";
 import {
   communityItems,
   developmentItems,
@@ -249,7 +250,9 @@ const Panel = ({
             <a
               href="https://console.akash.network/"
               id="console-header"
-              className="flex cursor-pointer items-center justify-center rounded-md border border-primary bg-primary px-[17px] py-[9px] text-sm font-medium leading-[20px] text-white hover:bg-darkGray"
+              className={buttonVariants({
+                variant: "default",
+              })}
             >
               Deploy Now
             </a>

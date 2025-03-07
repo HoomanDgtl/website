@@ -67,23 +67,13 @@ const shouldHide = shouldHideCta(pathname);
 
   <div class="mt-6 md:mt-10">
     <div class="hidden md:block">
-      <ButtonLink
-        link={button.link}
-        size="xl"
-        className="bg-primary text-white hover:bg-darkGray"
-        id={button.id}
-      >
+      <ButtonLink link={button.link} size="xl" id={button.id}>
         {button.label}
       </ButtonLink>
     </div>
 
     <div class="block md:hidden">
-      <ButtonLink
-        link={button.link}
-        size="md"
-        className="bg-primary text-white hover:bg-darkGray"
-        id={button.id}
-      >
+      <ButtonLink link={button.link} size="md" id={button.id}>
         {button.label}
       </ButtonLink>
     </div>

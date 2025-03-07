@@ -1,3 +1,4 @@
+import { buttonVariants } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { gpus } from "@/utils/api";
 import {
@@ -332,7 +333,7 @@ export const Tables = ({
               id={`become-a-provider-(gpus)`}
               href={`/providers/`}
               target="_blank"
-              className=" flex justify-center gap-1.5 rounded-md bg-primary px-4 py-2"
+              className={buttonVariants()}
             >
               <p className="font-medium leading-[24px] text-white">
                 Become a Provider

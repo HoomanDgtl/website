@@ -1,3 +1,4 @@
+import { buttonVariants } from "@/components/ui/button";
 import { gpus } from "@/utils/api";
 import {
   QueryClient,
@@ -262,7 +263,7 @@ export const Tables = ({
               id={"usage"}
               href={"https://console.akash.network/"}
               target="_blank"
-              className="flex justify-center gap-1.5 rounded-md bg-primary px-4 py-2 hover:bg-darkGray dark:hover:bg-background"
+              className={buttonVariants()}
             >
               <p className="font-medium leading-[24px] text-white">
                 Deploy Now

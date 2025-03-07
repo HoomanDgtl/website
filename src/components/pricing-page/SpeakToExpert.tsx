@@ -13,9 +13,9 @@ const speakToExpertVariants = cva(
       },
       variant: {
         primary:
-          "border-primary dark:border-primary bg-primary/5 text-primary hover:bg-primary hover:text-white",
+          "border-primary dark:border-primary bg-primary/5 text-primary hover:bg-primary/10 ",
         secondary:
-          "bg-white text-gray-600 hover:border-primary hover:text-primary",
+          "bg-background text-textGray border border-border hover:bg-gray-50 dark:hover:bg-darkGray",
       },
     },
     defaultVariants: {

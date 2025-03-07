@@ -5,6 +5,7 @@ import { getYearToUse } from "@/utils/redirects";
 import { getCollection } from "astro:content";
 import clsx from "clsx";
 import DarkModeToggle from "../dark-mode-toggle.astro";
+import ButtonLink from "../ui/button-link.astro";
 import HamburgerMenu from "./hamburger-menu";
 import { DiscordIcon, GithubIcon, TwitterIcon } from "./icons";
 import PopOverCommunity, { SubNavbar } from "./popovers/popover-nav-community";
@@ -135,19 +136,16 @@ const latestRoadmapYear = getYearToUse();
         </a>
       </div>
 
-      <div class="flex items-center lg:gap-x-4">
-        <div>
-          <a
-            aria-label="Deploy Now"
-            target="_blank"
-            id="console-header"
-            href="https://console.akash.network/"
-            class="flex h-full items-center justify-center rounded-[4px] bg-primary px-[10px] py-[7px] text-xs font-medium leading-[16px] text-white hover:bg-darkGray"
-          >
-            Deploy Now
-          </a>
-        </div>
-      </div>
+      <ButtonLink
+        size="sm"
+        id="console-header"
+        variant="primary"
+        link="https://console.akash.network/"
+        target="_blank"
+        className="flex h-full items-center justify-center rounded-[4px] bg-primary px-[10px] py-[7px] text-xs font-medium leading-[16px] text-white "
+      >
+        Deploy Now
+      </ButtonLink>
     </div>
   </nav>
 </header>

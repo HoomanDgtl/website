@@ -194,7 +194,7 @@ export const SubNavbar = ({
             <a
               href={external.link}
               target="_blank"
-              className=" flex items-center whitespace-nowrap rounded-full  border bg-background px-3 py-1.5 text-sm font-semibold  "
+              className=" flex items-center whitespace-nowrap rounded-full  border bg-background px-3 py-1.5 text-sm font-semibold hover:bg-gray-50 dark:hover:bg-darkGray  "
             >
               {external.title}
               <ArrowRightCircle
