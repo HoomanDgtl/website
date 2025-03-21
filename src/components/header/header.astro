@@ -14,9 +14,10 @@ const pathname = `/${Astro.url.pathname.split("/")[1]}`;
 
 interface Props {
   disableSticky?: boolean;
+  hideDarkToggle?: boolean;
 }
 
-const { disableSticky } = Astro.props;
+const { disableSticky, hideDarkToggle } = Astro.props;
 
 const visibilty = {
   network: ["/about", "/token"],
@@ -102,11 +103,12 @@ const latestRoadmapYear = getYearToUse();
         client:load
         currentPath={pathname}
         latestRoadmapYear={latestRoadmapYear}
+        hideDarkToggle={hideDarkToggle}
       />
     </div>
 
     <div class="hidden flex-shrink-0 slg:flex slg:gap-x-[12px]">
-      <DarkModeToggle nav />
+      {!hideDarkToggle && <DarkModeToggle nav />}
 
       <div class="mr-3 hidden items-center gap-x-[12px] text-para xl:flex">
         <a
