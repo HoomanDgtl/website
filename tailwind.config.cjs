@@ -101,6 +101,7 @@ module.exports = {
       fontFamily: {
         sans: ["Inter", ...fontFamily.sans],
         instrument: ["Instrument Serif", ...fontFamily.serif],
+        jetBrainsMono: ["JetBrains Mono", ...fontFamily.mono],
       },
 
       keyframes: {

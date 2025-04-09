@@ -1,75 +1,66 @@
 ---
-import { ArrowUpCircle } from "lucide-react";
 import ButtonLink from "../ui/button-link.astro";
 ---
 
-<section
-  class="flex flex-col gap-10 border-b-2 pb-10 pt-[18px] dark:border-[#D9D9D9] md:pb-28 md:pt-10 lg:gap-16 lg:pb-44"
->
+<section class="container-nav-2 flex flex-col gap-10 py-10 lg:gap-16">
   <div class="flex flex-row justify-between gap-5">
-    <div class="flex flex-col items-start gap-3 md:gap-5">
+    <div class="flex w-full flex-1 flex-col items-start gap-4">
+      <svg
+        width="141"
+        height="69"
+        viewBox="0 0 141 69"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="106.593" cy="33.5927" r="33.5927" fill="#8E8D92"></circle>
+        <path
+          d="M128.798 34.3056L107.71 51.8384L107.71 16.7728L128.798 34.3056Z"
+          fill="white"></path>
+        <path
+          d="M112.506 34.3056L91.4173 51.8384L91.4173 16.7728L112.506 34.3056Z"
+          fill="white"></path>
+        <circle cx="33.1035" cy="35.1035" r="33.1035" fill="#FF414C"></circle>
+        <path
+          d="M38.1678 39.2624L44.7175 47.4786L45.8783 50.3206H33.1785L26.825 39.2624H38.1678Z"
+          fill="white"></path>
+        <path
+          d="M45.8749 50.3217L52.2178 39.2634L39.5215 17.1416H26.825L45.8749 50.3217Z"
+          fill="white"></path>
+        <path
+          d="M20.4771 28.1983H33.1735L20.4823 50.3201L14.1289 39.2619L20.4771 28.1983Z"
+          fill="white"></path>
+      </svg>
+
       <h1
         class="text-5xl !font-semibold !leading-[1] lg:text-7xl 2xl:text-[88px]"
       >
-        Akash <br /> Accelerate
+        Akash <br /> Accelerate 2025
       </h1>
-      <svg
-        width="358"
-        height="68"
-        viewBox="0 0 358 68"
-        fill="none"
-        class="w-[300px] 2xl:w-[358px]"
-        xmlns="http://www.w3.org/2000/svg"
+      <p class="font-jetBrainsMono text-lg font-medium text-[#747474]">
+        NYC + Virtual / June 23rd / 9:30-6:30pm
+      </p>
+      <p
+        class="max-w-[35rem] text-lg font-medium text-foreground lg:text-xl 2xl:text-2xl"
       >
-        <circle cx="178.212" cy="33.5927" r="33.5927" fill="#21B35D"></circle>
-        <circle cx="251.309" cy="33.5927" r="33.5927" fill="#05ADDB"></circle>
-        <circle cx="324.407" cy="33.5927" r="33.5927" fill="#FAB215"></circle>
-        <circle cx="104.194" cy="33.5927" r="33.5927" fill="#8E8D92"></circle>
-        <path
-          d="M169.277 49.681H163.052L174.386 17.4855H181.586L192.937 49.681H186.711L178.112 24.0881H177.861L169.277 49.681ZM169.482 37.0575H186.46V41.7422H169.482V37.0575Z"
-          fill="white"></path>
-        <path
-          d="M266.691 28.3483H260.812C260.644 27.3841 260.335 26.53 259.884 25.7859C259.434 25.0313 258.873 24.392 258.202 23.868C257.531 23.344 256.766 22.951 255.907 22.689C255.058 22.4165 254.141 22.2802 253.156 22.2802C251.406 22.2802 249.855 22.7204 248.503 23.6008C247.151 24.4706 246.092 25.7492 245.327 27.4365C244.562 29.1134 244.18 31.1623 244.18 33.5832C244.18 36.0461 244.562 38.1212 245.327 39.8085C246.103 41.4854 247.161 42.7535 248.503 43.6129C249.855 44.4618 251.401 44.8863 253.14 44.8863C254.104 44.8863 255.006 44.7605 255.844 44.509C256.693 44.247 257.453 43.8644 258.124 43.3614C258.805 42.8583 259.376 42.24 259.837 41.5064C260.309 40.7727 260.634 39.9343 260.812 38.9911L266.691 39.0225C266.471 40.5527 265.994 41.9885 265.261 43.3299C264.538 44.6714 263.589 45.8557 262.415 46.8828C261.242 47.8993 259.869 48.6959 258.297 49.2723C256.725 49.8382 254.98 50.1212 253.062 50.1212C250.232 50.1212 247.706 49.4662 245.484 48.1561C243.263 46.8461 241.512 44.9544 240.234 42.481C238.955 40.0077 238.316 37.0417 238.316 33.5832C238.316 30.1143 238.96 27.1483 240.249 24.6855C241.539 22.2121 243.294 20.3204 245.516 19.0104C247.738 17.7003 250.253 17.0453 253.062 17.0453C254.854 17.0453 256.52 17.2968 258.061 17.7999C259.601 18.303 260.974 19.0418 262.18 20.0165C263.385 20.9807 264.375 22.165 265.151 23.5693C265.937 24.9632 266.45 26.5562 266.691 28.3483Z"
-          fill="white"></path>
-        <path
-          d="M338.548 28.3483H332.668C332.501 27.3841 332.191 26.53 331.741 25.7859C331.29 25.0313 330.729 24.392 330.059 23.868C329.388 23.344 328.623 22.951 327.763 22.689C326.915 22.4165 325.998 22.2802 325.012 22.2802C323.262 22.2802 321.711 22.7204 320.359 23.6008C319.007 24.4706 317.949 25.7492 317.184 27.4365C316.419 29.1134 316.036 31.1623 316.036 33.5832C316.036 36.0461 316.419 38.1212 317.184 39.8085C317.959 41.4854 319.018 42.7535 320.359 43.6129C321.711 44.4618 323.257 44.8863 324.997 44.8863C325.961 44.8863 326.862 44.7605 327.701 44.509C328.55 44.247 329.309 43.8644 329.98 43.3614C330.661 42.8583 331.232 42.24 331.694 41.5064C332.165 40.7727 332.49 39.9343 332.668 38.9911L338.548 39.0225C338.328 40.5527 337.851 41.9885 337.117 43.3299C336.394 44.6714 335.446 45.8557 334.272 46.8828C333.098 47.8993 331.725 48.6959 330.153 49.2723C328.581 49.8382 326.836 50.1212 324.918 50.1212C322.088 50.1212 319.563 49.4662 317.341 48.1561C315.119 46.8461 313.369 44.9544 312.09 42.481C310.812 40.0077 310.172 37.0417 310.172 33.5832C310.172 30.1143 310.817 27.1483 312.106 24.6855C313.395 22.2121 315.15 20.3204 317.372 19.0104C319.594 17.7003 322.109 17.0453 324.918 17.0453C326.71 17.0453 328.377 17.2968 329.917 17.7999C331.458 18.303 332.831 19.0418 334.036 20.0165C335.241 20.9807 336.232 22.165 337.007 23.5693C337.793 24.9632 338.307 26.5562 338.548 28.3483Z"
-          fill="white"></path>
-        <path
-          d="M126.4 34.3054L105.312 51.8381L105.312 16.7726L126.4 34.3054Z"
-          fill="white"></path>
-        <path
-          d="M110.107 34.3054L89.0188 51.8381L89.0188 16.7726L110.107 34.3054Z"
-          fill="white"></path>
-        <circle cx="33.1035" cy="34.1035" r="33.1035" fill="#FF414C"></circle>
-        <path
-          d="M38.168 38.2621L44.7176 46.4784L45.8785 49.3204H33.1786L26.8252 38.2621H38.168Z"
-          fill="white"></path>
-        <path
-          d="M45.8751 49.3214L52.218 38.2632L39.5216 16.1414H26.8252L45.8751 49.3214Z"
-          fill="white"></path>
-        <path
-          d="M20.4771 27.198H33.1735L20.4824 49.3199L14.1289 38.2616L20.4771 27.198Z"
-          fill="white"></path>
-      </svg>
+        Akash Accelerate is a full-day summit that will bring together the
+        entire ecosystem for a packed agenda of talks, panels, and discussions
+        exploring the future of decentralized compute and open-source AI.
+      </p>
+      <ButtonLink
+        link="/akash-accelerate-2025"
+        variant="primary"
+        size="xl"
+        className="font-jetBrainsMono  mr-auto mt-8 flex  gap-1 rounded !px-6 !py-4  text-xl uppercase  tracking-wide 2xl:text-2xl"
+      >
+        Register
+      </ButtonLink>
     </div>
-    <h2 class="hidden text-4xl font-semibold md:block lg:text-6xl 2xl:text-7xl">
-      2025
-    </h2>
+    <div class="flex w-full flex-1 items-center justify-center">
+      <img
+        src="/images/acc-2025/hero.png"
+        alt="Akash Accelerate 2025"
+        class="max-w-[386px] object-contain"
+      />
+    </div>
   </div>
-  <p
-    class="max-w-[50rem] text-lg font-medium text-foreground lg:text-xl 2xl:text-2xl"
-  >
-    Akash Accelerate is a full-day summit that will bring together the entire
-    ecosystem for a packed agenda of talks, panels, and discussions exploring
-    the future of decentralized compute and open-source AI.
-  </p>
-  <ButtonLink
-    link="/akash-accelerate-2025"
-    variant="primary"
-    size="xl"
-    className="mr-auto flex  gap-1 !px-12 font-medium 2xl:!py-2 2xl:text-lg"
-  >
-    <ArrowUpCircle className="h-5 w-5 rotate-45" />
-    Register Now!
-  </ButtonLink>
 </section>

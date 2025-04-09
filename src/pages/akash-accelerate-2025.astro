@@ -10,31 +10,42 @@ import Head from "@/components/acc-2025/head.astro";
 import Highlights from "@/components/acc-2025/highlights.astro";
 import Information from "@/components/acc-2025/information.astro";
 import Location from "@/components/acc-2025/location.astro";
-import Show from "@/components/acc-2025/show.astro";
 import Speakers from "@/components/acc-2025/speakers.astro";
 import ThingToDo from "@/components/acc-2025/thing-to-do.astro";
+import { ArrowUpCircle } from "lucide-react";
 ---
 
 <BaseLayout
   title="Akash Accelerate 2025"
   description="Akash Accelerate is a full-day summit that will bring together the entire ecosystem for a packed agenda of talks, panels, and discussions exploring the future of decentralized compute and open-source AI."
   image="/meta-images/acc-2025.png"
-  classname="dark !bg-[#111111] px-[16px] md:px-[20px] lg:px-[40px]"
+  classname="dark !bg-[#111111] "
 >
   <Header
     hideDarkToggle
     overrideClassName="!bg-[#111111]  top-0 sticky z-[30] "
-    navClassName="border-b-2 border-[#D9D9D9] px-0 md:px-2"
+    navClassName="container-nav-2"
   />
 
-  <main class="container px-0">
+  <main>
     <Head />
+    <a
+      href="https://www.youtube.com"
+      target="_blank"
+      class="flex w-full items-center justify-center bg-[#434343] py-3 text-xl font-semibold text-white"
+    >
+      <ArrowUpCircle className="mr-2  size-6 rotate-45" />
+      Watch the 2024 Recap
+    </a>
+    <div class="bg-[#2C2C2C]">
+      <Speakers />
+    </div>
     <Location />
-    <Speakers />
-    <Show />
-    <ThingToDo />
     <Highlights />
+    <ThingToDo />
+
     <Information />
+
     <Accfooter />
   </main>
 </BaseLayout>
