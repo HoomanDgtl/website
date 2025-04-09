@@ -1,119 +1,93 @@
 ---
+import { subscribeLink } from "@/lib/constants";
+import { ArrowUpCircle, Github, Twitter, Youtube } from "lucide-react";
+import { DiscordIcon } from "../header/icons";
+import ButtonLink from "../ui/button-link.astro";
 
+const links = [
+  {
+    name: "Akash Github",
+    href: "https://github.com/akash-network",
+  },
+  {
+    name: "Akash on 'X'",
+    href: "https://twitter.com/akashnet_",
+  },
+  {
+    name: "Akash Discord",
+    href: "https://discord.com/invite/akash",
+  },
+  {
+    name: "Akash Youtube",
+    href: "https://www.youtube.com/c/AkashNetwork",
+  },
+];
 ---
 
-<section
-  class="flex flex-col justify-between gap-10 border-b-2 pb-10 pt-[18px] dark:border-[#D9D9D9] md:flex-row md:pb-20 md:pt-10"
->
-  <div class="flex flex-col gap-8 lg:gap-20">
-    <h2 class="text-2xl font-semibold lg:text-4xl 2xl:text-5xl">
-      Further information
-    </h2>
+<section class="flex">
+  <div
+    class="flex w-full flex-1 items-center justify-center bg-[#1E1E1E] px-10 py-28"
+  >
+    <img
+      src="/images/acc-2025/hero2.png"
+      alt="Akash Accelerate 2025 Information"
+      class="max-h-[361px] w-full object-contain"
+    />
+  </div>
+  <div class="flex w-full flex-1 flex-col justify-between gap-10 p-10">
+    <div class="flex flex-col gap-9">
+      <h2 class="text-5xl font-semibold leading-[1.2]">
+        Stay in touch about <br />
+        Akash Accelerate 2025
+      </h2>
 
-    <div class="flex w-full max-w-[50rem] flex-col">
-      <div class="mb-4 flex flex-col gap-4">
-        <svg
-          class="size-7 md:size-10"
-          width="19"
-          height="41"
-          viewBox="0 0 19 41"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14.1322 34.321V14.1322H8.07552L0 16.151V18.1699L4.03776 20.1888V34.321L0 36.3398V40.3776H18.1699V36.3398L14.1322 34.321Z"
-            fill="white"></path>
-          <path
-            d="M8.07552 12.1133C11.4205 12.1133 14.1322 9.40163 14.1322 6.05664C14.1322 2.71165 11.4205 0 8.07552 0C4.73053 0 2.01888 2.71165 2.01888 6.05664C2.01888 9.40163 4.73053 12.1133 8.07552 12.1133Z"
-            fill="white"></path>
-        </svg>
+      <ButtonLink
+        link={subscribeLink}
+        variant="primary"
+        size="xl"
+        className=" mr-auto  flex  gap-2  !px-6 !py-3  text-xl   tracking-wide 2xl:text-2xl"
+      >
+        <ArrowUpCircle className="size-6 rotate-45" />
+        Subscribe Now
+      </ButtonLink>
+    </div>
 
-        <h2 class="text-xl font-semibold md:text-2xl 2xl:text-3xl">
-          Follow Akash
-        </h2>
-      </div>
-      <div class="flex flex-col pt-2">
+    <div class="flex flex-col gap-5">
+      <h3 class="text-2xl font-normal">Connect with Akash</h3>
+      <div class="flex gap-3">
         <a
-          href="https://github.com/akash-network"
-          class="border-t py-1 transition-all hover:text-primary md:text-lg 2xl:text-xl"
+          href={links[0].href}
+          class="flex items-center justify-center rounded-full bg-[#24292e] p-2 text-white"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Akash Github
+          <Github className="size-7" />
         </a>
         <a
-          href="https://twitter.com/akashnet_"
-          class="border-t py-1 transition-all hover:text-primary md:text-lg 2xl:text-xl"
+          href={links[1].href}
+          class="flex items-center justify-center rounded-full bg-[#1DA1F2] p-2 text-white"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Akash on "X"
+          <Twitter className="size-7" />
         </a>
         <a
-          href="https://discord.com/invite/akash"
-          class="border-t py-1 transition-all hover:text-primary md:text-lg 2xl:text-xl"
+          href={links[2].href}
+          class="flex items-center justify-center rounded-full bg-[#5865F2] p-2 text-white"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Akash Discord
+          <DiscordIcon className="size-7" />
         </a>
         <a
-          href="https://www.youtube.com/c/AkashNetwork"
-          class="border-y py-1 transition-all hover:text-primary md:text-lg 2xl:text-xl"
+          href={links[3].href}
+          class="flex items-center justify-center rounded-full bg-[#FF0000] p-2 text-white"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Akash Youtube
+          <Youtube className="size-7" />
         </a>
       </div>
     </div>
-  </div>
-  <div class="flex justify-end">
-    <svg
-      width="313"
-      height="316"
-      viewBox="0 0 313 316"
-      class="h-[200px] w-[200px] lg:h-[250px] lg:w-[250px] 2xl:h-[316px] 2xl:w-[313px]"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="155.474" cy="50.5045" r="50.5045" fill="#8E8D92"></circle>
-      <circle cx="262.425" cy="50.5045" r="50.5045" fill="#8E8D92"></circle>
-      <path
-        d="M188.858 50.3547L157.153 76.7141L157.153 23.9953L188.858 50.3547Z"
-        fill="white"></path>
-      <path
-        d="M164.364 50.3547L132.659 76.7141L132.659 23.9953L164.364 50.3547Z"
-        fill="white"></path>
-      <circle cx="50.257" cy="50.257" r="50.257" fill="#FF414C"></circle>
-      <path
-        d="M57.9459 58.7256L67.8894 71.1993L69.6518 75.514H50.3712L40.7256 58.7256H57.9459Z"
-        fill="white"></path>
-      <path
-        d="M69.6466 75.5158L79.2763 58.7274L60.001 25.1426H40.7256L69.6466 75.5158Z"
-        fill="white"></path>
-      <path
-        d="M31.0878 41.9277H50.3632L31.0958 75.5126L21.4502 58.7242L31.0878 41.9277Z"
-        fill="white"></path>
-      <circle cx="50.2002" cy="158.142" r="50.2002" fill="#21B35D"></circle>
-      <circle cx="50.2002" cy="265.748" r="50.2002" fill="#8E8D92"></circle>
-      <circle cx="156.16" cy="158.142" r="50.2002" fill="#05ADDB"></circle>
-      <circle cx="156.16" cy="265.748" r="50.2002" fill="#FAB215"></circle>
-      <circle cx="262.121" cy="158.142" r="50.2002" fill="#FAB215"></circle>
-      <circle cx="262.121" cy="265.748" r="50.2002" fill="#FF414C"></circle>
-      <path
-        d="M38.9602 177.84H31.242L45.2946 137.923H54.2212L68.2933 177.84H60.5751L49.9138 146.109H49.602L38.9602 177.84ZM39.2136 162.189H60.2632V167.997H39.2136V162.189Z"
-        fill="white"></path>
-      <path
-        d="M66.1542 245.531V285.447H59.7224L40.9141 258.258H40.5828V285.447H33.3518V245.531H39.8226L58.6114 272.74H58.9622V245.531H66.1542Z"
-        fill="white"></path>
-      <path
-        d="M173.426 151.97H166.136C165.929 150.775 165.545 149.716 164.987 148.793C164.428 147.858 163.733 147.065 162.901 146.416C162.069 145.766 161.121 145.279 160.055 144.954C159.003 144.616 157.866 144.447 156.645 144.447C154.475 144.447 152.552 144.993 150.875 146.084C149.199 147.163 147.887 148.748 146.938 150.84C145.99 152.919 145.516 155.459 145.516 158.461C145.516 161.514 145.99 164.087 146.938 166.179C147.9 168.258 149.212 169.83 150.875 170.896C152.552 171.948 154.468 172.474 156.625 172.474C157.821 172.474 158.938 172.318 159.977 172.007C161.03 171.682 161.972 171.207 162.804 170.584C163.648 169.96 164.356 169.193 164.928 168.284C165.513 167.374 165.916 166.335 166.136 165.165L173.426 165.204C173.153 167.101 172.562 168.882 171.652 170.545C170.756 172.208 169.58 173.676 168.124 174.95C166.669 176.21 164.967 177.198 163.018 177.912C161.069 178.614 158.906 178.965 156.528 178.965C153.019 178.965 149.888 178.153 147.133 176.528C144.379 174.904 142.209 172.559 140.623 169.492C139.038 166.426 138.246 162.749 138.246 158.461C138.246 154.16 139.045 150.483 140.643 147.429C142.241 144.363 144.418 142.017 147.172 140.393C149.927 138.769 153.045 137.957 156.528 137.957C158.75 137.957 160.816 138.269 162.726 138.892C164.636 139.516 166.338 140.432 167.832 141.64C169.326 142.836 170.554 144.304 171.516 146.045C172.49 147.773 173.127 149.749 173.426 151.97Z"
-        fill="white"></path>
-      <path
-        d="M137.602 246.109H145.769L155.534 263.768H155.923L165.688 246.109H173.855L159.334 271.135V286.026H152.123V271.135L137.602 246.109Z"
-        fill="white"></path>
-      <path
-        d="M280.193 152.195H272.904C272.696 151 272.313 149.941 271.754 149.018C271.195 148.083 270.5 147.29 269.669 146.64C268.837 145.991 267.889 145.503 266.823 145.178C265.771 144.841 264.634 144.672 263.412 144.672C261.242 144.672 259.319 145.217 257.643 146.309C255.967 147.387 254.654 148.973 253.706 151.065C252.757 153.144 252.283 155.684 252.283 158.685C252.283 161.739 252.757 164.312 253.706 166.404C254.667 168.483 255.98 170.055 257.643 171.12C259.319 172.173 261.236 172.699 263.393 172.699C264.588 172.699 265.706 172.543 266.745 172.231C267.798 171.906 268.74 171.432 269.571 170.808C270.416 170.185 271.124 169.418 271.696 168.509C272.28 167.599 272.683 166.559 272.904 165.39L280.193 165.429C279.921 167.326 279.329 169.106 278.42 170.769C277.523 172.433 276.347 173.901 274.892 175.174C273.437 176.435 271.735 177.422 269.786 178.137C267.837 178.838 265.673 179.189 263.295 179.189C259.787 179.189 256.656 178.377 253.901 176.753C251.146 175.129 248.976 172.783 247.391 169.717C245.806 166.65 245.013 162.973 245.013 158.685C245.013 154.384 245.812 150.707 247.411 147.654C249.009 144.587 251.185 142.242 253.94 140.618C256.694 138.994 259.813 138.181 263.295 138.181C265.517 138.181 267.583 138.493 269.493 139.117C271.403 139.741 273.105 140.657 274.6 141.865C276.094 143.061 277.322 144.529 278.283 146.27C279.258 147.998 279.895 149.973 280.193 152.195Z"
-        fill="white"></path>
-      <path
-        d="M280.193 259.802H272.904C272.696 258.607 272.313 257.548 271.754 256.626C271.195 255.69 270.5 254.897 269.669 254.248C268.837 253.598 267.889 253.111 266.823 252.786C265.771 252.448 264.634 252.279 263.412 252.279C261.242 252.279 259.319 252.825 257.643 253.916C255.967 254.995 254.654 256.58 253.706 258.672C252.757 260.751 252.283 263.291 252.283 266.293C252.283 269.346 252.757 271.919 253.706 274.011C254.667 276.09 255.98 277.662 257.643 278.728C259.319 279.78 261.236 280.306 263.393 280.306C264.588 280.306 265.706 280.15 266.745 279.839C267.798 279.514 268.74 279.04 269.571 278.416C270.416 277.792 271.124 277.026 271.696 276.116C272.28 275.206 272.683 274.167 272.904 272.997L280.193 273.036C279.921 274.934 279.329 276.714 278.42 278.377C277.523 280.04 276.347 281.508 274.892 282.782C273.437 284.042 271.735 285.03 269.786 285.744C267.837 286.446 265.673 286.797 263.295 286.797C259.787 286.797 256.656 285.985 253.901 284.36C251.146 282.736 248.976 280.391 247.391 277.324C245.806 274.258 245.013 270.581 245.013 266.293C245.013 261.992 245.812 258.315 247.411 255.261C249.009 252.195 251.185 249.849 253.94 248.225C256.694 246.601 259.813 245.789 263.295 245.789C265.517 245.789 267.583 246.101 269.493 246.724C271.403 247.348 273.105 248.264 274.6 249.473C276.094 250.668 277.322 252.136 278.283 253.877C279.258 255.606 279.895 257.581 280.193 259.802Z"
-        fill="white"></path>
-      <path
-        d="M241.453 32.8762L249.742 32.8358L249.742 57.7857L280.05 27.4778L286.075 33.503L255.767 63.8108L280.697 63.7906L280.677 72.1005H241.453L241.453 32.8762Z"
-        fill="white"></path>
-    </svg>
   </div>
 </section>

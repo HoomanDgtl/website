@@ -11,7 +11,6 @@ import Highlights from "@/components/acc-2025/highlights.astro";
 import Information from "@/components/acc-2025/information.astro";
 import Location from "@/components/acc-2025/location.astro";
 import Speakers from "@/components/acc-2025/speakers.astro";
-import ThingToDo from "@/components/acc-2025/thing-to-do.astro";
 import { ArrowUpCircle } from "lucide-react";
 ---
 
@@ -42,10 +41,15 @@ import { ArrowUpCircle } from "lucide-react";
     </div>
     <Location />
     <Highlights />
-    <ThingToDo />
 
     <Information />
-
+    <section class="w-full">
+      <img
+        src="/images/acc-2025/acc.png"
+        alt="Akash Accelerate 2025"
+        class="w-full"
+      />
+    </section>
     <Accfooter />
   </main>
 </BaseLayout>

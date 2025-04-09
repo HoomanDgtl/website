@@ -1,82 +1,45 @@
 ---
-import { subscribeLink } from "@/lib/constants";
+import FooterYear from "../footer/footer-year";
 ---
 
 <footer
-  class="mb-20 flex flex-col justify-between gap-20 border-b-2 py-10 dark:border-[#D9D9D9] md:flex-row md:gap-10"
+  class="relative -mt-1 flex w-full flex-col items-start justify-center gap-2 gap-y-[16px] bg-white py-10 lg:flex-row lg:items-center"
 >
-  <a href={subscribeLink} target="_blank" class="group flex flex-col gap-4">
-    <svg
-      width="65"
-      height="65"
-      viewBox="0 0 65 65"
-      class="size-10 2xl:size-[65px]"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="32.4152" cy="32.0871" r="32.0871" fill="#FAB215"></circle>
-      <path
-        d="M19.0909 20.8871L24.3576 20.8614V36.7129L43.6131 17.4573L47.4411 21.2853L28.1856 40.5408L44.0242 40.528L44.0113 45.8075L19.0909 45.8075L19.0909 20.8871Z"
-        fill="white"></path>
-    </svg>
-    <h2
-      class="text-3xl font-semibold !leading-[1.2] group-hover:underline lg:text-4xl 2xl:text-5xl"
-    >
-      Stay in touch about <br /> Akash Accelerate 2025.<br /> Subscribe here!
-    </h2>
-  </a>
-  <div class="flex flex-col gap-3 md:items-end md:text-right">
-    <div class="flex items-center gap-1">
-      <p
-        class="text-2xl font-semibold text-foreground md:text-3xl 2xl:text-4xl"
-      >
-        Akash
-      </p>
-      <svg
-        width="34"
-        height="34"
-        viewBox="0 0 34 34"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="16.9909" cy="16.9948" r="16.9948" fill="#FF414C"></circle>
-        <path
-          d="M19.9944 20.1338L23.8832 25.0121L24.5725 26.6995H17.0321L13.2598 20.1338H19.9944Z"
-          fill="white"></path>
-        <path
-          d="M24.5704 26.7003L28.3365 20.1346L20.7981 7H13.2598L24.5704 26.7003Z"
-          fill="white"></path>
-        <path
-          d="M9.48986 13.5649H17.0282L9.493 26.6996L5.7207 20.1338L9.48986 13.5649Z"
-          fill="white"></path>
-      </svg>
-
-      <p
-        class="text-2xl font-semibold text-foreground md:text-3xl 2xl:text-4xl"
-      >
-        NYC
-      </p>
-    </div>
-    <p class="text-xs text-foreground md:text-sm">
-      © Akash Network 2025 The Akash Network Authors<br /> Documentation Distributed
-      under CC BY 4.0
-    </p>
-    <div class="flex flex-col gap-1 text-para">
+  <p class="text-left text-xs text-black">
+    © Akash Network <FooterYear client:load />
+    The Akash Network Authors Documentation Distributed under CC BY 4.0
+  </p>
+  <div class="flex gap-x-2">
+    <p class="text-xs">
       <a
+        aria-label="Open-source Apache 2.0 Licensed."
+        class="text-decoration-none text-[#737373] underline"
+        target="_blank"
         href="https://github.com/akash-network"
-        target="_blank"
-        class="text-xs underline"
       >
-        Open-source Apache 2.0 Licensed.</a
-      >
+        Open-source Apache 2.0 Licensed.
+      </a>
+    </p>
+    <p class="text-xs">
       <a
-        href="https://github.com/akash-network/node"
+        aria-label="GitHub v0.20.0"
+        class="text-decoration-none text-[#737373] underline"
         target="_blank"
-        class="text-xs underline"
+        href="https://github.com/akash-network/node"
       >
-        GitHub v0.20.0</a
+        GitHub v0.20.0
+      </a>
+    </p>
+
+    <p class="text-xs">
+      <a
+        aria-label="Privacy"
+        class="text-decoration-none text-[#737373] underline"
+        target="_blank"
+        href="/privacy"
       >
-      <a href="/privacy" class="text-xs underline">Privacy</a>
-    </div>
+        Privacy
+      </a>
+    </p>
   </div>
 </footer>
