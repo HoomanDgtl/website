@@ -5,11 +5,12 @@ import Header from "@/components/header/header.astro";
 
 import BaseLayout from "@/layouts/base-layout.astro";
 
+import { acc2025 } from "@/components/acc-2025/acc-2025";
 import Accfooter from "@/components/acc-2025/accfooter.astro";
 import Head from "@/components/acc-2025/head.astro";
 import Highlights from "@/components/acc-2025/highlights.astro";
 import Information from "@/components/acc-2025/information.astro";
-import Location from "@/components/acc-2025/location.astro";
+import Location from "@/components/acc-2025/Location";
 import Speakers from "@/components/acc-2025/speakers.astro";
 import { ArrowUpCircle } from "lucide-react";
 ---
@@ -29,9 +30,9 @@ import { ArrowUpCircle } from "lucide-react";
   <main>
     <Head />
     <a
-      href="https://www.youtube.com"
+      href={acc2025.youtube}
       target="_blank"
-      class="flex w-full items-center justify-center bg-[#434343] py-3 text-xl font-semibold text-white"
+      class="flex w-full items-center justify-center bg-[#595959] py-3 font-jetBrainsMono text-xl text-white transition-all hover:bg-[#8A8A8A]"
     >
       <ArrowUpCircle className="mr-2  size-6 rotate-45" />
       Watch the 2024 Recap
@@ -39,7 +40,7 @@ import { ArrowUpCircle } from "lucide-react";
     <div class="bg-[#2C2C2C]">
       <Speakers />
     </div>
-    <Location />
+    <Location client:load />
     <Highlights />
 
     <Information />

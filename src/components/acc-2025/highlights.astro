@@ -1,8 +1,12 @@
 ---
-
+import { acc2025 } from "./acc-2025";
 ---
 
-<section class="relative flex aspect-[16/6] max-h-[640px] w-full">
+<a
+  href={acc2025.youtube}
+  target="_blank"
+  class="group relative flex aspect-[16/6] max-h-[640px] w-full"
+>
   <img
     src="/images/acc-2025/sky.png"
     alt="Akash Accelerate 2025 Highlights"
@@ -20,9 +24,11 @@
       <path d="M61 43.5002L30.25 60.3877L30.25 26.6127L61 43.5002Z" fill="white"
       ></path>
     </svg>
-    <h2 class="text-5xl font-semibold leading-[1.2]">
+    <h2
+      class="text-5xl font-semibold leading-[1.2] transition-all group-hover:underline"
+    >
       View Highlights <br />
       From Last Year
     </h2>
   </div>
-</section>
+</a>

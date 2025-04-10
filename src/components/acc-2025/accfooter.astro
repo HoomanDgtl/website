@@ -2,44 +2,46 @@
 import FooterYear from "../footer/footer-year";
 ---
 
-<footer
-  class="relative -mt-1 flex w-full flex-col items-start justify-center gap-2 gap-y-[16px] bg-white py-10 lg:flex-row lg:items-center"
->
-  <p class="text-left text-xs text-black">
-    © Akash Network <FooterYear client:load />
-    The Akash Network Authors Documentation Distributed under CC BY 4.0
-  </p>
-  <div class="flex gap-x-2">
-    <p class="text-xs">
-      <a
-        aria-label="Open-source Apache 2.0 Licensed."
-        class="text-decoration-none text-[#737373] underline"
-        target="_blank"
-        href="https://github.com/akash-network"
-      >
-        Open-source Apache 2.0 Licensed.
-      </a>
+<footer class="bg-white">
+  <div
+    class="container-nav-2 relative -mt-[1px] flex w-full flex-col items-start justify-between gap-2 gap-y-[16px] py-10 font-jetBrainsMono lg:flex-row lg:items-center"
+  >
+    <p class="text-left text-xs text-black">
+      © Akash Network <FooterYear client:load />
+      The Akash Network Authors Documentation Distributed under CC BY 4.0
     </p>
-    <p class="text-xs">
-      <a
-        aria-label="GitHub v0.20.0"
-        class="text-decoration-none text-[#737373] underline"
-        target="_blank"
-        href="https://github.com/akash-network/node"
-      >
-        GitHub v0.20.0
-      </a>
-    </p>
+    <div class="flex gap-x-4">
+      <p class="text-xs">
+        <a
+          aria-label="Open-source Apache 2.0 Licensed."
+          class="text-decoration-none text-[#737373] underline"
+          target="_blank"
+          href="https://github.com/akash-network"
+        >
+          Open-source Apache 2.0 Licensed.
+        </a>
+      </p>
+      <p class="text-xs">
+        <a
+          aria-label="GitHub v0.20.0"
+          class="text-decoration-none text-[#737373] underline"
+          target="_blank"
+          href="https://github.com/akash-network/node"
+        >
+          GitHub v0.20.0
+        </a>
+      </p>
 
-    <p class="text-xs">
-      <a
-        aria-label="Privacy"
-        class="text-decoration-none text-[#737373] underline"
-        target="_blank"
-        href="/privacy"
-      >
-        Privacy
-      </a>
-    </p>
+      <p class="text-xs">
+        <a
+          aria-label="Privacy"
+          class="text-decoration-none text-[#737373] underline"
+          target="_blank"
+          href="/privacy"
+        >
+          Privacy
+        </a>
+      </p>
+    </div>
   </div>
 </footer>

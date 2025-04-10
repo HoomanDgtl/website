@@ -1,5 +1,5 @@
 ---
-import ButtonLink from "../ui/button-link.astro";
+import { acc2025 } from "./acc-2025";
 ---
 
 <section class="container-nav-2 flex flex-col gap-10 py-10 lg:gap-16">
@@ -46,14 +46,13 @@ import ButtonLink from "../ui/button-link.astro";
         entire ecosystem for a packed agenda of talks, panels, and discussions
         exploring the future of decentralized compute and open-source AI.
       </p>
-      <ButtonLink
-        link="/akash-accelerate-2025"
-        variant="primary"
-        size="xl"
-        className="font-jetBrainsMono  mr-auto mt-8 flex  gap-1 rounded !px-6 !py-4  text-xl uppercase  tracking-wide 2xl:text-2xl"
+      <a
+        href={acc2025.register}
+        target="_blank"
+        class="mr-auto mt-8 flex gap-1 rounded bg-primary px-6 py-4 font-jetBrainsMono text-xl uppercase tracking-wide transition-all hover:bg-[#2C2C2C] 2xl:text-2xl"
       >
         Register
-      </ButtonLink>
+      </a>
     </div>
     <div class="flex w-full flex-1 items-center justify-center">
       <img
