@@ -13,14 +13,18 @@ const Location = () => {
       onMouseLeave={() => setIsHovering(false)}
     >
       <div className="relative w-full flex-1 overflow-hidden">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.804551508223!2d-73.9578208!3d40.7223189!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25981a9364305%3A0x183e815910875204!2s74Wythe!5e0!3m2!1sen!2sin!4v1744373270939!5m2!1sen!2sin"
-          width="100%"
-          height="550"
-          loading="lazy"
-        ></iframe>
+        <img
+          src="/images/acc-2025/map.png"
+          alt="location"
+          className=" h-full w-full object-cover object-right md:hidden"
+        />
+        <img
+          src="/images/acc-2025/long-map.png"
+          alt="location"
+          className="hidden h-full w-full object-cover object-right md:block"
+        />
       </div>
-      <div className="flex  w-full flex-1 flex-col gap-5 bg-[#1E1E1E] px-4 py-10 md:gap-10 md:p-10">
+      <div className="flex  w-full flex-1 flex-col gap-5 bg-[#1E1E1E] px-4 py-10 md:gap-10 md:pb-40 md:pt-10">
         <div className="flex flex-col gap-3">
           <svg
             viewBox="0 0 60 61"
