@@ -28,7 +28,7 @@ const Location = () => {
         <div className="flex flex-col gap-3">
           <svg
             viewBox="0 0 60 61"
-            className="size-10 md:size-[60px]"
+            className="size-10 lg:size-[60px]"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -44,12 +44,12 @@ const Location = () => {
               fill="white"
             ></path>
           </svg>
-          <h2 className="text-4xl font-semibold leading-[1.2] transition-all duration-500 group-hover:underline md:text-5xl">
+          <h2 className="text-4xl font-semibold leading-[1.2] transition-all duration-500 group-hover:underline lg:text-5xl">
             74Wythe <br /> Williamsburg
             <br /> NYC
           </h2>
         </div>
-        <h3 className="font-jetBrainsMono md:text-2xl">
+        <h3 className="font-jetBrainsMono md:text-xl lg:text-2xl">
           June 23rd <br /> 9:30-6:30pm
         </h3>
       </div>
