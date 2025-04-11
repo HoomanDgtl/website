@@ -3,7 +3,7 @@ import { acc2025 } from "./acc-2025";
 ---
 
 <section class="container-nav-2 flex flex-col gap-10 py-10 lg:gap-16">
-  <div class="flex flex-row justify-between gap-5">
+  <div class="flex flex-col justify-between gap-14 md:flex-row md:gap-5">
     <div class="flex w-full flex-1 flex-col items-start gap-4">
       <svg
         width="141"
@@ -32,11 +32,13 @@ import { acc2025 } from "./acc-2025";
       </svg>
 
       <h1
-        class="text-5xl !font-semibold !leading-[1] lg:text-7xl 2xl:text-[88px]"
+        class="text-6xl !font-semibold !leading-[1] lg:text-7xl 2xl:text-[88px]"
       >
         Akash <br /> Accelerate 2025
       </h1>
-      <p class="font-jetBrainsMono text-lg font-medium text-[#747474]">
+      <p
+        class="font-jetBrainsMono text-sm font-medium text-[#747474] md:text-lg"
+      >
         NYC + Virtual / June 23rd / 9:30-6:30pm
       </p>
       <p
@@ -49,7 +51,7 @@ import { acc2025 } from "./acc-2025";
       <a
         href={acc2025.register}
         target="_blank"
-        class="mr-auto mt-8 flex gap-1 rounded bg-primary px-6 py-4 font-jetBrainsMono text-xl uppercase tracking-wide transition-all hover:bg-[#2C2C2C] 2xl:text-2xl"
+        class="mr-auto mt-2 flex gap-1 rounded bg-primary px-6 py-3 font-jetBrainsMono text-xl uppercase tracking-wide transition-all hover:bg-[#2C2C2C] md:mt-8 md:py-4 2xl:text-2xl"
       >
         Register
       </a>
@@ -58,7 +60,7 @@ import { acc2025 } from "./acc-2025";
       <img
         src="/images/acc-2025/hero.png"
         alt="Akash Accelerate 2025"
-        class="h-[70%] object-contain"
+        class="w-[75%] object-contain md:h-[70%]"
       />
     </div>
   </div>

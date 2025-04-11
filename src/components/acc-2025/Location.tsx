@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { acc2025 } from "./acc-2025";
 
 const Location = () => {
@@ -6,7 +6,7 @@ const Location = () => {
 
   return (
     <a
-      className="group flex"
+      className="group flex flex-col md:flex-row"
       href={acc2025.map}
       target="_blank"
       onMouseEnter={() => setIsHovering(true)}
@@ -24,12 +24,11 @@ const Location = () => {
           className={`absolute inset-0 z-[2] w-full  transform transition-all duration-500 ease-in-out ${isHovering ? " opacity-100" : " opacity-0"}`}
         />
       </div>
-      <div className="flex w-full flex-col gap-10 bg-[#1E1E1E] p-10">
+      <div className="flex w-full flex-col gap-5 bg-[#1E1E1E] px-4 py-10 md:gap-10 md:p-10">
         <div className="flex flex-col gap-3">
           <svg
-            width="60"
-            height="61"
             viewBox="0 0 60 61"
+            className="size-10 md:size-[60px]"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -45,12 +44,12 @@ const Location = () => {
               fill="white"
             ></path>
           </svg>
-          <h2 className="text-5xl font-semibold leading-[1.2] transition-all duration-500 group-hover:underline">
+          <h2 className="text-4xl font-semibold leading-[1.2] transition-all duration-500 group-hover:underline md:text-5xl">
             74Wythe <br /> Williamsburg
             <br /> NYC
           </h2>
         </div>
-        <h3 className="font-jetBrainsMono text-2xl">
+        <h3 className="font-jetBrainsMono md:text-2xl">
           June 23rd <br /> 9:30-6:30pm
         </h3>
       </div>
