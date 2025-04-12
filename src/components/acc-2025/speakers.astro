@@ -19,12 +19,12 @@ const speakers = [
     name: "Jake Brukhman",
     title: "Founder and CEO",
     company: "Coinfund",
-    image: "/images/acc-2025/speakers/jake.jpeg",
+    image: "/images/acc-2025/speakers/jake.png",
   },
   {
     name: "Benjamin Parr",
     title: "CoFounder",
-    company: "YesNoError +",
+    company: "YesNoError, Theory Forge Ventures",
     image: "/images/acc-2025/speakers/benjamin.png",
   },
   {
@@ -44,6 +44,12 @@ const speakers = [
     title: "Founder and CEO",
     company: "Vertical Studios BV",
     image: "/images/acc-2025/speakers/manouk.png",
+  },
+  {
+    name: "Daniel Kellern",
+    title: "Founder and CEO",
+    company: "InFlux",
+    image: "/images/acc-2025/speakers/daniel.png",
   },
   {
     name: "Tommy Eastman",
@@ -81,7 +87,7 @@ const speakers = [
             <img
               src={speaker.image}
               alt={speaker.name}
-              class=" aspect-[16/13.3] w-full bg-[#363636] object-contain"
+              class=" aspect-[16/13.3] w-full bg-[#363636] object-cover"
             />
             <div class="flex flex-col">
               <p class="text-xs font-medium !leading-[1.2] text-foreground md:text-lg">
@@ -101,7 +107,7 @@ const speakers = [
     <a
       href={acc2025.apply}
       target="_blank"
-      class="mx-auto flex items-center gap-2 rounded border-2 border-[#666666] px-4 py-2.5 font-jetBrainsMono text-lg font-medium transition-all hover:bg-[#666666]"
+      class="mx-auto flex items-center gap-2 rounded border-2 border-[#666666] px-4 py-2.5 font-jetBrainsMono text-lg font-medium transition-all hover:bg-[#666666] md:mt-4"
     >
       <ArrowUpCircle className="size-6 rotate-45" />
       Interested in speaking?

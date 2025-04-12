@@ -117,7 +117,11 @@ html body[data-scroll-locked] {
   }
 
   .container-nav-2 {
-    @apply mx-auto max-w-[1800px] px-[16px] md:px-[40px];
+    @apply px-[16px] md:px-[40px];
+  }
+
+  .container-nav-3 {
+    @apply mx-auto max-w-[1510px];
   }
 
   .container-reader {

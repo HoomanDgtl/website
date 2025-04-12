@@ -16,15 +16,15 @@ const Location = () => {
         <img
           src="/images/acc-2025/map.png"
           alt="location"
-          className=" h-full w-full object-cover object-right md:hidden"
+          className={`h-full w-full object-cover transition-opacity duration-300 ${isHovering ? "opacity-0" : "opacity-100"} `}
         />
         <img
-          src="/images/acc-2025/long-map.png"
+          src="/images/acc-2025/map-hover.png"
           alt="location"
-          className="hidden h-full w-full object-cover object-right md:block"
+          className={`h-full w-full object-cover transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-0"} absolute inset-0`}
         />
       </div>
-      <div className="flex  w-full flex-1 flex-col gap-5 bg-[#1E1E1E] px-4 py-10 md:gap-10 md:pb-40 md:pt-10">
+      <div className="flex  w-full flex-1 flex-col gap-5 bg-black px-4 py-10 md:gap-10 md:pb-40 md:pt-10">
         <div className="flex flex-col gap-3">
           <svg
             viewBox="0 0 60 61"
@@ -44,7 +44,7 @@ const Location = () => {
               fill="white"
             ></path>
           </svg>
-          <h2 className="text-4xl font-semibold leading-[1.2] transition-all duration-500 group-hover:underline lg:text-5xl">
+          <h2 className="mt-3 text-4xl font-semibold leading-[1.2] transition-all duration-500 group-hover:underline lg:text-5xl">
             74Wythe <br /> Williamsburg
             <br /> NYC
           </h2>
