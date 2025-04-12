@@ -9,10 +9,12 @@ const Location = () => {
       className="group flex flex-col md:flex-row"
       href={acc2025.map}
       target="_blank"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
     >
-      <div className="relative w-full flex-1 overflow-hidden">
+      <div
+        className="relative w-full flex-1 overflow-hidden"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <img
           src="/images/acc-2025/map.png"
           alt="location"
