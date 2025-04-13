@@ -9,6 +9,7 @@ module.exports = {
       screens: {
         "3xl": "1660px",
         slg: "1100px",
+        sxl: "1470px",
       },
       fontSize: {
         "2xs": ".625rem",
