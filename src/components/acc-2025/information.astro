@@ -20,10 +20,10 @@ const links = {
     />
   </div>
   <div
-    class="flex w-full flex-1 flex-col justify-between gap-10 px-4 py-10 md:px-10"
+    class="flex aspect-[16/15] w-full flex-1 flex-col justify-between gap-10 px-4 py-10 md:aspect-auto md:px-10"
   >
     <div class="flex flex-col gap-7 md:gap-9">
-      <h2 class="text-3xl font-semibold leading-[1.2] md:text-5xl">
+      <h2 class="text-3xl font-semibold !leading-[1.2] md:text-5xl">
         Stay in touch about <br />
         Akash Accelerate 2025
       </h2>
@@ -32,7 +32,7 @@ const links = {
         link={acc2025.youtube}
         variant="primary"
         size="xl"
-        className=" mr-auto  flex  gap-2  !px-6 !py-2 font-jetBrainsMono font-normal tracking-wide  md:!py-3   md:text-xl 2xl:text-2xl"
+        className=" mr-auto flex  gap-2  !rounded  !px-6 !py-2 font-jetBrainsMono font-normal tracking-wide  md:!py-3   md:text-xl "
       >
         <ArrowUpCircle className="size-5 rotate-45 md:size-6" />
         Subscribe Now
@@ -40,7 +40,7 @@ const links = {
     </div>
 
     <div class="flex flex-col gap-2 md:gap-5">
-      <h3 class="font-jetBrainsMono text-lg font-normal md:text-2xl">
+      <h3 class="font-jetBrainsMono text-lg font-thin md:text-2xl">
         Connect with Akash
       </h3>
       <div class="flex gap-1.5">

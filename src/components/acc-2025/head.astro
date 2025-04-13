@@ -2,49 +2,57 @@
 import { acc2025 } from "./acc-2025";
 ---
 
-<section class="container-nav-2 flex flex-col pt-10 lg:pb-10">
+<section
+  class="container-nav-2 flex flex-col pb-10 pt-10 md:pb-0 lg:pb-10 2xl:pb-0"
+>
   <div class="flex flex-col justify-between lg:flex-row lg:gap-14">
     <div class="flex w-full flex-1 flex-col items-start gap-4">
       <svg
-        class="w-[100px] md:h-[69px] md:w-[141px]"
-        viewBox="0 0 141 69"
+        width="85"
+        class="w-[78px] md:w-[84px]"
+        viewBox="0 0 85 40"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle cx="106.593" cy="33.5927" r="33.5927" fill="#8E8D92"></circle>
+        <circle cx="64.7517" cy="20" r="20" fill="#474748"></circle>
         <path
-          d="M128.798 34.3056L107.71 51.8384L107.71 16.7728L128.798 34.3056Z"
+          d="M77.5914 20.4244L64.9981 30.6891L64.9981 10.1598L77.5914 20.4244Z"
           fill="white"></path>
         <path
-          d="M112.506 34.3056L91.4173 51.8384L91.4173 16.7728L112.506 34.3056Z"
+          d="M67.7143 20.4244L55.8617 30.6891L55.8617 10.1598L67.7143 20.4244Z"
           fill="white"></path>
-        <circle cx="33.1035" cy="35.1035" r="33.1035" fill="#FF414C"></circle>
+        <circle cx="20.4539" cy="19.9539" r="19.9539" fill="#FF414C"></circle>
         <path
-          d="M38.1678 39.2624L44.7175 47.4786L45.8783 50.3206H33.1785L26.825 39.2624H38.1678Z"
-          fill="white"></path>
-        <path
-          d="M45.8749 50.3217L52.2178 39.2634L39.5215 17.1416H26.825L45.8749 50.3217Z"
+          d="M23.4901 23.3338L27.438 28.2863L28.1378 29.9994H20.4826L16.653 23.3338H23.4901Z"
           fill="white"></path>
         <path
-          d="M20.4771 28.1983H33.1735L20.4823 50.3201L14.1289 39.2619L20.4771 28.1983Z"
+          d="M28.1357 30.0001L31.9591 23.3344L24.306 10H16.653L28.1357 30.0001Z"
+          fill="white"></path>
+        <path
+          d="M12.8265 16.6647H20.4796L12.8297 29.9991L9 23.3335L12.8265 16.6647Z"
           fill="white"></path>
       </svg>
 
       <h1
-        class="text-6xl !font-semibold !leading-[1] lg:text-7xl 2xl:text-[88px]"
+        class="text-5xl !font-semibold !leading-[1] md:text-6xl lg:text-[88px]"
       >
         Akash <br /> Accelerate <span class="font-instrument font-normal italic"
           >2025</span
         >
       </h1>
       <p
-        class="font-jetBrainsMono text-sm font-medium text-[#747474] md:text-lg"
+        class="font-jetBrainsMono text-sm font-medium text-[#747474] md:my-4 md:text-lg"
       >
         NYC + Virtual / June 23rd / 9:30-6:30pm
       </p>
-      <p
-        class="max-w-[35rem] text-lg font-medium text-foreground lg:text-xl 2xl:text-2xl"
-      >
+      <div class="my-5 flex w-[90%] md:hidden">
+        <img
+          src="/images/acc-2025/hero-mob.png"
+          alt="Akash Accelerate 2025"
+          class="w-full object-contain"
+        />
+      </div>
+      <p class="max-w-[35rem] text-lg text-foreground lg:text-xl">
         Akash Accelerate is a full-day summit that will bring together the
         entire ecosystem for a packed agenda of talks, panels, and discussions
         exploring the future of decentralized compute and open-source AI.
@@ -57,11 +65,11 @@ import { acc2025 } from "./acc-2025";
         Register
       </a>
     </div>
-    <div class="flex w-full flex-1 items-center justify-center">
+    <div class="hidden w-full flex-1 items-center justify-center md:flex">
       <img
         src="/images/acc-2025/hero.png"
         alt="Akash Accelerate 2025"
-        class="object-contain md:w-[75%] lg:h-[90%] lg:w-full"
+        class="object-contain md:w-[75%] lg:h-full lg:w-full"
       />
     </div>
   </div>
