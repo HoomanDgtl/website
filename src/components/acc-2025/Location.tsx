@@ -6,7 +6,7 @@ const Location = () => {
 
   return (
     <a
-      className=" flex flex-col md:flex-row"
+      className=" flex flex-col lg:flex-row"
       href={acc2025.map}
       target="_blank"
     >
