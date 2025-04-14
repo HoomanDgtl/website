@@ -6,7 +6,7 @@ import FooterYear from "../footer/footer-year";
   <div
     class="container-nav-2 relative -mt-[1px] flex w-full flex-col items-center justify-center gap-2 gap-y-[16px] py-6 font-jetBrainsMono lg:py-10"
   >
-    <div class="mb-4 flex items-center gap-2.5">
+    <div class="mb-4 flex flex-col items-center gap-2.5 md:flex-row">
       <div
         class="flex items-center gap-2 font-jetBrainsMono text-[15px] font-light text-black"
       >
@@ -48,7 +48,7 @@ import FooterYear from "../footer/footer-year";
 
         <span>supercloud</span>
       </div>
-      <div class="h-5 w-[1px] bg-black"></div>
+      <div class="hidden h-5 w-[1px] bg-black md:block"></div>
       <div
         class="flex items-center gap-2 font-jetBrainsMono text-[15px] font-light text-black"
       >
@@ -57,7 +57,7 @@ import FooterYear from "../footer/footer-year";
 
         <span>compute marketplace</span>
       </div>
-      <div class="h-5 w-[1px] bg-black"></div>
+      <div class="mb-3 h-px w-[40%] bg-black md:mb-0 md:h-5 md:w-[1px]"></div>
       <svg
         width="53"
         height="24"
@@ -83,10 +83,13 @@ import FooterYear from "../footer/footer-year";
           fill="#212121"></path>
       </svg>
     </div>
-    <p class="text-center text-xs text-black md:text-left">
+    <p class="text-center text-xs text-[#737373] md:text-left">
       © Akash Network <FooterYear client:load />
-      The Akash Network Authors Documentation Distributed under CC BY 4.0
+      The Akash Network Authors Documentation Distributed <br
+        class="md:hidden"
+      /> under CC BY 4.0
     </p>
+    <div class="h-px w-[12%] bg-black md:hidden"></div>
     <div
       class="flex w-full flex-col items-center justify-center gap-1 gap-x-4 md:w-auto md:flex-row"
     >
