@@ -11,8 +11,8 @@ const speakers = [
   },
   {
     name: "Haseeb Qureshi",
-    title: "Founder and Managing Partner ",
-    company: "Dragonfly",
+    title: "Founder and Managing Partner Dragonfly",
+    
     image: "/images/acc-2025/speakers/haseeb.png",
   },
   {
@@ -97,9 +97,11 @@ const speakers = [
                 <p class="text-xs font-medium !leading-[1.2] text-[#909090]  md:text-lg">
                   {speaker.title}
                 </p>
-                <p class="text-xs font-medium !leading-[1.2] text-[#909090] md:text-lg">
-                  {speaker.company}
-                </p>
+                {speaker.company && (
+                  <p class="text-xs font-medium !leading-[1.2] text-[#909090] md:text-lg">
+                    {speaker.company}
+                  </p>
+                )}
               </div>
             </div>
           </div>
