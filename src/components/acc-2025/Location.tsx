@@ -26,7 +26,7 @@ const Location = () => {
           className={`h-full w-full object-cover transition-opacity duration-300 ${isHovering ? "opacity-100" : "opacity-0"} absolute inset-0`}
         />
       </div>
-      <div className="group flex aspect-[16/15] w-full flex-1  flex-col justify-between gap-5 bg-black px-4 py-10 md:aspect-auto md:justify-normal md:gap-10 md:pb-40 md:pt-10">
+      <div className="group flex aspect-[16/15] w-full flex-1  flex-col justify-between gap-5 bg-black px-4 py-10 md:aspect-auto md:justify-normal md:gap-10 md:px-10 md:pb-40 md:pt-10">
         <div className="flex flex-col md:gap-3">
           <svg
             viewBox="0 0 60 61"
