@@ -3,7 +3,7 @@ import { ArrowUpCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const Recap = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const videoId = acc2025.youtube.split("v=")[1];
 
   useEffect(() => {
@@ -19,13 +19,16 @@ const Recap = () => {
 
   return (
     <>
-      <button
+      <a
+        href={acc2025.youtube}
+        target="_blank"
+        rel="noopener noreferrer"
         onClick={() => setIsOpen(true)}
         className="flex w-full items-center justify-center bg-[#272626] py-3.5 font-jetBrainsMono text-lg text-white transition-all hover:bg-[#8A8A8A]"
       >
         <ArrowUpCircle className="mr-2 size-5 rotate-45 md:size-6" />
         Watch the 2024 Recap
-      </button>
+      </a>
 
       <div
         className={`fixed inset-0 z-50 bg-black/50 transition-opacity duration-300 ${
