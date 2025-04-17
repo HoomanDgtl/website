@@ -138,13 +138,17 @@ jobs:
               --base main \
               --head $branch_name)
 
-            # Extract PR number from PR URL
-            PR_NUMBER=$(echo $PR_URL | grep -oE '[0-9]+$')
+            # Extract PR number from PR URL using a more reliable method
+            PR_NUMBER=$(echo $PR_URL | grep -oP 'pull/\K[0-9]+')
+            if [ -z "$PR_NUMBER" ]; then
+              echo "Error: Could not extract PR number from URL: $PR_URL"
+              exit 1
+            fi
 
             echo "Merging newly created PR #$PR_NUMBER..."
             echo "Waiting until PR is mergeable ..."
             for i in {1..10}; do
-              MERGEABLE=$(gh pr view "$PR_URL" --json mergeable --jq '.mergeable')
+              MERGEABLE=$(gh pr view $PR_NUMBER --json mergeable --jq '.mergeable')
               echo "Mergeable status: $MERGEABLE"
               if [ "$MERGEABLE" = "MERGEABLE" ]; then
                 break
