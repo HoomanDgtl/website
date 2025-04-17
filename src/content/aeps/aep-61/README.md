@@ -7,7 +7,7 @@ type: Standard
 category: Core
 created: 2025-01-30
 updated: 2025-02-18
-estimated-completion: 2025-02-28
+completed: 2025-03-12
 roadmap: major
 ---
 
@@ -78,7 +78,7 @@ This approach has the following pros and cons:
 
 ### `x/authz`
 
-Store will update with following prefixes:
+Store will be updated with the following prefixes:
 - `{0x01}` - grantor prefix (remains unchanged)
 - `{0x03}` - grantee prefix. Format of the key is `0x03<granteeAddressLen (1 Byte)><granteeAddress_Bytes><granterAddressLen (1 Byte)><granterAddress_Bytes>: grants count`
 

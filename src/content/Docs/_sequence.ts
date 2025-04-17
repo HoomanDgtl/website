@@ -45,43 +45,85 @@ export const docsSequence = [
           {
             label: "Akash Console",
           },
+          { label: "Sandbox", subItems: [{ label: "Sandbox Introduction" }] },
+          { label: "Stable Payment Deployments" },
+        ],
+      },
+      {
+        label: "Providers",
+        subItems: [
+          { label: "Provider Overview"},
           {
-            label: "Praetor App",
+            label: "Build A Cloud Provider",
             subItems: [
-              { label: "What is Praetor App?" },
-              {
-                label: "Akash Provider",
+              { label: "Akash CLI",
                 subItems: [
-                  { label: "Build a Cloud Provider" },
-                  { label: "Existing Kubernetes Cluster" },
-                  { label: "Single Server Provider" },
-                  { label: "Build a Cloud Provider (Windows Machine)" },
-                  { label: "Sudo User Requirements" },
-                  { label: "Decommission a Provider" },
-                  
+                    {
+                      label: "Kubernetes Cluster For Akash Providers",
+                      subItems: [{ label: "Kubernetes Cluster for Akash Providers" }],
+                    },
+                    {
+                      label: "Akash Cloud Provider Build With Helm Charts",
+                    },
+                    {
+                      label: "Akash Provider Checkup",
+                    },
+                    {
+                      label: "Time Synchronization",
+                    },
+                    {
+                      label: "GPU Resource Enablement (Optional Step)",
+                    },
+                    {
+                      label: "TLS Certs for Akash Provider (Optional Step)",
+                    },
+                    {
+                      label: "IP Leases - Provider Enablement (Optional Step)",
+                    },
+                    {
+                      label: "Helm Based Provider Persistent Storage Enablement",
+                    },
+                    {
+                      label: "Akash Provider Bid Pricing Calculation",
+                    },
+                    {
+                      label: "Akash Provider Attribute Updates",
+                    },
+                    {
+                      label: "gVisor Issue - No system-cgroup v2 Support",
+                    },
+                    {
+                      label: "Shared Memory Enablement",
+                    },
+
+                ],
+              },
+              { label: "Provider Console",
+                subItems: [
+                  { label: "What is Provider Console?"},
+                  { label: "Building with Provider Console"},
+                  { label: "How to Enable Root Sign-in"}, 
                 ],
               },
             ],
           },
           {
-            label: "Provider Console",
-            subItems: [
-              { label: "How to Enable Root Sign-in"},
-              { label: "Provider Console"},  
-            ],
+            
           },
-          { label: "Sandbox", subItems: [{ label: "Sandbox Introduction" }] },
-          { label: "Stable Payment Deployments" },
+          { label: "Akash Provider FAQ and Guide" },
+          { label: "Community Solutions" },
+          { label: "Custom Kubernetes Cluster Settings" },
         ],
       },
       {
         label: "Guides",
 
         subItems: [
+          { label: "Guides Overview"},
           {
             label: "Machine Learning",
             subItems: [
-              { label: "OneClickLLM" },
+              { label: "Overview"},
               { label: "DeTrain" },
               { label: "Ray" },
               { label: "FLock.io" },
@@ -106,7 +148,12 @@ export const docsSequence = [
               { label: "LocalAI"},
               { label: "LangFlow"},
               { label: "TensorFlow"},
+              { label: "TensorLayer"},
               { label: "PyTorch"},
+              { label: "DeepSeek V3"},
+              { label: "Perplexity R1 1776"},
+              { label: "OpenThinker-32B"},
+              { label: "DeepSeek R1"},
             ],
           },
           {
@@ -141,6 +188,7 @@ export const docsSequence = [
               { label: "Apache Airflow"},
               { label: "Apache Kafka"},
               { label: "Apache Storm"},
+              { label: "Thirdweb"},
             ],
           },
           {
@@ -149,7 +197,6 @@ export const docsSequence = [
               { label: "Kava RPC Node Deployment" },
               { label: "Chia on Akash" },
               { label: "Polygon on Akash" },
-              { label: "Mine Raptoreum on Akash Network" },
               { label: "Deploying Iron Fish on Akash" },
             ],
           },
@@ -184,6 +231,7 @@ export const docsSequence = [
               { label: "WordPress"},
               { label: "Discourse"},
               { label: "Ghost"},
+              { label: "Nextcloud"},
             ]
           },
           {
@@ -221,13 +269,17 @@ export const docsSequence = [
           },
           {
             label: "Benchmarkings",
-            subItems: [{ label: "Fast.com" }],
+            subItems: [
+              { label: "Fast_com" },
+              { label: "LibreSpeed"},
+              { label: "Geekbench 5"},
+            ],
           },
           {
             label: "Games",
             subItems: [
               { label: "Minecraft"},
-            ]
+            ],
           },
           {
             label: "Science",
@@ -235,60 +287,38 @@ export const docsSequence = [
               { label: "GeoNetwork"},
               { label: "GNU Octave"},
               { label: "MATLAB"}
-            ]
-          }
-        ],
-      },
-      {
-        label: "Providers",
-        subItems: [
-          {
-            label: "Build A Cloud Provider",
-            subItems: [
-              {
-                label: "Kubernetes Cluster For Akash Providers",
-                subItems: [{ label: "Kubernetes Cluster for Akash Providers" }],
-              },
-              {
-                label: "Akash Cloud Provider Build With Helm Charts",
-              },
-              {
-                label: "Akash Provider Checkup",
-              },
-              {
-                label: "Time Synchronization",
-              },
-              {
-                label: "GPU Resource Enablement (Optional Step)",
-              },
-              {
-                label: "TLS Certs for Akash Provider (Optional Step)",
-              },
-              {
-                label: "IP Leases - Provider Enablement (Optional Step)",
-              },
-              {
-                label: "Helm Based Provider Persistent Storage Enablement",
-              },
-              {
-                label: "Akash Provider Bid Pricing Calculation",
-              },
-              {
-                label: "Akash Provider Attribute Updates",
-              },
-              {
-                label: "gVisor Issue - No system-cgroup v2 Support",
-              },
-              {
-                label: "Shared Memory Enablement",
-              },
             ],
           },
-          { label: "Akash Provider FAQ and Guide" },
-          { label: "Community Solutions" },
-          { label: "Custom Kubernetes Cluster Settings" },
+          {
+            label: "Network",
+            subItems: [
+              { label: "Overview"},
+              { label: "Owncloud"},
+              { label: "CJDNS PKT"},
+              { label: "Tor"},
+              { label: "X-UI"},
+              { label: "SoftEther VPN"},
+              { label: "Cloudflare"},
+              { label: "Custom Domain"},
+            ],
+          },
+          {
+            label: "Storage",
+            subItems: [
+              { label: "Codex"},
+            ],
+          },
+          {
+            label: "Project Management",
+            subItems: [
+              { label: "Kanboard"},
+              { label: "Redmine"},
+              { label: "Jira"},
+            ],
+          },
         ],
       },
+      
 
       {
         label: "Akash Nodes",
@@ -319,7 +349,7 @@ export const docsSequence = [
         ],
       },
       {
-        label: "Mainnet 12 Upgrade",
+        label: "Mainnet 13 Upgrade",
       },
       {
         label: "Testnet",

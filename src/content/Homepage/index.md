@@ -1,7 +1,7 @@
 ---
 advert: 
-  title: NVIDIA Blackwell is coming to Akash. Join the waitlist.
-  link: "/nvidia-blackwell-gpus"
+  title: Akash Accelerate 2025 is coming to NYC. Register here.
+  link: "/akash-accelerate-2025"
 
 # hero section content
 heroSection:
@@ -161,17 +161,18 @@ aiModelsAndAppsSection:
         label: Console Docs
         link: "/docs/getting-started/quickstart-guides/akash-console/"
 
-    - image:  "./assets/tools/praetor.svg"
-      description: "Praetor App makes it simple to become an Akash Network cloud provider. Use a streamlined UI to become a provider. "
-      logoTitle: Praetor App
+    - image:  "./assets/tools/awesomeakash.svg"
+      darkImage : "./assets/tools/awesomeakash.svg"
+      description: "Offer your compute resources on the Akash marketplace, and earn when people deploy. The Akash Provider Console walks you through the setup process, so you can get up and running on the Akash Supercloud."
+      logoTitle: Provider Console
 
       launchAppLink: 
         label: Launch App
-        link: "https://praetorapp.com/"
+        link: "https://provider-console.akash.network/"
 
       docsLink: 
-        label: Praetor Docs
-        link: "https://docs.praetorapp.com/"
+        label: Provider Console Docs
+        link: "/docs/providers/build-a-cloud-provider/akash-cli/kubernetes-cluster-for-akash-providers/kubernetes-cluster-for-akash-providers/"
 
     - image:  "./assets/tools/awesomeakash.svg"
       description: " View collection of SDL deployment templates based on the Awesome Akash GitHub repository "

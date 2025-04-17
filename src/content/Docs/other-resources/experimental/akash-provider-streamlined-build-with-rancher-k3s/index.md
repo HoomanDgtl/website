@@ -226,7 +226,7 @@ REDACTED
 -----END TENDERMINT PRIVATE KEY-----
 ```
 
-#### &#x20;STEP 2 - Create key.pem and Copy Output Into File
+#### STEP 2 - Create key.pem and Copy Output Into File
 
 - Copy the contents of the prior step into the `key.pem` file
 
@@ -317,7 +317,7 @@ DOMAIN=test.com
 
 4\. Set the Akash RPC node for your provider to use
 
-- If you are going to deploy Akash RPC Node using Helm-Charts then set the node to http://akash-node-1:26657 It is recommended that you install your own Akash RPC node. Follow [this guide](/docs/providers/build-a-cloud-provider/akash-cloud-provider-build-with-helm-charts/) to do so.
+- If you are going to deploy Akash RPC Node using Helm-Charts then set the node to http://akash-node-1:26657 It is recommended that you install your own Akash RPC node. Follow [this guide](/docs/providers/build-a-cloud-provider/akash-cli/akash-cloud-provider-build-with-helm-charts/) to do so.
 
 ```
 NODE=http://akash-node-1:26657
@@ -439,8 +439,8 @@ attributes:
 ### **Provider Bid Defaults**
 
 - When a provider is created the default bid engine settings are used. If desired these settings could be updated and added to the `provider.yaml` file. But we would recommend initially using the default values.
-- Note - the `bidpricestoragescale` value will get overridden by `-f provider-storage.yaml` covered in [Provider Persistent Storage](/docs/providers/build-a-cloud-provider/helm-based-provider-persistent-storage-enablement/) documentation.
-- Note - if you want to use a shellScript bid price strategy, pass the bid price script via `bidpricescript` variable detailed in the [bid pricing script doc](/docs/providers/build-a-cloud-provider/akash-provider-bid-pricing-calculation/). This will automatically suppress all `bidprice<cpu|memory|endpoint|storage>scale` settings.
+- Note - the `bidpricestoragescale` value will get overridden by `-f provider-storage.yaml` covered in [Provider Persistent Storage](/docs/providers/build-a-cloud-provider/akash-cli/helm-based-provider-persistent-storage-enablement/) documentation.
+- Note - if you want to use a shellScript bid price strategy, pass the bid price script via `bidpricescript` variable detailed in the [bid pricing script doc](/docs/providers/build-a-cloud-provider/akash-cli/akash-provider-bid-pricing-calculation/). This will automatically suppress all `bidprice<cpu|memory|endpoint|storage>scale` settings.
 
 ```
 bidpricecpuscale: "0.004" # cpu pricing scale in uakt per millicpu
@@ -580,7 +580,7 @@ tcp:
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
-  --version 4.7.1 \
+  --version 4.12.0 \
   --namespace ingress-nginx --create-namespace \
   -f ingress-nginx-custom.yaml
 ```
@@ -599,11 +599,11 @@ kubectl label ingressclass akash-ingress-class akash.network=true
 
 ### Akash Provider Checkup
 
-Following the initial build of your Akash Provider, use the [Akash Provider Checkup](/docs/providers/build-a-cloud-provider/akash-provider-checkup/) guide to ensure basic functionality.
+Following the initial build of your Akash Provider, use the [Akash Provider Checkup](/docs/providers/build-a-cloud-provider/akash-cli/akash-provider-checkup/) guide to ensure basic functionality.
 
 ### Persistent Storage Enablement (OPTIONAL)
 
-Use the [Helm Based Provider Persistent Storage Enablement](/docs/providers/build-a-cloud-provider/helm-based-provider-persistent-storage-enablement/) guide to host persistent volumes that will survive Kubernetes pod restarts for hosted deployments and workloads.
+Use the [Helm Based Provider Persistent Storage Enablement](/docs/providers/build-a-cloud-provider/akash-cli/helm-based-provider-persistent-storage-enablement/) guide to host persistent volumes that will survive Kubernetes pod restarts for hosted deployments and workloads.
 
 ### IP Leases Enablement (OPTIONAL)
 

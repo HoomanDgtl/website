@@ -30,7 +30,7 @@ The following provides an overview of the steps necessary to upgrade your Akash 
 # If this is being executed on machine that does not yet have the Akash
 # Helm Chart repo, first follow the steps in this guide to install Helm and pull down
 # the Akash repo:
-# https://docs.akash.network/providers/build-a-cloud-provider/akash-cloud-provider-build-with-helm-charts/#step-4-helm-installation-on-kubernetes-node
+# https://akash.network/docs/providers/build-a-cloud-provider/akash-cloud-provider-build-with-helm-charts/#step-4-helm-installation-on-kubernetes-node
 
 helm repo update
 
@@ -109,7 +109,7 @@ helm install akash-ip-operator akash/akash-ip-operator -n akash-services --set p
 
 > _**NOTE**_ - ensure to open port `8444` on your firewall if necessary as well
 
-The Ingress Controller rules have been updated to include Feature Discovery destinations and mainly port `8444`. Update your ingress controller to ensure they are current via the instructions in this doc [section](/docs/providers/build-a-cloud-provider/akash-cloud-provider-build-with-helm-charts/#step-8-ingress-controller-install).
+The Ingress Controller rules have been updated to include Feature Discovery destinations and mainly port `8444`. Update your ingress controller to ensure they are current via the instructions in this doc [section](/docs/providers/build-a-cloud-provider/akash-cli/akash-cloud-provider-build-with-helm-charts/#step-8-ingress-controller-install).
 
 ### Akash Provider Upgrade
 
