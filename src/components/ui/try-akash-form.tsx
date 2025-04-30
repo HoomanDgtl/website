@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { buttonVariants } from "./button";
 
 interface TryAkashFormProps {
@@ -19,6 +19,8 @@ export default function TryAkashForm({ type }: TryAkashFormProps) {
       document.body.removeChild(script);
     };
   }, []);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const defaultButton = (
     <button
@@ -43,7 +45,7 @@ export default function TryAkashForm({ type }: TryAkashFormProps) {
   );
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {type === "hero" ? heroButton : defaultButton}
       </DialogTrigger>
@@ -52,7 +54,9 @@ export default function TryAkashForm({ type }: TryAkashFormProps) {
         className="hide-scrollbar  max-h-[95vh] overflow-hidden overflow-y-auto !border-none bg-transparent  p-0 shadow-none sm:max-w-[600px]"
       >
         <button
-          onClick={() => document.querySelector('[role="dialog"]')?.remove()}
+          onClick={() => {
+            setIsOpen(false);
+          }}
           className="absolute right-4 top-4 rounded-full bg-white p-2 text-black hover:bg-white/90"
         >
           <X className="h-4 w-4" />
