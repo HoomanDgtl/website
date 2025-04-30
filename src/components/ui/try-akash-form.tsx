@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { X } from "lucide-react";
 import { useEffect } from "react";
 import { buttonVariants } from "./button";
 
@@ -48,8 +49,14 @@ export default function TryAkashForm({ type }: TryAkashFormProps) {
       </DialogTrigger>
       <DialogContent
         hideCloseButton
-        className="max-h-[90vh] overflow-hidden overflow-y-auto border-none p-0 shadow-none sm:max-w-[600px]"
+        className="hide-scrollbar  max-h-[95vh] overflow-hidden overflow-y-auto !border-none bg-transparent  p-0 shadow-none sm:max-w-[600px]"
       >
+        <button
+          onClick={() => document.querySelector('[role="dialog"]')?.remove()}
+          className="absolute right-4 top-4 rounded-full bg-white p-2 text-black hover:bg-white/90"
+        >
+          <X className="h-4 w-4" />
+        </button>
         <div
           className="hs-form-frame"
           data-region="na1"
