@@ -1,8 +1,12 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-
 import { useEffect } from "react";
 import { buttonVariants } from "./button";
-export default function TryAkashForm() {
+
+interface TryAkashFormProps {
+  type: "hero" | "header";
+}
+
+export default function TryAkashForm({ type }: TryAkashFormProps) {
   useEffect(() => {
     // Load HubSpot script
     const script = document.createElement("script");
@@ -15,22 +19,36 @@ export default function TryAkashForm() {
     };
   }, []);
 
+  const defaultButton = (
+    <button
+      type="button"
+      className={buttonVariants({
+        variant: "default",
+        size: "sm",
+        className: "!h-auto !rounded px-[11px] py-[7px] text-xs",
+      })}
+    >
+      Try Akash
+    </button>
+  );
+
+  const heroButton = (
+    <button
+      type="button"
+      className="mx-auto cursor-pointer rounded-md bg-primary px-10 py-2.5  !font-medium text-white transition-all hover:bg-primary/90 md:px-[60px] md:py-5 lg:text-xl"
+    >
+      Access The Marketplace
+    </button>
+  );
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button
-          className={buttonVariants({
-            variant: "default",
-            size: "sm",
-            className: "!h-auto !rounded py-[5px]",
-          })}
-        >
-          Try Akash
-        </button>
+        {type === "hero" ? heroButton : defaultButton}
       </DialogTrigger>
       <DialogContent
         hideCloseButton
-        className="overflow-hidden border-none p-0 shadow-none sm:max-w-[600px]"
+        className="max-h-[90vh] overflow-hidden overflow-y-auto border-none p-0 shadow-none sm:max-w-[600px]"
       >
         <div
           className="hs-form-frame"

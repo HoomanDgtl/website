@@ -1,4 +1,5 @@
 ---
+import TryAkashForm from "@/components/ui/try-akash-form";
 import type { CollectionEntry } from "astro:content";
 import { ArrowRight, Sparkles } from "lucide-react";
 
@@ -14,45 +15,41 @@ const { heroSection } = Astro.props;
     class="border-b border-paraDark pb-[80px] pt-10 md:pb-[120px] md:pt-[64px]"
   >
     <h1
-      class="mx-auto mt-10 text-center font-instrument text-6xl font-normal leading-[1] tracking-[-0.88px] lg:text-[88px]"
+      class="mx-auto mt-10 text-center font-instrument text-6xl font-normal leading-[1] tracking-[-0.88px] lg:text-[94px]"
       set:html={heroSection.title}
     />
 
     <p
-      class="mx-auto mt-4 text-center text-base md:text-xl"
+      class="mx-auto mt-4 text-center text-base md:text-xl lg:text-2xl"
       set:html={heroSection.description}
     />
 
     <div class="mt-10 flex flex-col justify-center gap-4">
       <a
         href="/pricing/gpus"
-        class="mx-auto flex w-fit items-center rounded-full border bg-gray-50 px-5 py-1.5 dark:bg-background2 md:gap-2 md:py-2.5"
+        class="mx-auto flex w-fit items-center rounded-full border bg-gray-50 px-5 py-2.5 dark:bg-background2 md:gap-2"
       >
         <Sparkles className="size-4 " />
         <p
-          class="line-clamp-2 flex-1 text-center text-xs font-semibold text-foreground"
+          class="line-clamp-2 flex-1 text-center text-xs font-semibold text-foreground lg:text-sm"
         >
           $500 Free Credit To Access GPUs
         </p>
       </a>
-      <a
-        href="https://share.hsforms.com/29tSLilX9Qye5Rxrlsz7WPwsaima"
-        target="_blank"
-        class="mx-auto rounded bg-primary px-14 py-3 font-semibold text-white transition-all hover:bg-primary/90"
-      >
-        Access The Marketplace
-      </a>
+      <div class="flex justify-center">
+        <TryAkashForm client:load type="hero" />
+      </div>
       <div class="mt-4 flex items-center justify-center gap-3">
         <a
           href="/providers"
-          class="flex items-center gap-1 text-sm font-medium text-foreground transition-all hover:text-primary"
+          class="flex items-center gap-1 text-xs font-medium text-foreground transition-all hover:text-primary md:text-sm"
         >
           Become a GPU provider <ArrowRight className="size-4" />
         </a>
         <div class="h-6 w-px bg-defaultBorder"></div>
         <a
           href="/pricing/gpus"
-          class="flex items-center gap-1 text-sm font-medium text-foreground transition-all hover:text-primary"
+          class="flex items-center gap-1 text-xs font-medium text-foreground transition-all hover:text-primary md:text-sm"
         >
           See GPU Availability
           <ArrowRight className="size-4" />

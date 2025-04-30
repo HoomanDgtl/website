@@ -123,8 +123,8 @@ const navContainerClass = hideContainer ? "" : "container";
       />
     </div>
 
-    <div class="hidden flex-shrink-0 slg:flex slg:gap-x-[12px]">
-      <div class="mr-3 hidden items-center gap-x-[12px] text-para xl:flex">
+    <div class="hidden flex-shrink-0 slg:flex slg:gap-x-5">
+      <div class="hidden items-center gap-x-2 text-para xl:flex">
         <a
           aria-label="Twitter Icon"
           href="https://twitter.com/akashnet_"
@@ -156,11 +156,12 @@ const navContainerClass = hideContainer ? "" : "container";
           link="https://console.akash.network/"
           variant="secondary"
           size="sm"
+          className="px-[11px] py-[7px] text-xs"
         >
           Console Login
         </ButtonLink>
 
-        <TryAkashForm client:load />
+        <TryAkashForm client:load type="header" />
       </div>
       {!hideDarkToggle && <DarkModeToggle nav />}
     </div>
