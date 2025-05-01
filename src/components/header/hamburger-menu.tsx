@@ -8,6 +8,7 @@ import {
   HamburgerIcon,
   TwitterIcon,
   XMarkIcon,
+  YoutubeIcon,
 } from "./icons";
 import { useLockBody } from "./use-lock-body";
 
@@ -21,6 +22,7 @@ import clsx from "clsx";
 import { ArrowRightCircle, ChevronDown } from "lucide-react";
 import { Fragment } from "react";
 import SpeakToExpert from "../pricing-page/SpeakToExpert";
+import TryAkashForm from "../ui/try-akash-form";
 import {
   communityItems,
   developmentItems,
@@ -251,14 +253,11 @@ const Panel = ({
 
         <div className="flex flex-col gap-y-6">
           <div className="flex flex-col gap-3">
-            <a
-              href="https://console.akash.network/"
-              id="console-header"
-              className="flex cursor-pointer items-center justify-center rounded-md border border-primary bg-primary px-[17px] py-[9px] text-sm font-medium leading-[20px] text-white hover:bg-darkGray"
-            >
-              Deploy Now
-            </a>
-            <SpeakToExpert />
+            <SpeakToExpert
+              variant={"ghost"}
+              className="rounded-md !py-[11px]"
+            />
+            <TryAkashForm type="hero" fullWidth />
           </div>
 
           <div className="flex items-center justify-between border-t border-border py-7 text-para">
@@ -283,6 +282,13 @@ const Panel = ({
                 className="hover:text-primary"
               >
                 <DiscordIcon />
+              </a>
+              <a
+                href="https://www.youtube.com/@akashnetwork"
+                target="_blank"
+                className="flex items-center justify-center hover:text-primary"
+              >
+                <YoutubeIcon />
               </a>
             </div>
 

@@ -1,13 +1,15 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import clsx from "clsx";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { buttonVariants } from "./button";
 
 interface TryAkashFormProps {
   type: "hero" | "header";
+  fullWidth?: boolean;
 }
 
-export default function TryAkashForm({ type }: TryAkashFormProps) {
+export default function TryAkashForm({ type, fullWidth }: TryAkashFormProps) {
   useEffect(() => {
     // Load HubSpot script
     const script = document.createElement("script");
@@ -38,7 +40,10 @@ export default function TryAkashForm({ type }: TryAkashFormProps) {
   const heroButton = (
     <button
       type="button"
-      className="mx-auto cursor-pointer rounded-md bg-primary px-10 py-2.5  !font-medium text-white transition-all hover:bg-primary/90 md:px-[60px] md:py-5 lg:text-xl"
+      className={clsx(
+        " cursor-pointer rounded-md bg-primary px-10 py-2.5  !font-medium text-white transition-all hover:bg-primary/90 md:px-[60px] md:py-5 lg:text-xl",
+        fullWidth ? "w-full" : "mx-auto",
+      )}
     >
       Access The Marketplace
     </button>

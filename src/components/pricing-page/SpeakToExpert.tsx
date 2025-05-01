@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import clsx from "clsx";
 
 const speakToExpertVariants = cva(
-  "flex items-center justify-center border transition-all duration-300",
+  "flex items-center justify-center border transition-all duration-300 ",
   {
     variants: {
       size: {
@@ -16,6 +16,8 @@ const speakToExpertVariants = cva(
           "border-primary dark:border-primary bg-primary/5 text-primary hover:bg-primary hover:text-white",
         secondary:
           "bg-white text-gray-600 hover:border-primary hover:text-primary",
+        ghost:
+          "  border bg-gray-50  hover:bg-gray-100 dark:bg-background dark:hover:bg-white/10",
       },
     },
     defaultVariants: {
@@ -30,12 +32,12 @@ interface SpeakToExpertProps
   className?: string;
 }
 
+export const speakToExpertLink =
+  "https://share.hsforms.com/1gQOaeJXgQ-GMc7MnsTOmsAsaima";
+
 const SpeakToExpert = ({ size, variant, className }: SpeakToExpertProps) => {
   return (
-    <a
-      href="https://share.hsforms.com/1gQOaeJXgQ-GMc7MnsTOmsAsaima"
-      target="_blank"
-    >
+    <a href={speakToExpertLink} target="_blank">
       <button
         className={clsx(speakToExpertVariants({ size, variant }), className)}
       >
