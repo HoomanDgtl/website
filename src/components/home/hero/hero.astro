@@ -17,7 +17,7 @@ const pathname = Astro.url.pathname;
     class="border-b border-paraDark pb-[80px] pt-10 md:pb-[120px] md:pt-[64px]"
   >
     {
-      pathname === "/meetingconfirmation" && (
+      pathname.includes("meetingconfirmation") && (
         <div class="relative mx-auto mt-10 flex w-fit items-center justify-center gap-2 rounded-lg border !border-primary px-4 py-3 text-sm text-primary">
           <Info className="size-4" />
           Thanks for booking your meeting, we look forward to speaking with you!
@@ -27,7 +27,7 @@ const pathname = Astro.url.pathname;
     <h1
       class={clsx(
         "mx-auto  text-center font-instrument text-6xl font-normal leading-[1] tracking-[-0.88px] lg:text-[94px]",
-        pathname === "/meetingconfirmation" ? "mt-7" : "mt-10",
+        pathname.includes("meetingconfirmation") ? "mt-7" : "mt-10",
       )}
       set:html={heroSection.title}
     />
