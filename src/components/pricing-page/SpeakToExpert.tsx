@@ -35,7 +35,7 @@ const SpeakToExpert = ({ size, variant, className }: SpeakToExpertProps) => {
     <TryAkashForm
       type="speakToExpertHeader"
       size={size}
-      variant={variant as any}
+      variant={variant}
       className={className}
     />
   );

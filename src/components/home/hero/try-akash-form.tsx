@@ -1,15 +1,14 @@
 import { speakToExpertVariants } from "@/components/pricing-page/SpeakToExpert";
 import { buttonVariants } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import type { VariantProps } from "class-variance-authority";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface TryAkashFormProps {
+interface TryAkashFormProps extends VariantProps<typeof speakToExpertVariants> {
   type: "hero" | "header" | "speckToExpert" | "speakToExpertHeader";
   fullWidth?: boolean;
-  size?: any;
-  variant?: "primary" | "secondary";
   className?: string;
 }
 
