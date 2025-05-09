@@ -256,7 +256,7 @@ const Panel = ({
               id="console-header"
               className="flex cursor-pointer items-center justify-center rounded-md border border-primary bg-primary px-[17px] py-[9px] text-sm font-medium leading-[20px] text-white hover:bg-darkGray"
             >
-              Deploy Now
+              Console Login
             </a>
             <TryAkashForm type="speakToExpertHeader" />
           </div>

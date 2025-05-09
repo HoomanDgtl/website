@@ -8,9 +8,18 @@ import { useEffect, useState } from "react";
 interface TryAkashFormProps {
   type: "hero" | "header" | "speckToExpert" | "speakToExpertHeader";
   fullWidth?: boolean;
+  size?: any;
+  variant?: "primary" | "secondary";
+  className?: string;
 }
 
-export default function TryAkashForm({ type, fullWidth }: TryAkashFormProps) {
+export default function TryAkashForm({
+  type,
+  fullWidth,
+  size,
+  variant,
+  className,
+}: TryAkashFormProps) {
   useEffect(() => {
     // Load HubSpot script
     const script = document.createElement("script");
@@ -119,7 +128,9 @@ export default function TryAkashForm({ type, fullWidth }: TryAkashFormProps) {
   );
 
   const speakToExpertHeaderButton = (
-    <button className={clsx(speakToExpertVariants())}>
+    <button
+      className={clsx(speakToExpertVariants({ size, variant }), className)}
+    >
       <svg
         className={clsx("h-5 w-5")}
         viewBox="0 0 20 21"
