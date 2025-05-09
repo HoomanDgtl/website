@@ -21,7 +21,6 @@ import {
 import clsx from "clsx";
 import { ArrowRightCircle, ChevronDown } from "lucide-react";
 import { Fragment } from "react";
-import SpeakToExpert from "../pricing-page/SpeakToExpert";
 import TryAkashForm from "../ui/try-akash-form";
 import {
   communityItems,
@@ -253,10 +252,13 @@ const Panel = ({
 
         <div className="flex flex-col gap-y-6">
           <div className="flex flex-col gap-3">
-            <SpeakToExpert
-              variant={"ghost"}
-              className="rounded-md !py-[11px]"
-            />
+            <a
+              id="console-header"
+              href="https://console.akash.network/"
+              className="flex w-full items-center  justify-center gap-2 rounded-md border bg-gray-50 py-[9px]  text-base font-medium hover:bg-gray-100  dark:bg-background dark:hover:bg-white/10 md:py-2"
+            >
+              Console Login
+            </a>
             <TryAkashForm type="hero" fullWidth />
           </div>
 

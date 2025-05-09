@@ -1,16 +1,24 @@
 import { speakToExpertVariants } from "@/components/pricing-page/SpeakToExpert";
 import { buttonVariants } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import type { VariantProps } from "class-variance-authority";
 import clsx from "clsx";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface TryAkashFormProps {
+interface TryAkashFormProps extends VariantProps<typeof speakToExpertVariants> {
   type: "hero" | "header" | "speckToExpert" | "speakToExpertHeader";
   fullWidth?: boolean;
+  className?: string;
 }
 
-export default function TryAkashForm({ type, fullWidth }: TryAkashFormProps) {
+export default function TryAkashForm({
+  type,
+  fullWidth,
+  size,
+  variant,
+  className,
+}: TryAkashFormProps) {
   useEffect(() => {
     // Load HubSpot script
     const script = document.createElement("script");
@@ -119,7 +127,9 @@ export default function TryAkashForm({ type, fullWidth }: TryAkashFormProps) {
   );
 
   const speakToExpertHeaderButton = (
-    <button className={clsx(speakToExpertVariants())}>
+    <button
+      className={clsx(speakToExpertVariants({ size, variant }), className)}
+    >
       <svg
         className={clsx("h-5 w-5")}
         viewBox="0 0 20 21"
