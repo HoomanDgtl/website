@@ -47,7 +47,7 @@ export default function TryAkashForm({
         fullWidth ? "w-full" : "mx-auto",
       )}
     >
-      Access The Marketplace
+      Access the Marketplace
     </button>
   );
 

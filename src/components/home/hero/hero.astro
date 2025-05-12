@@ -38,7 +38,6 @@ const pathname = Astro.url.pathname;
     />
 
     <div class="mt-12 flex flex-col justify-center gap-4">
-      <TryAkashForm client:load type="speckToExpert" />
       <div class="flex justify-center">
         <TryAkashForm client:load type="hero" />
       </div>
@@ -49,7 +48,7 @@ const pathname = Astro.url.pathname;
           href="/providers"
           class="flex items-center gap-1.5 font-medium text-foreground transition-all hover:text-primary"
         >
-          Become a GPU provider <ArrowRight className="size-4" />
+          Become a GPU Provider <ArrowRight className="size-4" />
         </a>
         <div class="hidden h-6 w-px bg-defaultBorder md:block"></div>
         <a
