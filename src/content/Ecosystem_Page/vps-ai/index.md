@@ -7,7 +7,7 @@ category: deployed_on_akash
 tags:
   - AI & ML
 
-description: Revolutionizing cloud computing for AI and Blockchain with GPU-enabled VPS.
+description: VPS AI has integrated with Akash, enabling decentralized, on-chain bidding for AI/ML workloads and GPU deployments.
 
 twitterLink: "https://x.com/VPS_AI"
 websiteLink: "https://vpsai.io/"
