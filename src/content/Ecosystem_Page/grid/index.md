@@ -5,7 +5,7 @@ pubDate: "2011-01-19"
 category: deployed_on_akash
 
 tags:
-  - Dev tools
+  - AI & ML
 
 description: Grid simplifies the deployment of your applications to a decentralized cloud, allowing you to get started with just a few clicks.
 
