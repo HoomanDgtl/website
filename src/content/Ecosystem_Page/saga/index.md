@@ -5,7 +5,7 @@ pubDate: "2011-01-17"
 category: deployed_on_akash
 tags:
   - AI & ML
-description: The future is layered, and Saga leads the way in pioneering scalable Web3 infrastructure, empowering creators to imagine, build, and succeed.
+description: Saga has integrated compute from the Akash Supercloud to power AI agents, enabling lower costs and greater access to the leading open source AI models.
 
 twitterLink: "https://x.com/Sagaxyz__"
 websiteLink: "https://www.saga.xyz/"
