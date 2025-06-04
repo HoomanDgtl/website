@@ -49,7 +49,7 @@ const FromAutoScroll = ({
   return (
     <div
       ref={containerRef}
-      className="w-full overflow-hidden md:hidden"
+      className="w-full overflow-hidden lg:hidden"
       aria-label="From Logos Carousel"
     >
       <div
