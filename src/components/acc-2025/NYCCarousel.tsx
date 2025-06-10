@@ -1,4 +1,3 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 import type { Swiper as SwiperType } from "swiper";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -57,21 +56,6 @@ const NYCCarousel: React.FC = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* Custom Navigation Buttons */}
-      <button
-        onClick={() => swiperRef.current?.slidePrev()}
-        className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#2E2E2E] bg-[#232323] p-3 shadow-lg transition-all duration-200 hover:bg-[#2E2E2E] hover:shadow-xl"
-      >
-        <ChevronLeft className="h-6 w-6 text-white" />
-      </button>
-
-      <button
-        onClick={() => swiperRef.current?.slideNext()}
-        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-[#2E2E2E] bg-[#232323] p-3 shadow-lg transition-all duration-200 hover:bg-[#2E2E2E] hover:shadow-xl"
-      >
-        <ChevronRight className="h-6 w-6 text-white" />
-      </button>
 
       {/* Custom Pagination */}
       <div className="swiper-pagination absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 space-x-2"></div>
