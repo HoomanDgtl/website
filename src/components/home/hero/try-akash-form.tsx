@@ -6,6 +6,49 @@ import clsx from "clsx";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
+// Singleton to track if HubSpot script is already loaded
+let hubspotScriptLoaded = false;
+let hubspotScriptPromise: Promise<void> | null = null;
+
+const loadHubSpotScript = (): Promise<void> => {
+  if (hubspotScriptLoaded) {
+    return Promise.resolve();
+  }
+
+  if (hubspotScriptPromise) {
+    return hubspotScriptPromise;
+  }
+
+  hubspotScriptPromise = new Promise((resolve, reject) => {
+    // Check if script already exists
+    const existingScript = document.querySelector(
+      'script[src="https://js.hsforms.net/forms/embed/47519938.js"]',
+    );
+    if (existingScript) {
+      hubspotScriptLoaded = true;
+      resolve();
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://js.hsforms.net/forms/embed/47519938.js";
+    script.defer = true;
+
+    script.onload = () => {
+      hubspotScriptLoaded = true;
+      resolve();
+    };
+
+    script.onerror = () => {
+      reject(new Error("Failed to load HubSpot script"));
+    };
+
+    document.body.appendChild(script);
+  });
+
+  return hubspotScriptPromise;
+};
+
 interface TryAkashFormProps extends VariantProps<typeof speakToExpertVariants> {
   type: "hero" | "header" | "speckToExpert" | "speakToExpertHeader";
   fullWidth?: boolean;
@@ -20,17 +63,8 @@ export default function TryAkashForm({
   className,
 }: TryAkashFormProps) {
   useEffect(() => {
-    // Load HubSpot script
-    const script = document.createElement("script");
-    script.src = "https://js.hsforms.net/forms/embed/47519938.js";
-    script.defer = true;
-    document.body.appendChild(script);
-
-    return () => {
-      if (script && script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
+    // Load HubSpot script only once
+    loadHubSpotScript().catch(console.error);
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
