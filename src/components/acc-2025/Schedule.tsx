@@ -81,12 +81,12 @@ const Schedule = () => {
       {schedule.map((item, index) => (
         <div
           key={index}
-          className="flex items-start justify-between  gap-2 border-b  py-4"
+          className="flex flex-col-reverse items-start justify-between gap-2  border-b py-4  md:flex-row"
         >
           <div className="flex-1">
             <div
               className={clsx(
-                ` font-semibold  text-xl`,
+                ` font-semibold  text-lg md:text-xl`,
                 !item?.speakers && "font-instrument italic",
               )}
             >
@@ -94,7 +94,7 @@ const Schedule = () => {
             </div>
             {item.speakers && (
               <div
-                className={`mt-0.5 font-instrument text-xl font-extralight italic`}
+                className={`mt-0.5 font-instrument text-lg font-extralight italic md:text-xl`}
               >
                 {item.speakers}
               </div>
