@@ -71,7 +71,7 @@ const { isLivestream }: Props = Astro.props;
       isLivestream ? (
         <AccTabs client:load />
       ) : (
-        <div>
+        <>
           <SpeakersContent />
           <a
             href={acc2025.apply}
@@ -81,7 +81,7 @@ const { isLivestream }: Props = Astro.props;
             <ArrowUpCircle className="size-6 rotate-45" />
             Interested in speaking?
           </a>
-        </div>
+        </>
       )
     }
   </div>

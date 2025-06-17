@@ -143,6 +143,12 @@ const speakers = [
     company: "InFlux Technologies",
     image: "/images/acc-2025/speakers/daniel.png",
   },
+  {
+    name: "Conor Moore",
+    title: "Co-Founder & COO",
+    company: "Permian Labs",
+    image: "/images/acc-2025/speakers/conor.png",
+  },
 ];
 
 const SpeakersContent = () => {
