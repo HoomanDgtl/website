@@ -15,7 +15,7 @@ const schedule = [
   },
   {
     time: "11:00 AM",
-    title: "Guest Talk",
+    title: "Presentation: Daylight Energy",
     speakers: ["Jason Badeaux"],
   },
   {
@@ -31,7 +31,7 @@ const schedule = [
     ],
   },
   {
-    time: "01:00 - 01:45 PM",
+    time: "1:00 - 01:45 PM",
     title: "Lunch Break",
   },
   {
