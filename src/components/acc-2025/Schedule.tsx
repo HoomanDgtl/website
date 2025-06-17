@@ -59,7 +59,7 @@ const schedule = [
   {
     time: "3:30 PM",
     title: "The Roadmap to a User-Owned AI Model",
-    speakers: ["Ilia Polosukhin"],
+    speakers: ["Illia Polosukhin"],
   },
   {
     time: "4:00 PM",
