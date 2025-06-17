@@ -29,16 +29,14 @@ const schedule = [
     speakers: [
       "Arel & Lex Avellino, Zack Abrams, Daniel Keller, Nirmal Krishnan",
     ],
-    italicSpeakers: true,
-    boldTitle: true,
   },
   {
-    time: "01:00 - 01:45 AM",
+    time: "01:00 - 01:45 PM",
     title: "Lunch Break",
   },
   {
     time: "1:45 PM",
-    title: "Is DePIN Real?: Building and Scaling Decentralized Networks",
+    title: "Is DePIN Real?: Building `and Scaling Decentralized Networks",
     speakers: [
       "Tommy Eastman, Haseeb Qureshi, Mahesh Ramakrishnan, Abhay Kumar",
     ],
@@ -47,11 +45,14 @@ const schedule = [
     time: "2:15 PM",
     title: "Powering the Mind of Machines: Why America Must Decentralize AI",
     speakers: ["Greg Osuri"],
-    italicSpeakers: true,
-    boldTitle: true,
   },
   {
     time: "3:00 PM",
+    title: "Giveaway Winner Announcement <br/> $25,000 Akash Compute Credits",
+    speakers: [],
+  },
+  {
+    time: "3:05 PM",
     title: "Showcase: The Rise of DeAI",
     speakers: ["Jiahao Sun, Manouk Vermaaten, Brayden Levangie"],
   },
@@ -59,7 +60,6 @@ const schedule = [
     time: "3:30 PM",
     title: "The Roadmap to a User-Owned AI Model",
     speakers: ["Ilia Polosukhin"],
-    italicSpeakers: true,
   },
   {
     time: "4:00 PM",
@@ -68,12 +68,13 @@ const schedule = [
   },
   {
     time: "5:00 PM",
-    title: "Nous Research Presentation",
+    title: "Presentation: Nous Research",
     speakers: ["Dillon Rolnick"],
   },
   {
-    time: "5:30 PM",
+    time: "5:30 - 7:30 PM",
     title: "Rooftop Happy Hour",
+    speakers: ["with DJ Jon Blak"],
   },
 ];
 
@@ -83,7 +84,7 @@ const Schedule = () => {
       {schedule.map((item, index) => (
         <div
           key={index}
-          className="flex flex-col-reverse items-start justify-between gap-2  border-b py-4  md:flex-row"
+          className="flex flex-col-reverse items-end justify-between gap-2  border-b py-4  md:flex-row"
         >
           <div className="flex-1">
             <div
@@ -91,10 +92,9 @@ const Schedule = () => {
                 ` font-semibold  text-lg md:text-xl`,
                 !item?.speakers && "font-instrument italic",
               )}
-            >
-              {item.title}
-            </div>
-            {item.speakers && (
+              dangerouslySetInnerHTML={{ __html: item.title }}
+            />
+            {item.speakers && item.speakers.length > 0 && (
               <div
                 className={`mt-0.5 font-instrument text-lg font-extralight italic md:text-xl`}
               >
