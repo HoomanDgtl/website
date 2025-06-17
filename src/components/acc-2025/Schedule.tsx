@@ -39,7 +39,9 @@ const schedule = [
   {
     time: "1:45 PM",
     title: "Is DePIN Real?: Building and Scaling Decentralized Networks",
-    speakers: ["Tommy Eastman, Haseeb Qureshi, Mahesh Qureshi, Abhay Kumar"],
+    speakers: [
+      "Tommy Eastman, Haseeb Qureshi, Mahesh Ramakrishnan, Abhay Kumar",
+    ],
   },
   {
     time: "2:15 PM",
