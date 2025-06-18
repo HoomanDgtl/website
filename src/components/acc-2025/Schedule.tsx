@@ -84,7 +84,7 @@ const Schedule = () => {
       {schedule.map((item, index) => (
         <div
           key={index}
-          className="flex flex-col-reverse items-end justify-between gap-2  border-b py-4  md:flex-row"
+          className="flex flex-col-reverse justify-between gap-2 border-b  py-4 md:flex-row  md:items-end"
         >
           <div className="flex-1">
             <div
