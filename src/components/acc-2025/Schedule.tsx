@@ -36,7 +36,7 @@ const schedule = [
   },
   {
     time: "1:45 PM",
-    title: "Is DePIN Real?: Building and Scaling Decentralized Networks",
+    title: "Is DePIN Real? Building and Scaling Decentralized Networks",
     speakers: [
       "Tommy Eastman, Haseeb Qureshi, Mahesh Ramakrishnan, Abhay Kumar",
     ],
@@ -66,7 +66,7 @@ const schedule = [
     time: "4:00 PM",
     title: "Panel: Investing in Intelligence",
     speakers: [
-      "Cheng Wang,Mark Palmer, Maja Vujinovic, Christian Lopez,Conor Moore",
+      "Cheng Wang, Maja Vujinovic, Conor Moore, Mark Palmer, Christian Lopez",
     ],
   },
   {
