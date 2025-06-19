@@ -48,7 +48,8 @@ const schedule = [
   },
   {
     time: "3:00 PM",
-    title: "Giveaway Winner Announcement <br/> $25,000 Akash Compute Credits",
+    title:
+      "Giveaway Winner Announcement <br/> <span class='text-sm md:text-base'>$25,000 Akash Compute Credits</span>",
     speakers: [],
   },
   {
