@@ -1,7 +1,7 @@
 ---
 advert: 
   title: Watch the livestream of Akash Accelerate 2025
-  link: "https://youtube.com/live/wiVrlo7XJA0"
+  link: "/akash-accelerate-2025-livestream"
 
 # hero section content
 heroSection:
