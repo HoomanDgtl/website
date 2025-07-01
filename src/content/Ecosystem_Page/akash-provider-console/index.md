@@ -1,6 +1,6 @@
 ---
 projectTitle: Akash Provider Console
-projectImage: "./banner.png"
+projectImage: "./banner.jpg"
 pubDate: "2023-01-19"
 
 tags:
