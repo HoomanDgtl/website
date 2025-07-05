@@ -3,6 +3,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import TryAkashForm from "@/components/ui/try-akash-form";
 import { cn } from "@/lib/utils";
 import clsx from "clsx";
 import { ArrowUpCircle, Info } from "lucide-react";
@@ -226,8 +227,15 @@ const DesktopTableGpu = ({
                       </HoverCardContent>
                     </HoverCard>
                   </td>
-                  <td className="rounded-r-lg border-y border-r px-2 text-center xl:px-4">
-                    <div className="flex items-center justify-center">
+                  <td className="rounded-r-lg border-y border-r px-2 py-3 text-center xl:px-4">
+                    <div className="flex  flex-col gap-2">
+                      <TryAkashForm
+                        type="customButton"
+                        linkText="Request More"
+                        className={cn(
+                          "flex items-center gap-1.5 rounded-md border border-primary bg-primary px-2 py-[5px] text-xs font-medium text-white  shadow-sm transition-all duration-300 hover:border-black hover:bg-black hover:text-white  md:px-2 lg:px-3",
+                        )}
+                      />
                       <a
                         id={`${model?.model}-(gpu-rent)`}
                         // href={`https://console.akash.network/rent-gpu?vendor=${model?.vendor}&gpu=${model?.model}&interface=${model?.interface}&vram=${model?.ram}`}
