@@ -357,11 +357,6 @@ export const Tables = ({
                   </HoverCard>
                 </div>
                 <div className="flex flex-col justify-center gap-2 pt-6">
-                  <TryAkashForm
-                    type="customButton"
-                    linkText="Request More"
-                    className="inline-flex justify-center gap-1.5 rounded-md bg-primary py-3 text-sm font-medium text-white hover:bg-primary/90 dark:text-black dark:hover:text-inherit"
-                  />
                   <a
                     id={`${model?.model}-(gpu-rent)`}
                     href={`https://console.akash.network/rent-gpu?vendor=${model?.vendor}&gpu=${model?.model}&interface=${model?.interface}&vram=${model?.ram}`}
@@ -371,6 +366,11 @@ export const Tables = ({
                     <p className="text-sm font-medium text-inherit">Rent Now</p>
                     <ArrowUpRightIcon className="w-[15px]" />
                   </a>
+                  <TryAkashForm
+                    type="customButton"
+                    linkText="Request More"
+                    className="inline-flex justify-center gap-1.5 rounded-md bg-primary py-3 text-sm font-medium text-white hover:bg-primary/90 dark:text-black dark:hover:text-inherit"
+                  />
                 </div>
               </Card>
             ))}
