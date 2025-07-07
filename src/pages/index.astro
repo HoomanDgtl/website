@@ -5,6 +5,7 @@ import Feature from "@/components/home/feature/feature.astro";
 import Hero from "@/components/home/hero/hero.astro";
 import Infrastructure from "@/components/home/infrastructure/infrastructure.astro";
 import Testimonials from "@/components/home/testimonials/testimonials.astro";
+import TrustedBy from "@/components/home/trusted-by.astro";
 import ButtonLink from "@/components/ui/button-link.astro";
 import Layout from "@/layouts/layout.astro";
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
@@ -29,7 +30,8 @@ const {
   featureSection,
   aiModelsAndAppsSection,
   testimonialsSection,
-} = homepage.data;
+  trustedBySection,
+} = homepage?.data;
 ---
 
 <Layout
@@ -38,6 +40,7 @@ const {
 >
   <div>
     <Hero heroSection={heroSection} />
+    <TrustedBy trustedBySection={trustedBySection} />
     <Feature featureSection={featureSection} />
     <Infrastructure infrastructureSection={infrastructureSection} />
     <AiModelsAndApps aiModelsAndAppsSection={aiModelsAndAppsSection} />

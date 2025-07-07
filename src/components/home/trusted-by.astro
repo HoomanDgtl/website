@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  trustedBySection: CollectionEntry<"Homepage">["data"]["trustedBySection"];
+}
+
+const { trustedBySection } = Astro.props;
+---
+
+<div
+  class="relative w-full overflow-hidden bg-[url('/images/trustedby/gradient.svg')] bg-cover bg-center"
+>
+  <div class="container relative z-10 flex">
+    {
+      trustedBySection.map((item) => (
+        <img src={item.image} alt={item.title} width={100} height={100} />
+      ))
+    }
+  </div>
+</div>

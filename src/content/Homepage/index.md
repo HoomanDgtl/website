@@ -212,7 +212,7 @@ testimonialsSection:
       useAvatar: "/useravatars/1.png"
       accountLink: "https://twitter.com/_PradeepGoel/status/1755951930067816607"
       testimonial: "“Solve.Care is migrating Care.Nodes to @akashnet_
-to reduce cost, scale faster, and get rid of #AWS.”"
+      to reduce cost, scale faster, and get rid of #AWS.”"
       companyName: "Solve.Care"
 
     - userName: "@jesseeckel"
@@ -274,9 +274,21 @@ to reduce cost, scale faster, and get rid of #AWS.”"
       testimonial: “Deploying on @akashnet_ is getting faster and easier by the day! Using the Akash Terraform Provider I can have my infrastructure on Akash in just 22s.”
       accountLink: "https://twitter.com/luna_4_go/status/1588978684203237376"
       companyName: "Founder Quasarch"
+      
+trustedBySection:
+  - image: "/images/trustedby/passage.svg"
+    title: "Passage"
+  - image: "/images/trustedby/envision.svg"
+    title: "Envision"
+  - image: "/images/trustedby/nodeshift.svg"
+    title: "Nodeshift"
+  - image: "/images/trustedby/passage.svg"
+    title: "Passage"
+  - image: "/images/trustedby/texas.svg"
+    title: "Texas"
+  - image: "/images/trustedby/venice.svg"
+    title: "Venice"
 
-
-# CTA section content
 CTASection:
   title: Experience the Supercloud - Deploy Now
 
@@ -284,4 +296,7 @@ CTASection:
     label: Deploy Now
     link: "/"
     enable: true
+
+
+
 ---
