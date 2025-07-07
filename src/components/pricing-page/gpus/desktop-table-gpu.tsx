@@ -235,13 +235,11 @@ const DesktopTableGpu = ({
                         href="https://console.akash.network/new-deployment"
                         target="_blank"
                         className={cn(
-                          "flex items-center gap-1.5 rounded-md border px-2 py-[1px] font-medium  shadow-sm transition-all duration-300 hover:border-black hover:bg-black hover:text-white  md:px-2 lg:px-3",
-                          hoveredRowIndex === index
-                            ? "!border-black bg-black text-white "
-                            : "text-[#71717A] dark:text-para",
+                          "flex items-center gap-1.5 rounded-md border border-primary   bg-primary px-2 py-[1px] font-medium    md:px-2 lg:px-3",
+                          "text-white  shadow-sm transition-all duration-300 hover:border-black hover:bg-black hover:text-white",
                         )}
                       >
-                        <p className="whitespace-nowrap text-xs font-medium text-inherit">
+                        <p className="whitespace-nowrap text-xs  text-inherit">
                           Rent Now
                         </p>
                         <ArrowUpCircle className="w-[15px] rotate-45" />
@@ -250,7 +248,8 @@ const DesktopTableGpu = ({
                         type="customButton"
                         linkText="Request More"
                         className={cn(
-                          "flex items-center gap-1.5 rounded-md border border-primary bg-primary px-2 py-[5px] text-xs font-medium text-white  shadow-sm transition-all duration-300 hover:border-black hover:bg-black hover:text-white  md:px-2 lg:px-3",
+                          "font-medium  text-[#71717A] shadow-sm transition-all duration-300 hover:border-black hover:bg-black hover:text-white dark:text-para",
+                          "flex items-center gap-1.5 rounded-md border px-2 py-[5px] text-xs font-medium   md:px-2 lg:px-3",
                         )}
                       />
                     </div>
