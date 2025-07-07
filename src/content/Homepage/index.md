@@ -276,18 +276,18 @@ testimonialsSection:
       companyName: "Founder Quasarch"
       
 trustedBySection:
-  - image: "/images/trustedby/passage.svg"
-    title: "Passage"
-  - image: "/images/trustedby/envision.svg"
-    title: "Envision"
-  - image: "/images/trustedby/nodeshift.svg"
-    title: "Nodeshift"
-  - image: "/images/trustedby/passage.svg"
-    title: "Passage"
-  - image: "/images/trustedby/texas.svg"
-    title: "Texas"
   - image: "/images/trustedby/venice.svg"
     title: "Venice"
+  - image: "/images/trustedby/passage.svg"
+    title: "Passage"
+  - image: "/images/trustedby/nodeshift.svg"
+    title: "Nodeshift"
+  - image: "/images/trustedby/envision.svg"
+    title: "Envision"
+  - image: "/images/trustedby/texas.svg"
+    title: "Texas"
+
+
 
 CTASection:
   title: Experience the Supercloud - Deploy Now
