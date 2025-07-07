@@ -4,16 +4,20 @@ import FeatureCard from "@/components/cards/FeatureCard.astro";
 const { infrastructureSection } = Astro.props;
 ---
 
-<section class="container mb-10">
-  <div class="border-b border-paraDark pb-[80px] pt-0 md:pb-[120px] md:pt-10">
-    <h2 class="text-center text-xl font-medium md:text-[28px]">
-      {infrastructureSection.title}
-    </h2>
-
+<section
+  class="border-b border-paraDark bg-[url('/images/trustedby/gradient2.svg')] bg-center py-[80px]"
+>
+  <div class="container">
+    <div class="flex flex-col items-center justify-center gap-2">
+      <h2 class="text-center text-xl font-medium md:text-[28px]">
+        {infrastructureSection.title}
+      </h2>
+      <p class="mt-1 text-center text-base text-paraDark">
+        {infrastructureSection.description}
+      </p>
+    </div>
     <div class="mt-10 lg:mt-20">
-      <div
-        class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6 3xl:gap-6"
-      >
+      <div class="grid grid-cols-5 gap-10 3xl:gap-6">
         {
           infrastructureSection.cards.map((card: any) => (
             <FeatureCard card={card} />

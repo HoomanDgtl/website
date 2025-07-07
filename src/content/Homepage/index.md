@@ -34,28 +34,25 @@ heroSection:
 
 # infrastructure section content
 infrastructureSection:
-  title: "Akash - The Decentralized Infrastructure Supercloud"
+  title: "Optimized for AI & Data Workloads"
+  description: "Purpose-built infrastructure designed for the most demanding computational tasks"
   cards:
-    - title: "Infrastructure as<br/> Code"
+    - title: "Machine Learning<br/> Training"
       image: "./assets/infrastructure/code.svg"
-      description: "Akash's orchestration layer, fueled by SDL, enables intricate deployments across regions, providers, with resource control and pricing decisions."
-    - title: "Kubernetes<br/> Powered"
+      description: "Accelerate model training with scalable GPU resources, significantly reducing time-to-market."
+    - title: "Generative AI<br/> Applications"
       image: "./assets/infrastructure/kubernetes.svg"
-      description: "Built on Kubernetes, Akash ensures a secure, tested, and reliable platform for hosting applications."
-    - title: "Persistent<br/> Storage"
+      description: "Deploy and scale generative AI platforms seamlessly, catering to variable demands."
+    - title: "Large Language<br/> Models"
       image: "./assets/infrastructure/storage.svg"
-      description: "Akash offers limitless storage, safeguarding data even post-restart, an ideal feature for data-intensive apps."
-    - title: "Dedicated<br/> IP Leasing"
+      description: "Power your conversational AI and NLP tasks with decentralized, cost-effective resources."
+    - title: "Real-time AI<br/> Inference"
       image: "./assets/infrastructure/ip.svg"
-      description: "By leasing a dedicated IP address, Akash permits port assignment, directing traffic – especially beneficial for DNS,<br class='hidden md:block'/> web servers, etc."
- 
-    - title: "Permissionless"
+      description: "Deliver instant insights and analytics, supporting critical real-time decisions."
+    - title: "Data-intensive<br/> Analytics"
       image: "./assets/infrastructure/censorship.svg"
-      description: "Akash democratizes secure, censorship-resistant app deployment, open to all innovators."
+      description: "Efficiently handle extensive data processing without infrastructure bottlenecks."
 
-    - title: "Peer-to-Peer<br/> and Private"
-      image: "./assets/infrastructure/peer.svg" 
-      description: "Peer-to-peer communication guarantees data privacy, payment transparency, and immunity from central control, reinforcing dependability."
 
 # feature section content
 featureSection:

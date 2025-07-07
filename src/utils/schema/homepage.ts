@@ -26,6 +26,7 @@ export const homePageSchema = defineCollection({
       }),
       infrastructureSection: z.object({
         title: z.string(),
+        description: z.string(),
         cards: z.array(
           z.object({
             title: z.string(),
