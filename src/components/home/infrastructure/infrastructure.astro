@@ -2,27 +2,122 @@
 import FeatureCard from "@/components/cards/FeatureCard.astro";
 
 const { infrastructureSection } = Astro.props;
+
+// Why Choose Akash Network section data
+const whyChooseSection = {
+  title: "Why Choose Akash Network?",
+  description:
+    "Discover the advantages that make Akash Network the preferred choice for decentralized cloud computing",
+  cards: [
+    {
+      title: "Significant Cost Savings",
+      description:
+        "Access cloud resources at up to 85% lower costs compared to traditional cloud providers, with transparent pricing and no hidden fees.",
+      icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M19 3L19.5 5.5L22 6L19.5 6.5L19 9L18.5 6.5L16 6L18.5 5.5L19 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M5 3L5.5 5.5L8 6L5.5 6.5L5 9L4.5 6.5L2 6L4.5 5.5L5 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>`,
+    },
+    {
+      title: "Enhanced Security",
+      description:
+        "Benefit from blockchain-level security with decentralized infrastructure that eliminates single points of failure and provides enhanced privacy protection.",
+      icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12L11 14L15 10M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>`,
+    },
+    {
+      title: "Ready to Deploy",
+      description:
+        "Get started immediately with our user-friendly deployment tools and comprehensive documentation, making cloud deployment accessible to everyone.",
+      icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M16 3L16.5 5.5L19 6L16.5 6.5L16 9L15.5 6.5L13 6L15.5 5.5L16 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M8 3L8.5 5.5L11 6L8.5 6.5L8 9L7.5 6.5L5 6L7.5 5.5L8 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>`,
+    },
+    {
+      title: "Global Network",
+      description:
+        "Access a worldwide network of providers offering diverse computing resources, ensuring high availability and optimal performance for your applications.",
+      icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M19 3L19.5 5.5L22 6L19.5 6.5L19 9L18.5 6.5L16 6L18.5 5.5L19 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M5 3L5.5 5.5L8 6L5.5 6.5L5 9L4.5 6.5L2 6L4.5 5.5L5 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>`,
+    },
+    {
+      title: "Open Source",
+      description:
+        "Leverage the power of open-source technology with full transparency, community-driven development, and the freedom to customize your infrastructure.",
+      icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 12L11 14L15 10M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>`,
+    },
+    {
+      title: "AI Optimized",
+      description:
+        "Purpose-built infrastructure designed specifically for AI and machine learning workloads, with optimized GPU resources and scalable compute power.",
+      icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M16 3L16.5 5.5L19 6L16.5 6.5L16 9L15.5 6.5L13 6L15.5 5.5L16 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M8 3L8.5 5.5L11 6L8.5 6.5L8 9L7.5 6.5L5 6L7.5 5.5L8 3Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>`,
+    },
+  ],
+};
 ---
 
-<section
-  class="border-b border-paraDark bg-[url('/images/trustedby/gradient2.svg')] bg-center py-[80px]"
->
-  <div class="container">
-    <div class="flex flex-col items-center justify-center gap-2">
-      <h2 class="text-center text-xl font-medium md:text-[28px]">
-        {infrastructureSection.title}
-      </h2>
-      <p class="mt-1 text-center text-base text-paraDark">
-        {infrastructureSection.description}
-      </p>
+<section class="bg-[url('/images/trustedby/gradient2.svg')] bg-center py-20">
+  <div class="container flex flex-col gap-20">
+    <div class="flex flex-col gap-2">
+      <div class="flex flex-col items-center justify-center gap-2">
+        <h2 class="text-center text-xl font-medium md:text-[28px]">
+          {infrastructureSection.title}
+        </h2>
+        <p class="mt-1 text-center text-base text-paraDark">
+          {infrastructureSection.description}
+        </p>
+      </div>
+      <div class="mt-10">
+        <div class="grid grid-cols-5 gap-10 3xl:gap-6">
+          {
+            infrastructureSection.cards.map((card: any) => (
+              <FeatureCard card={card} />
+            ))
+          }
+        </div>
+      </div>
     </div>
-    <div class="mt-10 lg:mt-20">
-      <div class="grid grid-cols-5 gap-10 3xl:gap-6">
-        {
-          infrastructureSection.cards.map((card: any) => (
-            <FeatureCard card={card} />
-          ))
-        }
+    <div>
+      <div class="flex flex-col items-center justify-center gap-2">
+        <h2 class="text-center text-xl font-medium md:text-[28px]">
+          {whyChooseSection.title}
+        </h2>
+        <p class="mt-1 text-center text-base text-paraDark">
+          {whyChooseSection.description}
+        </p>
+      </div>
+      <div class="mt-10">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {
+            whyChooseSection.cards.map((card: any) => (
+              <div class="flex flex-col items-start rounded-lg border bg-background p-6 shadow-xl">
+                <div class="flex size-12 items-center justify-center rounded-lg border border-paraDark bg-background2">
+                  <div set:html={card.icon} />
+                </div>
+                <div class="mt-5 flex flex-1 flex-col">
+                  <h3 class="text-base font-semibold" set:html={card.title} />
+                  <p class="mt-3 flex-grow text-sm font-medium leading-[20px] text-paraDark md:mt-4">
+                    {card.description}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   </div>
