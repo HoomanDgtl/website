@@ -1,0 +1,46 @@
+---
+const data = [
+  {
+    title: "85%",
+    description: "Average Cost Savings",
+  },
+  {
+    title: "50+",
+    description: "Provider Locations",
+  },
+  {
+    title: "2min",
+    description: "Deployment Speed",
+  },
+  {
+    title: "99%",
+    description: "Customer Satisfaction",
+  },
+];
+---
+
+<section
+  class="relative w-full overflow-hidden bg-[url('/images/trustedby/gradient.svg')] bg-cover bg-center pb-20 pt-14"
+>
+  <div class="container flex flex-col items-center gap-10">
+    <div class="flex flex-col items-center justify-center gap-2">
+      <h2 class="text-center text-3xl font-semibold text-white md:text-4xl">
+        Ready to deploy<br />on the Supercloud?
+      </h2>
+      <p class="mt-2 text-center text-base">
+        Get started with Akash Network and experience the future of cloud
+        computing today.
+      </p>
+    </div>
+    <div class="mt-8 grid w-full grid-cols-4 gap-5">
+      {
+        data.map((item) => (
+          <div class="relative flex flex-col items-center justify-center rounded-lg border bg-background2 p-10 shadow-xl">
+            <div class="text-4xl font-semibold">{item.title}</div>
+            <p class="mt-2 text-center text-sm ">{item.description}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

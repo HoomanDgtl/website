@@ -107,79 +107,23 @@ aiModelsAndAppsSection:
   subtitle1: "AI & ML"
   subtitle2: "Deployed on Akash"
   cards1:
-    - title: "Akash Chat"
-      image:  "./assets/tools/1.svg"
-      description: "Mistral-7B-v0.2 Large Language Model (LLM) is a pretrained generative text model with 7 billion parameters by Mistral AI. This application is running on NVIDIA GPUs leased from the Akash Supercloud."
+    - title: "Run Inference Instantly"
+      image: "./assets/tools/chat-api.svg"
+      description: "Tap into a curated catalog of open‑source models through a single, unified API. Simply request, receive results, and scale automatically on Akash's decentralized GPU network—no model deployment or setup needed."
       link: "https://chat.akash.network/"
-
-    - title: "AkashGen"
-      image: "./assets/tools/2.png"
-      description: "AkashGen is a high quality text-to-image model from Stability AI. This application is running on NVIDIA A100s leased from the Akash Supercloud, to achieve high-performing and cost-effective inference of 1024×1024 images."
-      link: "https://gen.akash.network/"
-
-
-    - title: "Ray cluster on Akash"
-      image: "./assets/tools/3.png"
-      description: "This post explores the difficulties of parallelizing and scaling AI/ML workloads. We present Ray, a leading open-source framework (used by top ML teams) for large-scale parallel computing and distributed training."
-      link: "/blog/distributed-machine-learning-on-akash-network-with-ray/"
-
-  cards2:
+      button: "Get Your Free API Key"
       
-    - title: "Venice AI"
-      image: "./assets/tools/venice.png"
-      description: "Venice is the easy app for private, uncensored AI conversations and image generation. Try for free with no log-in needed."
-      link : "https://venice.ai/home"
-      darkImage : "./assets/tools/venice.png"   
+    - title: "Chat with Multiple Models"
+      image:  "./assets/tools/akash-chat.svg"
+      description: "Benchmark conversational LLMs side‑by‑side. Seamlessly switch between leading open‑source chat models, evaluate responses, and choose the best fit for your application."
+      link: "https://chat.akash.network/"
+      button: "Open Akash Chat"
 
-    - title: "Brev.dev (Acq. by NVIDIA)"
-      image: "./assets/tools/brev.png"
-      description: "Brev.dev, known for its seamless setup of Jupyter notebooks for AI development, has integrated with Akash Network, enabling scalable, permissionless access to NVIDIA GPUs."
-      link : "https://brev.dev/"
-      darkImage : "./assets/tools/brev.png" 
-     
-
-    - title: "Nous Research"
-      image: "./assets/tools/nous.png"
-      description: "Leveraging the power of Akash's decentralized cloud, Nous Research successfully trained 'Nous Hermes 2,' an advanced AI model built on over 1,000,000 entries of GPT-4 data."
-      link : "https://nousresearch.com/"
-      darkImage : "./assets/tools/nous.png" 
-     
-  cards3:
-    - image:  "./assets/tools/awesomeakash.svg"
-      darkImage : "./assets/tools/awesomeakash.svg"
-      description: "Tailored for Web3 users, offering a powerful platform to deploy applications on the Akash network with enhanced capabilities."
-      logoTitle: Akash Console
-
-      launchAppLink: 
-        label: Launch App
-        link: "https://console.akash.network/"
-
-      docsLink: 
-        label: Console Docs
-        link: "/docs/getting-started/quickstart-guides/akash-console/"
-
-    - image:  "./assets/tools/awesomeakash.svg"
-      darkImage : "./assets/tools/awesomeakash.svg"
-      description: "Offer your compute resources on the Akash marketplace, and earn when people deploy. The Akash Provider Console walks you through the setup process, so you can get up and running on the Akash Supercloud."
-      logoTitle: Provider Console
-
-      launchAppLink: 
-        label: Launch App
-        link: "https://provider-console.akash.network/"
-
-      docsLink: 
-        label: Provider Console Docs
-        link: "/docs/providers/intro/"
-
-    - image:  "./assets/tools/awesomeakash.svg"
-      description: " View collection of SDL deployment templates based on the Awesome Akash GitHub repository "
-      logoTitle: Awesome Akash templates
-
-      githubLink: 
-        label: View on Github
-        link: "https://github.com/akash-network/awesome-akash"
-
-
+    - title: "Create Images on Demand"
+      image: "./assets/tools/akash-gen.svg"
+      button: "Try Image Generator"
+      description: "Generate photorealistic or artistic images using powerful diffusion models hosted on Akash. Perfect for rapid concepting, creative exploration, and content creation—right in your browser."
+      link: "https://gen.akash.network/"
 
 # CTA section content
 testimonialsSection:
