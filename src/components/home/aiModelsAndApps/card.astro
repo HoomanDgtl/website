@@ -5,16 +5,17 @@ import { ArrowUpRight } from "lucide-react";
 const { card } = Astro.props;
 ---
 
-<div class="rounded-lg border bg-background2">
+<div class="flex flex-col rounded-lg border bg-background2">
   <div class="flex items-center justify-center border-b py-20">
-    <Image src={card.image} alt={card.title} class={"w-[70%]"} />
+    <Image src={card.image} alt={card.title} class={"w-[70%] h-10"} />
   </div>
-  <div class="flex flex-col gap-4 px-5 py-8">
+  <div class="flex flex-1 flex-col gap-4 px-5 py-8">
     <h3 class="text-lg font-medium">{card.title}</h3>
-    <p class="text-muted-foreground text-sm">{card.description}</p>
+    <p class="text-muted-foreground h-40 text-sm">{card.description}</p>
+
     <ButtonLink
       link={card.link}
-      className="mt-12 flex w-full gap-2 bg-[#2D2C2C] py-3"
+      className=" flex w-full gap-2 bg-[#2D2C2C] !py-3"
       variant="secondary"
     >
       {card.button}
