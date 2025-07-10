@@ -15,6 +15,13 @@ import SpeakToExpert from "../pricing-page/SpeakToExpert";
 import AkashFooterLogo from "../ui/akash-footer-logo.astro";
 import FooterYear from "./footer-year";
 import SubscribeButton from "./subscribe-button.astro";
+
+type Props = {
+  overrideClassName?: string;
+};
+
+const { overrideClassName }: Props = Astro.props;
+
 const socials = [
   {
     name: "Twitter",
@@ -162,8 +169,9 @@ const shouldHide = shouldHideCta(pathname);
 
 <footer
   class={clsx(
-    " w-full bg-white px-4 pb-10 md:p-8 xl:p-20 dark:bg-background text-white ",
+    " w-full  px-4 pb-10 md:p-8 xl:p-20  text-white ",
     shouldHide && "border-t  mt-20",
+    overrideClassName ? overrideClassName : "bg-white dark:bg-background",
   )}
 >
   <div>
@@ -187,7 +195,7 @@ const shouldHide = shouldHideCta(pathname);
       </div>
     </div>
 
-    <div class="justify-between md:mx-auto lg:flex">
+    <div class="justify-between md:mx-auto lg:flex lg:gap-5">
       <div
         class="hidden flex-col gap-6 pb-[40px] text-left text-base font-[300] lg:flex"
       >

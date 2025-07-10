@@ -69,8 +69,8 @@ const whyChooseSection = {
 };
 ---
 
-<section class="bg-[url('/images/trustedby/gradient2.svg')] bg-center py-20">
-  <div class="container flex flex-col gap-20">
+<section class="noise bg-[#181818] py-20">
+  <div class="container relative z-[2] flex flex-col gap-20">
     <div class="flex flex-col gap-2">
       <div class="flex flex-col items-center justify-center gap-2">
         <h2 class="text-center text-xl font-medium md:text-[28px]">
@@ -80,7 +80,7 @@ const whyChooseSection = {
           {infrastructureSection.description}
         </p>
       </div>
-      <div class="mt-10">
+      <div class="mx-auto mt-10 max-w-[1237px]">
         <div class="grid grid-cols-5 gap-10 3xl:gap-6">
           {
             infrastructureSection.cards.map((card: any) => (
@@ -91,8 +91,8 @@ const whyChooseSection = {
       </div>
     </div>
     <div>
-      <div class="flex flex-col items-center justify-center gap-2">
-        <h2 class="text-center text-xl font-medium md:text-[28px]">
+      <div class="flex flex-col items-center justify-center gap-3">
+        <h2 class="text-center text-xl font-medium md:text-[40px]">
           {whyChooseSection.title}
         </h2>
         <p class="mt-1 text-center text-base text-paraDark">
@@ -107,7 +107,7 @@ const whyChooseSection = {
                 <div set:html={card.icon} />
 
                 <div class=" flex flex-1 flex-col">
-                  <h3 class="text-3xl font-semibold" set:html={card.title} />
+                  <h3 class="text-[28px] font-semibold" set:html={card.title} />
                   <p class="mt-3 flex-grow text-base font-medium leading-[20px] text-paraDark md:mt-4">
                     {card.description}
                   </p>
