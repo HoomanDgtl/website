@@ -1,5 +1,6 @@
 ---
 import FeatureCard from "@/components/cards/FeatureCard.astro";
+import WhyChooseSwiper from "./WhyChooseSwiper.tsx";
 
 const { infrastructureSection } = Astro.props;
 
@@ -94,7 +95,9 @@ const whyChooseSection = {
     </div>
     <div>
       <div class="flex flex-col items-center justify-center gap-3">
-        <h2 class="text-center text-[26px] font-medium md:text-[40px]">
+        <h2
+          class="text-center text-[26px] font-medium leading-tight md:text-[40px]"
+        >
           {whyChooseSection.title}
         </h2>
         <p class="mt-1 text-center text-base text-paraDark">
@@ -102,14 +105,21 @@ const whyChooseSection = {
         </p>
       </div>
       <div class="mt-10">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <WhyChooseSwiper cards={whyChooseSection.cards} client:load />
+
+        <div
+          class="hidden grid-cols-1 gap-6 sm:grid-cols-2 md:grid lg:grid-cols-3"
+        >
           {
             whyChooseSection.cards.map((card: any) => (
               <div class="flex gap-3  rounded-lg border bg-background p-6 shadow-xl">
                 <div set:html={card.icon} />
 
                 <div class=" flex flex-1 flex-col">
-                  <h3 class="text-[28px] font-semibold" set:html={card.title} />
+                  <h3
+                    class="text-2xl font-semibold md:text-[28px]"
+                    set:html={card.title}
+                  />
                   <p class="mt-3 flex-grow text-base font-medium leading-[20px] text-paraDark md:mt-4">
                     {card.description}
                   </p>
