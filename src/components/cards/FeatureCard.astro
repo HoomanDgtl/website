@@ -34,7 +34,7 @@ const { icon, card, className, autoHeight } = Astro.props as Props;
 
   <div class="mt-5 md:mt-6">
     <h3
-      class={clsx("text-xl font-semibold ", autoHeight ? "" : "md:h-14")}
+      class={clsx("text-xl font-semibold ", autoHeight ? "" : "lg:h-14")}
       set:html={card.title}
     />
     <p

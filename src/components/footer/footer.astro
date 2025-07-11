@@ -12,7 +12,6 @@ import {
   YoutubeIcon,
 } from "../header/icons";
 import SpeakToExpert from "../pricing-page/SpeakToExpert";
-import AkashFooterLogo from "../ui/akash-footer-logo.astro";
 import FooterYear from "./footer-year";
 import SubscribeButton from "./subscribe-button.astro";
 
@@ -52,7 +51,7 @@ const socials = [
 
 const links = [
   {
-    title: "Products",
+    title: "Tools",
     links: [
       {
         title: "Akash Console",
@@ -61,6 +60,18 @@ const links = [
       {
         title: "Akash Provider Console",
         link: "https://provider-console.akash.network/",
+      },
+      {
+        title: "Akash Chat",
+        link: "https://chat.akash.network",
+      },
+      {
+        title: "Akash ChatAPI",
+        link: "https://chatapi.akash.network",
+      },
+      {
+        title: "Akash Gen",
+        link: "https://gen.akash.network",
       },
     ],
   },
@@ -82,6 +93,10 @@ const links = [
       {
         title: "AKT Token",
         link: "/token",
+      },
+      {
+        title: "Providers",
+        link: "/providers",
       },
     ],
   },
@@ -169,57 +184,88 @@ const shouldHide = shouldHideCta(pathname);
 
 <footer
   class={clsx(
-    " w-full  px-4 pb-10 md:p-8 xl:p-20  text-white ",
+    " w-full  py-4  md:pt-20 pb-10 text-white ",
     shouldHide && "border-t  mt-20",
-    overrideClassName ? overrideClassName : "bg-white dark:bg-background",
+    overrideClassName
+      ? overrideClassName
+      : "bg-white dark:bg-background container",
   )}
 >
-  <div>
-    <div
-      class="flex w-full flex-col items-start pb-[50px] pt-[40px] md:pt-[26px] lg:hidden"
-    >
-      <a href="/" aria-label="Akash Network" class="text-foreground">
-        <AkashFooterLogo />
-      </a>
-      <div class="mt-4 md:hidden">
-        <SpeakToExpert size="small" client:load />
-      </div>
-
-      <div class="mt-10 flex flex-col items-start justify-start lg:hidden">
-        <p class="text-base font-medium leading-[24px] text-foreground">
-          Stay up to date with Akash Newsletter
-        </p>
-        <div class="mt-4">
-          <SubscribeButton />
-        </div>
-      </div>
-    </div>
-
+  <div class="border-b pb-20">
     <div class="justify-between md:mx-auto lg:flex lg:gap-5">
-      <div
-        class="hidden flex-col gap-6 pb-[40px] text-left text-base font-[300] lg:flex"
-      >
-        <p class="text-foreground">
-          <AkashFooterLogo />
-        </p>
-        <div class="flex gap-x-[24px] font-[300]">
+      <div class="flex flex-col gap-8 pb-[40px] text-left text-base font-[300]">
+        <div class="flex flex-col">
+          <svg
+            width="105"
+            height="27"
+            viewBox="0 0 105 27"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M17.1542 16.4897L21.1887 23.5858H13.039L8.96191 16.4897H17.1542Z"
+              fill="url(#paint0_linear_125_570)"></path>
+            <path
+              d="M21.1865 23.5869L25.2568 16.4909L17.1094 2.29541H8.96191L21.1865 23.5869Z"
+              fill="white"></path>
+            <path
+              d="M4.88828 9.38965H13.0358L4.89167 23.5851L0.814575 16.4891L4.88828 9.38965Z"
+              fill="white"></path>
+            <path
+              d="M41.669 9.39684L41.4662 11.5876C40.5975 9.88687 38.5994 8.96447 36.4565 8.96447C32.4313 8.96447 29.7382 11.8758 29.7382 16.3438C29.7382 20.7829 32.1707 24.0113 36.4275 24.0113C38.7442 24.0113 40.4527 22.8871 41.3504 21.417L41.5821 23.6366H44.8833V9.39684H41.669ZM41.2925 16.5167C41.2925 19.0822 39.6998 20.8405 37.2383 20.8405C34.7769 20.8405 33.2711 19.0533 33.2711 16.5167C33.2711 13.9801 34.8059 12.1641 37.2673 12.1641C39.7288 12.1641 41.2925 13.9512 41.2925 16.5167Z"
+              fill="white"></path>
+            <path
+              d="M50.8944 23.6366V19.8028L52.9794 17.6409L56.715 23.6366H60.7691L55.4408 15.0466L60.885 9.39684H56.4544L50.8944 15.3637V2.60986H47.3904V23.6366H50.8944Z"
+              fill="white"></path>
+            <path
+              d="M72.6334 9.39684L72.4307 11.5876C71.5619 9.88687 69.5638 8.96447 67.4209 8.96447C63.3957 8.96447 60.7026 11.8758 60.7026 16.3438C60.7026 20.7829 63.1351 24.0113 67.3919 24.0113C69.7086 24.0113 71.4171 22.8871 72.3148 21.417L72.5465 23.6366H75.8477V9.39684H72.6334ZM72.2569 16.5167C72.2569 19.0822 70.6642 20.8405 68.2028 20.8405C65.7413 20.8405 64.2355 19.0533 64.2355 16.5167C64.2355 13.9801 65.7703 12.1641 68.2317 12.1641C70.6932 12.1641 72.2569 13.9512 72.2569 16.5167Z"
+              fill="white"></path>
+            <path
+              d="M77.6355 19.3128C77.6355 22.1088 79.8942 24.0113 83.4561 24.0113C86.989 24.0113 89.4504 22.2241 89.4504 19.3416C89.4504 17.1509 88.2342 16.0555 85.8307 15.5078L83.2534 14.9025C82.0371 14.6142 81.4001 14.0954 81.4001 13.2883C81.4001 12.2217 82.2109 11.5876 83.6009 11.5876C84.9619 11.5876 85.7727 12.3659 85.8017 13.5765H89.1609C89.1319 10.8093 86.96 8.96447 83.7457 8.96447C80.4444 8.96447 78.0699 10.6363 78.0699 13.4324C78.0699 15.7096 79.3151 16.9203 81.8923 17.4968L84.4696 18.1021C85.7438 18.3904 86.1202 18.9092 86.1202 19.6298C86.1202 20.6676 85.2225 21.3305 83.5719 21.3305C81.9503 21.3305 81.0236 20.5523 80.9946 19.3128H77.6355Z"
+              fill="white"></path>
+            <path
+              d="M94.9515 23.6366V15.8537C94.9515 13.7206 96.2547 12.1641 98.4844 12.1641C100.28 12.1641 101.467 13.3171 101.467 15.7096V23.6366H105V14.8737C105 11.184 103.147 8.96447 99.6138 8.96447C97.5578 8.96447 95.8782 9.85805 94.9805 11.2417V2.60986H91.4186V23.6366H94.9515Z"
+              fill="white"></path>
+            <defs>
+              <linearGradient
+                id="paint0_linear_125_570"
+                x1="15.2499"
+                y1="19.5356"
+                x2="18.5702"
+                y2="16.2255"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="white"></stop>
+                <stop offset="1" stop-color="white" stop-opacity="0.127613"
+                ></stop>
+              </linearGradient>
+            </defs>
+          </svg>
+          <p class="mt-2 max-w-[20rem] text-linkText">
+            The world's first distributed peer-to-peer marketplace for cloud
+            compute.
+          </p>
+        </div>
+
+        <div class="flex gap-5 font-[300]">
+          <DarkModeToggle />
+          <div class="h-7 w-[1.5px] bg-[#3B3B3B]"></div>
           {
             socials.map((social) => (
               <a
                 aria-label={`Akash Network ${social.name}`}
                 href={social.link}
                 target="_blank"
-                class="flex items-center gap-4 text-para hover:text-primary"
+                class="flex items-center gap-4 text-linkText hover:text-primary"
               >
                 <social.icon />
               </a>
             ))
           }
         </div>
-        <SpeakToExpert size="small" client:load />
       </div>
       <div
-        class="grid grid-cols-3 justify-between gap-y-10 md:grid-cols-5 md:gap-x-[30px] lg:gap-x-7 xl:gap-x-10"
+        class="grid grid-cols-3 justify-between gap-y-10 md:grid-cols-5 md:gap-x-5"
       >
         {
           links.map((link) => (
@@ -238,42 +284,106 @@ const shouldHide = shouldHideCta(pathname);
       </div>
     </div>
   </div>
-  <div class="my-[40px] flex flex-col gap-4 lg:hidden">
-    <div class="flex gap-x-6 font-[300] text-para">
-      {
-        socials.map((social) => (
-          <a
-            aria-label={`Akash Network ${social.name}`}
-            href={social.link}
-            target="_blank"
-            class="flex items-center gap-4 text-para hover:text-primary"
-          >
-            <social.icon />
-          </a>
-        ))
-      }
+  <div class="flex items-center justify-between border-b py-8">
+    <div class="flex flex-col gap-3">
+      <p class="text-sm text-linkText">Not sure where to start?</p>
+      <SpeakToExpert size="small" client:load />
+    </div>
+    <div class="flex flex-col items-end gap-3">
+      <p class="text-sm text-linkText">Stay up to date with Akash Newsletter</p>
+      <SubscribeButton />
     </div>
   </div>
 
-  <div class="mt-20 hidden items-center justify-between border-y py-5 lg:flex">
-    <p class="text-xl font-medium leading-[30px] text-foreground">
-      Stay up to date with Akash Newsletter
-    </p>
-    <SubscribeButton />
-  </div>
-
-  <div
-    class="relative flex flex-col text-center md:pt-4 lg:flex-row lg:pt-[32px]"
-  >
+  <div class="relative flex flex-col justify-center pt-14 text-center">
     <div
-      class="flex w-full flex-col items-start justify-start gap-y-[16px] lg:flex-row lg:items-center"
+      class="mb-4 flex flex-col items-center justify-center gap-2.5 md:flex-row"
     >
-      <p class="text-left text-2xs text-para lg:border-r lg:pr-[16px]">
+      <div
+        class="flex items-center gap-2 font-jetBrainsMono text-[15px] font-light"
+      >
+        <span>akash</span>
+        <svg
+          width="64"
+          height="20"
+          viewBox="0 0 64 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M53.3746 9.93702C53.3746 11.0223 52.8553 12.1054 51.8138 13.1435C50.7703 14.1838 49.2318 15.1464 47.2858 15.9669C43.3962 17.6069 37.9836 18.6347 31.9759 18.6347C25.9682 18.6347 20.5557 17.6069 16.666 15.9669C14.72 15.1464 13.1816 14.1838 12.138 13.1435C11.0966 12.1054 10.5773 11.0223 10.5773 9.93702C10.5773 8.8517 11.0966 7.76861 12.138 6.73049C13.1816 5.69021 14.72 4.72759 16.666 3.90712C20.5557 2.26714 25.9682 1.23936 31.9759 1.23936C37.9836 1.23936 43.3962 2.26714 47.2858 3.90712C49.2318 4.72759 50.7703 5.69021 51.8138 6.73049C52.8553 7.76861 53.3746 8.8517 53.3746 9.93702Z"
+            stroke="currentColor"
+            stroke-width="1.12228"></path>
+          <path
+            d="M42.3948 9.93702C42.3948 14.6547 37.8236 18.6347 31.976 18.6347C26.1284 18.6347 21.5572 14.6547 21.5572 9.93702C21.5572 5.21929 26.1284 1.23936 31.976 1.23936C37.8236 1.23936 42.3948 5.21929 42.3948 9.93702Z"
+            stroke="currentColor"
+            strokeWidstroke-widthth="1.12228"></path>
+          <path
+            d="M63.4002 9.93702C63.4002 10.9341 62.6982 12.0052 61.1308 13.0779C59.5816 14.1382 57.3031 15.1153 54.4371 15.945C48.7126 17.6021 40.7713 18.6347 31.9764 18.6347C23.1814 18.6347 15.2402 17.6021 9.51565 15.945C6.64963 15.1153 4.37112 14.1382 2.82191 13.0779C1.25454 12.0052 0.552594 10.9341 0.552594 9.93702C0.552594 8.93998 1.25454 7.86885 2.82191 6.79615C4.37112 5.73588 6.64963 4.75871 9.51565 3.92907C15.2402 2.27197 23.1814 1.23936 31.9764 1.23936C40.7713 1.23936 48.7126 2.27197 54.4371 3.92907C57.3031 4.75871 59.5816 5.73588 61.1308 6.79615C62.6982 7.86885 63.4002 8.93998 63.4002 9.93702Z"
+            stroke="currentColor"
+            stroke-width="1.12228"></path>
+          <line
+            x1="0.946289"
+            y1="9.37587"
+            x2="63.484"
+            y2="9.37587"
+            stroke="currentColor"
+            stroke-width="1.12228"></line>
+          <line
+            x1="32.0602"
+            y1="1.08105"
+            x2="32.0602"
+            y2="19.1961"
+            stroke="currentColor"
+            stroke-width="1.12228"></line>
+        </svg>
+
+        <span>supercloud</span>
+      </div>
+      <div class="hidden h-5 w-[1px] bg-white md:block"></div>
+      <div
+        class="flex items-center gap-2 font-jetBrainsMono text-[15px] font-light"
+      >
+        <span>premier</span>
+        <span class="font-instrument text-[18.6px] italic">decentralized</span>
+
+        <span>compute marketplace</span>
+      </div>
+      <div class="mb-4 h-px w-[40%] bg-white md:mb-0 md:h-5 md:w-[1px]"></div>
+      <svg
+        width="53"
+        height="24"
+        viewBox="0 0 53 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M43.4606 11.936C43.4606 14.8002 41.2417 17.5282 37.3509 19.5734C33.4862 21.6048 28.1083 22.8782 22.1374 22.8782C16.1664 22.8782 10.7885 21.6048 6.92381 19.5734C3.03303 17.5282 0.814069 14.8002 0.814069 11.936C0.814069 9.07176 3.03303 6.34373 6.92381 4.29857C10.7885 2.26713 16.1664 0.993756 22.1374 0.993756C28.1083 0.993756 33.4862 2.26713 37.3509 4.29857C41.2417 6.34373 43.4606 9.07176 43.4606 11.936Z"
+          stroke="currentColor"
+          stroke-width="1.12228"></path>
+        <path
+          d="M24.0506 13.958L26.5594 17.1052L27.0041 18.1938H22.1395L19.7058 13.958H24.0506Z"
+          fill="currentColor"></path>
+        <path
+          d="M27.0028 18.1944L29.4324 13.9585L24.5691 5.48486H19.7058L27.0028 18.1944Z"
+          fill="currentColor"></path>
+        <path
+          d="M17.2742 9.71973H22.1375L17.2762 18.1934L14.8425 13.9576L17.2742 9.71973Z"
+          fill="currentColor"></path>
+        <path
+          d="M48.2664 0.494122C48.3211 0.228826 48.7001 0.228825 48.7548 0.494121L49.2456 2.87132C49.2657 2.96882 49.3419 3.04501 49.4394 3.06514L51.8166 3.5559C52.0819 3.61067 52.0819 3.98962 51.8166 4.04439L49.4394 4.53516C49.3419 4.55529 49.2657 4.63148 49.2456 4.72898L48.7548 7.10617C48.7001 7.37147 48.3211 7.37147 48.2664 7.10617L47.7756 4.72898C47.7555 4.63148 47.6793 4.55529 47.5818 4.53516L45.2046 4.04439C44.9393 3.98962 44.9393 3.61067 45.2046 3.5559L47.5818 3.06514C47.6793 3.04501 47.7555 2.96882 47.7756 2.87132L48.2664 0.494122Z"
+          fill="currentColor"></path>
+      </svg>
+    </div>
+    <div
+      class="flex w-full flex-col items-center justify-center gap-y-[16px] lg:flex-row lg:items-center"
+    >
+      <p class="text-left text-2xs text-linkText lg:border-r lg:pr-[16px]">
         © Akash Network <FooterYear client:load />
         The Akash Network Authors Documentation Distributed under CC BY 4.0
       </p>
       <div class="flex">
-        <p class="border-r pr-[8px] text-2xs text-para lg:px-[16px]">
+        <p class="border-r pr-[8px] text-2xs text-linkText lg:px-[16px]">
           <a
             aria-label="Open-source Apache 2.0 Licensed."
             class="text-decoration-none"
@@ -283,7 +393,7 @@ const shouldHide = shouldHideCta(pathname);
             Open-source Apache 2.0 Licensed.
           </a>
         </p>
-        <p class="border-r px-[8px] text-2xs text-para lg:px-[16px]">
+        <p class="border-r px-[8px] text-2xs text-linkText lg:px-[16px]">
           <a
             aria-label="GitHub v0.38.2"
             class="text-decoration-none"
@@ -294,7 +404,7 @@ const shouldHide = shouldHideCta(pathname);
           </a>
         </p>
 
-        <p class="pl-[8px] text-2xs text-para lg:pl-[16px]">
+        <p class="pl-[8px] text-2xs text-linkText lg:pl-[16px]">
           <a
             aria-label="Privacy"
             class="text-decoration-none"
@@ -304,24 +414,6 @@ const shouldHide = shouldHideCta(pathname);
             Privacy
           </a>
         </p>
-      </div>
-    </div>
-    <div class="hidden lg:block">
-      <DarkModeToggle footer />
-    </div>
-  </div>
-  <div
-    class="flex flex-col items-center gap-10 pt-[32px] text-cardGray dark:text-textGray"
-  >
-    <div class="grid w-full grid-cols-3 items-center justify-between">
-      <p></p>
-      <a
-        aria-label="Back To Top"
-        class="text-center text-[12px] font-[700] text-foreground lg:hidden"
-        href="#">Back To Top</a
-      >
-      <div class="ml-auto lg:hidden">
-        <DarkModeToggle />
       </div>
     </div>
   </div>
