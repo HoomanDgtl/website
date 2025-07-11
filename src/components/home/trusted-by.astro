@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import classnames from "classnames";
+import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
+import TrustedByMarquee from "./TrustedByMarquee";
 
 interface Props {
   trustedBySection: CollectionEntry<"Homepage">["data"]["trustedBySection"];
@@ -17,10 +19,10 @@ const gpuTypes = [
   {
     name: "Akash Network",
     price: "$25.12",
+    mobileName: "Akash",
     selected: true,
     svg: ` <svg
-        width="26"
-        height="23"
+        
         viewBox="0 0 26 23"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -56,8 +58,8 @@ const gpuTypes = [
     name: "AWS",
     price: "$25.12",
     svg: `  <svg
-        width="24"
-        height="25"
+       
+
         viewBox="0 0 24 25"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -97,9 +99,9 @@ const gpuTypes = [
   {
     name: "Google Cloud",
     price: "$25.12",
+    mobileName: "GCP",
     svg: ` <svg
-        width="21"
-        height="17"
+   
         viewBox="0 0 21 17"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -138,8 +140,7 @@ const gpuTypes = [
     name: "Coreweave",
     price: "$25.12",
     svg: ` <svg
-        width="21"
-        height="20"
+     
         viewBox="0 0 21 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -177,43 +178,59 @@ const gpuTypes = [
 ];
 ---
 
-<div class="w-full overflow-hidden bg-[#1c1c1c] py-20">
-  <div class="container-home relative z-[2] flex flex-col gap-[72px]">
+<div class="w-full overflow-hidden bg-[#1c1c1c] py-12 md:py-20">
+  <div class="container-home relative z-[2] flex flex-col gap-12 md:gap-[72px]">
     <div class="flex flex-col items-center justify-center gap-6">
-      <h2 class="text-lg text-gray-300 dark:text-[#8A8F98]">
+      <h2 class="text-gray-300 dark:text-[#8A8F98] md:text-lg">
         Trusted by Leading Investors
       </h2>
-      <div class="flex">
+
+      <div class="hidden lg:flex">
         {
           trustedBySection.map((item) => (
             <img src={item.image} alt={item.title} class="h-16" />
           ))
         }
       </div>
+
+      <TrustedByMarquee trustedBySection={trustedBySection} client:only />
     </div>
-    <div class="flex flex-col justify-center gap-16">
-      <h2 class="text-center text-[40px] font-semibold">
-        GPU's at Costs That Scale
+    <div class="flex flex-col justify-center gap-8 md:gap-16">
+      <h2 class="text-center text-2xl font-semibold md:text-[40px]">
+        GPU's at Costs <br class="md:hidden" /> That Scale
       </h2>
       <div class="shadow">
         <div class="grid w-full grid-cols-5 rounded-t-lg border">
           {
             gpuTypes.map((item, index) => (
               <div
-                class={classnames("flex flex-col", item.selected && " -mt-2")}
+                class={classnames(
+                  "flex flex-col",
+                  item.selected && " -mt-1 md:-mt-2",
+                )}
               >
                 <h3
                   class={classnames(
-                    "flex w-full items-center justify-center gap-2 py-4   text-lg",
-                    index === 0 && "rounded-tl-lg",
-                    index === gpuTypes.length - 1 && "rounded-tr-lg",
+                    "flex w-full items-center justify-center gap-1 py-2.5 text-[10px] md:gap-2 md:py-4  md:text-sm lg:text-lg",
+                    index === 0 && "rounded-tl-md md:rounded-tl-lg",
+                    index === gpuTypes.length - 1 &&
+                      "rounded-tr-md md:rounded-tr-lg",
                     item.selected
-                      ? "rounded-t-lg border-b !border-[#DC1D28] bg-primary py-5  text-white"
+                      ? "rounded-t-md border-b !border-[#DC1D28] bg-primary py-3 text-white md:rounded-t-lg  md:py-5"
                       : "border-b bg-black dark:text-[#8A8F98]",
                   )}
                 >
-                  <div set:html={item.svg} />
-                  {item.name}
+                  <div
+                    set:html={item.svg}
+                    class={clsx(
+                      !item.selected && "hidden lg:block",
+                      "size-4 md:size-6",
+                    )}
+                  />
+                  <span class="hidden md:block">{item.name}</span>
+                  <span class="block md:hidden">
+                    {item.mobileName ?? item.name}
+                  </span>
                 </h3>
                 <h4
                   style={
@@ -225,7 +242,7 @@ const gpuTypes = [
                       : {}
                   }
                   class={classnames(
-                    "bg-background py-4 text-center text-xl font-semibold  ",
+                    "bg-background py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl  ",
                     item.selected && " text-white",
                   )}
                 >
@@ -235,12 +252,13 @@ const gpuTypes = [
             ))
           }
         </div>
-        <div
-          class="flex items-center justify-center gap-1 rounded-b-lg border-x border-b bg-background py-4 font-medium"
+        <a
+          href="/pricing"
+          class="flex items-center justify-center gap-1 rounded-b-md border-x border-b bg-background py-2.5 font-medium md:rounded-b-lg md:py-4"
         >
-          <p class="text-base text-white">View more GPU pricing</p>
+          <p class="text-xs text-white md:text-base">View more GPU pricing</p>
           <ChevronDown className="h-4 w-4" />
-        </div>
+        </a>
       </div>
     </div>
   </div>
