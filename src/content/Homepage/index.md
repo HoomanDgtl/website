@@ -110,7 +110,7 @@ aiModelsAndAppsSection:
     - title: "Run Inference Instantly"
       image: "./assets/tools/chat-api.svg"
       description: "Tap into a curated catalog of open‑source models through a single, unified API. Simply request, receive results, and scale automatically on Akash's decentralized GPU network—no model deployment or setup needed."
-      link: "https://chat.akash.network/"
+      link: "https://chatapi.akash.network/"
       button: "Get Your Free API Key"
       
     - title: "Chat with Multiple Models"
