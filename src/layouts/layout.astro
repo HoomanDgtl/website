@@ -17,6 +17,7 @@ interface Props {
   classname?: string;
   headerClassName?: string;
   footerClassName?: string;
+  hideDarkToggle?: boolean;
 }
 
 const homepage = await getEntry("Homepage", "index");
@@ -31,6 +32,7 @@ const {
   classname,
   headerClassName,
   footerClassName,
+  hideDarkToggle,
 } = Astro.props;
 const pathname = Astro.url.pathname;
 ---
@@ -62,7 +64,7 @@ const pathname = Astro.url.pathname;
     )
   }
 
-  <Header overrideClassName={headerClassName} />
+  <Header overrideClassName={headerClassName} hideDarkToggle={hideDarkToggle} />
 
   <main>
     <slot />
@@ -77,6 +79,9 @@ const pathname = Astro.url.pathname;
     )}
   >
     <CTA />
-    <Footer overrideClassName={footerClassName} />
+    <Footer
+      overrideClassName={footerClassName}
+      hideDarkToggle={hideDarkToggle}
+    />
   </div>
 </BaseLayout>

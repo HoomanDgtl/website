@@ -18,9 +18,10 @@ import Superclound from "./superclound.astro";
 
 type Props = {
   overrideClassName?: string;
+  hideDarkToggle?: boolean;
 };
 
-const { overrideClassName }: Props = Astro.props;
+const { overrideClassName, hideDarkToggle }: Props = Astro.props;
 
 const socials = [
   {
@@ -198,8 +199,14 @@ const shouldHide = shouldHideCta(pathname);
       <div
         class="mb-6 flex items-center justify-center gap-5 border-b py-5 font-[300] md:hidden"
       >
-        <DarkModeToggle />
-        <div class="h-7 w-[1.5px] bg-[#3B3B3B]"></div>
+        {
+          !hideDarkToggle && (
+            <>
+              <DarkModeToggle />
+              <div class="h-7 w-[1.5px] bg-[#3B3B3B]" />
+            </>
+          )
+        }
         {
           socials.map((social) => (
             <a
@@ -270,8 +277,14 @@ const shouldHide = shouldHideCta(pathname);
         </div>
 
         <div class="flex gap-5 font-[300]">
-          <DarkModeToggle />
-          <div class="h-7 w-[1.5px] bg-[#3B3B3B]"></div>
+          {
+            !hideDarkToggle && (
+              <>
+                <DarkModeToggle />
+                <div class="h-7 w-[1.5px] bg-[#3B3B3B]" />
+              </>
+            )
+          }
           {
             socials.map((social) => (
               <a
