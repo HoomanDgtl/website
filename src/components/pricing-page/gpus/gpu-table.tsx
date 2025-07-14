@@ -155,7 +155,7 @@ export const Tables = ({
           (prev, curr) => prev + (curr?.availability?.total ?? 0),
           0,
         )
-      : data?.availability?.total || 0;
+      : 0;
 
   const totalAvailableGpus =
     filteredData?.length > 0
@@ -163,7 +163,7 @@ export const Tables = ({
           (prev, curr) => prev + (curr?.availability?.available ?? 0),
           0,
         )
-      : data?.availability?.available || 0;
+      : 0;
 
   return (
     <section
