@@ -15,7 +15,7 @@ const { icon, card, className, autoHeight } = Astro.props as Props;
 ---
 
 <div class={clsx("flex flex-col items-start", className)}>
-  <div class="flex items-start gap-3">
+  <div class="flex flex-col items-start gap-3 md:flex-row">
     <div
       class={"flex-shrink-0 rounded-lg border border-paraDark text-primary bg-background p-2"}
     >
@@ -33,12 +33,12 @@ const { icon, card, className, autoHeight } = Astro.props as Props;
       }
     </div>
     <h3
-      class={clsx("md:text-lg text-sm font-semibold ")}
+      class={clsx("text-base font-semibold md:text-lg")}
       set:html={card.title}
     />
   </div>
 
-  <div class="mt-2 md:mt-0">
+  <div class="md:mt-0">
     <p
       set:html={card.description}
       class="mt-2 flex-shrink-0 text-sm text-paraDark md:mt-4 md:text-base"
