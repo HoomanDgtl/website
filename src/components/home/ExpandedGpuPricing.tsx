@@ -312,8 +312,9 @@ const ExpandedGpu = () => {
                       key={i}
                       className={clsx(
                         " py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl ",
+                        i === 1 ? " border-t !border-[#DC1D28]" : "border-t",
                         i === 1 && index !== 1
-                          ? "bg-primary text-white"
+                          ? "bg-primary  text-white"
                           : "bg-background",
                       )}
                     >
