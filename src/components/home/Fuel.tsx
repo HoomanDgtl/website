@@ -230,7 +230,7 @@ const Fuel = () => {
         </div>
         <a
           href="/token/"
-          className="mt-10 flex items-center gap-2 rounded bg-white px-6  py-3 text-black"
+          className="mt-10 flex items-center gap-2 rounded bg-white px-6  py-3 text-black transition-all duration-300 hover:bg-white/80"
         >
           Learn How AKT Works
         </a>
