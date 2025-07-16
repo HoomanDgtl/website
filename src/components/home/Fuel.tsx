@@ -202,7 +202,7 @@ const Fuel = () => {
   }, []);
 
   return (
-    <section className="relative bg-[#a72c2d]">
+    <section className="relative bg-primary">
       <ParticlesBackground
         config={
           {
@@ -230,7 +230,7 @@ const Fuel = () => {
         </div>
         <a
           href="/token/"
-          className="mt-10 flex items-center gap-2 rounded bg-white px-6  py-3 text-black transition-all duration-300 hover:bg-white/80"
+          className="mt-10 flex items-center gap-2 rounded bg-white px-6  py-3 text-black transition-all duration-300 hover:bg-[#E9E9E9]"
         >
           Learn How AKT Works
         </a>
