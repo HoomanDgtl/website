@@ -6,6 +6,8 @@ linkTitle: "Tokens and Wallets"
 weight: 3
 ---
 
+This section guides you through setting up a wallet and acquiring AKT tokens. If you prefer to follow along with a video, you can find a guide [here](https://akashedu.thinkific.com/courses/take/ai-placeholder/lessons/64818615-akash-102-getting-started-with-akash).
+
 ## Why Do I Need a Wallet?
 
 When using cryptocurrency, setting up a wallet is crucial to hold and utilize your coins. A wallet, whether software or hardware, allows you to transfer cryptocurrency from an exchange to a usable location. Using your own wallet, as opposed to storing crypto on an exchange, reduces the risk of losing funds due to an exchange hack. Additionally, it enables you to deploy your crypto into Decentralized Finance (DeFi) applications like [Osmosis DEX](https://app.osmosis.zone) or stake your funds at higher rates. Exchange wallets are suitable for buying crypto, but non-exchange wallets are better for various other purposes.
@@ -155,3 +157,9 @@ Click "**I have saved it somewhere safe.**".
 
     All that is left is to send AKT tokens to the wallet address provided by Leap Cosmos Wallet.
     You can purchase AKT tokens [here](https://akash.network/token/#buying-akt).
+
+---
+
+## Next Steps
+
+Now that you have your wallet set up, you can start deploying applications on Akash! For the easiest deployment experience, try the **[GitHub Deploy Feature](/docs/getting-started/github-deploy-feature/)** which allows you to deploy applications directly from GitHub, GitLab, and Bitbucket repositories.

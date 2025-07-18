@@ -26,6 +26,7 @@ export const homePageSchema = defineCollection({
       }),
       infrastructureSection: z.object({
         title: z.string(),
+        description: z.string(),
         cards: z.array(
           z.object({
             title: z.string(),
@@ -82,41 +83,7 @@ export const homePageSchema = defineCollection({
             description: z.string(),
             link: z.string(),
             image: image(),
-          }),
-        ),
-        cards2: z.array(
-          z.object({
-            title: z.string(),
-            description: z.string(),
-            image: image(),
-            link: z.string(),
-            darkImage: image().optional(),
-          }),
-        ),
-        cards3: z.array(
-          z.object({
-            description: z.string(),
-            image: image(),
-            logoTitle: z.string(),
-            darkImage: image().optional(),
-            launchAppLink: z
-              .object({
-                label: z.string(),
-                link: z.string(),
-              })
-              .optional(),
-            docsLink: z
-              .object({
-                label: z.string(),
-                link: z.string(),
-              })
-              .optional(),
-            githubLink: z
-              .object({
-                label: z.string(),
-                link: z.string(),
-              })
-              .optional(),
+            button: z.string(),
           }),
         ),
       }),
