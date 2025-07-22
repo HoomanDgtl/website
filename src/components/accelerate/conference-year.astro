@@ -1,7 +1,17 @@
 ---
 import Layout from "@/layouts/layout.astro";
+import { socialLinks, subscribeLink } from "@/lib/constants";
 import { AccYear } from "@/utils/acc-years-data";
+import {
+  DiscordIcon,
+  GithubIcon,
+  TelegramIcon,
+  TwitterIcon,
+  YoutubeIcon,
+} from "../header/icons";
+
 import classNames from "classnames";
+import { ArrowUpCircle } from "lucide-react";
 const title = "Akash Accelerate";
 const description =
   "Akash Accelerate is a full-day summit that brings together the entire ecosystem for a packed agenda of talks, panels, and discussions exploring the future of decentralized compute and open-source AI.";
@@ -12,6 +22,34 @@ type Props = {
   currentYear: AccYear;
 };
 const { year, years, currentYear } = Astro.props;
+
+const socials = [
+  {
+    name: "Twitter",
+    link: socialLinks.twitter,
+    icon: TwitterIcon,
+  },
+  {
+    name: "Github",
+    link: socialLinks.github,
+    icon: GithubIcon,
+  },
+  {
+    name: "Discord",
+    link: socialLinks.discord,
+    icon: DiscordIcon,
+  },
+  {
+    name: "Youtube",
+    link: socialLinks.youtube,
+    icon: YoutubeIcon,
+  },
+  {
+    name: "Telegram",
+    link: socialLinks.telegram,
+    icon: TelegramIcon,
+  },
+];
 ---
 
 <Layout
@@ -19,7 +57,7 @@ const { year, years, currentYear } = Astro.props;
   description={description}
   image="/meta-images/acc-2024.png"
 >
-  <div class="flex flex-col py-10">
+  <div class="container-home flex flex-col pt-10">
     <section
       class="flex flex-col items-center justify-center gap-5 border-b pb-6"
     >
@@ -109,35 +147,104 @@ const { year, years, currentYear } = Astro.props;
         </div>
       </div>
     </section>
-    <section
-      class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10"
-    >
-      <p class="font-jetBrainsMono text-sm">Watch the Livestream</p>
-      <div class="aspect-video w-full overflow-hidden rounded-lg">
-        <iframe
-          src={currentYear.live}
-          class="h-full w-full"
-          title="Akash Accelerate Livestream"></iframe>
-      </div>
-    </section>
-    <section
-      class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10"
-    >
-      <p class="font-jetBrainsMono text-sm">
-        Highlights from Akash Accelerate 2024
-      </p>
-      <div class="grid w-full grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-5">
-        {
-          new Array(15).fill(0).map((_, index) => (
-            <div class="flex flex-col gap-3">
-              <div class="aspect-video w-full overflow-hidden  bg-lightGray" />
-              <h4 class="text-sm ">
-                Greg Osuri Keynote at Akash Accelerate 2025
-              </h4>
+    {
+      currentYear.upcoming ? (
+        <section class="flex flex-col items-center justify-center gap-8 pt-20">
+          <div class="flex max-w-4xl flex-col items-center justify-center gap-6">
+            <h2 class="text-5xl font-semibold">
+              Ready for Akash Accelerate 2026?{" "}
+            </h2>
+            <p class="text-center ">
+              Don’t miss your chance to see the next wave of decentralized cloud
+              breakthroughs. Secure early access to sneak peeks, hands‑on
+              workshops and visionary keynotes—exclusive insights you won’t find
+              anywhere else.
+            </p>
+            <p class="text-center ">
+              Be the first to know—subscribe now for exclusive news and
+              early‑bird access.
+            </p>
+          </div>
+          <a
+            target="_blank"
+            href={subscribeLink}
+            class="flex items-center justify-center rounded-md bg-primary px-12 py-3 text-lg text-white hover:bg-primary/90"
+          >
+            <ArrowUpCircle className="mr-2 size-6 rotate-45" /> Subscribe Now
+          </a>
+          <div class="mt-10 flex flex-col gap-4">
+            <p class="font-jetBrainsMono text-sm">Connect with Akash</p>
+            <div class="flex items-center justify-center gap-4">
+              {socials.map((social) => (
+                <a
+                  aria-label={`Akash Network ${social.name}`}
+                  href={social.link}
+                  target="_blank"
+                  class="flex items-center gap-4 text-linkText hover:text-primary"
+                >
+                  <social.icon />
+                </a>
+              ))}
             </div>
-          ))
-        }
-      </div>
-    </section>
+          </div>
+        </section>
+      ) : (
+        <>
+          {" "}
+          <section class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10">
+            <p class="font-jetBrainsMono text-sm">Watch the Livestream</p>
+            <div class="aspect-video w-full overflow-hidden rounded-lg">
+              <iframe
+                src={currentYear.live}
+                class="h-full w-full"
+                title="Akash Accelerate Livestream"
+              />
+            </div>
+          </section>
+          <section class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10">
+            <p class="font-jetBrainsMono text-sm">
+              Highlights from Akash Accelerate 2024
+            </p>
+            <div class="grid w-full grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
+              {new Array(15).fill(0).map((_, index) => (
+                <div class="flex flex-col gap-3">
+                  <div class="aspect-video w-full overflow-hidden  bg-lightGray" />
+                  <h4 class="text-sm ">
+                    Greg Osuri Keynote at Akash Accelerate 2025
+                  </h4>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section class="flex flex-col items-center justify-center gap-6 px-10 pt-10">
+            <p class="font-jetBrainsMono text-sm">Browse Sessions</p>
+            <div class="flex w-full flex-col divide-y">
+              {new Array(5).fill(0).map((_, index) => (
+                <div class="flex divide-x py-3">
+                  <div class="flex items-center gap-2 pr-3">
+                    <div class="size-10 rounded-full bg-lightGray" />
+                    <p class="text-foreground">
+                      <span class="text-sm font-semibold">Greg Osuri,</span>
+                      <span class="text-sm font-light">
+                        CEO Overclock Labs, Founder of Akash Network
+                      </span>
+                    </p>
+                  </div>
+                  <p class="flex flex-1 items-center  px-3 font-semibold text-foreground">
+                    Presentation Headline
+                  </p>
+                  <div class="flex items-center justify-center gap-2 pl-3">
+                    <p class="font-jetBrainsMono text-sm text-foreground">
+                      View on Youtube
+                    </p>
+                    <ArrowUpCircle className="size-4 rotate-45" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      )
+    }
   </div>
 </Layout>

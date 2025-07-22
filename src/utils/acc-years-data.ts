@@ -3,6 +3,7 @@ export type AccYear = {
   title?: string;
   images: string[];
   live: string;
+  upcoming?: boolean;
   sessions: {
     title: string;
     description: string;
@@ -44,7 +45,7 @@ export const accYearsData: AccYear[] = [
       "https://picsum.photos/200/300",
       "https://picsum.photos/200/300",
     ],
-    live: "https://www.youtube.com/embed/60mmj3bNzB0",
+    live: "https://www.youtube.com/embed/wiVrlo7XJA0",
     sessions: [
       {
         title: "Session 1",
@@ -68,7 +69,8 @@ export const accYearsData: AccYear[] = [
       "https://picsum.photos/200/300",
       "https://picsum.photos/200/300",
     ],
-    live: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    upcoming: true,
+    live: "https://www.youtube.com/embed/wiVrlo7XJA0",
     sessions: [
       {
         title: "Session 1",
