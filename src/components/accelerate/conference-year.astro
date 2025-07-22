@@ -1,0 +1,140 @@
+---
+import Layout from "@/layouts/layout.astro";
+import { AccYear } from "@/utils/acc-years-data";
+import classNames from "classnames";
+const title = "Akash Accelerate";
+const description =
+  "Akash Accelerate is a full-day summit that brings together the entire ecosystem for a packed agenda of talks, panels, and discussions exploring the future of decentralized compute and open-source AI.";
+
+type Props = {
+  year: string;
+  years: AccYear[];
+  currentYear: AccYear;
+};
+const { year, years, currentYear } = Astro.props;
+---
+
+<Layout
+  title={`${title} - ${year}`}
+  description={description}
+  image="/meta-images/acc-2024.png"
+>
+  <div class="flex flex-col py-10">
+    <section
+      class="flex flex-col items-center justify-center gap-5 border-b pb-6"
+    >
+      <svg
+        width="296"
+        height="42"
+        viewBox="0 0 296 42"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M39.4307 1.46429C49.9823 1.46436 59.4858 3.71524 66.3154 7.30511C73.1913 10.9193 77.1133 15.7405 77.1133 20.8022C77.1131 25.8637 73.1912 30.6851 66.3154 34.2993C59.4858 37.8891 49.9822 40.139 39.4307 40.1391C28.8789 40.1391 19.3746 37.8891 12.5449 34.2993C5.6692 30.6851 1.74721 25.8637 1.74707 20.8022C1.74707 15.7405 5.66908 10.9193 12.5449 7.30511C19.3746 3.71517 28.8788 1.46429 39.4307 1.46429Z"
+          stroke="currentColor"
+          stroke-width="1.9833"></path>
+        <path
+          d="M42.8105 24.3721L47.2441 29.9338L48.0299 31.8577H39.4331L35.1323 24.3721H42.8105Z"
+          fill="currentColor"></path>
+        <path
+          d="M48.0276 31.8582L52.3213 24.3726L43.7268 9.39783H35.1323L48.0276 31.8582Z"
+          fill="currentColor"></path>
+        <path
+          d="M30.8358 16.8818H39.4303L30.8394 31.8566L26.5386 24.371L30.8358 16.8818Z"
+          fill="currentColor"></path>
+        <path
+          d="M54.0622 9.5823C54.1166 9.31858 54.4933 9.31858 54.5477 9.5823L55.0356 11.9454C55.0556 12.0423 55.1313 12.118 55.2283 12.138L57.5913 12.6259C57.8551 12.6803 57.8551 13.057 57.5913 13.1115L55.2283 13.5993C55.1313 13.6193 55.0556 13.6951 55.0356 13.792L54.5477 16.1551C54.4933 16.4188 54.1166 16.4188 54.0622 16.1551L53.5743 13.792C53.5543 13.6951 53.4786 13.6193 53.3816 13.5993L51.0186 13.1115C50.7549 13.057 50.7549 12.6803 51.0186 12.6259L53.3816 12.138C53.4786 12.118 53.5543 12.0423 53.5743 11.9454L54.0622 9.5823Z"
+          fill="currentColor"></path>
+        <path
+          d="M162.406 1.4129C175.671 1.41293 187.631 3.68165 196.238 7.31036C200.543 9.12551 203.961 11.2609 206.288 13.5799C208.61 15.895 209.793 18.3348 209.793 20.8016C209.793 23.2685 208.61 25.708 206.288 28.0233C203.961 30.3424 200.543 32.4785 196.238 34.2938C187.631 37.9225 175.671 40.1912 162.406 40.1912C149.141 40.1912 137.18 37.9226 128.573 34.2938C124.268 32.4785 120.85 30.3424 118.523 28.0233C116.201 25.7081 115.019 23.2684 115.019 20.8016C115.019 18.3348 116.201 15.895 118.523 13.5799C120.85 11.2609 124.268 9.12556 128.573 7.31036C137.18 3.68157 149.141 1.4129 162.406 1.4129Z"
+          stroke="currentColor"
+          stroke-width="2.04096"></path>
+        <path
+          d="M162.405 1.4129C175.379 1.4129 185.589 10.2496 185.589 20.8016C185.589 31.3538 175.379 40.1912 162.405 40.1912C149.432 40.1911 139.223 31.3537 139.223 20.8016C139.223 10.2497 149.432 1.41307 162.405 1.4129Z"
+          stroke="currentColor"
+          stroke-width="2.04096"></path>
+        <path
+          d="M162.406 1.41284C181.807 1.41284 199.333 3.69044 211.977 7.35034C218.305 9.18228 223.352 11.3445 226.794 13.7C230.269 16.0779 231.891 18.4953 231.891 20.8015C231.891 23.1079 230.269 25.5259 226.794 27.9041C223.352 30.2595 218.305 32.4217 211.977 34.2537C199.333 37.9136 181.807 40.1912 162.406 40.1912C143.004 40.1912 125.478 37.9136 112.834 34.2537C106.506 32.4217 101.459 30.2595 98.0168 27.9041C94.5421 25.5259 92.9202 23.1079 92.9202 20.8015C92.9204 18.4953 94.5423 16.0779 98.0168 13.7C101.459 11.3445 106.506 9.18228 112.834 7.35034C125.478 3.69045 143.004 1.41284 162.406 1.41284Z"
+          stroke="currentColor"
+          stroke-width="2.04096"></path>
+        <line
+          x1="94.0044"
+          y1="19.7815"
+          x2="231.859"
+          y2="19.7815"
+          stroke="currentColor"
+          stroke-width="2.04096"></line>
+        <line
+          x1="162.374"
+          y1="1.2796"
+          x2="162.374"
+          y2="41.2114"
+          stroke="currentColor"
+          stroke-width="2.04096"></line>
+        <path
+          d="M292.181 20.3693C292.501 20.5692 292.501 21.0347 292.181 21.2346L271.633 34.0871C271.293 34.2996 270.851 34.0552 270.851 33.6545L270.851 7.9494C270.851 7.5487 271.293 7.3043 271.633 7.51678L292.181 20.3693Z"
+          stroke="currentColor"
+          stroke-width="2.03858"></path>
+        <path
+          d="M268.7 20.3752C269.008 20.5765 269.008 21.0274 268.7 21.2287L249.105 34.0178C248.766 34.2389 248.316 33.9951 248.316 33.59L248.316 8.01385C248.316 7.6088 248.766 7.36493 249.105 7.58612L268.7 20.3752Z"
+          stroke="currentColor"
+          stroke-width="2.03858"></path>
+      </svg>
+      <h1 class="text-[72px] font-semibold leading-[1]">{title}</h1>
+      <p class="max-w-3xl text-center text-base">{description}</p>
+
+      <div class="mt-5 flex flex-col items-center justify-center gap-6">
+        <p class="font-jetBrainsMono text-sm font-light">
+          Choose Conference Year
+        </p>
+        <div class="flex">
+          {
+            years &&
+              years.map((cy) => (
+                <a
+                  href={`/akash-accelerate/${cy.year}`}
+                  class={classNames(
+                    "rounded-full    px-10 py-3 text-sm font-semibold",
+                    {
+                      "border  bg-lightGray ": cy.year === Number(year),
+                      "text-para": cy.year !== Number(year),
+                    }
+                  )}
+                >
+                  {cy.year}
+                </a>
+              ))
+          }
+        </div>
+      </div>
+    </section>
+    <section
+      class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10"
+    >
+      <p class="font-jetBrainsMono text-sm">Watch the Livestream</p>
+      <div class="aspect-video w-full overflow-hidden rounded-lg">
+        <iframe
+          src={currentYear.live}
+          class="h-full w-full"
+          title="Akash Accelerate Livestream"></iframe>
+      </div>
+    </section>
+    <section
+      class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10"
+    >
+      <p class="font-jetBrainsMono text-sm">
+        Highlights from Akash Accelerate 2024
+      </p>
+      <div class="grid grid-cols-5 gap-5">
+        {
+          new Array(15)
+            .fill(0)
+            .map((_, index) => (
+              <div class="h-10 w-full overflow-hidden rounded-lg bg-red-500" />
+            ))
+        }
+      </div>
+    </section>
+  </div>
+</Layout>

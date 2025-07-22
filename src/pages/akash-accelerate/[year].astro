@@ -1,0 +1,17 @@
+---
+import ConferenceYear from "@/components/accelerate/conference-year.astro";
+import { accYearsData } from "@/utils/acc-years-data";
+
+export async function getStaticPaths() {
+  return accYearsData.map((year) => ({
+    params: { year: year.year.toString() },
+  }));
+}
+const { year } = Astro.params;
+---
+
+<ConferenceYear
+  year={year}
+  years={accYearsData}
+  currentYear={accYearsData.find((y) => y.year === Number(year))!}
+/>
