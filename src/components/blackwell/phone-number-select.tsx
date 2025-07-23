@@ -27,17 +27,20 @@ type PhoneInputProps = Omit<
 > &
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
+    modal?: boolean;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, ...props }, ref) => {
+    ({ className, onChange, modal, ...props }, ref) => {
       return (
         <RPNInput.default
           ref={ref}
           className={cn("flex  ", className)}
           flagComponent={FlagComponent}
-          countrySelectComponent={CountrySelect}
+          countrySelectComponent={(props) => (
+            <CountrySelect modal={modal} {...props} />
+          )}
           inputComponent={InputComponent}
           smartCaret={false}
           /**
@@ -76,6 +79,7 @@ type CountrySelectProps = {
   value: RPNInput.Country;
   options: CountryEntry[];
   onChange: (country: RPNInput.Country) => void;
+  modal?: boolean;
 };
 
 const CountrySelect = ({
@@ -83,9 +87,10 @@ const CountrySelect = ({
   value: selectedCountry,
   options: countryList,
   onChange,
+  modal = false,
 }: CountrySelectProps) => {
   return (
-    <Popover>
+    <Popover modal={modal}>
       <PopoverTrigger asChild>
         <Button
           type="button"

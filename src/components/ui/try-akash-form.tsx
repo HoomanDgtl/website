@@ -1,15 +1,24 @@
+import { PhoneInput } from "@/components/blackwell/phone-number-select";
 import { speakToExpertVariants } from "@/components/pricing-page/SpeakToExpert";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { VariantProps } from "class-variance-authority";
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface TryAkashFormProps extends VariantProps<typeof speakToExpertVariants> {
   type:
@@ -33,7 +42,206 @@ export default function TryAkashForm({
   linkText,
 }: TryAkashFormProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const randomId = Math.random().toString(36).substring(2, 15);
+  const [submitted, setSubmitted] = useState(false);
+  const [step, setStep] = useState(1);
+  // 1. Add country data for select and flag
+  const [countryDialogOpen, setCountryDialogOpen] = useState(false);
+  const [countries, setCountries] = useState<any[]>([]);
+
+  // Fetch country data from a public API (on mount)
+  useEffect(() => {
+    fetch("https://restcountries.com/v3.1/all?fields=name,idd,cca2,flags")
+      .then((res) => res.json())
+      .then((data) => {
+        const mapped = data
+          .filter((c: any) => c.idd?.root && c.idd?.suffixes && c.cca2)
+          .map((c: any) => ({
+            code: c.cca2,
+            name: c.name.common,
+            dial: c.idd.root + (c.idd.suffixes[0] || ""),
+            flag: c.flags.svg,
+          }))
+          .sort((a: any, b: any) => a.name.localeCompare(b.name));
+        setCountries(mapped);
+      });
+  }, []);
+
+  // 2. Add country to formData
+  const [formData, setFormData] = useState<{
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    country: string;
+    how_are_you_looking_to_use_akash_: string[];
+    company: string;
+    website: string;
+    project_details: string;
+    current_gpu_usage: string; // For Rent GPUs
+    provider_gpu_type: string; // For Provide GPUs
+    gpu_quantity_available: string; // For Provide GPUs
+    support_request_info: string; // For Support
+  }>({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    country: "IN",
+    how_are_you_looking_to_use_akash_: [],
+    company: "",
+    website: "",
+    project_details: "",
+    current_gpu_usage: "",
+    provider_gpu_type: "",
+    gpu_quantity_available: "",
+    support_request_info: "",
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [submitError, setSubmitError] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  function formFieldsToHSJSON() {
+    const result = [];
+    for (const [name, value] of Object.entries(formData)) {
+      if (name === "how_are_you_looking_to_use_akash_") {
+        result.push({
+          name: "how_are_you_looking_to_use_akash_",
+          value: Array.isArray(value) ? value.join(", ") : value,
+        });
+      } else {
+        result.push({ name, value });
+      }
+    }
+    return result;
+  }
+
+  function getCookie(name: string) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  }
+
+  function buildHSContext() {
+    return {
+      hutk: getCookie("hubspotutk"),
+      pageUri: window.location.href,
+      pageName: document.title,
+    };
+  }
+
+  function validateStep1() {
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.firstname) newErrors.firstname = "First Name is required";
+    if (!formData.lastname) newErrors.lastname = "Last Name is required";
+    if (!formData.email) newErrors.email = "Email is required";
+    if (
+      !formData.how_are_you_looking_to_use_akash_ ||
+      formData.how_are_you_looking_to_use_akash_.length === 0
+    )
+      newErrors.how_are_you_looking_to_use_akash_ =
+        "Please select at least one option";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  function validateStep2() {
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.company)
+      newErrors.company = "Company / Project Name is required";
+    // Rent GPUs validation
+    if (
+      formData.how_are_you_looking_to_use_akash_.includes("Rent GPUs") &&
+      !formData.current_gpu_usage
+    ) {
+      newErrors.current_gpu_usage = "Please select your current compute spend";
+    }
+    // Provide GPUs validation
+    if (formData.how_are_you_looking_to_use_akash_.includes("Provide GPUs")) {
+      if (!formData.provider_gpu_type) {
+        newErrors.provider_gpu_type = "Please select GPU type";
+      }
+      if (!formData.gpu_quantity_available) {
+        newErrors.gpu_quantity_available = "Please select GPU quantity";
+      }
+    }
+    // Support validation
+    if (
+      formData.how_are_you_looking_to_use_akash_.includes(
+        "Get technical support",
+      ) &&
+      !formData.support_request_info
+    ) {
+      newErrors.support_request_info = "Please provide support request info";
+    }
+    setErrors((prev) => ({ ...prev, ...newErrors }));
+    return Object.keys(newErrors).length === 0;
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (step === 1) {
+      if (validateStep1()) setStep(2);
+      return;
+    }
+    if (!validateStep2()) return;
+    const submission = {
+      fields: formFieldsToHSJSON(),
+      context: buildHSContext(),
+    };
+    const res = await fetch(
+      "https://api.hsforms.com/submissions/v3/integration/submit/47519938/f6d48b8a-55fd-4327-b947-1ae5b33ed63f",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submission),
+      },
+    );
+    if (res.ok) {
+      setSubmitted(true);
+      setSubmitError("");
+      window.location.href = "/meeting-confirmation";
+    } else {
+      setSubmitError("Submission failed. Please try again.");
+    }
+  }
+
+  function handleChange(
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
+  ) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  }
+
+  function handlePhoneChange(value: string | undefined) {
+    setFormData((prev) => ({ ...prev, phone: value || "" }));
+    setErrors((prev) => ({ ...prev, phone: "" }));
+  }
+
+  function handleCheckboxChange(option: string) {
+    setFormData((prev) => {
+      const arr = prev.how_are_you_looking_to_use_akash_;
+      if (arr.includes(option)) {
+        return {
+          ...prev,
+          how_are_you_looking_to_use_akash_: arr.filter((o) => o !== option),
+        };
+      } else {
+        return {
+          ...prev,
+          how_are_you_looking_to_use_akash_: [...arr, option],
+        };
+      }
+    });
+    setErrors((prev) => ({ ...prev, how_are_you_looking_to_use_akash_: "" }));
+  }
+
+  function handleBack() {
+    setStep(1);
+  }
+
   const defaultButton = (
     <button
       type="button"
@@ -51,7 +259,7 @@ export default function TryAkashForm({
     <button
       type="button"
       className={clsx(
-        " cursor-pointer rounded-md bg-primary px-10 py-2.5  !font-medium text-white transition-all hover:bg-primary/90 md:px-[60px] md:py-5 lg:text-xl",
+        " cursor-pointer rounded-md bg-primary px-10 py-2.5  !font-medium  transition-all hover:bg-primary/90 md:px-[60px] md:py-5 lg:text-xl",
         fullWidth ? "w-full" : "mx-auto",
       )}
     >
@@ -198,25 +406,350 @@ export default function TryAkashForm({
       </DialogTrigger>
       <DialogContent
         hideCloseButton
-        overlayClassName="z-[99]"
-        className="hide-scrollbar  z-[100] max-h-[95vh] overflow-hidden overflow-y-auto !border-none  bg-transparent p-0 shadow-none sm:max-w-[600px]"
+        className="hide-scrollbar  z-[50] max-h-[95vh] overflow-hidden overflow-y-auto !border-none  bg-transparent p-0 shadow-none sm:max-w-[600px]"
       >
         <DialogTitle className="sr-only">Form</DialogTitle>
-        <button
-          onClick={() => {
-            setIsOpen(false);
-          }}
-          className="absolute right-4 top-4 rounded-full bg-white p-2 text-black hover:bg-white/90"
-        >
-          <X className="h-4 w-4" />
-        </button>
-        <div
-          id={`hs-form-iframe-${randomId}`}
-          className="hs-form-frame"
-          data-region="na1"
-          data-form-id="f6d48b8a-55fd-4327-b947-1ae5b33ed63f"
-          data-portal-id="47519938"
-        />
+
+        {submitted ? null : (
+          <form
+            id="custom-hs-form"
+            ref={formRef}
+            className="mx-auto w-full max-w-md space-y-6 rounded-xl bg-background px-6 py-8 shadow-lg "
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
+            {submitError && (
+              <div className="mb-4 rounded bg-red-100 px-3 py-2 text-sm text-red-700">
+                {submitError}
+              </div>
+            )}
+            <div>
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="mb-1 text-center text-2xl font-bold text-foreground">
+                  Get Started With Akash
+                </h2>
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    setSubmitted(false);
+                  }}
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <p className="mb-6  text-sm">
+                Please complete the information below to help guide you to the
+                right place.
+              </p>
+            </div>
+            {step === 1 && (
+              <>
+                <div>
+                  <label className="mb-1 block text-sm ">First Name</label>
+                  <Input
+                    name="firstname"
+                    value={formData.firstname}
+                    onChange={handleChange}
+                    placeholder="First Name"
+                    required
+                    className="w-full border  bg-background2 text-foreground"
+                  />
+                  {errors.firstname && (
+                    <span className="text-xs text-red-400">
+                      {errors.firstname}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm">Last Name</label>
+                  <Input
+                    name="lastname"
+                    value={formData.lastname}
+                    onChange={handleChange}
+                    placeholder="Last Name"
+                    required
+                    className="w-full border  bg-background2 "
+                  />
+                  {errors.lastname && (
+                    <span className="text-xs text-red-400">
+                      {errors.lastname}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm">
+                    Email<span className="text-red-400">*</span>
+                  </label>
+                  <Input
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    required
+                    className="w-full border  bg-background2 "
+                  />
+                  {errors.email && (
+                    <span className="text-xs text-red-400">{errors.email}</span>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm">Phone Number</label>
+                  <PhoneInput
+                    placeholder="+1"
+                    value={formData.phone}
+                    onChange={handlePhoneChange}
+                    modal={true}
+                  />
+                  {errors.phone && (
+                    <span className="text-xs text-red-400">{errors.phone}</span>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm">
+                    What would you like to do on Akash?
+                    <span className="text-red-400">*</span>
+                  </label>
+                  <div className="flex flex-col gap-2">
+                    {[
+                      "Rent GPUs",
+                      "Provide GPUs",
+                      "Get technical support",
+                      "Other",
+                    ].map((option) => (
+                      <label
+                        key={option}
+                        className="flex items-center gap-2 text-sm"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.how_are_you_looking_to_use_akash_.includes(
+                            option,
+                          )}
+                          onChange={() => handleCheckboxChange(option)}
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+                  {errors.how_are_you_looking_to_use_akash_ && (
+                    <span className="text-xs text-red-400">
+                      {errors.how_are_you_looking_to_use_akash_}
+                    </span>
+                  )}
+                </div>
+                <Button type="submit" className="w-full">
+                  Next
+                </Button>
+              </>
+            )}
+            {step === 2 && (
+              <>
+                <div>
+                  <label className="mb-1 block text-sm">
+                    Company / Project Name
+                    <span className="text-red-400">*</span>
+                  </label>
+                  <Input
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    placeholder="Company / Project Name"
+                    required
+                    className="w-full border  bg-background2 "
+                  />
+                  {errors.company && (
+                    <span className="text-xs text-red-400">
+                      {errors.company}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm">Website URL</label>
+                  <Input
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    placeholder="Website URL"
+                    className="w-full border  bg-background2 "
+                  />
+                </div>
+                {/* Rent GPUs conditional field */}
+                {formData.how_are_you_looking_to_use_akash_.includes(
+                  "Rent GPUs",
+                ) && (
+                  <div>
+                    <label className="mb-1 block text-sm">
+                      How much are you currently spending on compute?
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <Select
+                      value={formData.current_gpu_usage}
+                      onValueChange={(value) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          current_gpu_usage: value,
+                        }));
+                        setErrors((prev) => ({
+                          ...prev,
+                          current_gpu_usage: "",
+                        }));
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select an option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="<$1000/mo">$0-$1,000/mo</SelectItem>
+                        <SelectItem value="$1,000-$5,000">
+                          $1,000-$5,000
+                        </SelectItem>
+                        <SelectItem value="$5,000-$25,000">
+                          $5,000-$25,000
+                        </SelectItem>
+                        <SelectItem value="$25,000+">$25,000+</SelectItem>
+                        <SelectItem value="No Spend Currently">
+                          No Spend Currently
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.current_gpu_usage && (
+                      <span className="text-xs text-red-400">
+                        {errors.current_gpu_usage}
+                      </span>
+                    )}
+                  </div>
+                )}
+                {/* Provide GPUs conditional fields */}
+                {formData.how_are_you_looking_to_use_akash_.includes(
+                  "Provide GPUs",
+                ) && (
+                  <>
+                    <div>
+                      <label className="mb-1 block text-sm">
+                        What type of GPUs do you want to provide?
+                        <span className="text-red-400">*</span>
+                      </label>
+                      <Select
+                        value={formData.provider_gpu_type}
+                        onValueChange={(value) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            provider_gpu_type: value,
+                          }));
+                          setErrors((prev) => ({
+                            ...prev,
+                            provider_gpu_type: "",
+                          }));
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select GPU type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="H200">H200</SelectItem>
+                          <SelectItem value="H100">H100</SelectItem>
+                          <SelectItem value="A100">A100</SelectItem>
+                          <SelectItem value="RTX4090">RTX4090</SelectItem>
+                          <SelectItem value="A6000">A6000</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {errors.provider_gpu_type && (
+                        <span className="text-xs text-red-400">
+                          {errors.provider_gpu_type}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <label className="mb-1 block text-sm">
+                        How many total GPUs do you want to provide?
+                        <span className="text-red-400">*</span>
+                      </label>
+                      <Select
+                        value={formData.gpu_quantity_available}
+                        onValueChange={(value) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            gpu_quantity_available: value,
+                          }));
+                          setErrors((prev) => ({
+                            ...prev,
+                            gpu_quantity_available: "",
+                          }));
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select quantity" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1</SelectItem>
+                          <SelectItem value="2-5">2-5</SelectItem>
+                          <SelectItem value="5-10">5-10</SelectItem>
+                          <SelectItem value="10+">10+</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {errors.gpu_quantity_available && (
+                        <span className="text-xs text-red-400">
+                          {errors.gpu_quantity_available}
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+                {/* Support Request conditional field */}
+                {formData.how_are_you_looking_to_use_akash_.includes(
+                  "Get technical support",
+                ) && (
+                  <div>
+                    <label className="mb-1 block text-sm">
+                      Support Request Info
+                      <span className="text-red-400">*</span>
+                    </label>
+                    <textarea
+                      name="support_request_info"
+                      value={formData.support_request_info}
+                      onChange={handleChange}
+                      placeholder="Describe your support request"
+                      rows={3}
+                      className="w-full rounded border bg-background2 px-3 py-2 text-sm focus:outline-none"
+                      required
+                    />
+                    {errors.support_request_info && (
+                      <span className="text-xs text-red-400">
+                        {errors.support_request_info}
+                      </span>
+                    )}
+                  </div>
+                )}
+                <div>
+                  <label className="mb-1 block text-sm">Project Details</label>
+                  <textarea
+                    name="project_details"
+                    value={formData.project_details}
+                    onChange={handleChange}
+                    placeholder="Project Details"
+                    rows={4}
+                    className="w-full rounded border bg-background2  px-3 py-2 text-sm  focus:outline-none"
+                  />
+                </div>
+                <div className="mt-4 flex gap-2">
+                  <Button
+                    type="button"
+                    onClick={handleBack}
+                    variant="outline"
+                    className="flex-1"
+                  >
+                    Back
+                  </Button>
+                  <Button type="submit" className="flex-1">
+                    Submit
+                  </Button>
+                </div>
+              </>
+            )}
+          </form>
+        )}
       </DialogContent>
     </Dialog>
   );
