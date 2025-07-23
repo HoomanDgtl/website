@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import type { VariantProps } from "class-variance-authority";
 import clsx from "clsx";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface TryAkashFormProps extends VariantProps<typeof speakToExpertVariants> {
@@ -99,6 +99,7 @@ export default function TryAkashForm({
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitError, setSubmitError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function formFieldsToHSJSON() {
     const result = [];
@@ -184,24 +185,31 @@ export default function TryAkashForm({
       return;
     }
     if (!validateStep2()) return;
+    setIsSubmitting(true);
     const submission = {
       fields: formFieldsToHSJSON(),
       context: buildHSContext(),
     };
-    const res = await fetch(
-      "https://api.hsforms.com/submissions/v3/integration/submit/47519938/f6d48b8a-55fd-4327-b947-1ae5b33ed63f",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submission),
-      },
-    );
-    if (res.ok) {
-      setSubmitted(true);
-      setSubmitError("");
-      window.location.href = "/meeting-confirmation";
-    } else {
+    try {
+      const res = await fetch(
+        "https://api.hsforms.com/submissions/v3/integration/submit/47519938/f6d48b8a-55fd-4327-b947-1ae5b33ed63f",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submission),
+        },
+      );
+      if (res.ok) {
+        setSubmitted(true);
+        setSubmitError("");
+        window.location.href = "/meetingconfirmation";
+      } else {
+        setSubmitError("Submission failed. Please try again.");
+      }
+    } catch (error) {
       setSubmitError("Submission failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -538,7 +546,11 @@ export default function TryAkashForm({
                     </span>
                   )}
                 </div>
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
                   Next
                 </Button>
               </>
@@ -739,11 +751,23 @@ export default function TryAkashForm({
                     onClick={handleBack}
                     variant="outline"
                     className="flex-1"
+                    disabled={isSubmitting}
                   >
                     Back
                   </Button>
-                  <Button type="submit" className="flex-1">
-                    Submit
+                  <Button
+                    type="submit"
+                    className="flex-1"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Submitting...
+                      </span>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </div>
               </>
