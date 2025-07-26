@@ -88,4 +88,4 @@ If you believe in open infrastructure, want to shape the future of decentralized
 
 Applications are now open.
 
-**Start here →** [Apply Link](https://akashnet.typeform.com/to/PXpRWgfD?typeform-source=akash.network)
+**Start here →** [Apply Link](/community/akash-insiders/)
