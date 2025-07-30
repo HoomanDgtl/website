@@ -7,4 +7,5 @@ export interface CarouselProps {
   images: CarouselImage[];
   speed?: number;
   gap?: number;
+  itemClassName?: string;
 }

@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/layout.astro";
 import { socialLinks, subscribeLink } from "@/lib/constants";
-import { AccYear } from "@/utils/acc-years-data";
+import type { AccYear } from "@/utils/acc-years-data";
 import {
   DiscordIcon,
   GithubIcon,
@@ -12,6 +12,7 @@ import {
 
 import classNames from "classnames";
 import { ArrowUpCircle } from "lucide-react";
+import { Carousel } from "../community-pages/custom-carousel/Carousel";
 const title = "Akash Accelerate";
 const description =
   "Akash Accelerate is a full-day summit that brings together the entire ecosystem for a packed agenda of talks, panels, and discussions exploring the future of decentralized compute and open-source AI.";
@@ -50,6 +51,11 @@ const socials = [
     icon: TelegramIcon,
   },
 ];
+
+const carouselImages = currentYear.images?.map((image, index) => ({
+  src: image,
+  alt: `Akash Accelerate ${year} highlight ${index + 1}`,
+}));
 ---
 
 <Layout
@@ -147,6 +153,7 @@ const socials = [
         </div>
       </div>
     </section>
+
     {
       currentYear.upcoming ? (
         <section class="flex flex-col items-center justify-center gap-8 pt-20">
@@ -216,7 +223,7 @@ const socials = [
               ))}
             </div>
           </section>
-          <section class="flex flex-col items-center justify-center gap-6 px-10 pt-10">
+          <section class="flex flex-col items-center justify-center gap-6 border-b px-10 py-10">
             <p class="font-jetBrainsMono text-sm">Browse Sessions</p>
             <div class="flex w-full flex-col divide-y">
               {new Array(5).fill(0).map((_, index) => (
@@ -243,6 +250,21 @@ const socials = [
               ))}
             </div>
           </section>
+          {currentYear?.images && (
+            <section class="flex flex-col gap-6 pt-10">
+              <p class="text-center font-jetBrainsMono text-sm">
+                Highlights from Akash Accelerate {year}
+              </p>
+
+              <Carousel
+                images={carouselImages || []}
+                speed={50}
+                gap={10}
+                client:only
+                itemClassName="!mx-1"
+              />
+            </section>
+          )}
         </>
       )
     }

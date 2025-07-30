@@ -1,7 +1,7 @@
 export type AccYear = {
   year: number;
   title?: string;
-  images: string[];
+
   live: string;
   upcoming?: boolean;
   sessions: {
@@ -11,16 +11,13 @@ export type AccYear = {
       name: string;
     }[];
   }[];
+  images?: string[];
 };
 
 export const accYearsData: AccYear[] = [
   {
     year: 2024,
-    images: [
-      "https://picsum.photos/200/300",
-      "https://picsum.photos/200/300",
-      "https://picsum.photos/200/300",
-    ],
+
     live: "https://www.youtube.com/embed/60mmj3bNzB0",
     sessions: [
       {
@@ -40,11 +37,7 @@ export const accYearsData: AccYear[] = [
   {
     year: 2025,
     title: "Akash Accelerate 2025",
-    images: [
-      "https://picsum.photos/200/300",
-      "https://picsum.photos/200/300",
-      "https://picsum.photos/200/300",
-    ],
+
     live: "https://www.youtube.com/embed/wiVrlo7XJA0",
     sessions: [
       {
@@ -60,15 +53,29 @@ export const accYearsData: AccYear[] = [
         ],
       },
     ],
+    images: [
+      "/images/accelerate/2025/1.png",
+      "/images/accelerate/2025/2.png",
+      "/images/accelerate/2025/3.png",
+      "/images/accelerate/2025/4.png",
+      "/images/accelerate/2025/5.png",
+      "/images/accelerate/2025/6.png",
+      "/images/accelerate/2025/7.png",
+      "/images/accelerate/2025/8.png",
+      "/images/accelerate/2025/9.png",
+      "/images/accelerate/2025/10.png",
+      "/images/accelerate/2025/11.png",
+      "/images/accelerate/2025/12.png",
+      "/images/accelerate/2025/13.png",
+      "/images/accelerate/2025/14.png",
+      "/images/accelerate/2025/15.png",
+      "/images/accelerate/2025/16.png",
+    ],
   },
   {
     year: 2026,
     title: "Akash Accelerate 2025",
-    images: [
-      "https://picsum.photos/200/300",
-      "https://picsum.photos/200/300",
-      "https://picsum.photos/200/300",
-    ],
+
     upcoming: true,
     live: "https://www.youtube.com/embed/wiVrlo7XJA0",
     sessions: [
