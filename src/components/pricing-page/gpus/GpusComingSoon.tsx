@@ -81,8 +81,9 @@ export const NVIDIAB200SoonForm = ({
   const button = (
     <button className="flex w-full items-center justify-center bg-primary px-3 py-2">
       <div>
-        <p className="text-center text-sm font-semibold text-white underline">
-          NVIDIA B200/300 are coming to Akash - Get Early Access
+        <p className="text-center text-sm font-semibold text-white ">
+          NVIDIA B200/300 are coming to Akash -{" "}
+          <span className="underline">Get Early Access</span>
         </p>
       </div>
     </button>
