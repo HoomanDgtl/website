@@ -276,6 +276,7 @@ const ExpandedGpu = () => {
                 )}
               >
                 {prices[0][index]}
+                {index !== 0 && "/hr"}
               </h4>
             </div>
           ))}
@@ -304,6 +305,7 @@ const ExpandedGpu = () => {
                       )}
                     >
                       {item}
+                      {i !== 0 && "/hr"}
                     </h4>
                   ))}
                 </div>
