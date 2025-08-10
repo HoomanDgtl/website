@@ -226,9 +226,8 @@ const ExpandedGpu = () => {
     <div className="flex flex-col justify-center gap-8 md:gap-16">
       <div className="flex flex-col gap-1 md:gap-3">
         <h2 className="text-center text-2xl font-semibold md:text-[40px]">
-          GPU's at Costs <br className="md:hidden" /> That Scale
+          GPU's at Costs That Scale
         </h2>
-        <p className="text-center text-sm font-medium">(Costing per hour)</p>
       </div>
       <div className="shadow">
         <div className="grid w-full grid-cols-5 rounded-t-lg border">
