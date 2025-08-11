@@ -279,7 +279,7 @@ const ExpandedGpu = () => {
               >
                 {prices[0][index]}
                 {index !== 0 && (
-                  <span className="hidden md:inline-flex">/hr</span>
+                  <span className="inline-flex text-xs  md:text-xl">/hr</span>
                 )}
               </h4>
             </div>
@@ -310,7 +310,9 @@ const ExpandedGpu = () => {
                     >
                       {item}
                       {i !== 0 && (
-                        <span className="hidden md:inline-flex">/hr</span>
+                        <span className="inline-flex text-xs md:text-xl">
+                          /hr
+                        </span>
                       )}
                     </h4>
                   ))}
