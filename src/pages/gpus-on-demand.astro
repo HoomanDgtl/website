@@ -1,0 +1,76 @@
+---
+import { GpuContactForm } from "@/components/gpus-on-demand/GpuContactForm";
+
+import TopMargin from "@/components/ui/top-margin.astro";
+import Layout from "@/layouts/layout.astro";
+import "@/styles/globals.css";
+
+import { readyToDeploy, whyChooseSection } from "@/lib/constants";
+---
+
+<Layout
+  title="Get Access to GPUs On Demand | Akash Network"
+  description="Need affordable, high-performance GPU compute? From training models to running inference or deploying a containerized apps Akash covers all your compute needs."
+>
+  <TopMargin className="container-small" isNotContainer>
+    <section
+      class="flex min-h-screen flex-col gap-12 lg:grid lg:grid-cols-2 lg:gap-20"
+    >
+      <div class="flex flex-col gap-12 lg:gap-16">
+        <div class="flex flex-col gap-4">
+          <h1 class="text-4xl !font-semibold leading-[1.2] lg:text-[54px]">
+            Get Access to GPUs<br /> On Demand
+          </h1>
+          <p class="text-para md:text-lg">
+            Need affordable, high-performance GPU compute? From training models
+            to running inference or deploying a containerized apps Akash covers
+            all your compute needs.
+          </p>
+          <p class="text-para md:text-lg">
+            This quick form helps us understand your needs so we can help you
+            get started.
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <h2 class="text-3xl font-semibold">Why Choose Akash Network?</h2>
+          <div class="grid gap-4 md:grid-cols-2">
+            {
+              whyChooseSection.cards.map((card: any) => (
+                <div class="flex items-center gap-3 rounded-md border px-4 py-4">
+                  <div set:html={card.icon} class="size-10" />
+
+                  <h3
+                    class="text-lg font-semibold leading-[1.2]"
+                    set:html={card?.title}
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div class="flex flex-col gap-6">
+          <h2 class="text-3xl font-semibold">
+            Ready to deploy on the Supercloud?
+          </h2>
+          <div class="grid gap-4 md:grid-cols-2">
+            {
+              readyToDeploy.map((card: any) => (
+                <div class="flex flex-col   gap-1 rounded-md border px-5 py-4">
+                  <h2 class="text-[40px] font-semibold leading-[1]">
+                    {card.title}
+                  </h2>
+                  <p>{card.description}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-8 rounded-lg border p-6 md:p-14">
+        <h2 class="text-2xl font-medium">Tell Us What You Need</h2>
+        <GpuContactForm client:load />
+      </div>
+    </section>
+  </TopMargin>
+</Layout>

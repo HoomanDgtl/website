@@ -1,22 +1,5 @@
 ---
-const data = [
-  {
-    title: "85%",
-    description: "Average Cost Savings",
-  },
-  {
-    title: "50+",
-    description: "Provider Locations",
-  },
-  {
-    title: "2min",
-    description: "Deployment Speed",
-  },
-  {
-    title: "99%",
-    description: "Customer Satisfaction",
-  },
-];
+import { readyToDeploy } from "@/lib/constants";
 ---
 
 <section class="bg-[#1c1c1c] py-12 md:py-20">
@@ -34,7 +17,7 @@ const data = [
     </div>
     <div class="grid w-full grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4">
       {
-        data.map((item) => (
+        readyToDeploy.map((item) => (
           <div class="relative flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background2 py-4 shadow-xl md:py-14">
             <div class="pointer-events-none absolute -top-5 left-1/2 -translate-x-1/2  select-none whitespace-nowrap bg-gradient-to-b from-white/80 to-background2 bg-clip-text text-6xl font-semibold tracking-wide  text-transparent opacity-10 md:text-8xl">
               {item.title}
