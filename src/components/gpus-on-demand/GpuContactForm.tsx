@@ -1,7 +1,7 @@
 import { PhoneInput } from "@/components/blackwell/phone-number-select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "react-phone-number-input/style.css";
 import * as z from "zod";
@@ -30,8 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CheckCircle2 } from "lucide-react";
-import { Checkbox } from "../ui/checkbox";
+import { CheckCircle2, ExternalLink } from "lucide-react";
 
 const formSchema = z.object({
   firstname: z
@@ -46,29 +45,28 @@ const formSchema = z.object({
     .string()
     .min(10, "Invalid phone number")
     .min(1, "Phone number is required*"),
-  gpu_type_interest: z
-    .string()
-    .min(1, "Please select a GPU type")
-    .min(1, "GPU type is required*"),
-  current_amount_spent_on_computer: z
-    .string()
-    .min(1, "Please select your current compute spending"),
-  website: z
-    .string()
-    .min(2, "Company name must be at least 2 characters")
-    .min(1, "Company name is required*"),
   email: z
     .string()
     .email("Invalid business email")
     .min(1, "Business email is required*"),
-  check: z
-    .boolean()
-    .refine((value) => value === true, "You must agree to the terms*"),
+  company: z
+    .string()
+    .min(2, "Company name must be at least 2 characters")
+    .min(1, "Company name is required*"),
+  website: z.string().optional(),
+  project_details: z.string().optional(),
+  lead_type: z.string().min(1, "Please select an option"),
+  current_amount_spent_on_computer: z.string().optional().nullable(),
+  provider_gpu_type: z.string().optional().nullable(),
+  gpu_quantity_available: z.string().optional().nullable(),
+  support_request_info: z.string().optional(),
 });
 
 export function GpuContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [countdown, setCountdown] = useState(5);
+  const [redirectUri, setRedirectUri] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,31 +74,77 @@ export function GpuContactForm() {
       firstname: "",
       lastname: "",
       phone: "",
-      gpu_type_interest: "other",
-      current_amount_spent_on_computer: "",
-      website: "",
       email: "",
-      check: false,
+      company: "",
+      website: "",
+      project_details: "",
+      lead_type: "",
+      current_amount_spent_on_computer: null,
+      provider_gpu_type: null,
+      gpu_quantity_available: null,
+      support_request_info: "",
     },
   });
+
+  const watchedUseCases = form.watch("lead_type");
+
+  const shouldShowRedirectDialog = () => {
+    return redirectUri !== null;
+  };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (showSuccessDialog && shouldShowRedirectDialog() && countdown > 0) {
+      interval = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    } else if (countdown === 0 && shouldShowRedirectDialog()) {
+      window.open(redirectUri!, "_blank");
+      setShowSuccessDialog(false);
+      setCountdown(5);
+      setRedirectUri(null);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [showSuccessDialog, countdown, redirectUri]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsSubmitting(true);
 
       const hubspotEndpoint =
-        "https://api.hsforms.com/submissions/v3/integration/submit/47519938/2d95f20c-cd65-4648-94f1-df0732aa60e6";
+        "https://api.hsforms.com/submissions/v3/integration/submit/47519938/f6d48b8a-55fd-4327-b947-1ae5b33ed63f";
 
       const formData = {
         fields: [
           { name: "firstname", value: values.firstname },
           { name: "lastname", value: values.lastname },
           { name: "email", value: values.email },
+          { name: "company", value: values.company },
           { name: "website", value: values.website },
-          { name: "gpu_type_interest", value: values.gpu_type_interest },
+          { name: "project_details", value: values.project_details },
+          {
+            name: "lead_type",
+            value: values.lead_type,
+          },
           {
             name: "current_amount_spent_on_computer",
-            value: values.current_amount_spent_on_computer,
+            value: values.current_amount_spent_on_computer || "null",
+          },
+          {
+            name: "provider_gpu_type",
+            value: values.provider_gpu_type || "null",
+          },
+          {
+            name: "gpu_quantity_available",
+            value: values.gpu_quantity_available || "null",
+          },
+          {
+            name: "support_request_info",
+            value: values.support_request_info,
           },
           { name: "phone", value: values.phone },
         ],
@@ -119,8 +163,14 @@ export function GpuContactForm() {
       });
 
       if (response.ok) {
-        setShowSuccessDialog(true);
+        const responseData = await response.json();
+
+        if (responseData.redirectUri) {
+          setRedirectUri(responseData.redirectUri);
+        }
+
         form.reset();
+        setShowSuccessDialog(true);
       } else {
         throw new Error("Failed to submit form");
       }
@@ -140,7 +190,10 @@ export function GpuContactForm() {
             name="firstname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name*</FormLabel>
+                <FormLabel>
+                  First Name
+                  <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="John" {...field} />
                 </FormControl>
@@ -153,7 +206,9 @@ export function GpuContactForm() {
             name="lastname"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last Name*</FormLabel>
+                <FormLabel>
+                  Last Name <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="Doe" {...field} />
                 </FormControl>
@@ -166,9 +221,26 @@ export function GpuContactForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Business Email*</FormLabel>
+                <FormLabel>
+                  Business Email <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input placeholder="business@example.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Company / Project Name <span className="text-red-500">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="Acme Inc." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -179,9 +251,9 @@ export function GpuContactForm() {
             name="website"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Company Name*</FormLabel>
+                <FormLabel>Website URL</FormLabel>
                 <FormControl>
-                  <Input placeholder="Acme Inc." {...field} />
+                  <Input placeholder="https://example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,7 +265,9 @@ export function GpuContactForm() {
             name="phone"
             render={({ field }) => (
               <FormItem className="flex flex-col items-start">
-                <FormLabel>Phone Number*</FormLabel>
+                <FormLabel>
+                  Phone Number <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl className="w-full">
                   <PhoneInput placeholder="+1" {...field} />
                 </FormControl>
@@ -204,65 +278,200 @@ export function GpuContactForm() {
 
           <FormField
             control={form.control}
-            name="gpu_type_interest"
+            name="lead_type"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  GPU Type Needed (e.g., Blackwell, A100, H100, etc.)*
+                  What would you like to do on Akash?
+                  <span className="text-red-500">*</span>
                 </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select GPU type" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="b300">B300</SelectItem>
-                    <SelectItem value="b200">B200</SelectItem>
-                    <SelectItem value="h200">H200</SelectItem>
-                    <SelectItem value="h100">H100</SelectItem>
-                    <SelectItem value="a100">A100</SelectItem>
-                    <SelectItem value="other">
-                      Other (A100, 4090..etc)
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormControl>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      "Rent GPUs",
+                      "Provide GPUs",
+                      "Get technical support",
+                      "Other",
+                    ].map((option) => (
+                      <label
+                        key={option}
+                        className="group relative flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:shadow-sm"
+                      >
+                        <div className="relative hidden  h-5 w-5 items-center justify-center">
+                          <input
+                            type="radio"
+                            name="lead_type"
+                            value={option}
+                            checked={field.value === option}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                field.onChange(option);
+                              }
+                            }}
+                            className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-gray-300 transition-all duration-200 checked:border-primary hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                          />
+                          <div className="pointer-events-none absolute h-2 w-2 rounded-full bg-white opacity-0 transition-opacity duration-200 peer-checked:opacity-100" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 transition-colors duration-200 group-hover:text-primary">
+                          {option}
+                        </span>
+                        {field.value === option && (
+                          <div className="ml-auto">
+                            <CheckCircle2 className="h-5 w-5 text-primary" />
+                          </div>
+                        )}
+                      </label>
+                    ))}
+                  </div>
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          {watchedUseCases === "Rent GPUs" && (
+            <FormField
+              control={form.control}
+              name="current_amount_spent_on_computer"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    How much are you currently spending on compute?
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value || ""}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your current spending" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="<$1000/mo">&lt;$1000/mo</SelectItem>
+                      <SelectItem value="$1,000-$5,000">
+                        $1,000-$5,000
+                      </SelectItem>
+                      <SelectItem value="$5,000-$25,000">
+                        $5,000-$25,000
+                      </SelectItem>
+                      <SelectItem value="$25,000+">$25,000+</SelectItem>
+                      <SelectItem value="No Spend Currently">
+                        No Spend Currently
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
+          {watchedUseCases === "Provide GPUs" && (
+            <>
+              <FormField
+                control={form.control}
+                name="provider_gpu_type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      What type of GPUs do you want to provide?
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || ""}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select GPU type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="H200">H200</SelectItem>
+                        <SelectItem value="H100">H100</SelectItem>
+                        <SelectItem value="A100">A100</SelectItem>
+                        <SelectItem value="RTX4090">RTX4090</SelectItem>
+                        <SelectItem value="A6000">A6000</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gpu_quantity_available"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      How many total GPUs do you want to provide?
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value || ""}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select quantity" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="1">1</SelectItem>
+                        <SelectItem value="2-5">2-5</SelectItem>
+                        <SelectItem value="5-10">5-10</SelectItem>
+                        <SelectItem value="10+">10+</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>
+          )}
+
+          {/* Support Request conditional field */}
+          {watchedUseCases === "Get technical support" && (
+            <FormField
+              control={form.control}
+              name="support_request_info"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Support Request Info
+                    <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <textarea
+                      placeholder="Describe your support request"
+                      rows={3}
+                      className="w-full rounded border bg-background2 px-3 py-2 text-sm focus:outline-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
           <FormField
             control={form.control}
-            name="current_amount_spent_on_computer"
+            name="project_details"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  How much are you currently spending on compute?*
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your current spending" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="<$1000/mo">&lt;$1000/mo</SelectItem>
-                    <SelectItem value="$1,000-$5,000">$1,000-$5,000</SelectItem>
-                    <SelectItem value="$5,000-$25,000">
-                      $5,000-$25,000
-                    </SelectItem>
-                    <SelectItem value="$25,000+">$25,000+</SelectItem>
-                    <SelectItem value="No Spend Currently">
-                      No Spend Currently
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormLabel>Project Details</FormLabel>
+                <FormControl>
+                  <textarea
+                    placeholder="Project Details"
+                    rows={4}
+                    className="w-full rounded border bg-background2 px-3 py-2 text-sm focus:outline-none"
+                    {...field}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -281,27 +490,6 @@ export function GpuContactForm() {
             </a>{" "}
             for more information.
           </p>
-          <FormField
-            control={form.control}
-            name="check"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      onCheckedChange={field.onChange}
-                      checked={field.value}
-                    />
-                    <FormLabel>
-                      I agree to receive other communications from Akash
-                      Network.
-                    </FormLabel>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
           <Button
             type="submit"
@@ -324,16 +512,48 @@ export function GpuContactForm() {
               className="flex items-center justify-center gap-2 
             text-center text-2xl font-bold tracking-tight text-gray-800"
             >
-              Success!
+              {shouldShowRedirectDialog()
+                ? "Success! Redirecting..."
+                : "Success!"}
             </DialogTitle>
 
             <DialogDescription
               className="px-4 text-center text-base leading-relaxed 
             text-gray-600 opacity-90"
             >
-              Thank you for your interest! We've received your information and
-              will be in touch soon with exciting updates.
+              {shouldShowRedirectDialog()
+                ? "Thank you for your interest! We're redirecting you to schedule a meeting with our team."
+                : "Thank you for your interest! We've received your information and will be in touch soon with exciting updates."}
             </DialogDescription>
+
+            {shouldShowRedirectDialog() && (
+              <div className="flex flex-col items-center space-y-4">
+                <div className="text-center">
+                  <p className="mb-2 text-sm text-gray-600">Redirecting in:</p>
+                  <div className="text-3xl font-bold text-primary">
+                    {countdown}
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-2 text-center">
+                  <p className="text-sm text-gray-600">
+                    Or click below to schedule now:
+                  </p>
+                  <Button
+                    onClick={() => {
+                      window.open(redirectUri!, "_blank");
+                      setShowSuccessDialog(false);
+                      setCountdown(5);
+                      setRedirectUri(null);
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    Schedule Meeting
+                    <ExternalLink className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            )}
           </DialogHeader>
         </DialogContent>
       </Dialog>
