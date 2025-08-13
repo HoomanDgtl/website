@@ -295,7 +295,7 @@ export function GpuContactForm() {
                     ].map((option) => (
                       <label
                         key={option}
-                        className="group relative flex cursor-pointer items-center gap-3 rounded-lg border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:shadow-sm"
+                        className="group relative flex cursor-pointer items-center gap-3 rounded-lg border  bg-background p-4 transition-all duration-200 hover:border-primary hover:bg-primary/5 hover:shadow-sm"
                       >
                         <div className="relative hidden  h-5 w-5 items-center justify-center">
                           <input
@@ -312,7 +312,7 @@ export function GpuContactForm() {
                           />
                           <div className="pointer-events-none absolute h-2 w-2 rounded-full bg-white opacity-0 transition-opacity duration-200 peer-checked:opacity-100" />
                         </div>
-                        <span className="text-sm font-medium text-gray-700 transition-colors duration-200 group-hover:text-primary">
+                        <span className="text-sm font-medium  transition-colors duration-200 group-hover:text-primary">
                           {option}
                         </span>
                         {field.value === option && (
@@ -468,7 +468,7 @@ export function GpuContactForm() {
                   <textarea
                     placeholder="Project Details"
                     rows={4}
-                    className="w-full rounded border bg-background2 px-3 py-2 text-sm focus:outline-none"
+                    className="w-full rounded border bg-background px-3 py-2 text-sm focus:outline-none"
                     {...field}
                   />
                 </FormControl>
