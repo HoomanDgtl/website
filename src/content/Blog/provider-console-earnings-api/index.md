@@ -1,6 +1,6 @@
 ---
 title: "Provider Console - Earnings API"
-description: Last week, we announced that Jack Zampolin of Pylon Validation Services and Tendermint joined Akash as an Advisor, and today, we’re excited to announce that the number one Cosmos validator Sikka aka Sunny Aggarwal of Tendermint/Cosmos has joined Akash as an Advisor. Validators are essential to ensuring the sovereignty and security of Akash’s platform.
+description: The new Provider Console Earnings API gives Akash providers powerful insights into their revenue, with secure access and easy integration for custom dashboards.
 
 pubDate: "2025-08-13"
 draft: false
