@@ -2,7 +2,7 @@
 title: "Automatic Escrow Top-Up"
 description: "Auto-funds Akash deployments to prevent downtime for credit card users."
 
-pubDate: "2025-08-18T11:00:00Z"
+pubDate: "2025-08-18T10:00:00Z"
 draft: false
 
 categories:
