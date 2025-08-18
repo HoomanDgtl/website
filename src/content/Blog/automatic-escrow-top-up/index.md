@@ -1,6 +1,6 @@
 ---
 title: "Automatic Escrow Top-Up"
-description: "Learn how Akash's Automatic Escrow Top-Up feature keeps your deployments online by automatically funding your escrow account before it runs out, with easy controls and granular settings—currently available for credit card users."
+description: "Auto-funds Akash deployments to prevent downtime for credit card users."
 
 pubDate: "2025-08-18"
 draft: false

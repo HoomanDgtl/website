@@ -1,6 +1,6 @@
 ---
 title: "Billing & Usage Analytics in Akash Console & API"
-description: "Learn how Akash's new Billing & Usage feature brings cloud-style billing transparency to credit card users, with detailed credit purchase history, downloadable receipts, CSV export, and interactive usage analytics—all accessible via Console and API."
+description: "Billing & Usage: credit card purchase history and analytics for Akash."
 
 pubDate: "2025-08-18"
 draft: false

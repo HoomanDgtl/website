@@ -1,6 +1,6 @@
 ---
 title: "Alerts & Notifications in Akash Console"
-description: "Learn how Akash Console’s new Alerts & Notifications system helps you stay informed about low escrow balances and deployment closures, with flexible configuration and email notifications to keep your services running smoothly."
+description: "Get email alerts for low balances and deployment closures in Console."
 
 pubDate: "2025-08-18"
 draft: false
