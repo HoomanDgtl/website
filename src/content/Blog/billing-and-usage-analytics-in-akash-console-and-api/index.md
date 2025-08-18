@@ -2,7 +2,7 @@
 title: "Billing & Usage Analytics in Akash Console & API"
 description: "Billing & Usage: credit card purchase history and analytics for Akash."
 
-pubDate: "2025-08-18T09:00:00Z"
+pubDate: "2025-08-18T06:00:00Z"
 draft: false
 
 categories:

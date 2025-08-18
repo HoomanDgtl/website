@@ -2,7 +2,7 @@
 title: "Alerts & Notifications in Akash Console"
 description: "Get email alerts for low balances and deployment closures in Console."
 
-pubDate: "2025-08-18T04:00:00Z"
+pubDate: "2025-08-18T09:00:00Z"
 draft: false
 
 categories:
