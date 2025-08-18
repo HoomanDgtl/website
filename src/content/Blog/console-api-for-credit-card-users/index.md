@@ -2,7 +2,7 @@
 title: "Console API for Credit Card Users"
 description: "API lets credit card users manage deployments, no blockchain knowledge needed."
 
-pubDate: "2025-08-18"
+pubDate: "2025-08-18T10:00:00Z"
 draft: false
 
 categories:
