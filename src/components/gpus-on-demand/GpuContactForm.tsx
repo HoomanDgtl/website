@@ -48,7 +48,7 @@ const formSchema = z.object({
     .min(1, "Business email is required*"),
   company: z
     .string()
-    .min(2, "Company name must be at least 2 characters")
+    .min(2, "Company name is required*")
     .min(1, "Company name is required*"),
   website: z.string().optional(),
   project_details: z.string().optional(),
