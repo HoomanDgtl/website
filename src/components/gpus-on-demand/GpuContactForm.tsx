@@ -30,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CheckCircle2, ExternalLink } from "lucide-react";
+import { CheckCircle2, ExternalLink, X } from "lucide-react";
 
 const formSchema = z.object({
   firstname: z
@@ -62,7 +62,7 @@ const formSchema = z.object({
 export function GpuContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [countdown, setCountdown] = useState(5);
+  const [isLoading, setIsLoading] = useState(false);
   const [redirectUri, setRedirectUri] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -91,23 +91,24 @@ export function GpuContactForm() {
   };
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout;
 
-    if (showSuccessDialog && shouldShowRedirectDialog() && countdown > 0) {
-      interval = setInterval(() => {
-        setCountdown((prev) => prev - 1);
-      }, 1000);
-    } else if (countdown === 0 && shouldShowRedirectDialog()) {
-      window.open(redirectUri!, "_blank");
-      setShowSuccessDialog(false);
-      setCountdown(5);
-      setRedirectUri(null);
+    if (showSuccessDialog && shouldShowRedirectDialog()) {
+      setIsLoading(true);
+
+      // Show loading for 3 seconds, then redirect
+      timeout = setTimeout(() => {
+        setIsLoading(false);
+        window.open(redirectUri!, "_blank");
+        setShowSuccessDialog(false);
+        setRedirectUri(null);
+      }, 3000);
     }
 
     return () => {
-      if (interval) clearInterval(interval);
+      if (timeout) clearTimeout(timeout);
     };
-  }, [showSuccessDialog, countdown, redirectUri]);
+  }, [showSuccessDialog, redirectUri]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -583,56 +584,70 @@ export function GpuContactForm() {
       </Form>
 
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <DialogContent className="animate-fade-in rounded-xl bg-white shadow-2xl sm:max-w-md">
-          <DialogHeader className="space-y-4">
-            <div className="animate-bounce-in flex justify-center">
-              <CheckCircle2 className="h-16 w-16 text-green-500 " />
+        <DialogContent
+          className="animate-fade-in  border-none bg-background shadow-2xl sm:max-w-md"
+          hideCloseButton
+        >
+          <button
+            onClick={() => setShowSuccessDialog(false)}
+            className="absolute right-2 top-2 rounded-full border  p-2  backdrop-blur-sm hover:bg-gray-50 dark:bg-background2 hover:dark:bg-background2/50"
+          >
+            <X className="size-5" />
+          </button>
+          <DialogHeader className="space-y-6 text-center">
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-500 ">
+              <CheckCircle2 className="h-10 w-10  text-white" />
             </div>
 
-            <DialogTitle
-              className="flex items-center justify-center gap-2 
-            text-center text-2xl font-bold tracking-tight text-gray-800"
-            >
-              {shouldShowRedirectDialog()
-                ? "Success! Redirecting..."
-                : "Success!"}
-            </DialogTitle>
+            <div className="space-y-2">
+              <DialogTitle className="bg-gradient-to-r   text-center text-3xl font-bold">
+                {shouldShowRedirectDialog() && isLoading
+                  ? "Processing..."
+                  : "Success"}
+              </DialogTitle>
 
-            <DialogDescription
-              className="px-4 text-center text-base leading-relaxed 
-            text-gray-600 opacity-90"
-            >
-              {shouldShowRedirectDialog()
-                ? "Thank you for your interest! We're redirecting you to schedule a meeting with our team."
-                : "Thank you for your interest! We've received your information and will be in touch soon with exciting updates."}
-            </DialogDescription>
+              <DialogDescription className="mx-auto max-w-sm  text-center text-lg leading-relaxed text-para">
+                {shouldShowRedirectDialog()
+                  ? isLoading
+                    ? "Thank you for your interest! Preparing your meeting scheduler..."
+                    : "Ready to schedule your meeting!"
+                  : "Thank you for your interest! We've received your information and will be in touch soon with exciting updates."}
+              </DialogDescription>
+            </div>
 
             {shouldShowRedirectDialog() && (
-              <div className="flex flex-col items-center space-y-4">
-                <div className="text-center">
-                  <p className="mb-2 text-sm text-gray-600">Redirecting in:</p>
-                  <div className="text-3xl font-bold text-primary">
-                    {countdown}
+              <div className="space-y-6 pt-4">
+                {isLoading ? (
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="relative">
+                      <div className="h-16 w-16 rounded-full border-4 border-green-200"></div>
+                      <div className="absolute left-0 top-0 h-16 w-16 animate-spin rounded-full border-4 border-transparent border-t-green-500"></div>
+                    </div>
+                    <p className="text-sm font-medium text-green-700 dark:text-green-500">
+                      Setting up your meeting scheduler...
+                    </p>
                   </div>
-                </div>
-
-                <div className="flex flex-col items-center gap-2 text-center">
-                  <p className="text-sm text-gray-600">
-                    Or click below to schedule now:
-                  </p>
-                  <Button
-                    onClick={() => {
-                      window.open(redirectUri!, "_blank");
-                      setShowSuccessDialog(false);
-                      setCountdown(5);
-                      setRedirectUri(null);
-                    }}
-                    className="flex items-center gap-2"
-                  >
-                    Schedule Meeting
-                    <ExternalLink className="h-4 w-4" />
-                  </Button>
-                </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex flex-col items-center justify-center  border-t bg-background p-4 backdrop-blur-sm">
+                      <p className="mb-3 text-sm font-medium">
+                        Your meeting scheduler is ready!
+                      </p>
+                      <Button
+                        onClick={() => {
+                          window.open(redirectUri!, "_blank");
+                          setShowSuccessDialog(false);
+                          setRedirectUri(null);
+                        }}
+                      >
+                        <span className="flex items-center justify-center gap-2">
+                          Schedule Meeting
+                          <ExternalLink className="h-4 w-4" />
+                        </span>
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </DialogHeader>
