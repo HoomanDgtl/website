@@ -35,11 +35,11 @@ import { CheckCircle2, ExternalLink } from "lucide-react";
 const formSchema = z.object({
   firstname: z
     .string()
-    .min(2, "First name must be at least 2 characters")
+    .min(2, "First name is required*")
     .min(1, "First name is required*"),
   lastname: z
     .string()
-    .min(2, "Last name must be at least 2 characters")
+    .min(2, "First name is required*")
     .min(1, "Last name is required*"),
   phone: z.string().min(10, "Invalid phone number").optional(),
   email: z
