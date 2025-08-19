@@ -217,7 +217,7 @@ export function GpuContactForm() {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
           {currentStep === 1 && (
             <>
               {/* Step 1: Lead Type Selection */}
@@ -274,10 +274,8 @@ export function GpuContactForm() {
                 )}
               />
 
-              {/* Show additional fields only after selection */}
               {watchedUseCases && (
                 <>
-                  {/* First Name and Last Name on same line */}
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <FormField
                       control={form.control}
@@ -404,7 +402,6 @@ export function GpuContactForm() {
 
           {currentStep === 2 && (
             <>
-              {/* Step 2: Additional Details */}
               <div className="mb-6">
                 <h3 className="mb-2 text-lg font-semibold">
                   Share any additional details about your project
@@ -444,7 +441,6 @@ export function GpuContactForm() {
                 )}
               />
 
-              {/* Conditional fields for other lead types */}
               {watchedUseCases === "Provide GPUs" && (
                 <>
                   <FormField
