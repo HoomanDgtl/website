@@ -39,7 +39,7 @@ const formSchema = z.object({
     .min(1, "First name is required*"),
   lastname: z
     .string()
-    .min(2, "First name is required*")
+    .min(2, "Last name is required*")
     .min(1, "Last name is required*"),
   phone: z.string().min(10, "Invalid phone number").optional(),
   email: z
