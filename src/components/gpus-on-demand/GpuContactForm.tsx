@@ -7,6 +7,7 @@ import "react-phone-number-input/style.css";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -41,7 +42,7 @@ const formSchema = z.object({
     .string()
     .min(2, "Last name is required*")
     .min(1, "Last name is required*"),
-  phone: z.string().min(10, "Invalid phone number").optional(),
+  phone: z.string().optional(),
   email: z
     .string()
     .email("Invalid business email")
@@ -54,7 +55,7 @@ const formSchema = z.object({
   project_details: z.string().optional(),
   lead_type: z.string().min(1, "Please select an option"),
   current_amount_spent_on_computer: z.string().optional().nullable(),
-  provider_gpu_type: z.string().optional().nullable(),
+  provider_gpu_type: z.array(z.string()).optional().nullable(),
   gpu_quantity_available: z.string().optional().nullable(),
   support_request_info: z.string().optional(),
 });
@@ -78,7 +79,7 @@ export function GpuContactForm() {
       project_details: "",
       lead_type: "",
       current_amount_spent_on_computer: null,
-      provider_gpu_type: null,
+      provider_gpu_type: [],
       gpu_quantity_available: null,
       support_request_info: "",
     },
@@ -114,10 +115,10 @@ export function GpuContactForm() {
     try {
       setIsSubmitting(true);
 
-      if (!values.phone) {
-        form.setError("phone", { message: "Phone number is required" });
-        return;
-      }
+      // if (!values.phone) {
+      //   form.setError("phone", { message: "Phone number is required" });
+      //   return;
+      // }
 
       const hubspotEndpoint =
         "https://api.hsforms.com/submissions/v3/integration/submit/47519938/f6d48b8a-55fd-4327-b947-1ae5b33ed63f";
@@ -140,7 +141,9 @@ export function GpuContactForm() {
           },
           {
             name: "provider_gpu_type",
-            value: values.provider_gpu_type || "null",
+            value: Array.isArray(values.provider_gpu_type)
+              ? values.provider_gpu_type.join(", ")
+              : "null",
           },
           {
             name: "gpu_quantity_available",
@@ -188,7 +191,6 @@ export function GpuContactForm() {
   const handleNextStep = () => {
     const currentValues = form.getValues();
 
-    // Validate required fields for step 1
     const requiredFields = ["lead_type"];
     if (currentValues.lead_type === "Rent GPUs") {
       requiredFields.push(
@@ -208,9 +210,12 @@ export function GpuContactForm() {
     });
 
     if (!hasErrors) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       setCurrentStep(2);
     } else {
-      // Trigger validation to show errors
       form.trigger(requiredFields as any);
     }
   };
@@ -252,6 +257,14 @@ export function GpuContactForm() {
                                 onChange={(e) => {
                                   if (e.target.checked) {
                                     field.onChange(option);
+                                    setTimeout(() => {
+                                      window.scrollTo({
+                                        top:
+                                          (document.getElementById("step-1")
+                                            ?.offsetTop ?? 0) - 95,
+                                        behavior: "smooth",
+                                      });
+                                    }, 100);
                                   }
                                 }}
                                 className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border-2 border-gray-300 transition-all duration-200 checked:border-primary hover:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -277,7 +290,10 @@ export function GpuContactForm() {
 
               {watchedUseCases && (
                 <>
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div
+                    className="grid  grid-cols-1 gap-4 md:grid-cols-2"
+                    id="step-1"
+                  >
                     <FormField
                       control={form.control}
                       name="firstname"
@@ -363,22 +379,39 @@ export function GpuContactForm() {
                             value={field.value || ""}
                           >
                             <FormControl>
-                              <SelectTrigger>
+                              <SelectTrigger className="cursor-pointer transition-colors duration-200 hover:text-primary">
                                 <SelectValue placeholder="Select your current spending" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="<$1000/mo">
+                              <SelectItem
+                                value="<$1000/mo"
+                                className="hover:text-primary"
+                              >
                                 &lt;$1000/mo
                               </SelectItem>
-                              <SelectItem value="$1,000-$5,000">
+                              <SelectItem
+                                value="$1,000-$5,000"
+                                className="hover:text-primary"
+                              >
                                 $1,000-$5,000
                               </SelectItem>
-                              <SelectItem value="$5,000-$25,000">
+                              <SelectItem
+                                value="$5,000-$25,000"
+                                className="hover:text-primary"
+                              >
                                 $5,000-$25,000
                               </SelectItem>
-                              <SelectItem value="$25,000+">$25,000+</SelectItem>
-                              <SelectItem value="No Spend Currently">
+                              <SelectItem
+                                value="$25,000+"
+                                className="hover:text-primary"
+                              >
+                                $25,000+
+                              </SelectItem>
+                              <SelectItem
+                                value="No Spend Currently"
+                                className="hover:text-primary"
+                              >
                                 No Spend Currently
                               </SelectItem>
                             </SelectContent>
@@ -453,24 +486,51 @@ export function GpuContactForm() {
                           What type of GPUs do you want to provide?
                           <span className="text-red-500">*</span>
                         </FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field.value || ""}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select GPU type" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value="H200">H200</SelectItem>
-                            <SelectItem value="H100">H100</SelectItem>
-                            <SelectItem value="A100">A100</SelectItem>
-                            <SelectItem value="RTX4090">RTX4090</SelectItem>
-                            <SelectItem value="A6000">A6000</SelectItem>
-                            <SelectItem value="Other">Other</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <FormControl>
+                          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                            {[
+                              "H200",
+                              "H100",
+                              "A100",
+                              "RTX4090",
+                              "A6000",
+                              "Other",
+                            ].map((gpuType) => (
+                              <div
+                                key={gpuType}
+                                className="flex items-center space-x-3"
+                              >
+                                <Checkbox
+                                  checked={
+                                    field.value?.includes(gpuType) || false
+                                  }
+                                  onCheckedChange={(checked) => {
+                                    const currentValues = field.value || [];
+                                    if (checked) {
+                                      field.onChange([
+                                        ...currentValues,
+                                        gpuType,
+                                      ]);
+                                    } else {
+                                      field.onChange(
+                                        currentValues.filter(
+                                          (value) => value !== gpuType,
+                                        ),
+                                      );
+                                    }
+                                  }}
+                                  id={`gpu-${gpuType}`}
+                                />
+                                <label
+                                  htmlFor={`gpu-${gpuType}`}
+                                  className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                  {gpuType}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -489,15 +549,35 @@ export function GpuContactForm() {
                           value={field.value || ""}
                         >
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className="cursor-pointer transition-colors duration-200 hover:text-primary">
                               <SelectValue placeholder="Select quantity" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="1">1</SelectItem>
-                            <SelectItem value="2-5">2-5</SelectItem>
-                            <SelectItem value="5-10">5-10</SelectItem>
-                            <SelectItem value="10+">10+</SelectItem>
+                            <SelectItem
+                              value="1"
+                              className="hover:text-primary"
+                            >
+                              1
+                            </SelectItem>
+                            <SelectItem
+                              value="2-5"
+                              className="hover:text-primary"
+                            >
+                              2-5
+                            </SelectItem>
+                            <SelectItem
+                              value="5-10"
+                              className="hover:text-primary"
+                            >
+                              5-10
+                            </SelectItem>
+                            <SelectItem
+                              value="10+"
+                              className="hover:text-primary"
+                            >
+                              10+
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
