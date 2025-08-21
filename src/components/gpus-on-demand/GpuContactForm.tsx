@@ -33,32 +33,89 @@ import {
 } from "@/components/ui/select";
 import { CheckCircle2, ExternalLink, X } from "lucide-react";
 
-const formSchema = z.object({
-  firstname: z
-    .string()
-    .min(2, "First name is required*")
-    .min(1, "First name is required*"),
-  lastname: z
-    .string()
-    .min(2, "Last name is required*")
-    .min(1, "Last name is required*"),
-  phone: z.string().optional(),
-  email: z
-    .string()
-    .email("Invalid business email")
-    .min(1, "Business email is required*"),
-  company: z
-    .string()
-    .min(2, "Company name is required*")
-    .min(1, "Company name is required*"),
-  website: z.string().optional(),
-  project_details: z.string().optional(),
-  lead_type: z.string().min(1, "Please select an option"),
-  current_amount_spent_on_computer: z.string().optional().nullable(),
-  provider_gpu_type: z.array(z.string()).optional().nullable(),
-  gpu_quantity_available: z.string().optional().nullable(),
-  support_request_info: z.string().optional(),
-});
+const formSchema = z
+  .object({
+    firstname: z
+      .string()
+      .min(2, "First name is required*")
+      .min(1, "First name is required*"),
+    lastname: z
+      .string()
+      .min(2, "Last name is required*")
+      .min(1, "Last name is required*"),
+    phone: z.string().optional(),
+    email: z
+      .string()
+      .email("Invalid business email")
+      .min(1, "Business email is required*"),
+    company: z
+      .string()
+      .min(2, "Company name is required*")
+      .min(1, "Company name is required*"),
+    website: z.string().optional(),
+    project_details: z.string().optional(),
+    lead_type: z.string().min(1, "Please select an option"),
+    current_amount_spent_on_computer: z.string().optional().nullable(),
+    provider_gpu_type: z.array(z.string()).optional().nullable(),
+    gpu_quantity_available: z.string().optional().nullable(),
+    support_request_info: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // If user wants to provide GPUs, provider_gpu_type is required
+      if (data.lead_type === "Provide GPUs") {
+        return data.provider_gpu_type && data.provider_gpu_type.length > 0;
+      }
+      return true;
+    },
+    {
+      message: "Please select at least one GPU type",
+      path: ["provider_gpu_type"],
+    },
+  )
+  .refine(
+    (data) => {
+      // If user wants to provide GPUs, gpu_quantity_available is required
+      if (data.lead_type === "Provide GPUs") {
+        return (
+          data.gpu_quantity_available &&
+          data.gpu_quantity_available.trim() !== ""
+        );
+      }
+      return true;
+    },
+    {
+      message: "Please select GPU quantity",
+      path: ["gpu_quantity_available"],
+    },
+  )
+  .refine(
+    (data) => {
+      // If user wants technical support, support_request_info is required
+      if (data.lead_type === "Get technical support") {
+        return (
+          data.support_request_info && data.support_request_info.trim() !== ""
+        );
+      }
+      return true;
+    },
+    {
+      message: "Please describe your support request",
+      path: ["support_request_info"],
+    },
+  );
+
+interface ApiError {
+  message: string;
+  errorType: string;
+}
+
+interface ApiErrorResponse {
+  status: string;
+  message: string;
+  correlationId?: string;
+  errors?: ApiError[];
+}
 
 export function GpuContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -66,6 +123,10 @@ export function GpuContactForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [redirectUri, setRedirectUri] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [showMeetingSuccess, setShowMeetingSuccess] = useState(false);
+  const [showMeetingDialog, setShowMeetingDialog] = useState(false);
+  const [apiErrors, setApiErrors] = useState<ApiError[]>([]);
+  const [generalError, setGeneralError] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -91,13 +152,17 @@ export function GpuContactForm() {
     return redirectUri !== null;
   };
 
+  const isMeetingLink = (url: string | null) => {
+    if (!url) return false;
+    return url.includes("meetings.hubspot.com");
+  };
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
     if (showSuccessDialog && shouldShowRedirectDialog()) {
       setIsLoading(true);
 
-      // Show loading for 3 seconds, then redirect
       timeout = setTimeout(() => {
         setIsLoading(false);
         window.open(redirectUri!, "_blank");
@@ -111,14 +176,32 @@ export function GpuContactForm() {
     };
   }, [showSuccessDialog, redirectUri]);
 
+  useEffect(() => {
+    if (showMeetingDialog) {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src =
+        "https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js";
+      script.async = true;
+      document.head.appendChild(script);
+
+      return () => {
+        const existingScript = document.querySelector(
+          'script[src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"]',
+        );
+        if (existingScript) {
+          document.head.removeChild(existingScript);
+        }
+      };
+    }
+  }, [showMeetingDialog]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsSubmitting(true);
 
-      // if (!values.phone) {
-      //   form.setError("phone", { message: "Phone number is required" });
-      //   return;
-      // }
+      setApiErrors([]);
+      setGeneralError("");
 
       const hubspotEndpoint =
         "https://api.hsforms.com/submissions/v3/integration/submit/47519938/f6d48b8a-55fd-4327-b947-1ae5b33ed63f";
@@ -141,9 +224,11 @@ export function GpuContactForm() {
           },
           {
             name: "provider_gpu_type",
-            value: Array.isArray(values.provider_gpu_type)
-              ? values.provider_gpu_type.join(", ")
-              : "null",
+            value:
+              Array.isArray(values.provider_gpu_type) &&
+              values.provider_gpu_type.length > 0
+                ? values.provider_gpu_type.join(", ")
+                : "null",
           },
           {
             name: "gpu_quantity_available",
@@ -174,15 +259,42 @@ export function GpuContactForm() {
 
         if (responseData.redirectUri) {
           setRedirectUri(responseData.redirectUri);
+
+          if (isMeetingLink(responseData.redirectUri)) {
+            setShowMeetingSuccess(true);
+
+            setTimeout(() => {
+              setShowMeetingDialog(true);
+            }, 1000);
+          } else {
+            setShowSuccessDialog(true);
+          }
+        } else {
+          setShowSuccessDialog(true);
         }
 
         form.reset();
-        setShowSuccessDialog(true);
       } else {
-        throw new Error("Failed to submit form");
+        const errorData: ApiErrorResponse = await response.json();
+
+        if (errorData.errors && errorData.errors.length > 0) {
+          setApiErrors(errorData.errors);
+        } else {
+          setGeneralError(errorData.message || "Failed to submit form");
+        }
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      setGeneralError("An unexpected error occurred. Please try again.");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -190,6 +302,9 @@ export function GpuContactForm() {
 
   const handleNextStep = () => {
     const currentValues = form.getValues();
+
+    setApiErrors([]);
+    setGeneralError("");
 
     const requiredFields = ["lead_type"];
     if (currentValues.lead_type === "Rent GPUs") {
@@ -224,9 +339,35 @@ export function GpuContactForm() {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
+          {(apiErrors.length > 0 || generalError) && (
+            <div className="rounded-lg border !border-primary/50  bg-primary/10 p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <X className="h-5 w-5 text-primary" />
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-primary">
+                    {apiErrors.length > 0
+                      ? "Validation Error"
+                      : "Submission Error"}
+                  </h3>
+                  <div className="mt-2 text-sm text-primary">
+                    {generalError && <p>{generalError}</p>}
+                    {apiErrors.length > 0 && (
+                      <ul className="list-disc space-y-1 pl-5">
+                        {apiErrors.map((error, index) => (
+                          <li key={index}>{error.message}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {currentStep === 1 && (
             <>
-              {/* Step 1: Lead Type Selection */}
               <FormField
                 control={form.control}
                 name="lead_type"
@@ -363,7 +504,6 @@ export function GpuContactForm() {
                     )}
                   />
 
-                  {/* Conditional field for Rent GPUs */}
                   {watchedUseCases === "Rent GPUs" && (
                     <FormField
                       control={form.control}
@@ -616,9 +756,7 @@ export function GpuContactForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem className="flex flex-col items-start">
-                    <FormLabel>
-                      Phone Number <span className="text-red-500">*</span>
-                    </FormLabel>
+                    <FormLabel>Phone Number</FormLabel>
                     <FormControl className="w-full">
                       <PhoneInput placeholder="+1" {...field} />
                     </FormControl>
@@ -663,13 +801,24 @@ export function GpuContactForm() {
         </form>
       </Form>
 
-      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+      <Dialog
+        open={showSuccessDialog}
+        onOpenChange={(open) => {
+          setShowSuccessDialog(open);
+          if (!open) {
+            setCurrentStep(1);
+          }
+        }}
+      >
         <DialogContent
           className="animate-fade-in  border-none bg-background shadow-2xl sm:max-w-md"
           hideCloseButton
         >
           <button
-            onClick={() => setShowSuccessDialog(false)}
+            onClick={() => {
+              setShowSuccessDialog(false);
+              setCurrentStep(1);
+            }}
             className="absolute right-2 top-2 rounded-full border  p-2  backdrop-blur-sm hover:bg-gray-50 dark:bg-background2 hover:dark:bg-background2/50"
           >
             <X className="size-5" />
@@ -704,24 +853,25 @@ export function GpuContactForm() {
                       <div className="absolute left-0 top-0 h-16 w-16 animate-spin rounded-full border-4 border-transparent border-t-green-500"></div>
                     </div>
                     <p className="text-sm font-medium text-green-700 dark:text-green-500">
-                      Setting up your meeting scheduler...
+                      Redirecting to Akash Console...
                     </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     <div className="flex flex-col items-center justify-center  border-t bg-background p-4 backdrop-blur-sm">
                       <p className="mb-3 text-sm font-medium">
-                        Your meeting scheduler is ready!
+                        Redirecting to Akash Console...
                       </p>
                       <Button
                         onClick={() => {
                           window.open(redirectUri!, "_blank");
                           setShowSuccessDialog(false);
                           setRedirectUri(null);
+                          setCurrentStep(1);
                         }}
                       >
                         <span className="flex items-center justify-center gap-2">
-                          Schedule Meeting
+                          Redirecting...
                           <ExternalLink className="h-4 w-4" />
                         </span>
                       </Button>
@@ -731,6 +881,34 @@ export function GpuContactForm() {
               </div>
             )}
           </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={showMeetingDialog}
+        onOpenChange={(open) => {
+          setShowMeetingDialog(open);
+          if (!open) {
+            setCurrentStep(1);
+          }
+        }}
+      >
+        <DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto border-none p-0">
+          <DialogHeader className="sr-only  p-6 pb-0">
+            <DialogTitle className="text-center text-2xl font-bold">
+              Schedule Your Meeting
+            </DialogTitle>
+            <DialogDescription className="text-center text-lg">
+              Let's discuss your GPU compute needs
+            </DialogDescription>
+          </DialogHeader>
+          <div className=" md:pt-2">
+            <div
+              className="meetings-iframe-container "
+              data-src="https://meetings.hubspot.com/connect-akash-network?embed=true"
+              style={{ minHeight: "600px" }}
+            ></div>
+          </div>
         </DialogContent>
       </Dialog>
     </>
