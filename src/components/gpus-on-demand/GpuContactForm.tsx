@@ -902,7 +902,7 @@ export function GpuContactForm() {
               Let's discuss your GPU compute needs
             </DialogDescription>
           </DialogHeader>
-          <div className=" md:pt-2">
+          <div className=" md:pt-7">
             <div
               className="meetings-iframe-container "
               data-src="https://meetings.hubspot.com/connect-akash-network?embed=true"
