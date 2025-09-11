@@ -260,7 +260,7 @@ export default function NvidiaBlackwellForm({
             </div>
 
             {/* Basic Information */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label className="mb-1 block text-sm font-medium">
                   First Name<span className="text-red-400">*</span>

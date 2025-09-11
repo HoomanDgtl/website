@@ -443,8 +443,9 @@ export default function TryAkashForm({
                   : defaultButton}
       </DialogTrigger>
       <DialogContent
+        overlayClassName="z-[99]"
         hideCloseButton
-        className="hide-scrollbar  z-[50] max-h-[95vh] overflow-hidden overflow-y-auto !border-none  bg-transparent p-0 shadow-none sm:max-w-[600px]"
+        className="hide-scrollbar  z-[101] max-h-[95vh] overflow-hidden overflow-y-auto !border-none  bg-transparent p-0 shadow-none sm:max-w-[600px]"
       >
         <DialogTitle className="sr-only">Form</DialogTitle>
 
@@ -482,7 +483,7 @@ export default function TryAkashForm({
             </div>
             {step === 1 && (
               <>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-4 md:grid-cols-2">
                   <div>
                     <label className="mb-1 block text-sm ">First Name</label>
                     <Input
