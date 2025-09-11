@@ -81,6 +81,8 @@ export default function TryAkashForm({
     provider_gpu_type: string; // For Provide GPUs
     gpu_quantity_available: string; // For Provide GPUs
     support_request_info: string; // For Support
+    lead_type: string; // Required field
+    current_amount_spent_on_computer: string; // Required field
   }>({
     firstname: "",
     lastname: "",
@@ -95,6 +97,8 @@ export default function TryAkashForm({
     provider_gpu_type: "",
     gpu_quantity_available: "",
     support_request_info: "",
+    lead_type: "",
+    current_amount_spent_on_computer: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitError, setSubmitError] = useState("");
@@ -110,7 +114,9 @@ export default function TryAkashForm({
           value: Array.isArray(value) ? value.join(", ") : value,
         });
       } else {
-        result.push({ name, value });
+        // Send "null" for empty required fields
+        const fieldValue = value === "" ? "null" : value;
+        result.push({ name, value: fieldValue });
       }
     }
     return result;
@@ -149,6 +155,30 @@ export default function TryAkashForm({
     const newErrors: { [key: string]: string } = {};
     if (!formData.company)
       newErrors.company = "Company / Project Name is required";
+
+    if (formData.how_are_you_looking_to_use_akash_.includes("Rent GPUs")) {
+      setFormData((prev) => ({ ...prev, lead_type: "Rent GPUs" }));
+    } else if (
+      formData.how_are_you_looking_to_use_akash_.includes("Provide GPUs")
+    ) {
+      setFormData((prev) => ({ ...prev, lead_type: "Provide GPUs" }));
+    } else if (
+      formData.how_are_you_looking_to_use_akash_.includes(
+        "Get technical support",
+      )
+    ) {
+      setFormData((prev) => ({ ...prev, lead_type: "Support" }));
+    } else {
+      setFormData((prev) => ({ ...prev, lead_type: "Other" }));
+    }
+
+    if (formData.current_gpu_usage) {
+      setFormData((prev) => ({
+        ...prev,
+        current_amount_spent_on_computer: formData.current_gpu_usage,
+      }));
+    }
+
     // Rent GPUs validation
     if (
       formData.how_are_you_looking_to_use_akash_.includes("Rent GPUs") &&
@@ -422,7 +452,7 @@ export default function TryAkashForm({
           <form
             id="custom-hs-form"
             ref={formRef}
-            className="mx-auto w-full max-w-md space-y-6 rounded-xl bg-background px-6 py-8 shadow-lg "
+            className="mx-auto w-full max-w-xl space-y-6 rounded-xl bg-background px-6 py-8 shadow-lg "
             onSubmit={handleSubmit}
             autoComplete="off"
           >
@@ -452,66 +482,72 @@ export default function TryAkashForm({
             </div>
             {step === 1 && (
               <>
-                <div>
-                  <label className="mb-1 block text-sm ">First Name</label>
-                  <Input
-                    name="firstname"
-                    value={formData.firstname}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                    required
-                    className="w-full border  bg-background2 text-foreground"
-                  />
-                  {errors.firstname && (
-                    <span className="text-xs text-red-400">
-                      {errors.firstname}
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm">Last Name</label>
-                  <Input
-                    name="lastname"
-                    value={formData.lastname}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                    required
-                    className="w-full border  bg-background2 "
-                  />
-                  {errors.lastname && (
-                    <span className="text-xs text-red-400">
-                      {errors.lastname}
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm">
-                    Email<span className="text-red-400">*</span>
-                  </label>
-                  <Input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    required
-                    className="w-full border  bg-background2 "
-                  />
-                  {errors.email && (
-                    <span className="text-xs text-red-400">{errors.email}</span>
-                  )}
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm">Phone Number</label>
-                  <PhoneInput
-                    placeholder="+1"
-                    value={formData.phone}
-                    onChange={handlePhoneChange}
-                    modal={true}
-                  />
-                  {errors.phone && (
-                    <span className="text-xs text-red-400">{errors.phone}</span>
-                  )}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="mb-1 block text-sm ">First Name</label>
+                    <Input
+                      name="firstname"
+                      value={formData.firstname}
+                      onChange={handleChange}
+                      placeholder="First Name"
+                      required
+                      className="w-full border  bg-background2 text-foreground"
+                    />
+                    {errors.firstname && (
+                      <span className="text-xs text-red-400">
+                        {errors.firstname}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-sm">Last Name</label>
+                    <Input
+                      name="lastname"
+                      value={formData.lastname}
+                      onChange={handleChange}
+                      placeholder="Last Name"
+                      required
+                      className="w-full border  bg-background2 "
+                    />
+                    {errors.lastname && (
+                      <span className="text-xs text-red-400">
+                        {errors.lastname}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-sm">
+                      Email<span className="text-red-400">*</span>
+                    </label>
+                    <Input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Email"
+                      required
+                      className="w-full border  bg-background2 "
+                    />
+                    {errors.email && (
+                      <span className="text-xs text-red-400">
+                        {errors.email}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-sm">Phone Number</label>
+                    <PhoneInput
+                      placeholder="+1"
+                      value={formData.phone}
+                      onChange={handlePhoneChange}
+                      modal={true}
+                    />
+                    {errors.phone && (
+                      <span className="text-xs text-red-400">
+                        {errors.phone}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className="mb-1 block text-sm">
@@ -608,7 +644,7 @@ export default function TryAkashForm({
                         }));
                       }}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-background2">
                         <SelectValue placeholder="Select an option" />
                       </SelectTrigger>
                       <SelectContent>
@@ -655,7 +691,7 @@ export default function TryAkashForm({
                           }));
                         }}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-background2">
                           <SelectValue placeholder="Select GPU type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -691,7 +727,7 @@ export default function TryAkashForm({
                           }));
                         }}
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-background2">
                           <SelectValue placeholder="Select quantity" />
                         </SelectTrigger>
                         <SelectContent>
