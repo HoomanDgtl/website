@@ -238,7 +238,7 @@ export default function NvidiaBlackwellForm({
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="absolute right-4 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
+              className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
             >
               <X className="h-4 w-4" />
             </button>
@@ -374,7 +374,7 @@ export default function NvidiaBlackwellForm({
                 How much are you currently spending on compute?
                 <span className="text-red-400">*</span>
               </label>
-              <div className="space-y-3">
+              <div className="flex flex-col gap-3">
                 {[
                   { value: "<$1000/mo", label: "<$1000/mo" },
                   { value: "$1,000-$5,000", label: "$1,000-$5,000" },
@@ -382,34 +382,47 @@ export default function NvidiaBlackwellForm({
                   { value: "$25,000+", label: "$25,000+" },
                   { value: "No Spend Currently", label: "No Spend Currently" },
                 ].map((option) => (
-                  <div
+                  <label
                     key={option.value}
-                    className="flex items-center space-x-3"
+                    className="group flex cursor-pointer items-center gap-3"
                   >
-                    <input
-                      type="radio"
-                      id={`spending-${option.value}`}
-                      name="current_amount_spent_on_computer"
-                      value={option.value}
-                      checked={
-                        formData.current_amount_spent_on_computer ===
-                        option.value
-                      }
-                      onChange={(e) =>
-                        handleSelectChange(
-                          "current_amount_spent_on_computer",
-                          e.target.value,
-                        )
-                      }
-                      className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
-                    />
-                    <label
-                      htmlFor={`spending-${option.value}`}
-                      className="cursor-pointer text-sm font-medium leading-none"
-                    >
+                    <div className="relative">
+                      <input
+                        type="radio"
+                        name="current_amount_spent_on_computer"
+                        value={option.value}
+                        checked={
+                          formData.current_amount_spent_on_computer ===
+                          option.value
+                        }
+                        onChange={(e) =>
+                          handleSelectChange(
+                            "current_amount_spent_on_computer",
+                            e.target.value,
+                          )
+                        }
+                        className="sr-only"
+                      />
+                      <div
+                        className={`h-5 w-5 rounded-full border-2 transition-all duration-200 ${
+                          formData.current_amount_spent_on_computer ===
+                          option.value
+                            ? "border-primary bg-primary"
+                            : "border-gray-300 group-hover:border-primary/50"
+                        }`}
+                      >
+                        {formData.current_amount_spent_on_computer ===
+                          option.value && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="h-2 w-2 rounded-full bg-white"></div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium leading-none">
                       {option.label}
-                    </label>
-                  </div>
+                    </span>
+                  </label>
                 ))}
               </div>
               {errors.current_amount_spent_on_computer && (

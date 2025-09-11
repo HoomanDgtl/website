@@ -1,6 +1,7 @@
 import { PhoneInput } from "@/components/blackwell/phone-number-select";
 import { speakToExpertVariants } from "@/components/pricing-page/SpeakToExpert";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -551,30 +552,32 @@ export default function TryAkashForm({
                   </div>
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm">
+                  <label className="mb-3 block text-sm">
                     What would you like to do on Akash?
                     <span className="text-red-400">*</span>
                   </label>
-                  <div className="flex flex-col gap-2">
+                  <div className="space-y-3">
                     {[
                       "Rent GPUs",
                       "Provide GPUs",
                       "Get technical support",
                       "Other",
                     ].map((option) => (
-                      <label
-                        key={option}
-                        className="flex items-center gap-2 text-sm"
-                      >
-                        <input
-                          type="checkbox"
+                      <div key={option} className="flex items-center space-x-3">
+                        <Checkbox
+                          id={`akash-use-${option}`}
                           checked={formData.how_are_you_looking_to_use_akash_.includes(
                             option,
                           )}
-                          onChange={() => handleCheckboxChange(option)}
+                          onCheckedChange={() => handleCheckboxChange(option)}
                         />
-                        {option}
-                      </label>
+                        <label
+                          htmlFor={`akash-use-${option}`}
+                          className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {option}
+                        </label>
+                      </div>
                     ))}
                   </div>
                   {errors.how_are_you_looking_to_use_akash_ && (
