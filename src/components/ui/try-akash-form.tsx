@@ -74,12 +74,12 @@ export default function TryAkashForm({
     email: string;
     phone: string;
     country: string;
-    how_are_you_looking_to_use_akash_: string[];
+    how_are_you_looking_to_use_akash_: string;
     company: string;
     website: string;
     project_details: string;
     current_gpu_usage: string; // For Rent GPUs
-    provider_gpu_type: string; // For Provide GPUs
+    provider_gpu_type: string[]; // For Provide GPUs
     gpu_quantity_available: string; // For Provide GPUs
     support_request_info: string; // For Support
     lead_type: string; // Required field
@@ -90,12 +90,12 @@ export default function TryAkashForm({
     email: "",
     phone: "",
     country: "IN",
-    how_are_you_looking_to_use_akash_: [],
+    how_are_you_looking_to_use_akash_: "",
     company: "",
     website: "",
     project_details: "",
     current_gpu_usage: "",
-    provider_gpu_type: "",
+    provider_gpu_type: [],
     gpu_quantity_available: "",
     support_request_info: "",
     lead_type: "",
@@ -109,9 +109,9 @@ export default function TryAkashForm({
   function formFieldsToHSJSON() {
     const result = [];
     for (const [name, value] of Object.entries(formData)) {
-      if (name === "how_are_you_looking_to_use_akash_") {
+      if (name === "provider_gpu_type") {
         result.push({
-          name: "how_are_you_looking_to_use_akash_",
+          name: "provider_gpu_type",
           value: Array.isArray(value) ? value.join(", ") : value,
         });
       } else {
@@ -142,12 +142,8 @@ export default function TryAkashForm({
     if (!formData.firstname) newErrors.firstname = "First Name is required";
     if (!formData.lastname) newErrors.lastname = "Last Name is required";
     if (!formData.email) newErrors.email = "Email is required";
-    if (
-      !formData.how_are_you_looking_to_use_akash_ ||
-      formData.how_are_you_looking_to_use_akash_.length === 0
-    )
-      newErrors.how_are_you_looking_to_use_akash_ =
-        "Please select at least one option";
+    if (!formData.how_are_you_looking_to_use_akash_)
+      newErrors.how_are_you_looking_to_use_akash_ = "Please select an option";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
@@ -157,16 +153,12 @@ export default function TryAkashForm({
     if (!formData.company)
       newErrors.company = "Company / Project Name is required";
 
-    if (formData.how_are_you_looking_to_use_akash_.includes("Rent GPUs")) {
+    if (formData.how_are_you_looking_to_use_akash_ === "Rent GPUs") {
       setFormData((prev) => ({ ...prev, lead_type: "Rent GPUs" }));
-    } else if (
-      formData.how_are_you_looking_to_use_akash_.includes("Provide GPUs")
-    ) {
+    } else if (formData.how_are_you_looking_to_use_akash_ === "Provide GPUs") {
       setFormData((prev) => ({ ...prev, lead_type: "Provide GPUs" }));
     } else if (
-      formData.how_are_you_looking_to_use_akash_.includes(
-        "Get technical support",
-      )
+      formData.how_are_you_looking_to_use_akash_ === "Get technical support"
     ) {
       setFormData((prev) => ({ ...prev, lead_type: "Support" }));
     } else {
@@ -182,15 +174,18 @@ export default function TryAkashForm({
 
     // Rent GPUs validation
     if (
-      formData.how_are_you_looking_to_use_akash_.includes("Rent GPUs") &&
+      formData.how_are_you_looking_to_use_akash_ === "Rent GPUs" &&
       !formData.current_gpu_usage
     ) {
       newErrors.current_gpu_usage = "Please select your current compute spend";
     }
     // Provide GPUs validation
-    if (formData.how_are_you_looking_to_use_akash_.includes("Provide GPUs")) {
-      if (!formData.provider_gpu_type) {
-        newErrors.provider_gpu_type = "Please select GPU type";
+    if (formData.how_are_you_looking_to_use_akash_ === "Provide GPUs") {
+      if (
+        !formData.provider_gpu_type ||
+        formData.provider_gpu_type.length === 0
+      ) {
+        newErrors.provider_gpu_type = "Please select at least one GPU type";
       }
       if (!formData.gpu_quantity_available) {
         newErrors.gpu_quantity_available = "Please select GPU quantity";
@@ -198,9 +193,7 @@ export default function TryAkashForm({
     }
     // Support validation
     if (
-      formData.how_are_you_looking_to_use_akash_.includes(
-        "Get technical support",
-      ) &&
+      formData.how_are_you_looking_to_use_akash_ === "Get technical support" &&
       !formData.support_request_info
     ) {
       newErrors.support_request_info = "Please provide support request info";
@@ -259,22 +252,30 @@ export default function TryAkashForm({
     setErrors((prev) => ({ ...prev, phone: "" }));
   }
 
-  function handleCheckboxChange(option: string) {
+  function handleRadioChange(option: string) {
+    setFormData((prev) => ({
+      ...prev,
+      how_are_you_looking_to_use_akash_: option,
+    }));
+    setErrors((prev) => ({ ...prev, how_are_you_looking_to_use_akash_: "" }));
+  }
+
+  function handleGpuTypeChange(option: string) {
     setFormData((prev) => {
-      const arr = prev.how_are_you_looking_to_use_akash_;
+      const arr = prev.provider_gpu_type;
       if (arr.includes(option)) {
         return {
           ...prev,
-          how_are_you_looking_to_use_akash_: arr.filter((o) => o !== option),
+          provider_gpu_type: arr.filter((o) => o !== option),
         };
       } else {
         return {
           ...prev,
-          how_are_you_looking_to_use_akash_: [...arr, option],
+          provider_gpu_type: [...arr, option],
         };
       }
     });
-    setErrors((prev) => ({ ...prev, how_are_you_looking_to_use_akash_: "" }));
+    setErrors((prev) => ({ ...prev, provider_gpu_type: "" }));
   }
 
   function handleBack() {
@@ -454,7 +455,7 @@ export default function TryAkashForm({
           <form
             id="custom-hs-form"
             ref={formRef}
-            className="relative mx-auto w-full max-w-xl space-y-6 rounded-xl bg-background px-10 pb-8 pt-16 shadow-lg "
+            className="relative mx-auto w-full max-w-xl space-y-6 rounded-xl bg-background px-6 pb-8 pt-16 shadow-lg md:px-10 "
             onSubmit={handleSubmit}
             autoComplete="off"
           >
@@ -470,19 +471,20 @@ export default function TryAkashForm({
                 {submitError}
               </div>
             )}
-            <div>
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="mb-8 text-center text-3xl font-bold text-foreground">
-                  Get Started With Akash
-                </h2>
-              </div>
-              <p className="mb-10  text-lg text-foreground">
-                Please complete the information below to help guide you to the
-                right place.
-              </p>
-            </div>
+
             {step === 1 && (
               <>
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <h2 className="mb-8 text-3xl font-bold text-foreground">
+                      Get Started With Akash
+                    </h2>
+                  </div>
+                  <p className="mb-10  text-lg text-foreground">
+                    Please complete the information below to help guide you to
+                    the right place.
+                  </p>
+                </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
                     <label className="mb-1 block text-sm ">First Name</label>
@@ -551,43 +553,66 @@ export default function TryAkashForm({
                     What would you like to do on Akash?
                     <span className="text-red-400">*</span>
                   </label>
-                  <div className="space-y-3">
+                  <div className="flex flex-col gap-3">
                     {[
                       "Rent GPUs",
                       "Provide GPUs",
                       "Get technical support",
                       "Other",
                     ].map((option) => (
-                      <div key={option} className="flex items-center space-x-3">
-                        <Checkbox
-                          id={`akash-use-${option}`}
-                          checked={formData.how_are_you_looking_to_use_akash_.includes(
-                            option,
-                          )}
-                          onCheckedChange={() => handleCheckboxChange(option)}
-                        />
-                        <label
-                          htmlFor={`akash-use-${option}`}
-                          className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
+                      <label
+                        key={option}
+                        className="group flex cursor-pointer items-center gap-3"
+                      >
+                        <div className="relative">
+                          <input
+                            type="radio"
+                            name="how_are_you_looking_to_use_akash_"
+                            value={option}
+                            checked={
+                              formData.how_are_you_looking_to_use_akash_ ===
+                              option
+                            }
+                            onChange={() => handleRadioChange(option)}
+                            className="sr-only"
+                          />
+                          <div
+                            className={`h-5 w-5 rounded-full border-2 transition-all duration-200 ${
+                              formData.how_are_you_looking_to_use_akash_ ===
+                              option
+                                ? "border-primary bg-primary"
+                                : "border-gray-300 group-hover:border-primary/50"
+                            }`}
+                          >
+                            {formData.how_are_you_looking_to_use_akash_ ===
+                              option && (
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="h-2 w-2 rounded-full bg-white"></div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <span className="text-sm font-medium leading-none">
                           {option}
-                        </label>
-                      </div>
+                        </span>
+                      </label>
                     ))}
                   </div>
                   {errors.how_are_you_looking_to_use_akash_ && (
-                    <span className="text-xs text-red-400">
+                    <span className="mt-2 block text-xs text-red-400">
                       {errors.how_are_you_looking_to_use_akash_}
                     </span>
                   )}
                 </div>
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  Next
-                </Button>
+                <div className="flex justify-end">
+                  <Button
+                    type="submit"
+                    className=" w-min px-10"
+                    disabled={isSubmitting}
+                  >
+                    Next
+                  </Button>
+                </div>
               </>
             )}
             {step === 2 && (
@@ -620,88 +645,116 @@ export default function TryAkashForm({
                   />
                 </div>
                 {/* Rent GPUs conditional field */}
-                {formData.how_are_you_looking_to_use_akash_.includes(
-                  "Rent GPUs",
-                ) && (
+                {formData.how_are_you_looking_to_use_akash_ === "Rent GPUs" && (
                   <div>
-                    <label className="mb-1 block text-sm">
+                    <label className="mb-3 block text-sm">
                       How much are you currently spending on compute?
                       <span className="text-red-400">*</span>
                     </label>
-                    <Select
-                      value={formData.current_gpu_usage}
-                      onValueChange={(value) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          current_gpu_usage: value,
-                        }));
-                        setErrors((prev) => ({
-                          ...prev,
-                          current_gpu_usage: "",
-                        }));
-                      }}
-                    >
-                      <SelectTrigger className="bg-background2">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="<$1000/mo">$0-$1,000/mo</SelectItem>
-                        <SelectItem value="$1,000-$5,000">
-                          $1,000-$5,000
-                        </SelectItem>
-                        <SelectItem value="$5,000-$25,000">
-                          $5,000-$25,000
-                        </SelectItem>
-                        <SelectItem value="$25,000+">$25,000+</SelectItem>
-                        <SelectItem value="No Spend Currently">
-                          No Spend Currently
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <div className="flex flex-col gap-3">
+                      {[
+                        { value: "<$1000/mo", label: "$0-$1,000/mo" },
+                        { value: "$1,000-$5,000", label: "$1,000-$5,000" },
+                        { value: "$5,000-$25,000", label: "$5,000-$25,000" },
+                        { value: "$25,000+", label: "$25,000+" },
+                        {
+                          value: "No Spend Currently",
+                          label: "No Spend Currently",
+                        },
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className="group flex cursor-pointer items-center gap-3"
+                        >
+                          <div className="relative">
+                            <input
+                              type="radio"
+                              name="current_gpu_usage"
+                              value={option.value}
+                              checked={
+                                formData.current_gpu_usage === option.value
+                              }
+                              onChange={(e) => {
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  current_gpu_usage: e.target.value,
+                                }));
+                                setErrors((prev) => ({
+                                  ...prev,
+                                  current_gpu_usage: "",
+                                }));
+                              }}
+                              className="sr-only"
+                            />
+                            <div
+                              className={`h-5 w-5 rounded-full border-2 transition-all duration-200 ${
+                                formData.current_gpu_usage === option.value
+                                  ? "border-primary bg-primary"
+                                  : "border-gray-300 group-hover:border-primary/50"
+                              }`}
+                            >
+                              {formData.current_gpu_usage === option.value && (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="h-2 w-2 rounded-full bg-white"></div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <span className="text-sm font-medium leading-none">
+                            {option.label}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                     {errors.current_gpu_usage && (
-                      <span className="text-xs text-red-400">
+                      <span className="mt-2 block text-xs text-red-400">
                         {errors.current_gpu_usage}
                       </span>
                     )}
                   </div>
                 )}
                 {/* Provide GPUs conditional fields */}
-                {formData.how_are_you_looking_to_use_akash_.includes(
-                  "Provide GPUs",
-                ) && (
+                {formData.how_are_you_looking_to_use_akash_ ===
+                  "Provide GPUs" && (
                   <>
                     <div>
-                      <label className="mb-1 block text-sm">
+                      <label className="mb-3 block text-sm">
                         What type of GPUs do you want to provide?
                         <span className="text-red-400">*</span>
                       </label>
-                      <Select
-                        value={formData.provider_gpu_type}
-                        onValueChange={(value) => {
-                          setFormData((prev) => ({
-                            ...prev,
-                            provider_gpu_type: value,
-                          }));
-                          setErrors((prev) => ({
-                            ...prev,
-                            provider_gpu_type: "",
-                          }));
-                        }}
-                      >
-                        <SelectTrigger className="bg-background2">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="H200">H200</SelectItem>
-                          <SelectItem value="H100">H100</SelectItem>
-                          <SelectItem value="A100">A100</SelectItem>
-                          <SelectItem value="RTX4090">RTX4090</SelectItem>
-                          <SelectItem value="A6000">A6000</SelectItem>
-                          <SelectItem value="Other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="space-y-3">
+                        {[
+                          "H200",
+                          "H100",
+                          "A100",
+                          "RTX4090",
+                          "A6000",
+                          "Other",
+                        ].map((gpuType) => (
+                          <div
+                            key={gpuType}
+                            className="flex items-center space-x-3"
+                          >
+                            <Checkbox
+                              id={`gpu-type-${gpuType}`}
+                              checked={formData.provider_gpu_type.includes(
+                                gpuType,
+                              )}
+                              onCheckedChange={() =>
+                                handleGpuTypeChange(gpuType)
+                              }
+                            />
+                            <label
+                              htmlFor={`gpu-type-${gpuType}`}
+                              className="cursor-pointer text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              {gpuType}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
                       {errors.provider_gpu_type && (
-                        <span className="text-xs text-red-400">
+                        <span className="mt-2 block text-xs text-red-400">
                           {errors.provider_gpu_type}
                         </span>
                       )}
@@ -727,7 +780,7 @@ export default function TryAkashForm({
                         <SelectTrigger className="bg-background2">
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="z-[102]">
                           <SelectItem value="1">1</SelectItem>
                           <SelectItem value="2-5">2-5</SelectItem>
                           <SelectItem value="5-10">5-10</SelectItem>
@@ -743,9 +796,8 @@ export default function TryAkashForm({
                   </>
                 )}
                 {/* Support Request conditional field */}
-                {formData.how_are_you_looking_to_use_akash_.includes(
-                  "Get technical support",
-                ) && (
+                {formData.how_are_you_looking_to_use_akash_ ===
+                  "Get technical support" && (
                   <div>
                     <label className="mb-1 block text-sm">
                       Support Request Info
@@ -776,19 +828,19 @@ export default function TryAkashForm({
                     className="w-full rounded border bg-background2  px-3 py-2 text-sm  focus:outline-none"
                   />
                 </div>
-                <div className="mt-4 flex gap-2">
+                <div className="mt-4 flex justify-between  gap-2">
                   <Button
                     type="button"
                     onClick={handleBack}
                     variant="outline"
-                    className="flex-1"
+                    className="w-min px-10"
                     disabled={isSubmitting}
                   >
                     Back
                   </Button>
                   <Button
                     type="submit"
-                    className="flex-1"
+                    className=" w-min px-10"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (

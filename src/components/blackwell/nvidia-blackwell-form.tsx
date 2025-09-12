@@ -204,7 +204,7 @@ export default function NvidiaBlackwellForm({
           NVIDIA Blackwell Early Access Form
         </DialogTitle>
 
-        {submitted ? (
+        {!submitted ? (
           <div className="mx-auto w-full max-w-xl rounded-xl bg-background  pt-16 shadow-lg">
             <button
               type="button"
@@ -214,7 +214,7 @@ export default function NvidiaBlackwellForm({
               <X className="h-4 w-4" />
             </button>
             <div>
-              <h2 className="mb-14 px-10 text-3xl font-bold text-foreground">
+              <h2 className="mb-6 px-6 text-3xl font-bold text-foreground md:mb-14 md:px-10">
                 Thanks for requesting early access, we'll be in touch.
               </h2>
               <img
@@ -226,7 +226,7 @@ export default function NvidiaBlackwellForm({
         ) : (
           <form
             ref={formRef}
-            className="mx-auto flex w-full max-w-[600px] flex-col gap-6 rounded-xl bg-background px-10 pb-10 pt-16 shadow-lg"
+            className="mx-auto flex w-full max-w-[600px] flex-col gap-6 rounded-xl bg-background px-6 pb-10 pt-16 shadow-lg md:px-10"
             onSubmit={handleSubmit}
             autoComplete="off"
           >
