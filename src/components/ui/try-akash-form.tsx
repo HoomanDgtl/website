@@ -225,9 +225,17 @@ export default function TryAkashForm({
         },
       );
       if (res.ok) {
-        setSubmitted(true);
         setSubmitError("");
-        window.location.href = "/meetingconfirmation";
+
+        try {
+          const responseData = await res.json();
+          if (responseData.redirectUri) {
+            window.location.href = responseData.redirectUri;
+            return;
+          } else {
+            setSubmitted(true);
+          }
+        } catch (err) {}
       } else {
         setSubmitError("Submission failed. Please try again.");
       }
@@ -280,6 +288,30 @@ export default function TryAkashForm({
   }
 
   function handleBack() {
+    setStep(1);
+  }
+
+  function resetForm() {
+    setFormData({
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      country: "IN",
+      how_are_you_looking_to_use_akash_: "",
+      company: "",
+      website: "",
+      project_details: "",
+      current_gpu_usage: "",
+      provider_gpu_type: [],
+      gpu_quantity_available: "",
+      support_request_info: "",
+      lead_type: "",
+      current_amount_spent_on_computer: "",
+    });
+    setErrors({});
+    setSubmitError("");
+    setSubmitted(false);
     setStep(1);
   }
 
@@ -431,7 +463,15 @@ export default function TryAkashForm({
   );
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        setIsOpen(open);
+        if (!open) {
+          resetForm();
+        }
+      }}
+    >
       <DialogTrigger asChild>
         {type === "hero"
           ? heroButton
@@ -452,7 +492,57 @@ export default function TryAkashForm({
       >
         <DialogTitle className="sr-only">Form</DialogTitle>
 
-        {submitted ? null : (
+        {submitted ? (
+          <div className="mx-auto w-full max-w-xl rounded-xl bg-background pt-16 shadow-lg">
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                resetForm();
+              }}
+              className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="px-6 pb-6 md:px-10">
+              <h2 className="mb-6 text-3xl font-bold text-foreground">
+                Thank you for reaching out to Akash Network.
+              </h2>
+              <div className="space-y-4 text-foreground">
+                <p>
+                  For projects looking to rent multiple GPUs or provide GPUs go
+                  ahead and book a call with our Akash Expert Team:{" "}
+                  <a
+                    href="https://hubs.ly/Q03F6xHP0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline hover:text-primary/80"
+                  >
+                    Book A Call
+                  </a>
+                </p>
+                <p>
+                  For other inquiries, we will be in touch shortly. For urgent
+                  questions, please join the{" "}
+                  <a
+                    href="https://discord.com/invite/akash"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline hover:text-primary/80"
+                  >
+                    Akash Network Discord
+                  </a>{" "}
+                  for 24/7 support.
+                </p>
+              </div>
+            </div>
+            <img
+              src="https://47519938.fs1.hubspotusercontent-na1.net/hub/47519938/hubfs/akash-dustparticles-1-1.png?width=800&height=204.75914103308185"
+              className="aspect-[16/6] w-full rounded-b-xl object-cover object-center"
+              alt="Akash Network"
+            />
+          </div>
+        ) : (
           <form
             id="custom-hs-form"
             ref={formRef}
@@ -462,7 +552,10 @@ export default function TryAkashForm({
           >
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                resetForm();
+              }}
               className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
             >
               <X className="h-4 w-4" />

@@ -204,11 +204,14 @@ export default function NvidiaBlackwellForm({
           NVIDIA Blackwell Early Access Form
         </DialogTitle>
 
-        {!submitted ? (
+        {submitted ? (
           <div className="mx-auto w-full max-w-xl rounded-xl bg-background  pt-16 shadow-lg">
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                resetForm();
+              }}
               className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
             >
               <X className="h-4 w-4" />
@@ -232,7 +235,10 @@ export default function NvidiaBlackwellForm({
           >
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                resetForm();
+              }}
               className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
             >
               <X className="h-4 w-4" />
