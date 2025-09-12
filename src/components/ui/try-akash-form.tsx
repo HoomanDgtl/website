@@ -74,32 +74,28 @@ export default function TryAkashForm({
     email: string;
     phone: string;
     country: string;
-    how_are_you_looking_to_use_akash_: string;
+    lead_type: string; // Required field
     company: string;
     website: string;
     project_details: string;
-    current_gpu_usage: string; // For Rent GPUs
+    current_amount_spent_on_computer: string; // For Rent GPUs
     provider_gpu_type: string[]; // For Provide GPUs
     gpu_quantity_available: string; // For Provide GPUs
     support_request_info: string; // For Support
-    lead_type: string; // Required field
-    current_amount_spent_on_computer: string; // Required field
   }>({
     firstname: "",
     lastname: "",
     email: "",
     phone: "",
     country: "IN",
-    how_are_you_looking_to_use_akash_: "",
+    lead_type: "",
     company: "",
     website: "",
     project_details: "",
-    current_gpu_usage: "",
+    current_amount_spent_on_computer: "",
     provider_gpu_type: [],
     gpu_quantity_available: "",
     support_request_info: "",
-    lead_type: "",
-    current_amount_spent_on_computer: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [submitError, setSubmitError] = useState("");
@@ -143,8 +139,7 @@ export default function TryAkashForm({
     if (!formData.firstname) newErrors.firstname = "First Name is required";
     if (!formData.lastname) newErrors.lastname = "Last Name is required";
     if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.how_are_you_looking_to_use_akash_)
-      newErrors.how_are_you_looking_to_use_akash_ = "Please select an option";
+    if (!formData.lead_type) newErrors.lead_type = "Please select an option";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }
@@ -154,34 +149,16 @@ export default function TryAkashForm({
     if (!formData.company)
       newErrors.company = "Company / Project Name is required";
 
-    if (formData.how_are_you_looking_to_use_akash_ === "Rent GPUs") {
-      setFormData((prev) => ({ ...prev, lead_type: "Rent GPUs" }));
-    } else if (formData.how_are_you_looking_to_use_akash_ === "Provide GPUs") {
-      setFormData((prev) => ({ ...prev, lead_type: "Provide GPUs" }));
-    } else if (
-      formData.how_are_you_looking_to_use_akash_ === "Get technical support"
-    ) {
-      setFormData((prev) => ({ ...prev, lead_type: "Support" }));
-    } else {
-      setFormData((prev) => ({ ...prev, lead_type: "Other" }));
-    }
-
-    if (formData.current_gpu_usage) {
-      setFormData((prev) => ({
-        ...prev,
-        current_amount_spent_on_computer: formData.current_gpu_usage,
-      }));
-    }
-
     // Rent GPUs validation
     if (
-      formData.how_are_you_looking_to_use_akash_ === "Rent GPUs" &&
-      !formData.current_gpu_usage
+      formData.lead_type === "Developer" &&
+      !formData.current_amount_spent_on_computer
     ) {
-      newErrors.current_gpu_usage = "Please select your current compute spend";
+      newErrors.current_amount_spent_on_computer =
+        "Please select your current compute spend";
     }
     // Provide GPUs validation
-    if (formData.how_are_you_looking_to_use_akash_ === "Provide GPUs") {
+    if (formData.lead_type === "Provider") {
       if (
         !formData.provider_gpu_type ||
         formData.provider_gpu_type.length === 0
@@ -194,7 +171,7 @@ export default function TryAkashForm({
     }
     // Support validation
     if (
-      formData.how_are_you_looking_to_use_akash_ === "Get technical support" &&
+      formData.lead_type === "technical support" &&
       !formData.support_request_info
     ) {
       newErrors.support_request_info = "Please provide support request info";
@@ -262,11 +239,23 @@ export default function TryAkashForm({
   }
 
   function handleRadioChange(option: string) {
+    // Map display labels to CRM values
+    let leadTypeValue = "";
+    if (option === "Rent GPUs") {
+      leadTypeValue = "Developer";
+    } else if (option === "Provide GPUs") {
+      leadTypeValue = "Provider";
+    } else if (option === "Get technical support") {
+      leadTypeValue = "technical support";
+    } else {
+      leadTypeValue = "Other";
+    }
+
     setFormData((prev) => ({
       ...prev,
-      how_are_you_looking_to_use_akash_: option,
+      lead_type: leadTypeValue,
     }));
-    setErrors((prev) => ({ ...prev, how_are_you_looking_to_use_akash_: "" }));
+    setErrors((prev) => ({ ...prev, lead_type: "" }));
   }
 
   function handleGpuTypeChange(option: string) {
@@ -298,16 +287,14 @@ export default function TryAkashForm({
       email: "",
       phone: "",
       country: "IN",
-      how_are_you_looking_to_use_akash_: "",
+      lead_type: "",
       company: "",
       website: "",
       project_details: "",
-      current_gpu_usage: "",
+      current_amount_spent_on_computer: "",
       provider_gpu_type: [],
       gpu_quantity_available: "",
       support_request_info: "",
-      lead_type: "",
-      current_amount_spent_on_computer: "",
     });
     setErrors({});
     setSubmitError("");
@@ -661,25 +648,43 @@ export default function TryAkashForm({
                         <div className="relative">
                           <input
                             type="radio"
-                            name="how_are_you_looking_to_use_akash_"
+                            name="lead_type"
                             value={option}
                             checked={
-                              formData.how_are_you_looking_to_use_akash_ ===
-                              option
+                              (option === "Rent GPUs" &&
+                                formData.lead_type === "Developer") ||
+                              (option === "Provide GPUs" &&
+                                formData.lead_type === "Provider") ||
+                              (option === "Get technical support" &&
+                                formData.lead_type === "technical support") ||
+                              (option === "Other" &&
+                                formData.lead_type === "Other")
                             }
                             onChange={() => handleRadioChange(option)}
                             className="sr-only"
                           />
                           <div
                             className={`h-5 w-5 rounded-full border-2 transition-all duration-200 ${
-                              formData.how_are_you_looking_to_use_akash_ ===
-                              option
+                              (option === "Rent GPUs" &&
+                                formData.lead_type === "Developer") ||
+                              (option === "Provide GPUs" &&
+                                formData.lead_type === "Provider") ||
+                              (option === "Get technical support" &&
+                                formData.lead_type === "technical support") ||
+                              (option === "Other" &&
+                                formData.lead_type === "Other")
                                 ? "border-primary bg-primary"
                                 : "border-gray-300 group-hover:border-primary/50"
                             }`}
                           >
-                            {formData.how_are_you_looking_to_use_akash_ ===
-                              option && (
+                            {((option === "Rent GPUs" &&
+                              formData.lead_type === "Developer") ||
+                              (option === "Provide GPUs" &&
+                                formData.lead_type === "Provider") ||
+                              (option === "Get technical support" &&
+                                formData.lead_type === "technical support") ||
+                              (option === "Other" &&
+                                formData.lead_type === "Other")) && (
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <div className="h-2 w-2 rounded-full bg-white"></div>
                               </div>
@@ -692,9 +697,9 @@ export default function TryAkashForm({
                       </label>
                     ))}
                   </div>
-                  {errors.how_are_you_looking_to_use_akash_ && (
+                  {errors.lead_type && (
                     <span className="mt-2 block text-xs text-red-400">
-                      {errors.how_are_you_looking_to_use_akash_}
+                      {errors.lead_type}
                     </span>
                   )}
                 </div>
@@ -739,7 +744,7 @@ export default function TryAkashForm({
                   />
                 </div>
                 {/* Rent GPUs conditional field */}
-                {formData.how_are_you_looking_to_use_akash_ === "Rent GPUs" && (
+                {formData.lead_type === "Developer" && (
                   <div>
                     <label className="mb-3 block text-sm">
                       How much are you currently spending on compute?
@@ -763,31 +768,35 @@ export default function TryAkashForm({
                           <div className="relative">
                             <input
                               type="radio"
-                              name="current_gpu_usage"
+                              name="current_amount_spent_on_computer"
                               value={option.value}
                               checked={
-                                formData.current_gpu_usage === option.value
+                                formData.current_amount_spent_on_computer ===
+                                option.value
                               }
                               onChange={(e) => {
                                 setFormData((prev) => ({
                                   ...prev,
-                                  current_gpu_usage: e.target.value,
+                                  current_amount_spent_on_computer:
+                                    e.target.value,
                                 }));
                                 setErrors((prev) => ({
                                   ...prev,
-                                  current_gpu_usage: "",
+                                  current_amount_spent_on_computer: "",
                                 }));
                               }}
                               className="sr-only"
                             />
                             <div
                               className={`h-5 w-5 rounded-full border-2 transition-all duration-200 ${
-                                formData.current_gpu_usage === option.value
+                                formData.current_amount_spent_on_computer ===
+                                option.value
                                   ? "border-primary bg-primary"
                                   : "border-gray-300 group-hover:border-primary/50"
                               }`}
                             >
-                              {formData.current_gpu_usage === option.value && (
+                              {formData.current_amount_spent_on_computer ===
+                                option.value && (
                                 <div className="absolute inset-0 flex items-center justify-center">
                                   <div className="h-2 w-2 rounded-full bg-white"></div>
                                 </div>
@@ -800,16 +809,15 @@ export default function TryAkashForm({
                         </label>
                       ))}
                     </div>
-                    {errors.current_gpu_usage && (
+                    {errors.current_amount_spent_on_computer && (
                       <span className="mt-2 block text-xs text-red-400">
-                        {errors.current_gpu_usage}
+                        {errors.current_amount_spent_on_computer}
                       </span>
                     )}
                   </div>
                 )}
                 {/* Provide GPUs conditional fields */}
-                {formData.how_are_you_looking_to_use_akash_ ===
-                  "Provide GPUs" && (
+                {formData.lead_type === "Provider" && (
                   <>
                     <div>
                       <label className="mb-3 block text-sm">
@@ -890,8 +898,7 @@ export default function TryAkashForm({
                   </>
                 )}
                 {/* Support Request conditional field */}
-                {formData.how_are_you_looking_to_use_akash_ ===
-                  "Get technical support" && (
+                {formData.lead_type === "technical support" && (
                   <div>
                     <label className="mb-1 block text-sm">
                       Support Request Info
