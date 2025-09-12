@@ -454,10 +454,17 @@ export default function TryAkashForm({
           <form
             id="custom-hs-form"
             ref={formRef}
-            className="mx-auto w-full max-w-xl space-y-6 rounded-xl bg-background px-6 py-8 shadow-lg "
+            className="relative mx-auto w-full max-w-xl space-y-6 rounded-xl bg-background px-10 pb-8 pt-16 shadow-lg "
             onSubmit={handleSubmit}
             autoComplete="off"
           >
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
+            >
+              <X className="h-4 w-4" />
+            </button>
             {submitError && (
               <div className="mb-4 rounded bg-red-100 px-3 py-2 text-sm text-red-700">
                 {submitError}
@@ -465,19 +472,11 @@ export default function TryAkashForm({
             )}
             <div>
               <div className="flex items-center justify-between gap-2">
-                <h2 className="mb-1 text-center text-2xl font-bold text-foreground">
+                <h2 className="mb-8 text-center text-3xl font-bold text-foreground">
                   Get Started With Akash
                 </h2>
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    setSubmitted(false);
-                  }}
-                >
-                  <X className="h-4 w-4" />
-                </button>
               </div>
-              <p className="mb-6  text-sm">
+              <p className="mb-10  text-lg text-foreground">
                 Please complete the information below to help guide you to the
                 right place.
               </p>
@@ -491,7 +490,6 @@ export default function TryAkashForm({
                       name="firstname"
                       value={formData.firstname}
                       onChange={handleChange}
-                      placeholder="First Name"
                       required
                       className="w-full border  bg-background2 text-foreground"
                     />
@@ -507,7 +505,6 @@ export default function TryAkashForm({
                       name="lastname"
                       value={formData.lastname}
                       onChange={handleChange}
-                      placeholder="Last Name"
                       required
                       className="w-full border  bg-background2 "
                     />
@@ -526,7 +523,6 @@ export default function TryAkashForm({
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="Email"
                       required
                       className="w-full border  bg-background2 "
                     />
@@ -539,7 +535,6 @@ export default function TryAkashForm({
                   <div>
                     <label className="mb-1 block text-sm">Phone Number</label>
                     <PhoneInput
-                      placeholder="+1"
                       value={formData.phone}
                       onChange={handlePhoneChange}
                       modal={true}
@@ -606,7 +601,6 @@ export default function TryAkashForm({
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    placeholder="Company / Project Name"
                     required
                     className="w-full border  bg-background2 "
                   />
@@ -622,7 +616,6 @@ export default function TryAkashForm({
                     name="website"
                     value={formData.website}
                     onChange={handleChange}
-                    placeholder="Website URL"
                     className="w-full border  bg-background2 "
                   />
                 </div>
@@ -649,7 +642,7 @@ export default function TryAkashForm({
                       }}
                     >
                       <SelectTrigger className="bg-background2">
-                        <SelectValue placeholder="Select an option" />
+                        <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="<$1000/mo">$0-$1,000/mo</SelectItem>
@@ -696,7 +689,7 @@ export default function TryAkashForm({
                         }}
                       >
                         <SelectTrigger className="bg-background2">
-                          <SelectValue placeholder="Select GPU type" />
+                          <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="H200">H200</SelectItem>
@@ -732,7 +725,7 @@ export default function TryAkashForm({
                         }}
                       >
                         <SelectTrigger className="bg-background2">
-                          <SelectValue placeholder="Select quantity" />
+                          <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="1">1</SelectItem>
@@ -762,7 +755,6 @@ export default function TryAkashForm({
                       name="support_request_info"
                       value={formData.support_request_info}
                       onChange={handleChange}
-                      placeholder="Describe your support request"
                       rows={3}
                       className="w-full rounded border bg-background2 px-3 py-2 text-sm focus:outline-none"
                       required
@@ -780,7 +772,6 @@ export default function TryAkashForm({
                     name="project_details"
                     value={formData.project_details}
                     onChange={handleChange}
-                    placeholder="Project Details"
                     rows={4}
                     className="w-full rounded border bg-background2  px-3 py-2 text-sm  focus:outline-none"
                   />

@@ -198,40 +198,35 @@ export default function NvidiaBlackwellForm({
       <DialogContent
         hideCloseButton
         overlayClassName="z-[99]"
-        className="hide-scrollbar z-[100] max-h-[95vh] overflow-hidden overflow-y-auto !border-none bg-transparent p-0 shadow-none sm:max-w-[600px]"
+        className="hide-scrollbar z-[100]  max-h-[95vh] overflow-hidden overflow-y-auto !border-none bg-transparent p-0 shadow-none sm:max-w-[600px]"
       >
         <DialogTitle className="sr-only">
           NVIDIA Blackwell Early Access Form
         </DialogTitle>
 
         {submitted ? (
-          <div className="mx-auto w-full max-w-xl rounded-xl bg-background px-6 py-8 shadow-lg">
+          <div className="mx-auto w-full max-w-xl rounded-xl bg-background  pt-16 shadow-lg">
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="absolute right-4 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
+              className="absolute right-6 top-4 z-10 rounded-full bg-white p-2 text-black hover:bg-white/90"
             >
               <X className="h-4 w-4" />
             </button>
-            <div className="text-center">
-              <h2 className="mb-4 text-2xl font-bold text-foreground">
-                Thank You!
-              </h2>
-              <p className="mb-6 text-foreground/80">
+            <div>
+              <h2 className="mb-14 px-10 text-3xl font-bold text-foreground">
                 Thanks for requesting early access, we'll be in touch.
-              </p>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="rounded-md bg-primary px-6 py-2 text-white transition-colors hover:bg-primary/90"
-              >
-                Close
-              </button>
+              </h2>
+              <img
+                src="https://47519938.fs1.hubspotusercontent-na1.net/hub/47519938/hubfs/akash-dustparticles-1-1.png?width=800&height=204.75914103308185"
+                className="aspect-[16/6] w-full rounded-b-2xl object-cover object-center"
+              />
             </div>
           </div>
         ) : (
           <form
             ref={formRef}
-            className="mx-auto w-full max-w-xl space-y-6 rounded-xl bg-background px-6 py-8 shadow-lg"
+            className="mx-auto flex w-full max-w-[600px] flex-col gap-6 rounded-xl bg-background px-10 pb-10 pt-16 shadow-lg"
             onSubmit={handleSubmit}
             autoComplete="off"
           >
@@ -249,17 +244,10 @@ export default function NvidiaBlackwellForm({
               </div>
             )}
 
-            <div>
-              <h2 className="mb-1 text-center text-2xl font-bold text-foreground">
-                Akash - NVIDIA Blackwell Early Access
-              </h2>
-              <p className="mb-6 text-center text-sm text-foreground/80">
-                Get early access to NVIDIA's most advanced GPUs on Akash
-                Supercloud
-              </p>
-            </div>
+            <h2 className=" mb-4 text-3xl font-bold text-foreground">
+              Akash - NVIDIA Blackwell Early Access
+            </h2>
 
-            {/* Basic Information */}
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label className="mb-1 block text-sm font-medium">
@@ -269,7 +257,6 @@ export default function NvidiaBlackwellForm({
                   name="firstname"
                   value={formData.firstname}
                   onChange={handleChange}
-                  placeholder="First Name"
                   required
                   className="w-full border bg-background2 text-foreground"
                 />
@@ -287,7 +274,6 @@ export default function NvidiaBlackwellForm({
                   name="lastname"
                   value={formData.lastname}
                   onChange={handleChange}
-                  placeholder="Last Name"
                   required
                   className="w-full border bg-background2"
                 />
@@ -308,7 +294,6 @@ export default function NvidiaBlackwellForm({
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="your@email.com"
                 required
                 className="w-full border bg-background2"
               />
@@ -322,7 +307,6 @@ export default function NvidiaBlackwellForm({
                 Phone Number
               </label>
               <PhoneInput
-                placeholder="+1"
                 value={formData.phone}
                 onChange={handlePhoneChange}
                 modal={true}
@@ -434,21 +418,24 @@ export default function NvidiaBlackwellForm({
 
             {/* Website URL */}
             <div>
-              <label className="mb-1 block text-sm font-medium">
+              <label className="mb-2 block text-sm font-medium">
                 Company / Project Website URL
               </label>
               <Input
                 name="website"
                 value={formData.website}
                 onChange={handleChange}
-                placeholder="https://yourwebsite.com"
                 className="w-full border bg-background2"
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button
+              type="submit"
+              className="ml-auto w-min px-10"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? (
-                <span className="flex items-center justify-center gap-2">
+                <span className=" flex items-center justify-center gap-2">
                   <Loader2 className="h-4 w-4 animate-spin" />
                   Submitting...
                 </span>
