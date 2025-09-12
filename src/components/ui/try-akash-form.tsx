@@ -110,12 +110,13 @@ export default function TryAkashForm({
     const result = [];
     for (const [name, value] of Object.entries(formData)) {
       if (name === "provider_gpu_type") {
+        const fieldValue =
+          Array.isArray(value) && value.length > 0 ? value.join(", ") : "null";
         result.push({
           name: "provider_gpu_type",
-          value: Array.isArray(value) ? value.join(", ") : value,
+          value: fieldValue,
         });
       } else {
-        // Send "null" for empty required fields
         const fieldValue = value === "" ? "null" : value;
         result.push({ name, value: fieldValue });
       }
