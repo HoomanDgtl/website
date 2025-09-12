@@ -68,13 +68,11 @@ export default function NvidiaBlackwellForm({
     const result = [];
     for (const [name, value] of Object.entries(formData)) {
       if (name === "gpu_type_interest") {
-        // Join array values with commas for HubSpot
         result.push({
           name: "gpu_type_interest",
           value: Array.isArray(value) ? value.join(", ") : value,
         });
       } else {
-        // Send "null" for empty optional fields, actual values for required fields
         const fieldValue = value === "" ? "null" : value;
         result.push({ name, value: fieldValue });
       }
