@@ -108,7 +108,6 @@ export default function NvidiaBlackwellForm({
     };
 
     try {
-      // Using the same HubSpot form ID as in the original component
       const res = await fetch(
         "https://api.hsforms.com/submissions/v3/integration/submit/47519938/2d95f20c-cd65-4648-94f1-df0732aa60e6",
         {
@@ -320,7 +319,6 @@ export default function NvidiaBlackwellForm({
               )}
             </div>
 
-            {/* GPU Type Interest */}
             <div>
               <label className="mb-3 block text-sm font-medium">
                 What type of GPUs are you interested in renting?
@@ -356,7 +354,6 @@ export default function NvidiaBlackwellForm({
               )}
             </div>
 
-            {/* Current Spending */}
             <div>
               <label className="mb-3 block text-sm font-medium">
                 How much are you currently spending on compute?
@@ -420,7 +417,6 @@ export default function NvidiaBlackwellForm({
               )}
             </div>
 
-            {/* Website URL */}
             <div>
               <label className="mb-2 block text-sm font-medium">
                 Company / Project Website URL
