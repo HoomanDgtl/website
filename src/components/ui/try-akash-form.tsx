@@ -67,21 +67,20 @@ export default function TryAkashForm({
       });
   }, []);
 
-  // 2. Add country to formData
   const [formData, setFormData] = useState<{
     firstname: string;
     lastname: string;
     email: string;
     phone: string;
     country: string;
-    lead_type: string; // Required field
+    lead_type: string;
     company: string;
     website: string;
     project_details: string;
-    current_amount_spent_on_computer: string; // For Rent GPUs
-    provider_gpu_type: string[]; // For Provide GPUs
-    gpu_quantity_available: string; // For Provide GPUs
-    support_request_info: string; // For Support
+    current_amount_spent_on_computer: string;
+    provider_gpu_type: string[];
+    gpu_quantity_available: string;
+    support_request_info: string;
   }>({
     firstname: "",
     lastname: "",
