@@ -110,7 +110,10 @@ const CountrySelect = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="z-[102] w-[300px] p-0">
+      <PopoverContent
+        className="z-[102] w-[300px] p-0"
+        onWheel={(e) => e.stopPropagation()}
+      >
         <Command>
           <CommandInput placeholder="Search country..." />
           <CommandList>
