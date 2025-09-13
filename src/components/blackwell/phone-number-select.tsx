@@ -89,6 +89,20 @@ const CountrySelect = ({
   onChange,
   modal = false,
 }: CountrySelectProps) => {
+  const [searchValue, setSearchValue] = React.useState("");
+  const scrollAreaRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (scrollAreaRef.current) {
+      const viewport = scrollAreaRef.current.querySelector(
+        "[data-radix-scroll-area-viewport]",
+      );
+      if (viewport) {
+        viewport.scrollTop = 0;
+      }
+    }
+  }, [searchValue]);
+
   return (
     <Popover modal={modal}>
       <PopoverTrigger asChild>
@@ -116,9 +130,13 @@ const CountrySelect = ({
         onTouchMove={(e) => e.stopPropagation()}
       >
         <Command>
-          <CommandInput placeholder="Search country..." />
+          <CommandInput
+            placeholder="Search country..."
+            value={searchValue}
+            onValueChange={setSearchValue}
+          />
           <CommandList>
-            <ScrollArea className="h-72">
+            <ScrollArea className="h-72" ref={scrollAreaRef}>
               <CommandEmpty>No country found.</CommandEmpty>
               <CommandGroup>
                 {countryList.map(({ value, label }) =>
