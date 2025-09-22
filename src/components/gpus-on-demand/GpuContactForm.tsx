@@ -53,7 +53,10 @@ const formSchema = z
       .min(2, "Company name is required*")
       .min(1, "Company name is required*"),
     website: z.string().optional(),
-    project_details: z.string().optional(),
+    project_details: z
+      .string()
+      .min(1, "Project details are required*")
+      .min(10, "Please provide more details about your project"),
     lead_type: z.string().min(1, "Please select an option"),
     current_amount_spent_on_computer: z.string().optional().nullable(),
     provider_gpu_type: z.array(z.string()).optional().nullable(),
@@ -601,7 +604,9 @@ export function GpuContactForm() {
                 name="project_details"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Project Details</FormLabel>
+                    <FormLabel>
+                      Project Details <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <textarea
                         placeholder="Project Details"
