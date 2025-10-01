@@ -310,7 +310,7 @@ export default function TryAkashForm({
         className: "!h-auto !rounded px-[11px] py-[7px] text-xs",
       })}
     >
-      Book Demo
+      Get in Touch
     </button>
   );
 
