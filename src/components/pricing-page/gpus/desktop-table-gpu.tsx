@@ -232,8 +232,7 @@ const DesktopTableGpu = ({
                     <div className="flex  flex-col gap-2">
                       <a
                         id={`${model?.model}-(gpu-rent)`}
-                        // href={`https://console.akash.network/rent-gpu?vendor=${model?.vendor}&gpu=${model?.model}&interface=${model?.interface}&vram=${model?.ram}`}
-                        href="https://console.akash.network/new-deployment"
+                        href={`https://console.akash.network/rent-gpu?vendor=${model?.vendor}&gpu=${model?.model}&interface=${model?.interface}&vram=${model?.ram}`}
                         target="_blank"
                         className={cn(
                           buttonVariants({
