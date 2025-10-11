@@ -57,7 +57,7 @@ export default function Roadmap({ year, quarters, years }: Props) {
         </div>
       </section>
       <section className="container-reader sticky top-[57px] z-[20] w-full bg-background pb-4 md:top-[43px] md:pb-6">
-        <div className=" flex flex-col items-start  gap-3 md:flex-row md:items-end md:justify-between md:gap-4">
+        <div className=" flex flex-col items-start  gap-3 md:justify-between  md:gap-4 lg:flex-row lg:items-end">
           <YearSelector years={years} currentYear={year} />
           <div className="flex items-center   rounded-xl bg-gray-100 p-1 dark:bg-background2">
             <button
