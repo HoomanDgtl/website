@@ -56,8 +56,8 @@ export default function Roadmap({ year, quarters, years }: Props) {
           </p>
         </div>
       </section>
-      <section className="container-reader sticky top-[57px] z-[20] w-full bg-background pb-6 md:top-[43px]">
-        <div className="mt-5 flex flex-col-reverse items-start md:mt-0 md:flex-row md:items-end md:justify-between md:gap-4">
+      <section className="container-reader sticky top-[57px] z-[20] w-full bg-background pb-4 md:top-[43px] md:pb-6">
+        <div className=" flex flex-col items-start  gap-3 md:flex-row md:items-end md:justify-between md:gap-4">
           <YearSelector years={years} currentYear={year} />
           <div className="flex items-center   rounded-xl bg-gray-100 p-1 dark:bg-background2">
             <button
@@ -86,7 +86,7 @@ export default function Roadmap({ year, quarters, years }: Props) {
       <section className="md:container-reader flex w-full flex-col gap-6 md:mt-14 md:flex-row md:gap-14">
         <QuarterNavigation quarters={filteredQuarters} />
         <div className="relative w-full border-[#F0F1F2] px-5 pb-44 dark:border-[#2E2E2E] md:border-l md:px-0">
-          <div className="absolute -top-8 left-5 right-0 flex h-full bg-line-dashed bg-center bg-repeat-y dark:bg-line-dashed-dark md:-top-3 md:left-0 md:right-auto md:w-full"></div>
+          <div className="absolute -top-9 left-5 right-0 flex h-full bg-line-dashed bg-center bg-repeat-y dark:bg-line-dashed-dark md:-top-3 md:left-0 md:right-auto md:w-full"></div>
           <div className="relative z-[1] flex flex-col gap-6 border-l border-[#F0F1F2] md:gap-10 md:border-l-0 md:pt-10">
             {Object.entries(filteredQuarters).map(
               ([quarter, roadmaps]) =>
