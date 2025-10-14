@@ -8,7 +8,7 @@ export const nav: any = [
   },
   {
     label: "Community Groups",
-    link: "/development/current-groups/",
+    link: "/development/community-groups/",
     enabled: true,
   },
   {
