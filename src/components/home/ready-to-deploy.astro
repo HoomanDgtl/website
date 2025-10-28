@@ -1,5 +1,24 @@
 ---
-import { readyToDeploy } from "@/lib/constants";
+import TryAkashForm from "@/components/ui/try-akash-form";
+
+const readyToDeploy = [
+  {
+    title: "85%",
+    description: "Average Cost Savings",
+  },
+  {
+    title: "50+",
+    description: "Provider Locations",
+  },
+  {
+    title: "2min",
+    description: "Deployment Speed",
+  },
+  {
+    title: "99%",
+    description: "Customer Satisfaction",
+  },
+];
 ---
 
 <section class="bg-[#1c1c1c] py-12 md:py-20">
@@ -34,12 +53,11 @@ import { readyToDeploy } from "@/lib/constants";
         ))
       }
     </div>
-    <a
-      target="_blank"
-      href="https://console.akash.network/"
-      class="rounded-md bg-primary px-12 py-3 text-lg text-white hover:bg-primary/90"
-    >
-      Try Akash Now
-    </a>
+    <TryAkashForm
+      client:load
+      type="customButton"
+      className="rounded-md bg-primary px-12 py-3 text-lg text-white hover:bg-primary/90"
+      linkText="Book Demo"
+    />
   </div>
 </section>
