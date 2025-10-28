@@ -35,28 +35,18 @@ import { CheckCircle2, ExternalLink, X } from "lucide-react";
 
 const formSchema = z
   .object({
-    firstname: z
-      .string()
-      .min(2, "First name is required*")
-      .min(1, "First name is required*"),
-    lastname: z
-      .string()
-      .min(2, "Last name is required*")
-      .min(1, "Last name is required*"),
+    firstname: z.string().min(1, "First name is required*"),
+    lastname: z.string().min(1, "Last name is required*"),
     phone: z.string().optional(),
     email: z
       .string()
       .email("Invalid business email")
       .min(1, "Business email is required*"),
-    company: z
-      .string()
-      .min(2, "Company name is required*")
-      .min(1, "Company name is required*"),
+    company: z.string().min(1, "Company name is required*"),
     website: z.string().optional(),
     project_details: z
       .string()
-      .min(1, "Project details are required*")
-      .min(10, "Please provide more details about your project"),
+      .min(10, "Please provide at least 10 characters about your project"),
     lead_type: z.string().min(1, "Please select an option"),
     current_amount_spent_on_computer: z.string().optional().nullable(),
     provider_gpu_type: z.array(z.string()).optional().nullable(),
@@ -199,6 +189,47 @@ export function GpuContactForm() {
     }
   }, [showMeetingDialog]);
 
+  function getUtmParams() {
+    if (typeof window === "undefined") return {};
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmParams: Record<string, string> = {};
+
+    const utmKeys = [
+      "utm_source",
+      "utm_medium",
+      "utm_campaign",
+      "utm_term",
+      "utm_content",
+    ];
+
+    utmKeys.forEach((key) => {
+      const value = urlParams.get(key);
+      if (value) {
+        utmParams[key] = value;
+      }
+    });
+
+    return utmParams;
+  }
+
+  function getCookie(name: string) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  }
+
+  function buildHSContext() {
+    const utmParams = getUtmParams();
+
+    return {
+      hutk: getCookie("hubspotutk"),
+      pageUri: window.location.href,
+      pageName: "GPU Contact Form",
+      ...utmParams,
+    };
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsSubmitting(true);
@@ -243,10 +274,7 @@ export function GpuContactForm() {
           },
           { name: "phone", value: values.phone },
         ],
-        context: {
-          pageUri: window.location.href,
-          pageName: "GPU Contact Form",
-        },
+        context: buildHSContext(),
       };
 
       const response = await fetch(hubspotEndpoint, {
@@ -609,9 +637,9 @@ export function GpuContactForm() {
                     </FormLabel>
                     <FormControl>
                       <textarea
-                        placeholder="Project Details"
+                        placeholder="Tell us about your project (minimum 10 characters)"
                         rows={4}
-                        className="w-full rounded border bg-background px-3 py-2 text-sm focus:outline-none"
+                        className="w-full rounded border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
                         {...field}
                       />
                     </FormControl>
