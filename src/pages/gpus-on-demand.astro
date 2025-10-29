@@ -32,10 +32,7 @@ import { readyToDeploy, whyChooseSection } from "@/lib/constants";
           started.
         </p>
       </div>
-      <div
-        class="flex w-full flex-col gap-8 rounded-lg border p-6 md:hidden md:p-14"
-      >
-        <h2 class="text-2xl font-medium">Tell Us What You Need</h2>
+      <div class="flex w-full md:hidden">
         <GpuContactForm client:load />
       </div>
       <div class="flex flex-col gap-4 2xl:gap-6">
@@ -75,10 +72,7 @@ import { readyToDeploy, whyChooseSection } from "@/lib/constants";
         </div>
       </div>
     </div>
-    <div
-      class="hidden w-full flex-col gap-8 rounded-lg border p-6 md:flex md:p-14"
-    >
-      <h2 class="text-2xl font-medium">Tell Us What You Need</h2>
+    <div class="hidden w-full md:flex">
       <GpuContactForm client:load />
     </div>
   </section>
