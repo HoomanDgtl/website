@@ -1,0 +1,85 @@
+import * as Dialog from "@radix-ui/react-dialog";
+import { ArrowUpCircle, X } from "lucide-react";
+import { useState } from "react";
+import { Button } from "../ui/button";
+
+const buyData = [
+  {
+    logo: "/images/token/buy/coinbase.svg",
+    title: "Coinbase",
+    link: "https://www.coinbase.com/how-to-buy/akash-network",
+  },
+  {
+    logo: "/images/token/buy/kraken.svg",
+    title: "Kraken",
+    link: "https://www.kraken.com/prices/akash-network?quote=usd",
+  },
+  {
+    logo: "/images/token/buy/upbit.svg",
+    title: "Upbit",
+    link: "https://upbit.com/exchange?code=CRIX.UPBIT.KRW-AKT",
+  },
+  {
+    logo: "/images/token/buy/crypto.svg",
+    title: "Crypto.com",
+    link: "https://crypto.com/exchange/akt_usdt",
+  },
+];
+
+export const BuyAktButton = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Trigger asChild>
+        <Button variant="default" className="mx-auto w-fit gap-2 ">
+          <span>Buy AKT</span>
+          <ArrowUpCircle className="h-5 w-5 rotate-45" />
+        </Button>
+      </Dialog.Trigger>
+
+      {/* Modal */}
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+
+        <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-2xl translate-x-[-50%] translate-y-[-50%] rounded-lg border bg-background p-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
+          {/* Close Button */}
+          <Dialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:pointer-events-none">
+            <X className="h-5 w-5" />
+            <span className="sr-only">Close</span>
+          </Dialog.Close>
+
+          {/* Modal Header */}
+          <Dialog.Title className="mb-6 text-center text-3xl font-bold">
+            Buy AKT
+          </Dialog.Title>
+
+          {/* Exchange Grid */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {buyData.map((exchange) => (
+              <a
+                key={exchange.title}
+                href={exchange.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-card group flex items-center justify-between gap-4 rounded-lg border p-6 transition-all hover:border-primary hover:shadow-md"
+              >
+                <img
+                  src={exchange.logo}
+                  alt={exchange.title}
+                  className="h-6 "
+                />
+
+                <div className="flex  items-center justify-between">
+                  <ArrowUpCircle className="text-muted-foreground h-5 w-5 rotate-45 transition-colors group-hover:text-primary" />
+                </div>
+              </a>
+            ))}
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
+
+export default BuyAktButton;

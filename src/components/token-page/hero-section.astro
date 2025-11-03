@@ -2,18 +2,22 @@
 const { heroSection } = Astro.props;
 ---
 
-<div class="mb-10 flex flex-col items-center gap-10 md:mb-20 md:gap-14">
+<div class="flex flex-col items-center gap-10 md:gap-14">
   <div class="w-full flex-1">
-    <p class="mb-2 text-center text-base font-medium md:text-base lg:text-xl">
-      The AKT Token
-    </p>
     <h1
-      class="text-center text-2xl !leading-tight md:!leading-10 lg:text-[32px]"
+      class="mb-14 text-center text-2xl !leading-tight md:!leading-10 lg:text-4xl"
     >
-      {heroSection.title}
+      The Currency of the Supercloud
     </h1>
-  </div>
-  <div class="flex-1 lg:max-w-[575px]">
-    <img alt="Feature illustration" src={"/images/token/hero.webp"} />
+
+    <h2 class="mb-1 text-center text-base font-medium md:text-base lg:text-2xl">
+      The AKT Token
+    </h2>
+    <p class="mb-2 text-center text-base">
+      AKT is the native token of Akash Network, the currency developers use to
+      access compute from providers in the world’s first decentralized cloud
+      marketplace. It powers a global exchange where anyone can buy and sell
+      compute, fueling open, efficient, and affordable AI infrastructure.
+    </p>
   </div>
 </div>

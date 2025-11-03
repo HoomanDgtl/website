@@ -7,7 +7,7 @@ const howItWorksSection = {
     {
       title: "Security",
       description:
-        "Akash Network is secured by a Proof-of-Stake (PoS) blockchain, and AKT is used to secure the network by staking. Staking AKT provides a passive income stream for stakers, and increases the security of the network.",
+        "Akash Network is secured by a Proof-of-Stake (PoS) blockchain, and AKT is used to secure the network by staking. Staking AKT provides a yield for stakers, in exchange for securing the network.",
       icon: `<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9 12.8125L11 14.8125L15 10.8125M12 22.8125C12 22.8125 20 18.8125 20 12.8125V5.8125L12 2.8125L4 5.8125V12.8125C4 18.8125 12 22.8125 12 22.8125Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
@@ -25,20 +25,10 @@ const howItWorksSection = {
     {
       title: "Value Exchange",
       description:
-        "AKT provides a default mechanism to store and exchange value, and acts as a reserve currency in Cosmos’ multi-currency and multi-chain ecosystem.",
+        "AKT provides a default mechanism to store and exchange value. AKT is the only way to purchase compute on the network. Traditional payments such as credit card transactions are converted to AKT to access compute resources.",
       icon: `<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M16.5 3.8125L20.5 7.8125M20.5 7.8125L16.5 11.8125M20.5 7.8125H4.5M8.5 21.8125L4.5 17.8125M4.5 17.8125L8.5 13.8125M4.5 17.8125H20.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
-`,
-    },
-    {
-      title: "Incentivization",
-      description:
-        "AKT provides a default mechanism to store and exchange value, and acts as a reserve currency in Cosmos’ multi-currency and multi-chain ecosystem.",
-      icon: `<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M18.84 14.4425C19.7853 14.0901 20.6265 13.505 21.2858 12.7413C21.945 11.9776 22.4011 11.0601 22.6117 10.0734C22.8224 9.0868 22.7809 8.06298 22.491 7.09665C22.2012 6.13032 21.6723 5.25268 20.9534 4.54489C20.2345 3.8371 19.3487 3.32201 18.378 3.04727C17.4072 2.77253 16.3829 2.747 15.3997 2.97304C14.4165 3.19908 13.5061 3.6694 12.7528 4.3405C11.9995 5.0116 11.4276 5.86181 11.09 6.8125M14.75 16.8125C14.75 13.4988 12.0637 10.8125 8.75 10.8125C5.43629 10.8125 2.75 13.4988 2.75 16.8125C2.75 20.1262 5.43629 22.8125 8.75 22.8125C12.0637 22.8125 14.75 20.1262 14.75 16.8125Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
-
 `,
     },
   ],
@@ -51,7 +41,7 @@ const howItWorksSection = {
   </h2>
 
   <div
-    class="mx-auto mt-[40px] grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4"
+    class="mx-auto mt-[40px] grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3"
   >
     {
       howItWorksSection.cards.map((card: any) => (

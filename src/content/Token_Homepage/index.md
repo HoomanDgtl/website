@@ -11,46 +11,48 @@ ecosystemSection:
 
   table:
     - row:
-        - title: Explorers
-          link: "#"
         - title: Wallets
           link: "#"
         - title: Staking
           link: "#"
+        - title: Explorers
+          link: "#"
 
     - row:
-        - title: Mintscan
-          link: "https://mintscan.io/akash"
         - title: Leap wallet
           link: "https://www.leapwallet.io/"
         - title: Keplr
           link: "https://wallet.keplr.app/#/akash"
+        - title: Mintscan
+          link: "https://mintscan.io/akash"
 
     - row:
-        - title: Atom Scan
-          link: "https://atomscan.com/akash/"
         - title: Keplr
           link: "https://wallet.keplr.app/#/akash"
         - title: Cosmostation
           link: "https://wallet.cosmostation.io/#/akash"
+        - title: Atom Scan
+          link: "https://atomscan.com/akash/"
 
     - row:
-        - title: Ping.pub
-          link: "https://ping.pub/akash"
         - title: Cosmostation
           link: "https://wallet.cosmostation.io/#/akash"
         - title: Staking Rewards
           link: "https://www.stakingrewards.com/earn/akash/"
+        - title: Ping.pub
+          link: "https://ping.pub/akash"
 
     - row:
-        - title: ""
         - title: Mixin Messenger
           link: "https://mixin.one/messenger"
+        - title: ""
+        - title: ""
 
     - row:
-        - title: ""
         - title: Omni Wallet
           link: "https://omni.app/"
+        - title: ""
+        - title: ""
 
 aktFeaturesSection:
   title: AKT 2.0 Features
