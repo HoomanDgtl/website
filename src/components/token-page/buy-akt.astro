@@ -31,12 +31,21 @@ const buyData = [
     Own a token that’s backed by real world utility powering the future of AI.
   </p> -->
 
-  <div class="mx-auto mt-14 grid max-w-[50rem] grid-cols-4 gap-5">
+  <div
+    class="mx-auto mt-8 grid max-w-[50rem] grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-5"
+  >
     {
       buyData.map((item) => (
-        <div class="flex items-center justify-center rounded-lg border px-8 py-8">
-          <img src={item.logo} alt={item.title} class="h-6 text-foreground" />
-        </div>
+        <a
+          href={item.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center rounded-lg border px-8 py-8 transition-all hover:border-primary hover:shadow-md"
+        >
+          <svg class="h-5 " fill="none" xmlns="http://www.w3.org/2000/svg">
+            <use href={item.logo} />
+          </svg>
+        </a>
       ))
     }
   </div>

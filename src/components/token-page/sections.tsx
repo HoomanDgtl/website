@@ -98,7 +98,7 @@ const Query = ({
         isError={isError}
       />
 
-      <BuyAktButton />
+      <BuyAktButton className="mx-auto w-fit" />
     </div>
   );
 };
