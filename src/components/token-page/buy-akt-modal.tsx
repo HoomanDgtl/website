@@ -1,4 +1,5 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import clsx from "clsx";
 import { ArrowUpCircle, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
@@ -26,13 +27,13 @@ const buyData = [
   },
 ];
 
-export const BuyAktButton = () => {
+export const BuyAktButton = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <Button variant="default" className="mx-auto w-fit gap-2 ">
+        <Button variant="default" className={clsx(" gap-2 ", className)}>
           <span>Buy AKT</span>
           <ArrowUpCircle className="h-5 w-5 rotate-45" />
         </Button>
