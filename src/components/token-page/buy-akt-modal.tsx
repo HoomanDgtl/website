@@ -1,31 +1,9 @@
+import { buyAkt } from "@/lib/constants";
 import * as Dialog from "@radix-ui/react-dialog";
 import clsx from "clsx";
 import { ArrowUpCircle, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
-
-const buyData = [
-  {
-    logo: "/images/token/buy/coinbase.svg",
-    title: "Coinbase",
-    link: "https://www.coinbase.com/how-to-buy/akash-network",
-  },
-  {
-    logo: "/images/token/buy/kraken.svg",
-    title: "Kraken",
-    link: "https://www.kraken.com/prices/akash-network?quote=usd",
-  },
-  {
-    logo: "/images/token/buy/upbit.svg",
-    title: "Upbit",
-    link: "https://upbit.com/exchange?code=CRIX.UPBIT.KRW-AKT",
-  },
-  {
-    logo: "/images/token/buy/crypto.svg",
-    title: "Crypto.com",
-    link: "https://crypto.com/exchange/akt_usdt",
-  },
-];
 
 export const BuyAktButton = ({ className }: { className?: string }) => {
   const [open, setOpen] = useState(false);
@@ -57,7 +35,7 @@ export const BuyAktButton = ({ className }: { className?: string }) => {
 
           {/* Exchange Grid */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {buyData.map((exchange) => (
+            {buyAkt.map((exchange) => (
               <a
                 key={exchange.title}
                 href={exchange.link}
@@ -65,10 +43,9 @@ export const BuyAktButton = ({ className }: { className?: string }) => {
                 rel="noopener noreferrer"
                 className="bg-card group flex items-center justify-between gap-4 rounded-lg border p-6 transition-all hover:border-primary hover:shadow-md"
               >
-                <img
-                  src={exchange.logo}
-                  alt={exchange.title}
+                <div
                   className="h-6 "
+                  dangerouslySetInnerHTML={{ __html: exchange.logo }}
                 />
 
                 <div className="flex  items-center justify-between">

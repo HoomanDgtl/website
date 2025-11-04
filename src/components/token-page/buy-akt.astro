@@ -1,26 +1,5 @@
 ---
-const buyData = [
-  {
-    logo: "/images/token/buy/coinbase.svg",
-    title: "Coinbase",
-    link: "https://www.coinbase.com/how-to-buy/akash-network",
-  },
-  {
-    logo: "/images/token/buy/kraken.svg",
-    title: "Kraken",
-    link: "https://www.kraken.com/prices/akash-network?quote=usd",
-  },
-  {
-    logo: "/images/token/buy/upbit.svg",
-    title: "Upbit",
-    link: "https://upbit.com/exchange?code=CRIX.UPBIT.KRW-AKT",
-  },
-  {
-    logo: "/images/token/buy/crypto.svg",
-    title: "Crypto.com",
-    link: "https://crypto.com/exchange/akt_usdt",
-  },
-];
+import { buyAkt } from "@/lib/constants";
 ---
 
 <div>
@@ -35,16 +14,14 @@ const buyData = [
     class="mx-auto mt-8 grid max-w-[50rem] grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-5"
   >
     {
-      buyData.map((item) => (
+      buyAkt.map((item) => (
         <a
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
           class="flex items-center justify-center rounded-lg border px-8 py-8 transition-all hover:border-primary hover:shadow-md"
         >
-          <svg class="h-5 " fill="none" xmlns="http://www.w3.org/2000/svg">
-            <use href={item.logo} />
-          </svg>
+          <div set:html={item.logo} class="h-6" />
         </a>
       ))
     }
