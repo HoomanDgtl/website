@@ -1,4 +1,5 @@
 import {
+  Backpack,
   BadgeCheck,
   BadgeHelp,
   Calendar,
@@ -6,7 +7,6 @@ import {
   Codesandbox,
   FileStack,
   HeartHandshake,
-  User,
 } from "lucide-react";
 
 type NavItem = {
@@ -35,11 +35,7 @@ export const communityItems: NavItem[] = [
     title: "Akash Insiders",
     link: "/community/akash-insiders/",
   },
-  {
-    icon: User,
-    title: "Student Ambassador",
-    link: "/community/student-ambassador/",
-  },
+
   {
     customIcon: (
       <svg
@@ -109,6 +105,11 @@ export const communityItems: NavItem[] = [
     ),
     title: "Akash EDU",
     link: "/community/akash-edu/",
+  },
+  {
+    icon: Backpack,
+    title: "Student Ambassador",
+    link: "/community/student-ambassador/",
   },
   {
     title: "Swag Shop",
