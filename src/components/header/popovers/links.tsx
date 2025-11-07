@@ -6,6 +6,7 @@ import {
   Codesandbox,
   FileStack,
   HeartHandshake,
+  User,
 } from "lucide-react";
 
 type NavItem = {
@@ -33,6 +34,11 @@ export const communityItems: NavItem[] = [
     icon: BadgeCheck,
     title: "Akash Insiders",
     link: "/community/akash-insiders/",
+  },
+  {
+    icon: User,
+    title: "Student Ambassador",
+    link: "/community/student-ambassador/",
   },
   {
     customIcon: (
