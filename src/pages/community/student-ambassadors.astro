@@ -17,20 +17,21 @@ const description =
   <TopMargin isNotContainer>
     <CommunityHero container title={title} description={description} />
     <div class="flex flex-col gap-20 lg:gap-40">
-      <div class="container-reader flex flex-col gap-20 lg:gap-40">
-        <PointerSection
-          type="description"
-          description="Ambassadors play a key role in expanding awareness of Akash Network by hosting campus events, creating content, and connecting peers to opportunities in decentralized computing. More than a marketing initiative, this program focuses on ecosystem development, equipping students to represent a movement they truly believe in and build community from the ground up."
-          image="/images/student-ambassador/1.png"
-        />
+      <div class="container-reader flex flex-col gap-20">
+        <div class="flex flex-col gap-20 lg:gap-40">
+          <PointerSection
+            type="description"
+            description="Ambassadors play a key role in expanding awareness of Akash Network by hosting campus events, creating content, and connecting peers to opportunities in decentralized computing. More than a marketing initiative, this program focuses on ecosystem development, equipping students to represent a movement they truly believe in and build community from the ground up."
+            image="/images/student-ambassador/1.png"
+          />
 
-        <PointerSection
-          description="Through hands-on experience, ambassadors gain leadership skills, technical exposure, and real-world collaboration experience while contributing to a project that redefines how cloud infrastructure is built and accessed.<br/><br/>The program is designed around a simple idea: ambassadors succeed when they feel like owners, not just representatives. By connecting through shared values, learning from one another, and co-creating meaningful initiatives, students help shape the future of decentralized cloud computing and the broader Akash ecosystem."
-          image="/images/student-ambassador/2.png"
-          reverse={true}
-          type="description"
-        />
-
+          <PointerSection
+            description="Through hands-on experience, ambassadors gain leadership skills, technical exposure, and real-world collaboration experience while contributing to a project that redefines how cloud infrastructure is built and accessed.<br/><br/>The program is designed around a simple idea: ambassadors succeed when they feel like owners, not just representatives. By connecting through shared values, learning from one another, and co-creating meaningful initiatives, students help shape the future of decentralized cloud computing and the broader Akash ecosystem."
+            image="/images/student-ambassador/2.png"
+            reverse={true}
+            type="description"
+          />
+        </div>
         <div class="not-prose flex flex-col items-center justify-center gap-10">
           <h2 class="text-center text-3xl font-semibold">
             Applications for new ambassadors will <br class="hidden md:block" />
