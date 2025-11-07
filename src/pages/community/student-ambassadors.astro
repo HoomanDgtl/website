@@ -10,16 +10,12 @@ const description =
 ---
 
 <Layout
-  title={title}
+  title={title.replace("<br/>", "")}
   description={description}
   image="/meta-images/community.png"
 >
   <TopMargin isNotContainer>
-    <CommunityHero
-      container
-      title={title.replace("<br/>", "")}
-      description={description}
-    />
+    <CommunityHero container title={title} description={description} />
     <div class="flex flex-col gap-20 lg:gap-40">
       <div class="container-reader flex flex-col gap-20 lg:gap-40">
         <PointerSection

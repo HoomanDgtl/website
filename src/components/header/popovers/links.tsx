@@ -109,7 +109,7 @@ export const communityItems: NavItem[] = [
   {
     icon: Backpack,
     title: "Student Ambassador",
-    link: "/community/student-ambassador/",
+    link: "/community/student-ambassadors/",
   },
   {
     title: "Swag Shop",
