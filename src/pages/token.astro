@@ -15,7 +15,8 @@ const tokenPage = await getEntry("Token_Homepage", "index");
 
 const {
   heroSection,
-
+  buyAktSection,
+  howItWorksSection,
   faqsSection,
   ecosystemSection,
   buyingAKTSection,
@@ -31,14 +32,14 @@ const url = Astro.site;
   image="/meta-images/token.png"
 >
   <TopMargin readable>
-    <div class="flex flex-col gap-10 md:gap-y-20">
+    <div class="flex flex-col gap-20 md:gap-y-28">
       <HeroSection heroSection={heroSection} />
-      <div class="border-b"></div>
-      <BuyAkt />
+
+      <BuyAkt buyAktSection={buyAktSection} />
       <div class="mx-auto flex-1 lg:max-w-[575px]">
-        <img alt="Feature illustration" src={"/images/token/hero.webp"} />
+        <img alt="Feature illustration" src={heroSection.image} />
       </div>
-      <div class="border-b"></div>
+
       <Sections
         client:only
         aktFeaturesSection={aktFeaturesSection}
@@ -46,14 +47,10 @@ const url = Astro.site;
         faqsSection={faqsSection}
         url={url?.toString() ?? ""}
       />
-      <div class="border-b"></div>
-      <HowItWorksSection />
-
-      <div class="border-b"></div>
+      <HowItWorksSection howItWorksSection={howItWorksSection} />
       <EcosystemSection ecosystemSection={ecosystemSection} />
-      <div class="border-b"></div>
       <BuyingAkt buyingAKTSection={buyingAKTSection} />
-      <div class="border-b"></div>
+
       <FaqsToken client:only />
     </div>
   </TopMargin>

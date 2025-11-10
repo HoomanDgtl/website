@@ -6,19 +6,41 @@ export const tokenPage = defineCollection({
       heroSection: z.object({
         title: z.string(),
         description: z.string(),
+        image: z.string(),
+      }),
+
+      buyAktSection: z.object({
+        title: z.string(),
+        description: z.string(),
+        items: z.array(
+          z.object({
+            title: z.string(),
+            link: z.string(),
+          }),
+        ),
+      }),
+
+      howItWorksSection: z.object({
+        title: z.string(),
+        cards: z.array(
+          z.object({
+            title: z.string(),
+            description: z.string(),
+            icon: z.string(),
+          }),
+        ),
       }),
 
       ecosystemSection: z.object({
         title: z.string(),
         description: z.string(),
-
-        table: z.array(
+        categories: z.array(
           z.object({
-            row: z.array(
+            title: z.string(),
+            items: z.array(
               z.object({
                 title: z.string(),
-
-                link: z.string().optional(),
+                link: z.string(),
               }),
             ),
           }),
@@ -28,14 +50,13 @@ export const tokenPage = defineCollection({
       buyingAKTSection: z.object({
         title: z.string(),
         description: z.string(),
-
-        table: z.array(
+        categories: z.array(
           z.object({
-            row: z.array(
+            title: z.string(),
+            items: z.array(
               z.object({
                 title: z.string(),
-
-                link: z.string().optional(),
+                link: z.string(),
               }),
             ),
           }),

@@ -13,7 +13,21 @@ export const BuyAktButton = ({ className }: { className?: string }) => {
       <Dialog.Trigger asChild>
         <Button variant="default" className={clsx(" gap-2 ", className)}>
           <span>Buy AKT</span>
-          <ArrowUpCircle className="h-5 w-5 rotate-45" />
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12.665 7.33171V11.3317C12.665 11.6853 12.5246 12.0245 12.2745 12.2745C12.0245 12.5246 11.6853 12.665 11.3317 12.665H1.99837C1.64475 12.665 1.30561 12.5246 1.05556 12.2745C0.805515 12.0245 0.665039 11.6853 0.665039 11.3317V1.99837C0.665039 1.64475 0.805515 1.30561 1.05556 1.05556C1.30561 0.805515 1.64475 0.665039 1.99837 0.665039H5.99837M12.665 0.665039L6.66504 6.66504M12.665 0.665039H8.66504M12.665 0.665039V4.66504"
+              stroke="#FAFAFA"
+              stroke-width="1.33"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </Button>
       </Dialog.Trigger>
 

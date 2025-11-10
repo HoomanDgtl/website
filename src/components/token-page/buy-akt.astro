@@ -1,25 +1,27 @@
 ---
-import { buyAkt } from "@/lib/constants";
+const { buyAktSection } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-center text-2xl font-semibold md:text-2lg">Buy AKT</h2>
+  <h2 class="text-center text-2xl font-semibold md:text-2xl">
+    {buyAktSection.title}
+  </h2>
   <p class="mt-4 text-center text-base font-normal md:text-lg">
-    Own a token that’s backed by real world utility powering the future of AI.
+    {buyAktSection.description}
   </p>
 
   <div
-    class="mx-auto mt-8 grid max-w-[50rem] grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-5"
+    class="mx-auto mt-8 grid grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-5"
   >
     {
-      buyAkt.map((item) => (
+      buyAktSection.items.map((item: { title: string; link: string }) => (
         <a
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center justify-center rounded-lg border px-8 py-8 transition-all hover:border-primary hover:shadow-md"
+          class="flex items-center justify-center rounded-lg border px-8 py-4 font-medium transition-all hover:border-primary hover:shadow-md"
         >
-          <div set:html={item.logo} class="h-6" />
+          {item.title}
         </a>
       ))
     }
