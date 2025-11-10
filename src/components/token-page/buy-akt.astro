@@ -19,9 +19,11 @@ const { buyAktSection } = Astro.props;
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center justify-center rounded-lg border px-8 py-4 font-medium transition-all hover:border-primary hover:shadow-md"
+          class="group flex items-center justify-center rounded-2xl border border-defaultBorder bg-background2 px-2 py-6 text-center transition-all duration-200 hover:border-primary hover:bg-background2/80 md:px-6 "
         >
-          {item.title}
+          <span class="text-base font-medium text-foreground group-hover:text-primary md:text-lg">
+            {item.title}
+          </span>
         </a>
       ))
     }
