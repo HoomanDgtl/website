@@ -1,3 +1,5 @@
+import { buyAktIcons } from "./token-icons";
+
 interface BuyingAKTSection {
   title: string;
   description: string;
@@ -6,6 +8,7 @@ interface BuyingAKTSection {
     items: {
       title: string;
       link: string;
+      icon: string;
     }[];
   }[];
 }
@@ -42,11 +45,12 @@ const BuyingAkt = ({
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center rounded-2xl border border-defaultBorder bg-background2 px-2 py-6 text-center transition-all duration-200 hover:border-primary hover:bg-background2/80 md:px-6"
+                  className="group flex flex-col items-center justify-center gap-3 rounded-2xl border border-defaultBorder bg-background2 px-2 py-6 text-center transition-all duration-200 hover:border-primary hover:bg-background2/80 md:gap-4 md:px-6"
                 >
-                  <span className="text-base font-medium text-foreground group-hover:text-primary md:text-lg">
-                    {item.title}
-                  </span>
+                  <div
+                    className="h-6 text-foreground transition-colors duration-200 group-hover:text-primary"
+                    dangerouslySetInnerHTML={{ __html: buyAktIcons[item.icon] }}
+                  />
                 </a>
               ))}
             </div>

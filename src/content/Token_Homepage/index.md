@@ -10,12 +10,16 @@ buyAktSection:
   items:
     - title: Coinbase
       link: "https://www.coinbase.com/how-to-buy/akash-network"
+      icon: coinbase
     - title: Kraken
       link: "https://www.kraken.com/prices/akash-network?quote=usd"
-    - title: Osmosis
-      link: "https://app.osmosis.zone/?from=OSMO&to=AKT"
-    - title: Kado
-      link: "https://www.kado.money/assets/akash"
+      icon: kraken
+    - title: Upbit
+      link: "https://upbit.com/exchange?code=CRIX.UPBIT.KRW-AKT"
+      icon: upbit
+    - title: Crypto.com
+      link: "https://crypto.com/exchange/akt_usdt"
+      icon: cryptocom
 
 howItWorksSection:
   title: How Its Used
@@ -47,30 +51,41 @@ ecosystemSection:
       items:
         - title: Leap Wallet
           link: "https://www.leapwallet.io/"
+          icon: leap
         - title: Keplr
           link: "https://wallet.keplr.app/#/akash"
+          icon: keplr
         - title: Cosmostation
           link: "https://wallet.cosmostation.io/#/akash"
+          icon: cosmostation
         - title: Mixin Messenger
           link: "https://mixin.one/messenger"
+          icon: mixin
         - title: Omni Wallet
           link: "https://omni.app/"
+          icon: omni
     - title: Staking
       items:
         - title: Keplr
           link: "https://wallet.keplr.app/#/akash"
+          icon: keplr
         - title: Cosmostation
           link: "https://wallet.cosmostation.io/#/akash"
+          icon: cosmostation
         - title: Staking Rewards
           link: "https://www.stakingrewards.com/earn/akash/"
+          icon: stakingrewards
     - title: Explorers
       items:
         - title: Mintscan
           link: "https://mintscan.io/akash"
+          icon: mintscan
         - title: Atom Scan
           link: "https://atomscan.com/akash/"
+          icon: atomscan
         - title: Ping.pub
           link: "https://ping.pub/akash"
+          icon: pingpub
 
 aktFeaturesSection:
   title: AKT 2.0 Features
@@ -84,44 +99,63 @@ buyingAKTSection:
       items:
         - title: Coinbase
           link: "https://www.coinbase.com/how-to-buy/akash-network"
+          icon: coinbase
         - title: Kraken
           link: "https://www.kraken.com/prices/akash-network?quote=usd"
+          icon: kraken
         - title: Upbit
           link: "https://upbit.com/exchange?code=CRIX.UPBIT.KRW-AKT"
+          icon: upbit
         - title: Kucoin
           link: "https://trade.kucoin.com/AKT-USDT"
+          icon: kucoin
         - title: Crypto.com
           link: "https://crypto.com/exchange/akt_usdt"
+          icon: cryptocom
         - title: Gate.io
           link: "https://www.gate.io/trade/AKT_USDT"
+          icon: gateio
         - title: HTX
           link: "https://www.htx.com/trade/akt_usdt/"
+          icon: htx
         - title: RevolutApp
           link: "https://revolut.com/"
+          icon: revolutapp
         - title: Bitpanda
           link: "https://www.bitpanda.com/en/prices/akash-akt"
+          icon: bitpanda
         - title: Hotcoin
           link: "https://www.hotcoin.com/en_US/trade/akt_usdt"
+          icon: hotcoin
         - title: XT.COM
           link: "https://www.xt.com/en/trade/akt_usdt"
+          icon: xtcom
         - title: Bithumb
           link: "https://www.bithumb.com/react/trade/order/AKT-KRW"
+          icon: bithumb
         - title: Bitmart
           link: "https://www.bitmart.com/trade/en-US?symbol=AKT_USDT&r=PjkAFy"
+          icon: bitmart
         - title: BingX
           link: "https://bingx.com/en/spot/AKTUSDT/?ch=cgk_organic"
+          icon: bingx
         - title: Bitvavo
           link: "https://account.bitvavo.com/markets/AKT-EUR"
+          icon: bitvavo
         - title: Bitrue
           link: "https://www.bitrue.com/trade/akt_usdt"
+          icon: bitrue
     - title: Decentralized
       items:
         - title: Osmosis
           link: "https://app.osmosis.zone/?from=OSMO&to=AKT"
+          icon: osmosis
         - title: Rango Exchange
           link: "https://app.rango.exchange/swap/BSC.BNB/AKASH.AKT"
+          icon: rango
         - title: Kado
           link: "https://www.kado.money/assets/akash"
+          icon: kado
 
 faqsSection:
   title: FAQs

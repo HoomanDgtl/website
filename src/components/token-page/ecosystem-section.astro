@@ -1,4 +1,6 @@
 ---
+import { buyAktIcons } from "./token-icons";
+
 const { ecosystemSection } = Astro.props;
 ---
 
@@ -17,7 +19,7 @@ const { ecosystemSection } = Astro.props;
       ecosystemSection.categories.map(
         (category: {
           title: string;
-          items: { title: string; link: string }[];
+          items: { title: string; link: string; icon: string }[];
         }) => (
           <div class="space-y-8">
             <div class="flex justify-center">
@@ -32,11 +34,11 @@ const { ecosystemSection } = Astro.props;
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="group flex items-center justify-center rounded-2xl border border-defaultBorder bg-background2 px-2 py-6 text-center transition-all duration-200 hover:border-primary hover:bg-background2/80 md:px-6 "
+                  class="group flex flex-col items-center justify-center gap-3 rounded-2xl border border-defaultBorder bg-background2 px-2 py-6 text-center transition-all duration-200 hover:border-primary hover:bg-background2/80 md:gap-4 md:px-6 "
                 >
-                  <span class="text-base font-medium text-foreground group-hover:text-primary md:text-lg">
-                    {item.title}
-                  </span>
+                  <div class="h-7 text-foreground transition-colors duration-200 group-hover:text-primary">
+                    <Fragment set:html={buyAktIcons[item.icon]} />
+                  </div>
                 </a>
               ))}
             </div>

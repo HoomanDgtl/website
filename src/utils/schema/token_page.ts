@@ -16,6 +16,7 @@ export const tokenPage = defineCollection({
           z.object({
             title: z.string(),
             link: z.string(),
+            icon: z.string(),
           }),
         ),
       }),
@@ -41,6 +42,7 @@ export const tokenPage = defineCollection({
               z.object({
                 title: z.string(),
                 link: z.string(),
+                icon: z.string(),
               }),
             ),
           }),
@@ -57,6 +59,7 @@ export const tokenPage = defineCollection({
               z.object({
                 title: z.string(),
                 link: z.string(),
+                icon: z.string(),
               }),
             ),
           }),
