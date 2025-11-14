@@ -150,9 +150,6 @@ buyingAKTSection:
         - title: Rango Exchange
           link: "https://app.rango.exchange/swap/BSC.BNB/AKASH.AKT"
           icon: rango
-        - title: Swapped
-          link: "https://swapped.com/swap/akt-usdt"
-          icon: swapped
         - title: QuickeX
           link: "https://quickex.io/price/akash-network"
           icon: quickx
