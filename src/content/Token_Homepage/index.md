@@ -124,9 +124,6 @@ buyingAKTSection:
         - title: Bitpanda
           link: "https://www.bitpanda.com/en/prices/akash-akt"
           icon: bitpanda
-        - title: Hotcoin
-          link: "https://www.hotcoin.com/en_US/trade/akt_usdt"
-          icon: hotcoin
         - title: XT.COM
           link: "https://www.xt.com/en/trade/akt_usdt"
           icon: xtcom
@@ -153,9 +150,12 @@ buyingAKTSection:
         - title: Rango Exchange
           link: "https://app.rango.exchange/swap/BSC.BNB/AKASH.AKT"
           icon: rango
-        - title: Kado
-          link: "https://www.kado.money/assets/akash"
-          icon: kado
+        - title: Swapped
+          link: "https://swapped.com/swap/akt-usdt"
+          icon: swapped
+        - title: QuickeX
+          link: "https://quickex.io/price/akash-network"
+          icon: quickx
 
 faqsSection:
   title: FAQs
