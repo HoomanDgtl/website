@@ -1,4 +1,5 @@
 ---
+import { SupportContactForm } from "@/components/support/support-contact-form";
 import ButtonLink from "@/components/ui/button-link.astro";
 import Layout from "@/layouts/layout.astro";
 ---
@@ -9,6 +10,12 @@ import Layout from "@/layouts/layout.astro";
       <h3 class="text-2xl font-bold text-foreground md:text-3lg">
         Get the support you need
       </h3>
+    </div>
+
+    <div
+      class="container mx-auto max-w-[50rem] overflow-hidden pt-[40px] md:pt-[80px]"
+    >
+      <SupportContactForm client:load />
     </div>
 
     <div class="container py-[40px] md:py-[80px]">
