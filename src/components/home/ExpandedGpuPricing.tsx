@@ -265,18 +265,18 @@ const ExpandedGpu = () => {
                 </span>
               </h3>
               <h4
-                style={
-                  item.selected && !expanded
-                    ? {
-                        background:
-                          "linear-gradient(180deg, #FF414C 19.3%, #C4262F 100%)",
-                      }
-                    : {}
-                }
+                // style={
+                //   item.selected && !expanded
+                //     ? {
+                //         background:
+                //           "linear-gradient(180deg, #FF414C 19.3%, #C4262F 100%)",
+                //       }
+                //     : {}
+                // }
                 className={clsx(
                   "bg-background py-2.5 text-center  text-sm font-semibold md:py-4 md:text-xl  ",
                   item.selected && " text-white ",
-                  item.selected && expanded && "bg-primary",
+                  item.selected && "bg-primary",
                 )}
               >
                 {prices[0][index]}
@@ -292,21 +292,21 @@ const ExpandedGpu = () => {
                 <div className="grid grid-cols-5" key={index}>
                   {item.map((item, i) => (
                     <h4
-                      style={
-                        index === 1 && i === 1
-                          ? {
-                              background:
-                                "linear-gradient(180deg, #FF414C 19.3%, #C4262F 100%)",
-                            }
-                          : {}
-                      }
+                      // style={
+                      //   index === 1 && i === 1
+                      //     ? {
+                      //         background:
+                      //           "linear-gradient(180deg, #FF414C 19.3%, #C4262F 100%)",
+                      //       }
+                      //     : {}
+                      // }
                       key={i}
                       className={clsx(
                         " py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl ",
                         i === 1
                           ? " border-t !border-[#DC1D28] text-white"
                           : "border-t",
-                        i === 1 && index !== 1
+                        i === 1
                           ? "text-currentColor  bg-primary"
                           : "bg-background",
                         i !== item.length - 1 && i !== 1 && "border-r",
