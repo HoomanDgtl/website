@@ -1,6 +1,6 @@
 ---
 projectTitle: AkashML
-projectImage: "./project-banner.jpg"
+projectImage: "./akashML.png"
 pubDate: "2025-12-11"
 
 tags:
