@@ -2,13 +2,13 @@
 import Header from "@/components/docs/header.astro";
 import MarketingHeader from "@/components/header/header.astro";
 
-import Sidebar from "@/components/docs/sidebar.astro";
 import Footer from "@/components/docs/footer.astro";
+import Sidebar from "@/components/docs/sidebar.astro";
 import { getCollection } from "astro:content";
 
 import { generateDocsNav } from "@/lib/docs/generate-nav/docs-nav.ts";
-import BaseLayout from "./base-layout.astro";
 import "@fontsource-variable/jetbrains-mono";
+import BaseLayout from "./base-layout.astro";
 interface Props {
   title: string;
   description?: string;
@@ -22,25 +22,38 @@ let nav = generateDocsNav(pages);
 ---
 
 <BaseLayout title={title} description={description} image={image}>
+  <!-- Mobile Header -->
   <div class="md:hidden">
     <MarketingHeader disableSticky />
   </div>
-  <div class="sticky right-0 top-0 z-20 hidden bg-background md:block">
-    <Header nav={nav} />
-  </div>
 
-  <div class="flex justify-between md:pl-5 lg:pl-10">
-    <div class="hidden md:block">
+  <!-- Main Layout Container -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar - Hidden on mobile -->
+    <div
+      class="hidden border-r border-[#e6e8eb] bg-white dark:border-[#333] dark:bg-background md:block"
+    >
       <Sidebar nav={nav} />
     </div>
 
-    <div class="w-full">
-      <div class="mx-auto mt-10 pl-4 pr-2 lg:pl-10 lg:pr-4 xl:pl-20 xl:pr-6">
-        <slot />
+    <!-- Main Content Area -->
+    <div class="flex flex-1 flex-col">
+      <!-- Desktop Header -->
+      <div
+        class="sticky right-0 top-0 z-20 hidden bg-white dark:bg-background md:block"
+      >
+        <Header nav={nav} />
       </div>
-      <div>
-        <Footer />
-      </div>
+
+      <!-- Content -->
+      <main class="flex-1">
+        <div class="mx-auto px-4 pb-10 pt-10 lg:px-10 xl:px-20">
+          <slot />
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <Footer />
     </div>
   </div>
 </BaseLayout>

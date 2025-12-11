@@ -2,11 +2,9 @@
 import DocsLayout from "@/layouts/docs-layout.astro";
 import { getCollection, getEntry } from "astro:content";
 
-import MobileNav from "@/components/docs/mobile-sidebar";
 import AlgoliaSearch from "@/components/docs/algolia-search";
+import MobileNav from "@/components/docs/mobile-sidebar";
 import { generateDocsNav } from "@/lib/docs/generate-nav/docs-nav";
-import FeaturedCard from "@/components/docs/featured-card.astro";
-import SectionCard from "@/components/docs/section-card.astro";
 
 const pathname = new URL(Astro.request.url).pathname;
 
@@ -14,41 +12,52 @@ const doc = await getEntry("Docs", "index");
 const docsData = await getCollection("Docs");
 const docs = generateDocsNav(docsData);
 
+// Default values for the page
+const pageTitle = doc?.data?.title ?? "Akash Documentation";
+const pageDescription =
+  doc?.data?.description ??
+  "Access comprehensive documentation to guide you through using Akash Network. Find detailed instructions, FAQs, and resources for a seamless experience.";
+
 // Icons as SVG strings
-const rocketIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.25-2 5-2 5s3.75-.5 5-2c.545-.545.93-1.19 1.17-1.87"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`;
+const rocketIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.25-2 5-2 5s3.75-.5 5-2c.545-.545.93-1.19 1.17-1.87"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`;
 
-const codeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
+const codeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`;
 
-const gitIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`;
+const gitIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>`;
 
-const serverIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`;
+const serverIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>`;
 
-const toolIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
+const toolIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`;
 
-const activityIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`;
+const activityIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`;
 
-const boxIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></svg>`;
+const boxIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></svg>`;
 
-const apiIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h.01"/><path d="M15 9h.01"/><path d="M9 15h.01"/><path d="M15 15h.01"/></svg>`;
+const apiIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 9h.01"/><path d="M15 9h.01"/><path d="M9 15h.01"/><path d="M15 15h.01"/></svg>`;
 
-const databaseIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>`;
+const databaseIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>`;
 
-const nodeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><line x1="3" x2="9" y1="12" y2="12"/><line x1="15" x2="21" y1="12" y2="12"/><line x1="12" x2="12" y1="3" y2="9"/><line x1="12" x2="12" y1="15" y2="21"/></svg>`;
+const nodeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><line x1="3" x2="9" y1="12" y2="12"/><line x1="15" x2="21" y1="12" y2="12"/><line x1="12" x2="12" y1="3" y2="9"/><line x1="12" x2="12" y1="15" y2="21"/></svg>`;
 
-const shieldIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>`;
+const shieldIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>`;
 
-const upgradeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>`;
+const upgradeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>`;
 
-const bookIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>`;
+const bookIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>`;
 
-const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
+
+const goalIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`;
+
+const searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>`;
 ---
 
 <DocsLayout
-  title={`${doc.data.title} | Akash Network Documentation - Your Guide to Decentralized Cloud`}
-  description="Access comprehensive documentation to guide you through using Akash Network. Find detailed instructions, FAQs, and resources for a seamless experience."
+  title={`${pageTitle} | Akash Network Documentation - Your Guide to Decentralized Cloud`}
+  description={pageDescription}
   image="/meta-images/docs.png"
 >
+  <!-- Mobile Navigation -->
   <div
     class="sticky top-0 z-10 -mt-4 mb-10 h-[130px] bg-background pt-4 md:hidden"
   >
@@ -70,21 +79,22 @@ const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24
     </div>
   </div>
 
-  <!-- Header -->
-  <div class="flex flex-col items-start">
-    <div
-      class="flex h-[39px] w-[39px] items-center justify-center rounded-lg border bg-background2 md:h-[78px] md:w-[78px]"
-    >
+  <!-- Hero Section - Dark Background -->
+  <div
+    class="relative -mx-4 -mt-10 mb-0 bg-[#292929] px-8 py-16 md:-mx-10 md:px-16 lg:-mx-20 lg:px-20 xl:px-20"
+  >
+    <!-- Akash Logo Icon -->
+    <div class="mb-4">
       <svg
-        width="49"
-        height="42"
+        width="70"
+        height="61"
         viewBox="0 0 49 42"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M32.6461 28L40.6323 41.9964H24.5002L16.4297 28H32.6461Z"
-          fill="url(#paint0_linear_2233_35621)"></path>
+          fill="url(#paint0_linear_hero)"></path>
         <path
           d="M40.628 41.9977L48.6852 28.0014L32.5575 0.00195312H16.4297L40.628 41.9977Z"
           fill="#FF414C"></path>
@@ -93,7 +103,7 @@ const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24
           fill="#FF414C"></path>
         <defs>
           <linearGradient
-            id="paint0_linear_2233_35621"
+            id="paint0_linear_hero"
             x1="24.1078"
             y1="31.4804"
             x2="40.5695"
@@ -106,202 +116,571 @@ const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24
         </defs>
       </svg>
     </div>
-    <h1 class="mt-6 text-3xl md:mt-10 md:text-4xl lg:text-5xl">
-      {doc.data.title}
+
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+      {pageTitle}
     </h1>
-    <p class="mt-6 text-base md:text-lg">{doc.data.description}</p>
+
+    <!-- Description -->
+    <p class="mt-4 max-w-4xl text-base text-[#687076] md:text-lg">
+      {pageDescription}
+    </p>
   </div>
 
-  <!-- Getting Started Section with Featured Cards -->
-  <div class="mt-12">
-    <h2 class="mb-6 text-2xl font-bold text-foreground md:text-3xl">
+  <!-- Search Bar Section -->
+  <div class="-mt-6 mb-16 flex justify-center px-4">
+    <div class="relative w-full max-w-[642px]">
+      <div
+        class="flex items-center gap-3 rounded-full border border-[#e5e5e5] bg-white px-4 py-3 shadow-sm dark:border-[#333] dark:bg-[#1a1a1a]"
+      >
+        <div class="text-[#737373]" set:html={searchIcon} />
+        <input
+          type="text"
+          placeholder="Search Docs (e.g., 'Deploy', 'Provider', 'SDL')..."
+          class="w-full bg-transparent text-sm text-[#737373] placeholder-[#737373] outline-none"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Getting Started Section -->
+  <div class="mb-16">
+    <h2 class="mb-4 text-xl font-semibold text-[#11181c] dark:text-white">
       Getting Started
     </h2>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      <FeaturedCard
-        image="/images/docs/home/what-is-akash.png"
-        title="What is Akash Network?"
-        description="Learn about decentralized cloud computing"
-        link="/docs/getting-started/what-is-akash"
-        imageShift={-35}
-      />
-      <FeaturedCard
-        image="/images/docs/home/core-concepts.png"
-        title="Core Concepts"
-        description="Understand how Akash works"
-        link="/docs/getting-started/core-concepts"
-      />
-      <FeaturedCard
-        image="/images/docs/home/quick-start.png"
-        title="Quick Start"
-        description="Deploy your first app in under 10 minutes"
-        link="/docs/getting-started/quick-start"
-      />
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Card 1: What is Akash -->
+      <a
+        href="/docs/getting-started/what-is-akash"
+        class="group block overflow-hidden rounded-lg border border-[#e6e8eb] bg-white transition-all hover:shadow-lg dark:border-[#333] dark:bg-[#1a1a1a]"
+      >
+        <div
+          class="aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-[#222]"
+        >
+          <img
+            src="/images/docs/home/what-is-akash.png"
+            alt="What is Akash Network?"
+            loading="eager"
+            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+        <div class="p-6">
+          <div class="mb-3 flex items-center gap-2">
+            <div class="rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]">
+              <div
+                set:html={goalIcon}
+                class="h-5 w-5 text-[#11181c] dark:text-white"
+              />
+            </div>
+            <h3 class="text-base font-semibold text-[#11181c] dark:text-white">
+              What is Akash Network?
+            </h3>
+          </div>
+          <p class="text-sm text-[#7e868c]">
+            Learn about decentralized cloud computing
+          </p>
+        </div>
+      </a>
+
+      <!-- Card 2: Core Concepts -->
+      <a
+        href="/docs/getting-started/core-concepts"
+        class="group block overflow-hidden rounded-lg border border-[#e6e8eb] bg-white transition-all hover:shadow-lg dark:border-[#333] dark:bg-[#1a1a1a]"
+      >
+        <div
+          class="aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-[#222]"
+        >
+          <img
+            src="/images/docs/home/core-concepts.png"
+            alt="Core Concepts"
+            loading="eager"
+            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+        <div class="p-6">
+          <div class="mb-3 flex items-center gap-2">
+            <div class="rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]">
+              <div
+                set:html={boxIcon}
+                class="h-5 w-5 text-[#11181c] dark:text-white"
+              />
+            </div>
+            <h3 class="text-base font-semibold text-[#11181c] dark:text-white">
+              Core Concepts
+            </h3>
+          </div>
+          <p class="text-sm text-[#7e868c]">Understand how Akash works</p>
+        </div>
+      </a>
+
+      <!-- Card 3: Quick Start -->
+      <a
+        href="/docs/getting-started/quick-start"
+        class="group block overflow-hidden rounded-lg border border-[#e6e8eb] bg-white transition-all hover:shadow-lg dark:border-[#333] dark:bg-[#1a1a1a]"
+      >
+        <div
+          class="aspect-[4/3] w-full overflow-hidden bg-gray-100 dark:bg-[#222]"
+        >
+          <img
+            src="/images/docs/home/quick-start.png"
+            alt="Quick Start"
+            loading="eager"
+            class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+        <div class="p-6">
+          <div class="mb-3 flex items-center gap-2">
+            <div class="rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]">
+              <div
+                set:html={rocketIcon}
+                class="h-5 w-5 text-[#11181c] dark:text-white"
+              />
+            </div>
+            <h3 class="text-base font-semibold text-[#11181c] dark:text-white">
+              Quick Start
+            </h3>
+          </div>
+          <p class="text-sm text-[#7e868c]">
+            Deploy your first app in under 10 minutes
+          </p>
+        </div>
+      </a>
     </div>
   </div>
 
   <!-- Developers Section -->
-  <div class="mt-12">
-    <h2 class="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-      Developers
-    </h2>
-    <p class="mb-6 text-para">
-      Deploy applications and build on Akash Network
-    </p>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <SectionCard
-        icon={rocketIcon}
-        title="Getting Started"
-        description="Choose your deployment method and get started"
-        link="/docs/developers/getting-started"
-      />
-      <SectionCard
-        icon={codeIcon}
-        title="Deployment"
-        description="Console, CLI, SDKs, and AuthZ"
-        link="/docs/developers/deployment"
-      />
-      <SectionCard
-        icon={gitIcon}
-        title="Contributing"
-        description="Contribute to Akash codebase and documentation"
-        link="/docs/developers/contributing"
-      />
+  <div
+    class="mb-16 rounded-lg border border-[#e6e8eb] bg-white p-6 dark:border-[#333] dark:bg-[#1a1a1a]"
+  >
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-[#11181c] dark:text-white">
+        Developers
+      </h2>
+      <p class="mt-1 text-sm text-[#7e868c]">
+        Deploy applications and build on Akash Network
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Developer Card 1 -->
+      <a
+        href="/docs/developers/getting-started"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={rocketIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Getting Started
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Choose your deployment method and get started
+        </p>
+      </a>
+
+      <!-- Developer Card 2 -->
+      <a
+        href="/docs/developers/deployment"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={codeIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Deployment
+        </h4>
+        <p class="text-xs text-[#7e868c]">Console, CLI, SDKs, and AuthZ</p>
+      </a>
+
+      <!-- Developer Card 3 -->
+      <a
+        href="/docs/developers/contributing"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={gitIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Contributing
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Contribute to Akash codebase and documentation
+        </p>
+      </a>
     </div>
   </div>
 
   <!-- Providers Section -->
-  <div class="mt-12">
-    <h2 class="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-      Providers
-    </h2>
-    <p class="mb-6 text-para">Run compute resources on Akash Network</p>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <SectionCard
-        icon={rocketIcon}
-        title="Getting Started"
-        description="Should you run a provider? Hardware requirements and cost analysis"
-        link="/docs/providers/getting-started"
-      />
-      <SectionCard
-        icon={toolIcon}
-        title="Setup & Installation"
-        description="Provider Playbook, Kubespray, and Provider Console"
-        link="/docs/providers/setup-and-installation"
-      />
-      <SectionCard
-        icon={activityIcon}
-        title="Operations"
-        description="Lease management, monitoring, maintenance, and provider verification"
-        link="/docs/providers/operations"
-      />
+  <div
+    class="mb-16 rounded-lg border border-[#e6e8eb] bg-white p-6 dark:border-[#333] dark:bg-[#1a1a1a]"
+  >
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-[#11181c] dark:text-white">
+        Providers
+      </h2>
+      <p class="mt-1 text-sm text-[#7e868c]">
+        Run compute resources on Akash Network
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Provider Card 1 -->
+      <a
+        href="/docs/providers/getting-started"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={rocketIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Getting Started
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Should you run a provider? Hardware requirements and cost analysis
+        </p>
+      </a>
+
+      <!-- Provider Card 2 -->
+      <a
+        href="/docs/providers/setup-and-installation"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={toolIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Setup & Installation
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Provider Playbook, Kubespray, and Provider Console
+        </p>
+      </a>
+
+      <!-- Provider Card 3 -->
+      <a
+        href="/docs/providers/operations"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={activityIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Operations
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Lease management, monitoring, maintenance, and provider verification
+        </p>
+      </a>
     </div>
   </div>
 
   <!-- API Documentation Section -->
-  <div class="mt-12">
-    <h2 class="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-      API Documentation
-    </h2>
-    <p class="mb-6 text-para">
-      Build on Akash with SDKs, APIs, and architectural insights
-    </p>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <SectionCard
-        icon={rocketIcon}
-        title="Getting Started"
-        description="Choose your integration method"
-        link="/docs/api-documentation/getting-started"
-      />
-      <SectionCard
-        icon={apiIcon}
-        title="SDK"
-        description="Official Go and JavaScript/TypeScript SDKs"
-        link="/docs/api-documentation/sdk"
-      />
-      <SectionCard
-        icon={databaseIcon}
-        title="API"
-        description="Console Managed Wallet API"
-        link="/docs/api-documentation/console-api"
-      />
-      <SectionCard
-        icon={boxIcon}
-        title="Provider Architecture"
-        description="Provider service components"
-        link="/docs/providers/architecture"
-      />
-      <SectionCard
-        icon={nodeIcon}
-        title="Node Architecture"
-        description="Blockchain node architecture and APIs"
-        link="/docs/node-operators/architecture"
-      />
+  <div
+    class="mb-16 rounded-lg border border-[#e6e8eb] bg-white p-6 dark:border-[#333] dark:bg-[#1a1a1a]"
+  >
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-[#11181c] dark:text-white">
+        API Documentation
+      </h2>
+      <p class="mt-1 text-sm text-[#7e868c]">
+        Build on Akash with SDKs, APIs, and architectural insights
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- API Card 1 -->
+      <a
+        href="/docs/api-documentation/getting-started"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={rocketIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Getting Started
+        </h4>
+        <p class="text-xs text-[#7e868c]">Choose your integration method</p>
+      </a>
+
+      <!-- API Card 2 -->
+      <a
+        href="/docs/api-documentation/sdk"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={apiIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          SDK
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Official Go and JavaScript/TypeScript SDKs
+        </p>
+      </a>
+
+      <!-- API Card 3 -->
+      <a
+        href="/docs/api-documentation/console-api"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={databaseIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          API
+        </h4>
+        <p class="text-xs text-[#7e868c]">Console Managed Wallet API</p>
+      </a>
+
+      <!-- API Card 4 -->
+      <a
+        href="/docs/providers/architecture"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={boxIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Provider Architecture
+        </h4>
+        <p class="text-xs text-[#7e868c]">Provider service components</p>
+      </a>
+
+      <!-- API Card 5 -->
+      <a
+        href="/docs/node-operators/architecture"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={nodeIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Node Architecture
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Blockchain node architecture and APIs
+        </p>
+      </a>
     </div>
   </div>
 
   <!-- Node Operators Section -->
-  <div class="mt-12">
-    <h2 class="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-      Node Operators
-    </h2>
-    <p class="mb-6 text-para">Run blockchain nodes and validators</p>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <SectionCard
-        icon={rocketIcon}
-        title="Getting Started"
-        description="Choose between full node and validator"
-        link="/docs/node-operators/getting-started"
-      />
-      <SectionCard
-        icon={serverIcon}
-        title="Node Build"
-        description="CLI Build, Omnibus, and Helm Chart"
-        link="/docs/node-operators/node-build"
-      />
-      <SectionCard
-        icon={shieldIcon}
-        title="Validators"
-        description="Running validators, Omnibus, and TMKMS"
-        link="/docs/node-operators/validators"
-      />
-      <SectionCard
-        icon={upgradeIcon}
-        title="Network Upgrades"
-        description="Mainnet 15 upgrade guide"
-        link="/docs/node-operators/network-upgrades"
-      />
+  <div
+    class="mb-16 rounded-lg border border-[#e6e8eb] bg-white p-6 dark:border-[#333] dark:bg-[#1a1a1a]"
+  >
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-[#11181c] dark:text-white">
+        Node Operators
+      </h2>
+      <p class="mt-1 text-sm text-[#7e868c]">
+        Run blockchain nodes and validators
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Node Card 1 -->
+      <a
+        href="/docs/node-operators/getting-started"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={rocketIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Getting Started
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Choose between full node and validator
+        </p>
+      </a>
+
+      <!-- Node Card 2 -->
+      <a
+        href="/docs/node-operators/node-build"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={serverIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Node Build
+        </h4>
+        <p class="text-xs text-[#7e868c]">CLI Build, Omnibus, and Helm Chart</p>
+      </a>
+
+      <!-- Node Card 3 -->
+      <a
+        href="/docs/node-operators/validators"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={shieldIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Validators
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Running validators, Omnibus, and TMKMS
+        </p>
+      </a>
+
+      <!-- Node Card 4 -->
+      <a
+        href="/docs/node-operators/network-upgrades"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={upgradeIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Network Upgrades
+        </h4>
+        <p class="text-xs text-[#7e868c]">Mainnet 15 upgrade guide</p>
+      </a>
     </div>
   </div>
 
   <!-- Learn Section -->
-  <div class="mt-12 mb-12">
-    <h2 class="mb-4 text-2xl font-bold text-foreground md:text-3xl">Learn</h2>
-    <p class="mb-6 text-para">Deep dive into Akash concepts and resources</p>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <SectionCard
-        icon={bookIcon}
-        title="Core Concepts"
-        description="Detailed guides for deployments, storage, GPUs, and more"
-        link="/docs/learn/core-concepts"
-      />
-      <SectionCard
-        icon={usersIcon}
-        title="Community Resources"
-        description="Discord, GitHub, blog, and support channels"
-        link="/docs/learn/community-resources"
-      />
+  <div
+    class="mb-16 rounded-lg border border-[#e6e8eb] bg-white p-6 dark:border-[#333] dark:bg-[#1a1a1a]"
+  >
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-[#11181c] dark:text-white">
+        Learn
+      </h2>
+      <p class="mt-1 text-sm text-[#7e868c]">
+        Deep dive into Akash concepts and resources
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Learn Card 1 -->
+      <a
+        href="/docs/learn/core-concepts"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={bookIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Core Concepts
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Detailed guides for deployments, storage, GPUs, and more
+        </p>
+      </a>
+
+      <!-- Learn Card 2 -->
+      <a
+        href="/docs/learn/community-resources"
+        class="group block rounded-xl border border-[#e6e8eb] p-4 transition-all hover:border-[#ff414c] hover:shadow-md dark:border-[#333] dark:hover:border-[#ff414c]"
+      >
+        <div
+          class="mb-3 inline-flex rounded-lg bg-[#f5f5f5] p-2 dark:bg-[#333]"
+        >
+          <div
+            set:html={usersIcon}
+            class="h-5 w-5 text-[#11181c] dark:text-white"
+          />
+        </div>
+        <h4 class="mb-1 text-sm font-semibold text-[#11181c] dark:text-white">
+          Community Resources
+        </h4>
+        <p class="text-xs text-[#7e868c]">
+          Discord, GitHub, blog, and support channels
+        </p>
+      </a>
     </div>
   </div>
 
   <!-- Need Help Section -->
-  <div class="mt-12 mb-16 rounded-2xl border bg-background2 p-8">
-    <h2 class="mb-4 text-2xl font-bold text-foreground">Need Help?</h2>
+  <div
+    class="mb-16 rounded-lg border border-[#e6e8eb] bg-[#f8f9fa] p-8 dark:border-[#333] dark:bg-[#1a1a1a]"
+  >
+    <h2 class="mb-4 text-xl font-semibold text-[#11181c] dark:text-white">
+      Need Help?
+    </h2>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <a
         href="https://discord.akash.network"
         target="_blank"
-        class="flex items-center gap-3 text-primary hover:underline"
+        class="flex items-center gap-3 text-[#ff414c] hover:underline"
       >
         <svg
           class="h-5 w-5"
@@ -318,7 +697,7 @@ const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24
       <a
         href="https://github.com/akash-network/support"
         target="_blank"
-        class="flex items-center gap-3 text-primary hover:underline"
+        class="flex items-center gap-3 text-[#ff414c] hover:underline"
       >
         <svg
           class="h-5 w-5"
@@ -335,4 +714,3 @@ const usersIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24
     </div>
   </div>
 </DocsLayout>
-
