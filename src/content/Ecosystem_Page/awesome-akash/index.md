@@ -1,6 +1,6 @@
 ---
 projectTitle: Awesome Akash templates
-projectImage: "./project-banner.png"
+projectImage: "./project-banner.jpg"
 pubDate: "2021-01-19"
 
 tags:
@@ -15,7 +15,7 @@ ctaButton:
   link: "https://console.akash.network/"
   enable: true
 
-githubLink: "https://github.com/akash-network/awesome-akash"
+websiteLink: "https://github.com/akash-network/awesome-akash"
 
 featured: true
 ---
