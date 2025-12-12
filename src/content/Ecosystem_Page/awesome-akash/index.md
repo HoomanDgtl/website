@@ -1,6 +1,6 @@
 ---
 projectTitle: Awesome Akash templates
-projectImage: "./project-banner.jpg"
+projectImage: "./akash-templates.png"
 pubDate: "2021-01-19"
 
 tags:
