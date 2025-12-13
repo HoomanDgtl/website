@@ -53,7 +53,7 @@ const lines = page?.body
   image="/meta-images/docs.png"
 >
   <div
-    class="sticky top-0 z-10 -mt-4 mb-10 h-[130px] bg-background pt-4 md:hidden"
+    class="sticky top-0 z-10 mb-10 h-[130px] bg-background px-4 pt-4 md:pt-0 lg:hidden"
   >
     <div>
       <AlgoliaSearch client:only />
@@ -70,39 +70,34 @@ const lines = page?.body
           pathname={pathname}
         />
 
-        {!page.data.hideTOC && (
-          <MobileTableOfContents
-            client:load
-            toc={generateToc(headings, "Overview")}
-            labels={{
-              onThisPage: "On this page",
-              title: catName,
-            }}
-          />
-        )}
+        {
+          !page.data.hideTOC && (
+            <MobileTableOfContents
+              client:load
+              toc={generateToc(headings, "Overview")}
+              labels={{
+                onThisPage: "On this page",
+                title: catName,
+              }}
+            />
+          )
+        }
       </div>
     </div>
   </div>
   <div class="-mt-2">
-    <div class="grid grid-cols-12 gap-4">
-      <div class={page.data.hideTOC ? "col-span-12" : "col-span-12 lg:col-span-10"}>
+    <div class="flex flex-col gap-4 lg:flex-row">
+      <div
+        class={page.data.hideTOC
+          ? "w-full"
+          : "w-full lg:flex-1 container-reader "}
+      >
         <h1
           class="text-3xl md:text-4xl md:font-medium lg:text-5xl"
           id="overview"
         >
           {page.data.title}
         </h1>
-        {!page.data.hideTOC && (
-          <div class="mt-5 hidden md:block lg:hidden">
-            <MobileTableOfContents
-              client:load
-              toc={generateToc(headings, "Overview")}
-              labels={{
-                onThisPage: "On this page",
-              }}
-            />
-          </div>
-        )}
 
         <div class="my-5 border-b md:my-10"></div>
 
@@ -139,25 +134,25 @@ const lines = page?.body
         <NextPrevNav nav={findPrevAndNextPages(nav, pathname)} />
       </div>
 
-      {!page.data.hideTOC && (
-        <aside
-          class="sticky top-[150px] hidden h-[calc(100vh-150px)] overflow-y-auto lg:col-span-2 lg:block"
-        >
-          <div class="h-fit border-l pl-3 pb-10">
-            <p class="text-sm font-bold">ON THIS PAGE</p>
+      {
+        !page.data.hideTOC && (
+          <aside class="sticky top-[75px] hidden h-[calc(100vh-75px)] shrink-0 overflow-y-auto lg:block lg:w-[18rem]">
+            <div class="h-fit border-l pb-10 pl-3">
+              <p class="text-sm font-bold">ON THIS PAGE</p>
 
-            <div class="mt-4">
-              <TableOfContents
-                client:load
-                toc={generateToc(headings, "Overview")}
-                labels={{
-                  onThisPage: "onThisPage",
-                }}
-              />
+              <div class="mt-4">
+                <TableOfContents
+                  client:load
+                  toc={generateToc(headings, "Overview")}
+                  labels={{
+                    onThisPage: "onThisPage",
+                  }}
+                />
+              </div>
             </div>
-          </div>
-        </aside>
-      )}
+          </aside>
+        )
+      }
     </div>
   </div>
 </DocsLayout>

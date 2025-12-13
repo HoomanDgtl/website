@@ -22,37 +22,30 @@ let nav = generateDocsNav(pages);
 ---
 
 <BaseLayout title={title} description={description} image={image}>
-  <!-- Mobile Header -->
-  <div class="md:hidden">
+  <div class="lg:hidden">
     <MarketingHeader disableSticky />
   </div>
 
-  <!-- Main Layout Container -->
   <div class="flex min-h-screen">
-    <!-- Sidebar - Hidden on mobile -->
     <div
       class="hidden border-r border-[#e6e8eb] bg-white dark:border-[#333] dark:bg-background md:block"
     >
       <Sidebar nav={nav} />
     </div>
 
-    <!-- Main Content Area -->
     <div class="flex flex-1 flex-col">
-      <!-- Desktop Header -->
       <div
-        class="sticky right-0 top-0 z-20 hidden bg-white dark:bg-background md:block"
+        class="sticky right-0 top-0 z-20 hidden bg-white dark:bg-background lg:block"
       >
         <Header nav={nav} />
       </div>
 
-      <!-- Content -->
       <main class="flex-1">
-        <div class="mx-auto px-4 pb-10 pt-10 lg:px-10 xl:px-20">
+        <div class="mx-auto pb-10 md:pt-10">
           <slot />
         </div>
       </main>
 
-      <!-- Footer -->
       <Footer />
     </div>
   </div>

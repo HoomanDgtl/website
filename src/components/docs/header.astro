@@ -6,14 +6,15 @@ import AlgoliaSearch from "./algolia-search.jsx";
 ---
 
 <nav class="flex flex-col border-b border-[#e6e8eb] dark:border-[#333]">
-  <div class="flex items-center justify-between px-6 py-4 md:px-10">
-    <!-- Left side: Search -->
+  <div
+    class="container-small flex w-full items-center justify-between gap-3 px-5 py-4"
+  >
     <div class="flex items-center gap-8">
       <AlgoliaSearch client:only />
     </div>
 
     <!-- Right side: Social icons and buttons -->
-    <div class="hidden flex-shrink-0 items-center gap-8 md:flex">
+    <div class="hidden flex-shrink-0 items-center gap-5 md:flex xl:gap-8">
       <!-- Social Icons -->
       <div class="flex items-center gap-3 text-[#687076] dark:text-[#888]">
         <DarkModeToggle client:load />
