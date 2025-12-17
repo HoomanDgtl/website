@@ -173,7 +173,7 @@ const helpLinks = [
     </div>
   </div>
 
-  <div class="container-reader px-5">
+  <div class="container-reader px-5 md:mt-3">
     <div class="flex flex-col items-start">
       <h1 class="text-3xl font-bold md:text-4xl lg:text-5xl">
         {pageTitle}
@@ -186,7 +186,7 @@ const helpLinks = [
       <h2 class="mb-6 text-2xl font-bold text-foreground md:text-3xl">
         Integration Options
       </h2>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {
           integrationOptions.map((option) => (
             <div class="group rounded-lg border border-[#e6e8eb] bg-white p-6 transition-all hover:shadow-lg dark:border-[#333] dark:bg-[#1a1a1a]">
@@ -246,7 +246,7 @@ const helpLinks = [
       <h2 class="mb-6 text-2xl font-bold text-foreground md:text-3xl">
         SDK Documentation
       </h2>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {
           sdkDocsCards.map((card) => (
             <SectionCard
@@ -265,7 +265,7 @@ const helpLinks = [
       <h2 class="mb-6 text-2xl font-bold text-foreground md:text-3xl">
         Console API Documentation
       </h2>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {
           consoleApiCards.map((card) => (
             <SectionCard

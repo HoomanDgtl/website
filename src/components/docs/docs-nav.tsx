@@ -1,5 +1,5 @@
 import { docsSequence as docs } from "@/content/Docs/_sequence";
-import { ChevronDownIcon, ChevronRightIcon, Home } from "lucide-react";
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 
 // Types
@@ -37,7 +37,7 @@ const STYLES = {
       "mb-3 text-xs font-bold uppercase tracking-widest text-[#11181c] dark:text-white",
     divider: "mb-3 h-px w-full bg-[#e6e8eb] dark:bg-[#333]",
     title:
-      "mb-2 text-xs font-bold uppercase  tracking-wider text-[#11181c] dark:text-white",
+      "mb-2 text-xs font-medium uppercase  tracking-widest text-[#11181c] dark:text-white",
   },
 } as const;
 
@@ -388,9 +388,9 @@ function NavFolder({
 }: NavFolderProps) {
   if (depth === 0) {
     return (
-      <div className=" border-b pb-5 pt-5 first:mt-0   last:border-b-0">
+      <div className=" border-b pb-2 pt-2 first:mt-0   last:border-b-0">
         <h3 className={STYLES.section.header}>{item.label}</h3>
-        <div className="space-y-2.5">
+        <div className="space-y-2">
           {item.subItems?.map((subItem) => (
             <NavItem
               key={subItem.label || subItem.link}
@@ -608,9 +608,8 @@ export const HomeButton = ({ pathname }: { pathname: string }) => {
   return (
     <a
       href="/docs/"
-      className={`my-1.5 flex items-center gap-2  text-sm  transition-colors ${stateClass}`}
+      className={`mb-1.5 flex items-center gap-2  text-sm  transition-colors ${stateClass}`}
     >
-      <Home className="h-4 w-4" />
       <span>Home</span>
     </a>
   );

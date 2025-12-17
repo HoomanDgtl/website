@@ -26,27 +26,29 @@ let nav = generateDocsNav(pages);
     <MarketingHeader disableSticky />
   </div>
 
-  <div class="flex min-h-screen">
-    <div
-      class="hidden border-r border-[#e6e8eb] bg-white dark:border-[#333] dark:bg-background md:block"
-    >
-      <Sidebar nav={nav} />
+  <div class="flex min-h-screen flex-col">
+    <!-- Header at top (full width) -->
+    <div class="sticky top-0 z-20 hidden bg-white dark:bg-background lg:block">
+      <Header nav={nav} />
     </div>
 
-    <div class="flex flex-1 flex-col overflow-hidden">
+    <!-- Below header: Sidebar on left, Content on right -->
+    <div class="flex flex-1">
       <div
-        class="sticky right-0 top-0 z-20 hidden bg-white dark:bg-background lg:block"
+        class="hidden border-r border-[#e6e8eb] bg-white dark:border-[#333] dark:bg-background md:block"
       >
-        <Header nav={nav} />
+        <Sidebar nav={nav} />
       </div>
 
-      <main class="flex-1">
-        <div class="mx-auto pb-10 md:pt-10">
-          <slot />
-        </div>
-      </main>
+      <div class="flex flex-1 flex-col">
+        <main class="flex-1">
+          <div class="mx-auto pb-10 md:pt-6">
+            <slot />
+          </div>
+        </main>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   </div>
 </BaseLayout>
