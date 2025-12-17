@@ -425,7 +425,7 @@ function NavFolder({
         )}
       </a>
       {isOpen && item.subItems && (
-        <div className="ml-1 mt-0.5 space-y-3 border-l border-[#e6e8eb] pl-3 dark:border-[#333]">
+        <div className="ml-1 mt-0.5 space-y-2 border-l border-[#e6e8eb] pl-3 dark:border-[#333]">
           {item.subItems.map((subItem) => (
             <NavItem
               key={subItem.label || subItem.link}
