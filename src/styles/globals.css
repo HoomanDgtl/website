@@ -161,6 +161,12 @@ html body[data-scroll-locked] {
     background-color: #fbf8f7;
     @apply dark:bg-background;
   }
+
+  .toc-sticky {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 73px !important;
+  }
 }
 
 @layer base {
