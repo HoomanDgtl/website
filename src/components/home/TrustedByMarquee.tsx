@@ -37,6 +37,7 @@ interface TrustedByItem {
   image?: string;
   title: string;
   svg?: string;
+  height?: number | string;
 }
 
 const TrustedByMarquee = ({
@@ -66,10 +67,18 @@ const TrustedByMarquee = ({
     const timer = setTimeout(() => {
       if (trackRef.current) {
         const svgs = trackRef.current.querySelectorAll("svg");
-        svgs.forEach((svg) => {
+        svgs.forEach((svg, index) => {
+          const itemIndex = index % trustedBySection.length;
+          const item = trustedBySection[itemIndex];
+          const height = item.height
+            ? typeof item.height === "number"
+              ? `${item.height}px`
+              : item.height
+            : "34px";
+
           svg.removeAttribute("width");
           svg.removeAttribute("height");
-          svg.style.height = "34px";
+          svg.style.height = height;
           svg.style.width = "auto";
           svg.style.display = "block";
         });
@@ -86,26 +95,34 @@ const TrustedByMarquee = ({
       aria-label="Trusted By Logos Carousel"
     >
       <div ref={trackRef} className="flex items-center gap-24">
-        {displayItems.map((item, index) => (
-          <div
-            key={`${item.title}-${index}`}
-            className="flex shrink-0 items-center justify-center"
-          >
-            {item.svg ? (
-              <div
-                dangerouslySetInnerHTML={{ __html: processSvg(item.svg) }}
-                className="flex h-[34px] items-center justify-center [&>svg]:block [&>svg]:h-[60px] [&>svg]:w-auto"
-              />
-            ) : (
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-[60px] w-auto object-contain"
-                style={{ opacity: isLoaded ? 1 : 0 }}
-              />
-            )}
-          </div>
-        ))}
+        {displayItems.map((item, index) => {
+          const height = item.height
+            ? typeof item.height === "number"
+              ? `${item.height}px`
+              : item.height
+            : "34px";
+          return (
+            <div
+              key={`${item.title}-${index}`}
+              className="flex shrink-0 items-center justify-center"
+            >
+              {item.svg ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: processSvg(item.svg) }}
+                  className="flex items-center justify-center [&>svg]:block [&>svg]:w-auto"
+                  style={{ height }}
+                />
+              ) : (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-auto object-contain"
+                  style={{ height, opacity: isLoaded ? 1 : 0 }}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
