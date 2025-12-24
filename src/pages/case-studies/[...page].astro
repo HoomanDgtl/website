@@ -1,0 +1,102 @@
+---
+import PostCard from "@/components/cards/post-card.astro";
+import Pagination from "@/components/pagination.astro";
+import Layout from "@/layouts/layout.astro";
+import type { PaginateFunction } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+type BlogPost = CollectionEntry<"Blog">;
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction;
+}) {
+  const posts = (await getCollection("Blog"))
+    .filter((post) => {
+      return (
+        post.data.archive !== true &&
+        post.data.categories.some(
+          (category: string) => category.toLowerCase() === "case studies",
+        )
+      );
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.data.pubDate);
+      const dateB = new Date(b.data.pubDate);
+
+      return dateB.getTime() - dateA.getTime();
+    });
+
+  const pinnedPost: BlogPost | undefined = posts[0];
+  const remainingPosts = pinnedPost ? posts.slice(1) : posts;
+
+  return paginate(remainingPosts, {
+    props: { pinnedPost: pinnedPost },
+    pageSize: 12,
+  });
+}
+
+const { page, pinnedPost } = Astro.props;
+---
+
+<Layout
+  title="Case Studies - Akash Network"
+  description="The future of DePIN is sovereign, distributed, and builder-owned. See how the world's most resilient projects deploy on a global GPU grid that can't be shut down."
+  image={pinnedPost?.data.bannerImage.src}
+>
+  <div class="container mt-[120px]">
+    <!-- Centered Headline and Subheadline -->
+    <div class="mb-[80px] text-center">
+      <h1 class="font-sans text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+        Case Studies
+      </h1>
+      <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-para">
+        The future of DePIN is sovereign, distributed, and builder-owned. See
+        how the world's most resilient projects deploy on a global GPU grid
+        that can't be shut down.
+      </p>
+    </div>
+
+    {pinnedPost && page.currentPage === 1 && (
+      <a class="flex cursor-pointer" href={`/case-studies/${pinnedPost.slug}`}>
+        <PostCard
+          type="large"
+          title={pinnedPost.data.title}
+          image={pinnedPost.data.bannerImage}
+          tag={pinnedPost.data.categories[0]}
+          contributor={pinnedPost.data.contributors[0]}
+          pubDate={pinnedPost.data.pubDate}
+          description={pinnedPost.data.description}
+        />
+      </a>
+    )}
+  </div>
+
+  <div class="container mt-[120px]">
+    <!-- Posts grid -->
+    <div
+      class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:mt-[80px] lg:grid-cols-3 lg:gap-16"
+    >
+      {
+        page.data.map((post: BlogPost, i: number) => {
+          return (
+            <a class="flex cursor-pointer " href={`/case-studies/${post.slug}`}>
+              <PostCard
+                title={post.data.title}
+                image={post.data.bannerImage}
+                tag={post.data.categories[0]}
+                contributor={post.data.contributors[0]}
+                pubDate={post.data.pubDate}
+                description={post.data.description}
+              />
+            </a>
+          );
+        })
+      }
+    </div>
+
+    <Pagination page={page} />
+  </div>
+</Layout>
+
