@@ -253,10 +253,10 @@ const DesktopTableGpu = ({
                         linkText="Request More"
                         className={cn(
                           buttonVariants({
-                            variant: "secondary",
+                            variant: "default",
                             size: "sm",
                           }),
-                          "flex h-auto items-center gap-1.5 rounded-md border px-2 py-[5px] text-xs font-medium dark:text-black   md:px-2 lg:px-3",
+                          "flex h-auto items-center gap-1.5 rounded-md border px-2 py-[5px] text-xs font-medium   md:px-2 lg:px-3",
                         )}
                       />
                     </div>
