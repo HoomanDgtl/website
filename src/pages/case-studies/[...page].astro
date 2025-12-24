@@ -17,7 +17,7 @@ export async function getStaticPaths({
       return (
         post.data.archive !== true &&
         post.data.categories.some(
-          (category: string) => category.toLowerCase() === "case studies",
+          (category: string) => category.toLowerCase() === "case studies"
         )
       );
     })
@@ -48,32 +48,39 @@ const { page, pinnedPost } = Astro.props;
   <div class="container mt-[120px]">
     <!-- Centered Headline and Subheadline -->
     <div class="mb-[80px] text-center">
-      <h1 class="font-sans text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+      <h1
+        class="font-sans text-4xl font-bold text-foreground md:text-5xl lg:text-6xl"
+      >
         Case Studies
       </h1>
-      <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-para">
+      <p class="mx-auto mt-6 max-w-3xl text-lg text-para md:text-xl">
         The future of DePIN is sovereign, distributed, and builder-owned. See
-        how the world's most resilient projects deploy on a global GPU grid
-        that can't be shut down.
+        how the world's most resilient projects deploy on a global GPU grid that
+        can't be shut down.
       </p>
     </div>
 
-    {pinnedPost && page.currentPage === 1 && (
-      <a class="flex cursor-pointer" href={`/case-studies/${pinnedPost.slug}`}>
-        <PostCard
-          type="large"
-          title={pinnedPost.data.title}
-          image={pinnedPost.data.bannerImage}
-          tag={pinnedPost.data.categories[0]}
-          contributor={pinnedPost.data.contributors[0]}
-          pubDate={pinnedPost.data.pubDate}
-          description={pinnedPost.data.description}
-        />
-      </a>
-    )}
+    {
+      pinnedPost && page.currentPage === 1 && (
+        <a
+          class="flex cursor-pointer"
+          href={`/case-studies/${pinnedPost.slug}`}
+        >
+          <PostCard
+            type="large"
+            title={pinnedPost.data.title}
+            image={pinnedPost.data.bannerImage}
+            tag={pinnedPost.data.categories[0]}
+            contributor={pinnedPost.data.contributors[0]}
+            pubDate={pinnedPost.data.pubDate}
+            description={pinnedPost.data.description}
+          />
+        </a>
+      )
+    }
   </div>
 
-  <div class="container mt-[120px]">
+  <div class="container gap-10 md:mt-[120px]">
     <!-- Posts grid -->
     <div
       class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:mt-[80px] lg:grid-cols-3 lg:gap-16"
@@ -99,4 +106,3 @@ const { page, pinnedPost } = Astro.props;
     <Pagination page={page} />
   </div>
 </Layout>
-
