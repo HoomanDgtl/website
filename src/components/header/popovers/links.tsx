@@ -404,7 +404,7 @@ export const ecosystemNavItems: NavItem[] = [
   {
     icon: FileStack,
     title: "Case Studies",
-    link: "/blog/case-studies/1",
+    link: "/case-studies",
     external: true,
   },
 ];

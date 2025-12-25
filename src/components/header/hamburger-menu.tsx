@@ -43,7 +43,6 @@ const navigation = [
   { name: "Ecosystem", subCategories: ecosystemNavItems },
   { name: "Community", subCategories: communityItems },
   { name: "Blog", href: "/blog" },
-  { name: "Case Studies", href: "/case-studies" },
   { name: "Docs", href: "/docs" },
   { name: "Pricing & Earnings", href: "/pricing/gpus" },
 ];
