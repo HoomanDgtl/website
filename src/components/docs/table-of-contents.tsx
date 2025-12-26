@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { TocItem } from "../../lib/generateToc";
 
 interface Props {
@@ -15,86 +15,52 @@ const TableOfContents = ({ toc = [], labels }: Props) => {
     text: toc[0].text,
   });
 
-  // Track if user is actively scrolling to prevent interference
-  const isUserScrollingRef = useRef(false);
+  // Reference to the active link element
+  const activeLinkRef = useRef<HTMLAnchorElement | null>(null);
 
-  // Track if user is actively scrolling to prevent interference
-  useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
+  // Track if user is hovering over the TOC sidebar
+  const isHoveringTocRef = useRef(false);
 
-    const handleScroll = () => {
-      isUserScrollingRef.current = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isUserScrollingRef.current = false;
-      }, 200);
-    };
+  // Scroll the active TOC item into view
+  const scrollActiveIntoView = useCallback(() => {
+    if (isHoveringTocRef.current) return;
 
-    // Listen to main page scroll
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    if (activeLinkRef.current) {
+      const sidebar = activeLinkRef.current.closest("aside") as HTMLElement;
+      if (sidebar) {
+        const sidebarRect = sidebar.getBoundingClientRect();
+        const elementRect = activeLinkRef.current.getBoundingClientRect();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, []);
+        // Check if element is outside the visible area of the sidebar
+        const isAbove = elementRect.top < sidebarRect.top + 50;
+        const isBelow = elementRect.bottom > sidebarRect.bottom - 50;
 
-  useEffect(() => {
-    // Don't auto-scroll if user is actively scrolling
-    if (isUserScrollingRef.current) {
-      return;
-    }
+        if (isAbove || isBelow) {
+          const sidebarScrollTop = sidebar.scrollTop;
+          const elementRelativeTop =
+            elementRect.top - sidebarRect.top + sidebarScrollTop;
+          const sidebarHeight = sidebar.clientHeight;
+          const elementHeight = activeLinkRef.current.clientHeight;
 
-    // Use a timeout to debounce and allow scroll detection to settle
-    const timeoutId = setTimeout(() => {
-      // Don't scroll if user started scrolling during the timeout
-      if (isUserScrollingRef.current) {
-        return;
-      }
+          // Center the element in the visible area
+          const targetScroll =
+            elementRelativeTop - sidebarHeight / 2 + elementHeight / 2;
 
-      // Auto-scroll the active heading into view only if it's not visible
-      if (currentHeading.slug) {
-        const activeElement = document.querySelector(
-          `aside a[href="#${currentHeading.slug}"]`,
-        ) as HTMLElement;
-
-        if (activeElement) {
-          const sidebar = activeElement.closest("aside") as HTMLElement;
-          if (sidebar) {
-            const sidebarRect = sidebar.getBoundingClientRect();
-            const elementRect = activeElement.getBoundingClientRect();
-
-            // Check if element is outside the visible area of the sidebar
-            const isAbove = elementRect.top < sidebarRect.top;
-            const isBelow = elementRect.bottom > sidebarRect.bottom;
-
-            // Only scroll the sidebar, not the main page
-            if (isAbove || isBelow) {
-              // Calculate scroll position using getBoundingClientRect for accuracy
-              const sidebarScrollTop = sidebar.scrollTop;
-              
-              // Calculate the element's position relative to the sidebar's current scroll position
-              const elementRelativeTop = elementRect.top - sidebarRect.top + sidebarScrollTop;
-              const sidebarHeight = sidebar.clientHeight;
-              const elementHeight = activeElement.clientHeight;
-              
-              // Center the element in the visible area
-              const targetScroll = elementRelativeTop - sidebarHeight / 2 + elementHeight / 2;
-
-              // Smoothly scroll the sidebar container, not the element itself
-              // This prevents interfering with main page scroll
-              sidebar.scrollTo({
-                top: Math.max(0, targetScroll),
-                behavior: "smooth",
-              });
-            }
-          }
+          sidebar.scrollTo({
+            top: Math.max(0, targetScroll),
+            behavior: "smooth",
+          });
         }
       }
-    }, 150); // Debounce to avoid too frequent updates
+    }
+  }, []);
 
+  // Scroll active item into view when current heading changes
+  useEffect(() => {
+    // Small delay to ensure the DOM has updated with the new active class
+    const timeoutId = setTimeout(scrollActiveIntoView, 100);
     return () => clearTimeout(timeoutId);
-  }, [currentHeading]);
+  }, [currentHeading, scrollActiveIntoView]);
 
   // Define the ID for the "On This Page" heading.
   const onThisPageID = "on-this-page-heading";
@@ -152,14 +118,16 @@ const TableOfContents = ({ toc = [], labels }: Props) => {
   // Component for rendering individual Table of Contents items.
   const TableOfContentsItem = ({ heading }: { heading: TocItem }) => {
     const { depth, slug, text, children } = heading;
+    const isActive = currentHeading.slug === slug;
 
     return (
       <li>
         <a
+          ref={isActive ? activeLinkRef : null}
           className={` flex  items-center text-sm ${
             depth === 2 ? "" : "font-normal"
           } leading-[24px]  text-[#808080] hover:text-primary  depth-${depth} ${
-            currentHeading.slug === slug && "text-primary"
+            isActive && "text-primary"
           }`.trim()}
           href={`#${slug}`}
           onClick={onLinkClick}
@@ -178,13 +146,20 @@ const TableOfContents = ({ toc = [], labels }: Props) => {
   };
 
   return (
-    <>
+    <div
+      onMouseEnter={() => {
+        isHoveringTocRef.current = true;
+      }}
+      onMouseLeave={() => {
+        isHoveringTocRef.current = false;
+      }}
+    >
       <ul className="space-y-1 ">
         {toc.map((heading2) => (
           <TableOfContentsItem key={heading2.slug} heading={heading2} />
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
