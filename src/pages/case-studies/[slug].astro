@@ -7,16 +7,16 @@ import BlogLayout from "@/layouts/blog-layout.astro";
 import { proseClasses } from "@/lib/prose-classes";
 import { Image } from "astro:assets";
 import { getCollection, type CollectionEntry } from "astro:content";
-import { Facebook, Linkedin } from "lucide-react";
 import clsx from "clsx";
+import { Facebook, Linkedin } from "lucide-react";
 
 type BlogPost = CollectionEntry<"Blog">;
 export async function getStaticPaths() {
   const allPosts = await getCollection("Blog");
   const caseStudyPosts = allPosts.filter((post) =>
     post.data.categories.some(
-      (category: string) => category.toLowerCase() === "case studies",
-    ),
+      (category: string) => category.toLowerCase() === "case studies"
+    )
   );
 
   return caseStudyPosts.map((post) => {
@@ -147,24 +147,24 @@ const { Content } = await post.render();
         <p class="font-bold text-foreground">Other Case Studies</p>
         <div class="mt-3 flex flex-col space-y-2">
           {
-            otherCaseStudies
-              .slice(0, 4)
-              .map((caseStudy: BlogPost) => {
-                return (
-                  <a
-                    href={`/case-studies/${caseStudy.slug}`}
-                    class="line-clamp-2 cursor-pointer  text-darkText hover:text-primary hover:no-underline"
-                  >
-                    {caseStudy.data.title}
-                  </a>
-                );
-              })
+            otherCaseStudies.slice(0, 4).map((caseStudy: BlogPost) => {
+              return (
+                <a
+                  href={`/case-studies/${caseStudy.slug}`}
+                  class="line-clamp-2 cursor-pointer  text-darkText hover:text-primary hover:no-underline"
+                >
+                  {caseStudy.data.title}
+                </a>
+              );
+            })
           }
         </div>
       </div>
 
       <div>
-        <p class="font-bold leading-none text-foreground">Share this case study</p>
+        <p class="font-bold leading-none text-foreground">
+          Share this case study
+        </p>
 
         <div class="mt-5 flex space-x-4 text-para">
           <a
@@ -191,55 +191,6 @@ const { Content } = await post.render();
         </div>
       </div>
     </aside>
-  </div>
-
-  <!-- Desktop CTA Banner for Deploy on Console (after Other Case Studies) -->
-  <div class="hidden md:block mt-10">
-    <div class="container">
-      <section
-        class={clsx(
-          "flex flex-col items-center justify-around",
-          "bg-white dark:bg-background2",
-          "border-y",
-          "px-[30px] py-[80px] lg:py-[160px]",
-          "text-center",
-        )}
-      >
-        <h2
-          class={clsx(
-            "max-w-[1000px] font-instrument text-foreground",
-            "text-3xl md:text-5xl xl:text-6xl 2xl:text-[80px]",
-            "md:leading-snug",
-          )}
-        >
-          Experience the Supercloud.
-        </h2>
-
-        <div class="mt-6 md:mt-10">
-          <div class="hidden md:block">
-            <ButtonLink
-              link="https://console.akash.network/"
-              size="xl"
-              className="bg-primary text-white hover:bg-darkGray"
-              id="console-case-study-desktop"
-            >
-              Console Login
-            </ButtonLink>
-          </div>
-
-          <div class="block md:hidden">
-            <ButtonLink
-              link="https://console.akash.network/"
-              size="md"
-              className="bg-primary text-white hover:bg-darkGray"
-              id="console-case-study-desktop-mobile"
-            >
-              Console Login
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-    </div>
   </div>
 
   <div class="block md:hidden">
@@ -279,18 +230,16 @@ const { Content } = await post.render();
         <p class="text-xs font-bold text-foreground">Other Case Studies</p>
         <div class="mt-3 flex flex-col space-y-2">
           {
-            otherCaseStudies
-              .slice(0, 4)
-              .map((caseStudy: BlogPost) => {
-                return (
-                  <a
-                    href={`/case-studies/${caseStudy.slug}`}
-                    class="line-clamp-2 cursor-pointer  text-xs text-darkText hover:text-primary hover:no-underline"
-                  >
-                    {caseStudy.data.title}
-                  </a>
-                );
-              })
+            otherCaseStudies.slice(0, 4).map((caseStudy: BlogPost) => {
+              return (
+                <a
+                  href={`/case-studies/${caseStudy.slug}`}
+                  class="line-clamp-2 cursor-pointer  text-xs text-darkText hover:text-primary hover:no-underline"
+                >
+                  {caseStudy.data.title}
+                </a>
+              );
+            })
           }
         </div>
       </div>
@@ -304,14 +253,14 @@ const { Content } = await post.render();
           "bg-white dark:bg-background2",
           "border-y",
           "px-[30px] py-[80px] lg:py-[160px]",
-          "text-center",
+          "text-center"
         )}
       >
         <h2
           class={clsx(
             "max-w-[1000px] font-instrument text-foreground",
             "text-3xl md:text-5xl xl:text-6xl 2xl:text-[80px]",
-            "md:leading-snug",
+            "md:leading-snug"
           )}
         >
           Experience the Supercloud.
@@ -376,4 +325,3 @@ const { Content } = await post.render();
 
   <CalloutsClasses />
 </BlogLayout>
-
