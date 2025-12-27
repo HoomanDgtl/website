@@ -135,7 +135,7 @@ const TableOfContents = ({ toc = [], labels }: Props) => {
           {text}
         </a>
         {children.length > 0 ? (
-          <ul className="ml-7 mt-3  space-y-3 text-sm ">
+          <ul className="ml-2 mt-1  space-y-1 text-sm ">
             {children.map((heading) => (
               <TableOfContentsItem key={heading.slug} heading={heading} />
             ))}

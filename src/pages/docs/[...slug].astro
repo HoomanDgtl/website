@@ -1,5 +1,6 @@
 ---
 import AlgoliaSearch from "@/components/docs/algolia-search";
+import Breadcrumbs from "@/components/docs/breadcrumbs.astro";
 import MobileNav from "@/components/docs/mobile-sidebar.tsx";
 import MobileTableOfContents from "@/components/docs/mobile-table-of-contents.tsx";
 import NextPrevNav from "@/components/docs/next-prev-nav.astro";
@@ -86,7 +87,7 @@ const lines = page?.body
     </div>
   </div>
   <div>
-    <div class="mx-auto max-w-[1150px]">
+    <div class="mx-auto max-w-[1350px]">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start">
         <div
           class={classNames(
@@ -96,6 +97,7 @@ const lines = page?.body
             "md:pt-12"
           )}
         >
+          <Breadcrumbs pathname={pathname} />
           <h1
             class="text-3xl md:text-4xl md:font-medium lg:text-5xl"
             id="overview"
@@ -140,7 +142,7 @@ const lines = page?.body
 
         {
           !page.data.hideTOC && (
-            <aside class="sidebar-scroll toc-sticky z-10 hidden h-[calc(100vh-73px)] w-[18rem] shrink-0 self-start overflow-y-auto border-l bg-background lg:block">
+            <aside class="sidebar-scroll toc-sticky z-10 hidden h-[calc(100vh-73px)] w-[18rem] shrink-0 self-start overflow-y-auto  bg-background lg:block">
               <div class="h-fit  pb-6 pl-3 pt-5">
                 <h4 class="text-xs font-semibold tracking-widest">
                   ON THIS PAGE

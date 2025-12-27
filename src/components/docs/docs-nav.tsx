@@ -409,12 +409,26 @@ function NavFolder({
 
   const borderClass = depth === 0 ? STYLES.link.border : "";
   const stateClass = isActive ? STYLES.link.active : STYLES.link.inactive;
+  
+  // If item has a direct link (from index.md), clicking should navigate
+  // Otherwise, clicking toggles the dropdown
+  const hasDirectLink = Boolean(item.link);
+  const linkUrl = hasDirectLink ? item.link : (getFirstLink(item) || "#");
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (hasDirectLink) {
+      // If there's a direct link, navigate to it (don't prevent default)
+      return;
+    }
+    // If no direct link, toggle the dropdown
+    onToggle(sectionPath, item, e);
+  };
 
   return (
     <>
       <a
-        href={getFirstLink(item) || "#"}
-        onClick={(e) => onToggle(sectionPath, item, e)}
+        href={linkUrl}
+        onClick={handleClick}
         className={`${STYLES.folder.base} ${borderClass} ${stateClass}`}
       >
         <span className="flex-1">{item.label}</span>
