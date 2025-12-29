@@ -409,35 +409,47 @@ function NavFolder({
 
   const borderClass = depth === 0 ? STYLES.link.border : "";
   const stateClass = isActive ? STYLES.link.active : STYLES.link.inactive;
-  
+
   // If item has a direct link (from index.md), clicking should navigate
   // Otherwise, clicking toggles the dropdown
   const hasDirectLink = Boolean(item.link);
-  const linkUrl = hasDirectLink ? item.link : (getFirstLink(item) || "#");
+  const linkUrl = hasDirectLink ? item.link : getFirstLink(item) || "#";
 
-  const handleClick = (e: React.MouseEvent) => {
-    if (hasDirectLink) {
-      // If there's a direct link, navigate to it (don't prevent default)
-      return;
-    }
-    // If no direct link, toggle the dropdown
+  const handleChevronClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     onToggle(sectionPath, item, e);
+  };
+
+  const handleTextClick = (e: React.MouseEvent) => {
+    // If there's no direct link, prevent navigation and toggle instead
+    if (!hasDirectLink) {
+      e.preventDefault();
+      e.stopPropagation();
+      onToggle(sectionPath, item, e);
+    }
+    // If there's a direct link, let it navigate normally
   };
 
   return (
     <>
-      <a
-        href={linkUrl}
-        onClick={handleClick}
-        className={`${STYLES.folder.base} ${borderClass} ${stateClass}`}
-      >
-        <span className="flex-1">{item.label}</span>
-        {isOpen ? (
-          <ChevronDownIcon className="h-4 w-4 flex-shrink-0" />
-        ) : (
-          <ChevronRightIcon className="h-4 w-4 flex-shrink-0" />
-        )}
-      </a>
+      <div className={`${STYLES.folder.base} ${borderClass} ${stateClass}`}>
+        <a href={linkUrl} onClick={handleTextClick} className="flex-1">
+          {item.label}
+        </a>
+        <button
+          type="button"
+          onClick={handleChevronClick}
+          className={`flex-shrink-0 cursor-pointer p-0.5 transition-opacity hover:opacity-70 ${stateClass}`}
+          aria-label={isOpen ? "Close section" : "Open section"}
+        >
+          {isOpen ? (
+            <ChevronDownIcon className="h-4 w-4" />
+          ) : (
+            <ChevronRightIcon className="h-4 w-4" />
+          )}
+        </button>
+      </div>
       {isOpen && item.subItems && (
         <div className="ml-1 mt-0.5 space-y-2 border-l border-[#e6e8eb] pl-3 dark:border-[#333]">
           {item.subItems.map((subItem) => (
