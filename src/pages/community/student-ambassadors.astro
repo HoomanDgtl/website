@@ -1,9 +1,9 @@
 ---
 import PointerSection from "@/components/community-pages/pointer-section.astro";
 import CommunityHero from "@/components/mdx-cards/community-hero.astro";
+import ButtonLink from "@/components/ui/button-link.astro";
 import TopMargin from "@/components/ui/top-margin.astro";
 import Layout from "@/layouts/layout.astro";
-import ButtonLink from "@/components/ui/button-link.astro";
 
 const title = "The Akash Student<br/> Ambassador Program";
 const description =
@@ -35,7 +35,8 @@ const description =
         </div>
         <div class="not-prose flex flex-col items-center justify-center gap-10">
           <h2 class="text-center text-3xl font-semibold">
-            Join the Akash Ambassador Program. Submit your application for Spring 2026!
+            Join the Akash Ambassador Program.<br class="hidden md:block" /> Submit
+            your application for Spring 2026!
           </h2>
           <ButtonLink
             arrow
