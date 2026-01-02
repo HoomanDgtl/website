@@ -17,6 +17,7 @@ type NavItem = {
   link: string;
   external?: boolean;
   primary?: boolean;
+  internal?: boolean;
 };
 
 export const communityItems: NavItem[] = [
@@ -405,7 +406,7 @@ export const ecosystemNavItems: NavItem[] = [
     icon: FileStack,
     title: "Case Studies",
     link: "/case-studies",
-    external: true,
+    internal: true,
   },
 ];
 

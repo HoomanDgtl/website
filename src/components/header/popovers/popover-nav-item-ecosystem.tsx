@@ -49,7 +49,7 @@ const PopOverNavItemEcosystem = ({
             <div className="flex gap-2.5 p-5 ">
               <div className="flex w-full flex-1 flex-col">
                 {ecosystemNavItems
-                  .filter((item) => !item.external)
+                  .filter((item) => !item.external && !item.internal)
                   .map((item, i) => {
                     return (
                       <Menu.Item key={i}>
