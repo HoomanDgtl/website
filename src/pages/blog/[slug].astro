@@ -35,11 +35,16 @@ export async function getStaticPaths() {
     const relatedArticles = posts
       .filter((post) =>
         post.data.categories.some(
-          (category: string) => category.toLowerCase() === searchCategory,
-        ),
+          (category: string) => category.toLowerCase() === searchCategory
+        )
       )
       .filter((post) => {
         return post.data.archive !== true;
+      })
+      .filter((post) => {
+        return !post.data.categories.some(
+          (category: string) => category.toLowerCase() === "case studies"
+        );
       });
 
     return {
