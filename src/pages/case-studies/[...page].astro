@@ -28,22 +28,18 @@ export async function getStaticPaths({
       return dateB.getTime() - dateA.getTime();
     });
 
-  const pinnedPost: BlogPost | undefined = posts[0];
-  const remainingPosts = pinnedPost ? posts.slice(1) : posts;
-
-  return paginate(remainingPosts, {
-    props: { pinnedPost: pinnedPost },
+  return paginate(posts, {
     pageSize: 12,
   });
 }
 
-const { page, pinnedPost } = Astro.props;
+const { page } = Astro.props;
 ---
 
 <Layout
   title="Case Studies - Akash Network"
   description="The future of DePIN is sovereign, distributed, and builder-owned. See how the world's most resilient projects deploy on a global GPU grid that can't be shut down."
-  image={pinnedPost?.data.bannerImage.src}
+  image="/meta-images/home.png"
 >
   <div class="container mt-[120px]">
     <!-- Centered Headline and Subheadline -->
@@ -60,24 +56,6 @@ const { page, pinnedPost } = Astro.props;
       </p>
     </div>
 
-    {
-      pinnedPost && page.currentPage === 1 && (
-        <a
-          class="flex cursor-pointer"
-          href={`/case-studies/${pinnedPost.slug}`}
-        >
-          <PostCard
-            type="large"
-            title={pinnedPost.data.title}
-            image={pinnedPost.data.bannerImage}
-            tag={pinnedPost.data.categories[0]}
-            contributor={pinnedPost.data.contributors[0]}
-            pubDate={pinnedPost.data.pubDate}
-            description={pinnedPost.data.description}
-          />
-        </a>
-      )
-    }
   </div>
 
   <div class="container gap-10 md:mt-[120px]">
@@ -96,6 +74,9 @@ const { page, pinnedPost } = Astro.props;
                 contributor={post.data.contributors[0]}
                 pubDate={post.data.pubDate}
                 description={post.data.description}
+                hideTag={true}
+                hideDate={true}
+                hideAuthor={true}
               />
             </a>
           );
