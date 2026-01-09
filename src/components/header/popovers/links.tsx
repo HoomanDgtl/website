@@ -364,7 +364,6 @@ export const ecosystemNavItems: NavItem[] = [
     icon: FileStack,
     title: "Case Studies",
     link: "/case-studies",
-    internal: true,
   },
 ];
 
