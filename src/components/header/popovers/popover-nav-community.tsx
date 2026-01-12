@@ -170,7 +170,9 @@ export const SubNavbar = ({
                     pathname === item.link ||
                       (item.link === "roadmap" &&
                         pathname?.split("/")[1] === "roadmap") ||
-                      pathname?.split("/")[2] === item.link?.split("/")[2]
+                      pathname?.split("/")[2] === item.link?.split("/")[2] ||
+                      (pathname?.split("/")[1] === item.link?.split("/")[1] &&
+                        pathname.includes("case-studies"))
                       ? " border-foreground "
                       : "border-transparent",
                   )}
@@ -197,7 +199,9 @@ export const SubNavbar = ({
                 {internal && (
                   <a
                     href={internal.link}
-                    target={internal.link.startsWith("http") ? "_blank" : "_self"}
+                    target={
+                      internal.link.startsWith("http") ? "_blank" : "_self"
+                    }
                     className=" flex items-center whitespace-nowrap rounded-full  border bg-background px-3 py-1.5 text-sm font-semibold  "
                   >
                     {internal.title}
