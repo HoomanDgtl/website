@@ -33,13 +33,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { CheckCircle2, ExternalLink, X } from "lucide-react";
 
 const formSchema = z.object({
@@ -306,7 +299,6 @@ export function GpuContactForm() {
     }
   }
 
-
   return (
     <>
       {showEmbeddedMeeting ? (
@@ -389,148 +381,142 @@ export function GpuContactForm() {
                 className="grid  grid-cols-1 gap-4 md:grid-cols-2"
                 id="step-1"
               >
-                        <FormField
-                          control={form.control}
-                          name="firstname"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>
-                                First Name
-                                <span className="text-red-500">*</span>
-                              </FormLabel>
-                              <FormControl>
-                                <Input placeholder="John" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="lastname"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>
-                                Last Name{" "}
-                                <span className="text-red-500">*</span>
-                              </FormLabel>
-                              <FormControl>
-                                <Input placeholder="Doe" {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+                <FormField
+                  control={form.control}
+                  name="firstname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        First Name
+                        <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="John" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastname"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Last Name <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input placeholder="Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>
-                              Email <span className="text-red-500">*</span>
-                            </FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="business@example.com"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Email <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="business@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="company"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Company / Project Name{" "}
+                      <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Acme Inc." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Website URL</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="project_details"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Project Details <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <textarea
+                        placeholder="Tell us about your project (minimum 10 characters)"
+                        rows={4}
+                        className="w-full rounded border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                        {...field}
                       />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                      <FormField
-                        control={form.control}
-                        name="company"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>
-                              Company / Project Name{" "}
-                              <span className="text-red-500">*</span>
-                            </FormLabel>
-                            <FormControl>
-                              <Input placeholder="Acme Inc." {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col items-start">
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl className="w-full">
+                      <PhoneInput placeholder="+1" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                      <FormField
-                        control={form.control}
-                        name="website"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Website URL</FormLabel>
-                            <FormControl>
-                              <Input placeholder="https://example.com" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+              <p className="!mt-8 text-xs text-para md:text-sm">
+                By clicking submit below, you consent to allow Akash Network to
+                store and process the personal information submitted above to
+                provide you the content requested. Please review our{" "}
+                <a
+                  target="_blank"
+                  href="/privacy"
+                  className="text-primary underline"
+                >
+                  privacy policy
+                </a>{" "}
+                for more information.
+              </p>
 
-                      <FormField
-                        control={form.control}
-                        name="project_details"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>
-                              Project Details{" "}
-                              <span className="text-red-500">*</span>
-                            </FormLabel>
-                            <FormControl>
-                              <textarea
-                                placeholder="Tell us about your project (minimum 10 characters)"
-                                rows={4}
-                                className="w-full rounded border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col items-start">
-                            <FormLabel>Phone Number</FormLabel>
-                            <FormControl className="w-full">
-                              <PhoneInput placeholder="+1" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <p className="!mt-8 text-xs text-para md:text-sm">
-                        By clicking submit below, you consent to allow Akash Network
-                        to store and process the personal information submitted
-                        above to provide you the content requested. Please review
-                        our{" "}
-                        <a
-                          target="_blank"
-                          href="/privacy"
-                          className="text-primary underline"
-                        >
-                          privacy policy
-                        </a>{" "}
-                        for more information.
-                      </p>
-
-                      <Button
-                        type="submit"
-                        className="!mt-8 h-auto w-auto rounded-md px-6 py-3"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? "Sending..." : "Submit"}
-                      </Button>
+              <Button
+                type="submit"
+                className="!mt-8 h-auto w-auto rounded-md px-6 py-3"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Submit"}
+              </Button>
             </form>
           </Form>
         </div>

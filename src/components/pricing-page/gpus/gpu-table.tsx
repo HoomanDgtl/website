@@ -250,7 +250,7 @@ export const Tables = ({
             <TryAkashForm
               type="customButton"
               linkText="Get a Custom Quote"
-              className="h-9 w-full rounded-lg bg-[#171717] px-4 py-2 text-sm font-medium text-[#fafafa] hover:bg-[#171717]/90"
+              className="h-9 w-full rounded-lg bg-[#171717] px-4 py-2 text-sm font-medium text-[#fafafa] transition-all hover:bg-[#171717]/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
             />
           </div>
         </div>
@@ -278,7 +278,7 @@ export const Tables = ({
             />
           </div>
 
-          <div className="h-px w-full bg-[#e4e4e7]" />
+          <div className="h-px w-full bg-defaultBorder" />
           <DesktopTableGpu
             subCom={subCom || false}
             isLoading={isLoading || false}

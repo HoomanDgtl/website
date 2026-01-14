@@ -47,20 +47,20 @@ const GpuTableRow = ({
       href={href}
       target="_blank"
       className={cn(
-        "group flex cursor-pointer items-center justify-between overflow-hidden border-b border-[#e6e8eb] px-4 py-5 transition-all duration-200 hover:bg-[#f9fafb]",
+        "group flex cursor-pointer items-center justify-between overflow-hidden border-b  px-4 py-5 transition-all duration-200 ",
 
         className,
       )}
     >
       <div className="flex items-center gap-4">
-        <p className="min-w-[110px] text-base font-medium capitalize text-[#09090b]">
+        <p className="min-w-[110px] text-base font-medium capitalize text-foreground">
           {model}
         </p>
         <div className="flex items-center gap-2">
-          <span className="rounded-full border border-[#e6e8eb] bg-transparent px-3 py-0.5 text-sm font-normal text-[#71717a]">
+          <span className="rounded-full border  bg-transparent px-3 py-0.5 text-sm font-normal text-para">
             {ram}
           </span>
-          <span className="rounded-full border border-[#e6e8eb] bg-transparent px-3 py-0.5 text-sm font-normal text-[#71717a]">
+          <span className="rounded-full border  bg-transparent px-3 py-0.5 text-sm font-normal text-para">
             {interfaceType}
           </span>
         </div>
@@ -75,7 +75,7 @@ const GpuTableRow = ({
           <HoverCard openDelay={100} closeDelay={100}>
             <HoverCardTrigger asChild>
               <button className="flex cursor-pointer items-center gap-2">
-                <Info className="h-4 w-4 text-[#a1a1aa]" />
+                <Info className="h-4 w-4 text-para" />
               </button>
             </HoverCardTrigger>
             <HoverCardContent
@@ -106,13 +106,13 @@ const GpuTableRow = ({
           </HoverCard>
         </div>
 
-        <span className="min-w-[70px] text-base font-medium text-[#09090b]">
+        <span className="min-w-[70px] text-base font-medium text-foreground">
           {formattedAvgPrice}/hr
         </span>
 
         <div
           className={cn(
-            "flex h-7 items-center justify-center overflow-hidden rounded-full bg-[#F5F5F5] transition-all duration-300 ease-in-out",
+            "flex h-7 items-center justify-center overflow-hidden rounded-full bg-[#F5F5F5] transition-all duration-300 ease-in-out dark:bg-background2",
             isB200
               ? "w-7 group-hover:w-[130px] group-hover:gap-2 group-hover:pl-4 group-hover:pr-3"
               : "w-7 group-hover:w-[90px] group-hover:gap-2 group-hover:pl-4 group-hover:pr-3",
@@ -121,7 +121,7 @@ const GpuTableRow = ({
           {/* Text - hidden by default, shown on hover */}
           <span
             className={cn(
-              "overflow-hidden whitespace-nowrap text-sm font-medium text-[#09090b] transition-all duration-300 ease-in-out",
+              "overflow-hidden whitespace-nowrap text-sm font-medium text-[#09090b] transition-all duration-300 ease-in-out dark:text-white",
               isB200
                 ? "w-0 opacity-0 group-hover:w-[85px] group-hover:opacity-100"
                 : "w-0 opacity-0 group-hover:w-[45px] group-hover:opacity-100",

@@ -13,8 +13,8 @@ const GpuTableRowSkeleton = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-between overflow-hidden border-b border-[#e6e8eb] px-4 py-5",
-        isB200 ? "bg-[#fbfbfb]" : "bg-white",
+        "flex items-center justify-between overflow-hidden border-b  px-4 py-5",
+        "bg-background",
         className,
       )}
     >
