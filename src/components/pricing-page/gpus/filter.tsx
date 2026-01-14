@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/select";
 import { Check, X } from "lucide-react";
 import React from "react";
-import SpeakToExpert from "../SpeakToExpert";
 import { modifyModel, type Gpus } from "./gpu-table";
 import { onTop } from "./sort";
 
@@ -110,9 +109,24 @@ export default function Filter({
         .sort(
           (a, b) => b?.availability?.available - a?.availability?.available,
         );
-      setFilteredData(filtered || []);
+      // Keep B200 at the top
+      const b200Models = (filtered || []).filter(
+        (model) => model?.model?.toLowerCase() === "b200",
+      );
+      const otherModels = (filtered || []).filter(
+        (model) => model?.model?.toLowerCase() !== "b200",
+      );
+      setFilteredData([...b200Models, ...otherModels]);
     } else {
-      setFilteredData(res?.models || []);
+      // Keep B200 at the top even when no filters
+      const allModels = res?.models || [];
+      const b200Models = allModels.filter(
+        (model) => model?.model?.toLowerCase() === "b200",
+      );
+      const otherModels = allModels.filter(
+        (model) => model?.model?.toLowerCase() !== "b200",
+      );
+      setFilteredData([...b200Models, ...otherModels]);
     }
   }, [filters, res]);
 
@@ -150,50 +164,45 @@ export default function Filter({
     filters.interface.length > 0;
 
   return (
-    <div className="flex w-full flex-col ">
-      <div className="flex items-center justify-between border-b  pb-5">
-        <div className=" flex flex-1 flex-wrap gap-4">
-          {options?.map((item) => (
-            <div key={item.name} className="">
-              <Select>
-                <SelectTrigger className="px-4 hover:bg-gray-50 dark:hover:bg-darkGray">
-                  <p className="text-s2 mr-2.5 font-medium text-foreground">
-                    {item.name}
-                  </p>
-                </SelectTrigger>
-                <SelectContent>
-                  {item.options.map((option) => {
-                    const isSelected = filters[item.value].includes(
-                      option.value,
-                    );
-                    return (
-                      <SelectItem
-                        key={option.value}
-                        value={option.value}
-                        hideCheck={true}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          handleSelectOption(item, option.value);
-                        }}
-                        className="flex cursor-pointer items-center justify-between"
-                      >
-                        <div className="flex items-center gap-2">
-                          {isSelected && (
-                            <span className="absolute left-2 flex h-3.5 w-3.5 shrink-0 items-center justify-center">
-                              <Check className="h-4 w-4 text-primary" />
-                            </span>
-                          )}
-                          <span>{option.name}</span>
-                        </div>
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
-        </div>
-        <SpeakToExpert className="!w-fit !py-[7px] px-4" />
+    <div className="flex  flex-col ">
+      <div className=" flex flex-1 flex-wrap gap-3">
+        {options?.map((item) => (
+          <div key={item.name} className="">
+            <Select>
+              <SelectTrigger className="!rounded-md px-4 hover:bg-gray-50 dark:hover:bg-darkGray">
+                <p className="mr-2.5 text-sm font-medium text-foreground">
+                  {item.name}
+                </p>
+              </SelectTrigger>
+              <SelectContent>
+                {item.options.map((option) => {
+                  const isSelected = filters[item.value].includes(option.value);
+                  return (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      hideCheck={true}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        handleSelectOption(item, option.value);
+                      }}
+                      className="flex cursor-pointer items-center justify-between"
+                    >
+                      <div className="flex items-center gap-2">
+                        {isSelected && (
+                          <span className="absolute left-2 flex h-3.5 w-3.5 shrink-0 items-center justify-center">
+                            <Check className="h-4 w-4 text-primary" />
+                          </span>
+                        )}
+                        <span>{option.name}</span>
+                      </div>
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+        ))}
       </div>
 
       {/* Combined badges area */}

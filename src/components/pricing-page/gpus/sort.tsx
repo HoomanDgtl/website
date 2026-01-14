@@ -170,36 +170,52 @@ export default function Sort({
 
   useEffect(() => {
     const sortData = (sortType: string) => {
+      // Helper function to keep B200 at top
+      const keepB200AtTop = (sorted: Gpus["models"]) => {
+        const b200Models = sorted.filter(
+          (model) => model?.model?.toLowerCase() === "b200",
+        );
+        const otherModels = sorted.filter(
+          (model) => model?.model?.toLowerCase() !== "b200",
+        );
+        return [...b200Models, ...otherModels];
+      };
+
       switch (sortType) {
         case "Availability":
           filters.modal.length > 0 ||
           filters.ram.length > 0 ||
           filters.interface.length > 0
-            ? setFilteredData((prev) =>
-                [...prev].sort(
+            ? setFilteredData((prev) => {
+                const sorted = [...prev].sort(
                   (a, b) => b.availability.available - a.availability.available,
-                ),
-              )
-            : setFilteredData(onTop(res));
+                );
+                return keepB200AtTop(sorted);
+              })
+            : setFilteredData((prev) => {
+                const sorted = onTop(res);
+                return keepB200AtTop(sorted);
+              });
           break;
         case "Lowest Price":
-          setFilteredData((prev) =>
-            [...prev].sort((a, b) => {
+          setFilteredData((prev) => {
+            const sorted = [...prev].sort((a, b) => {
               const aMed = a.price ? a.price.med : 0;
               const bMed = b.price ? b.price.med : 0;
               return aMed - bMed;
-            }),
-          );
-
+            });
+            return keepB200AtTop(sorted);
+          });
           break;
         case "Highest Price":
-          setFilteredData((prev) =>
-            [...prev].sort((a, b) => {
+          setFilteredData((prev) => {
+            const sorted = [...prev].sort((a, b) => {
               const aMed = a.price ? a.price.med : 0;
               const bMed = b.price ? b.price.med : 0;
               return bMed - aMed;
-            }),
-          );
+            });
+            return keepB200AtTop(sorted);
+          });
           break;
         default:
           break;
