@@ -1,10 +1,5 @@
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Info } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { price } from "./gpu-table";
 
 interface GpuTableRowProps {
@@ -68,7 +63,7 @@ const GpuTableRow = ({
 
       {/* Price Range & Avg Price */}
       <div className="flex items-center gap-8">
-        <div className="flex items-start gap-1">
+        {/* <div className="flex items-start gap-1">
           <span className="rounded-full border px-4 py-1 text-sm font-normal text-para transition-all duration-200">
             min {formattedMinPrice} - max {formattedMaxPrice}
           </span>
@@ -104,7 +99,7 @@ const GpuTableRow = ({
               </div>
             </HoverCardContent>
           </HoverCard>
-        </div>
+        </div> */}
 
         <span className="min-w-[70px] text-base font-medium text-foreground">
           {formattedAvgPrice}/hr
