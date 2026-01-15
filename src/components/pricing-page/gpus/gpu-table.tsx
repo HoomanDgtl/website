@@ -21,6 +21,7 @@ import React from "react";
 import { Skeleton } from "../../ui/skeleton";
 import AvailabilityBar from "./availability-bar";
 import DesktopTableGpu from "./desktop-table-gpu";
+import { DUMMY_GPU_DATA } from "./dummy-gpu-data";
 import Filter, { defaultFilters, type Filters } from "./filter";
 import GpusComingSoon from "./GpusComingSoon";
 import Sort from "./sort";
@@ -94,7 +95,16 @@ const Table = ({
     Error
   >({
     queryKey: ["GPU_TABLE"],
-    queryFn: () => axios.get(gpus),
+    queryFn: async () => {
+      if (
+        typeof window !== "undefined" &&
+        !window.location.origin.includes("akash.network")
+      ) {
+        return Promise.resolve({ data: DUMMY_GPU_DATA });
+      }
+
+      return axios.get(gpus);
+    },
     refetchIntervalInBackground: true,
 
     refetchInterval: fetchInterval,
@@ -256,29 +266,14 @@ export const Tables = ({
         </div>
 
         <div className="flex flex-1 flex-col gap-5">
-          <div className="flex items-center justify-between">
-            {isLoading ? (
-              <div className="h-9 w-[185px] rounded-full border  bg-transparent" />
-            ) : (
-              <div className="inline-flex items-center gap-1 rounded-full border bg-transparent px-[14px] py-1.5  font-medium  text-para">
-                GPU Utilization:
-                {totalGpus > 0
-                  ? Math.round(
-                      ((totalGpus - totalAvailableGpus) / totalGpus) * 100,
-                    )
-                  : 0}
-                %
-              </div>
-            )}
-            <Filter
-              filters={filters}
-              setFilters={setFilters}
-              setFilteredData={setFilteredDataWithB200First}
-              res={data}
-            />
-          </div>
+          <Filter
+            filters={filters}
+            setFilters={setFilters}
+            setFilteredData={setFilteredDataWithB200First}
+            res={data}
+          />
 
-          <div className="h-px w-full bg-defaultBorder" />
+          <div className="h-px w-full bg-defaultBorder md:hidden" />
           <DesktopTableGpu
             subCom={subCom || false}
             isLoading={isLoading || false}

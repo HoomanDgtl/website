@@ -23,6 +23,11 @@ const DesktopTableGpu = ({
       )}
     >
       <div className="flex flex-col ">
+        <div className="flex items-center justify-between border-b  pb-4 pt-3">
+          <p className="text-sm  ">GPU Model</p>
+          <p className="text-sm  ">Price (Starting at):</p>
+        </div>
+
         {!isLoading && (
           <GpuTableRow
             model="B200"

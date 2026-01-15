@@ -34,11 +34,17 @@ export default function Filter({
   res,
   filters,
   setFilters,
+  isLoading,
+  totalGpus,
+  totalAvailableGpus,
 }: {
   setFilteredData: React.Dispatch<React.SetStateAction<Gpus["models"]>>;
   res?: Gpus;
   filters: Filters;
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+  isLoading?: boolean;
+  totalGpus?: number;
+  totalAvailableGpus?: number;
 }) {
   const data: Options[] = [
     {
@@ -164,47 +170,63 @@ export default function Filter({
     filters.interface.length > 0;
 
   return (
-    <div className="flex  flex-col ">
-      <div className=" flex flex-1 flex-wrap gap-3">
-        {options?.map((item) => (
-          <div key={item.name} className="">
-            <Select>
-              <SelectTrigger className="!rounded-md px-4 hover:bg-gray-50 dark:hover:bg-darkGray">
-                <p className="mr-2.5 text-sm font-medium text-foreground">
-                  {item.name}
-                </p>
-              </SelectTrigger>
-              <SelectContent>
-                {item.options.map((option) => {
-                  const isSelected = filters[item.value].includes(option.value);
-                  return (
-                    <SelectItem
-                      key={option.value}
-                      value={option.value}
-                      hideCheck={true}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        handleSelectOption(item, option.value);
-                      }}
-                      className="flex cursor-pointer items-center justify-between"
-                    >
-                      <div className="flex items-center gap-2">
-                        {isSelected && (
-                          <span className="absolute left-2 flex h-3.5 w-3.5 shrink-0 items-center justify-center">
-                            <Check className="h-4 w-4 text-primary" />
-                          </span>
-                        )}
-                        <span>{option.name}</span>
-                      </div>
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between">
+        {isLoading ? (
+          <div className="h-9 w-[185px] rounded-full border  bg-transparent" />
+        ) : (
+          <div className="inline-flex items-center gap-1 rounded-full border bg-transparent px-[14px] py-1.5  font-medium  text-para">
+            GPU Utilization:
+            {totalGpus && totalAvailableGpus && totalGpus > 0
+              ? Math.round(((totalGpus - totalAvailableGpus) / totalGpus) * 100)
+              : 0}
+            %
           </div>
-        ))}
+        )}
+        <div className="flex  flex-col ">
+          <div className=" flex flex-1 flex-wrap gap-3">
+            {options?.map((item) => (
+              <div key={item.name} className="">
+                <Select>
+                  <SelectTrigger className="!rounded-md px-4 hover:bg-gray-50 dark:hover:bg-darkGray">
+                    <p className="mr-2.5 text-sm font-medium text-foreground">
+                      {item.name}
+                    </p>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {item.options.map((option) => {
+                      const isSelected = filters[item.value].includes(
+                        option.value,
+                      );
+                      return (
+                        <SelectItem
+                          key={option.value}
+                          value={option.value}
+                          hideCheck={true}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            handleSelectOption(item, option.value);
+                          }}
+                          className="flex cursor-pointer items-center justify-between"
+                        >
+                          <div className="flex items-center gap-2">
+                            {isSelected && (
+                              <span className="absolute left-2 flex h-3.5 w-3.5 shrink-0 items-center justify-center">
+                                <Check className="h-4 w-4 text-primary" />
+                              </span>
+                            )}
+                            <span>{option.name}</span>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-
       {/* Combined badges area */}
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 border-b  py-3">
