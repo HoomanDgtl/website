@@ -29,28 +29,54 @@ const DesktopTableGpu = ({
         </div>
 
         {!isLoading && (
-          <GpuTableRow
-            model="B200"
-            ram="190GB"
-            interface="HBM3e"
-            minPrice="$1,34"
-            maxPrice="$1,34"
-            avgPrice="$1,34"
-            providerCount={1}
-            isB200={true}
-            className="hidden lg:flex"
-          />
+          <>
+            <GpuTableRow
+              model="B200"
+              ram="190GB"
+              interface="HBM3e"
+              minPrice={5}
+              maxPrice={5}
+              avgPrice={5}
+              providerCount={1}
+              isB200={true}
+              className="hidden lg:flex"
+              id="b200-(gpu-rent)"
+              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b200&interface=HBM3e&vram=190GB"
+            />
+            <GpuTableRow
+              model="B300"
+              ram="190GB"
+              interface="HBM3e"
+              minPrice={6}
+              maxPrice={6}
+              avgPrice={6}
+              providerCount={1}
+              isB200={true}
+              className="hidden lg:flex"
+              id="b300-(gpu-rent)"
+              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b300&interface=HBM3e&vram=190GB"
+            />
+          </>
         )}
 
         {isLoading
           ? new Array(10)
               .fill(0)
               .map((_, index) => (
-                <GpuTableRowSkeleton key={index} isB200={index === 0} />
+                <GpuTableRowSkeleton key={index} isB200={index < 2} />
               ))
-          : filteredData?.map((rawModel, index) => {
+          : filteredData
+              ?.filter(
+                (model) =>
+                  model?.model?.toLowerCase() !== "b200" &&
+                  model?.model?.toLowerCase() !== "b300",
+              )
+              ?.map((rawModel, index) => {
               const model = normalizeGpuModel(rawModel);
-              const isB200 = model?.model?.toLowerCase() === "b200";
+              const modelLower = model?.model?.toLowerCase();
+              const isB200 = modelLower === "b200";
+              const isB300 = modelLower === "b300";
+              const isSpecialModel = isB200 || isB300;
               const providerCount = model?.providerAvailability?.available || 0;
 
               return (
@@ -63,7 +89,7 @@ const DesktopTableGpu = ({
                   maxPrice={model?.price?.max || 0}
                   avgPrice={model?.price?.weightedAverage || 0}
                   providerCount={providerCount}
-                  isB200={isB200}
+                  isB200={isSpecialModel}
                   id={`${model?.model}-(gpu-rent)`}
                 />
               );

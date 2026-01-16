@@ -115,24 +115,32 @@ export default function Filter({
         .sort(
           (a, b) => b?.availability?.available - a?.availability?.available,
         );
-      // Keep B200 at the top
+      // Keep B200 and B300 at the top
       const b200Models = (filtered || []).filter(
         (model) => model?.model?.toLowerCase() === "b200",
       );
-      const otherModels = (filtered || []).filter(
-        (model) => model?.model?.toLowerCase() !== "b200",
+      const b300Models = (filtered || []).filter(
+        (model) => model?.model?.toLowerCase() === "b300",
       );
-      setFilteredData([...b200Models, ...otherModels]);
+      const otherModels = (filtered || []).filter((model) => {
+        const modelLower = model?.model?.toLowerCase();
+        return modelLower !== "b200" && modelLower !== "b300";
+      });
+      setFilteredData([...b200Models, ...b300Models, ...otherModels]);
     } else {
-      // Keep B200 at the top even when no filters
+      // Keep B200 and B300 at the top even when no filters
       const allModels = res?.models || [];
       const b200Models = allModels.filter(
         (model) => model?.model?.toLowerCase() === "b200",
       );
-      const otherModels = allModels.filter(
-        (model) => model?.model?.toLowerCase() !== "b200",
+      const b300Models = allModels.filter(
+        (model) => model?.model?.toLowerCase() === "b300",
       );
-      setFilteredData([...b200Models, ...otherModels]);
+      const otherModels = allModels.filter((model) => {
+        const modelLower = model?.model?.toLowerCase();
+        return modelLower !== "b200" && modelLower !== "b300";
+      });
+      setFilteredData([...b200Models, ...b300Models, ...otherModels]);
     }
   }, [filters, res]);
 

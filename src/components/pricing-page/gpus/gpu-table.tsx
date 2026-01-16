@@ -138,7 +138,9 @@ const formatText = (model: string) => {
   return formattedText;
 };
 export const modifyModel = (model: string) => {
-  return model === "rtxa6000" ? "A6000" : formatText(model);
+  if (model === "rtxa6000") return "A6000";
+  if (model === "pro6000we") return "RTX PRO 6000";
+  return formatText(model);
 };
 
 export const price = (price: number) => {
@@ -149,11 +151,13 @@ export const price = (price: number) => {
 };
 
 export const normalizeGpuModel = (model: Gpus["models"][number]) => {
-  const isB200 = model?.model?.toLowerCase() === "b200";
+  const modelLower = model?.model?.toLowerCase();
+  const isB200 = modelLower === "b200";
+  const isB300 = modelLower === "b300";
 
-  if (!isB200) return model;
+  if (!isB200 && !isB300) return model;
 
-  const hardcodedPrice = 1.34;
+  const hardcodedPrice = isB200 ? 5 : 6; // B200: $5, B300: $6
 
   return {
     ...model,
@@ -188,7 +192,7 @@ export const Tables = ({
   const [filteredData, setFilteredData] = React.useState<Gpus["models"]>([]);
   const [filters, setFilters] = React.useState<Filters>(defaultFilters);
 
-  // Wrapper to always keep B200 at top
+  // Wrapper to always keep B200 and B300 at top
   const setFilteredDataWithB200First = React.useCallback(
     (newData: Gpus["models"] | ((prev: Gpus["models"]) => Gpus["models"])) => {
       setFilteredData((prev) => {
@@ -197,10 +201,14 @@ export const Tables = ({
         const b200Models = dataToProcess.filter(
           (model) => model?.model?.toLowerCase() === "b200",
         );
-        const otherModels = dataToProcess.filter(
-          (model) => model?.model?.toLowerCase() !== "b200",
+        const b300Models = dataToProcess.filter(
+          (model) => model?.model?.toLowerCase() === "b300",
         );
-        return [...b200Models, ...otherModels];
+        const otherModels = dataToProcess.filter((model) => {
+          const modelLower = model?.model?.toLowerCase();
+          return modelLower !== "b200" && modelLower !== "b300";
+        });
+        return [...b200Models, ...b300Models, ...otherModels];
       });
     },
     [],
@@ -224,15 +232,19 @@ export const Tables = ({
   const normalizedData = React.useMemo(() => {
     const normalized =
       filteredData?.map((model) => normalizeGpuModel(model)) ?? [];
-    // Hardcode B200 at the top - separate B200 from others
+    // Hardcode B200 and B300 at the top - separate from others
     const b200Models = normalized.filter(
       (model) => model?.model?.toLowerCase() === "b200",
     );
-    const otherModels = normalized.filter(
-      (model) => model?.model?.toLowerCase() !== "b200",
+    const b300Models = normalized.filter(
+      (model) => model?.model?.toLowerCase() === "b300",
     );
-    // Always return B200 first, then others
-    return [...b200Models, ...otherModels];
+    const otherModels = normalized.filter((model) => {
+      const modelLower = model?.model?.toLowerCase();
+      return modelLower !== "b200" && modelLower !== "b300";
+    });
+    // Always return B200 first, then B300, then others
+    return [...b200Models, ...b300Models, ...otherModels];
   }, [filteredData]);
 
   return (
@@ -371,7 +383,10 @@ export const Tables = ({
               </div>
             ))
           : normalizedData?.map((model, index) => {
-              const isB200 = model?.model?.toLowerCase() === "b200";
+              const modelLower = model?.model?.toLowerCase();
+              const isB200 = modelLower === "b200";
+              const isB300 = modelLower === "b300";
+              const isSpecialModel = isB200 || isB300;
 
               return (
                 <Card className="my-2 flex w-full flex-col p-6" key={index}>
@@ -463,7 +478,7 @@ export const Tables = ({
                         "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-[13px] text-sm font-medium",
                       )}
                     >
-                      <span>{isB200 ? "Get Access" : "Rent"}</span>
+                      <span>{isSpecialModel ? "Get Access" : "Rent"}</span>
                       <ArrowRight className="h-4 w-4" />
                     </a>
                     <TryAkashForm

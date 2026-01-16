@@ -170,15 +170,21 @@ export default function Sort({
 
   useEffect(() => {
     const sortData = (sortType: string) => {
-      // Helper function to keep B200 at top
+      // Helper function to keep B200 and B300 at top
       const keepB200AtTop = (sorted: Gpus["models"]) => {
         const b200Models = sorted.filter(
           (model) => model?.model?.toLowerCase() === "b200",
         );
-        const otherModels = sorted.filter(
-          (model) => model?.model?.toLowerCase() !== "b200",
+        const b300Models = sorted.filter(
+          (model) => model?.model?.toLowerCase() === "b300",
         );
-        return [...b200Models, ...otherModels];
+        const otherModels = sorted.filter(
+          (model) => {
+            const modelLower = model?.model?.toLowerCase();
+            return modelLower !== "b200" && modelLower !== "b300";
+          },
+        );
+        return [...b200Models, ...b300Models, ...otherModels];
       };
 
       switch (sortType) {
