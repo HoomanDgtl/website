@@ -178,12 +178,10 @@ export default function Sort({
         const b300Models = sorted.filter(
           (model) => model?.model?.toLowerCase() === "b300",
         );
-        const otherModels = sorted.filter(
-          (model) => {
-            const modelLower = model?.model?.toLowerCase();
-            return modelLower !== "b200" && modelLower !== "b300";
-          },
-        );
+        const otherModels = sorted.filter((model) => {
+          const modelLower = model?.model?.toLowerCase();
+          return modelLower !== "b200" && modelLower !== "b300";
+        });
         return [...b200Models, ...b300Models, ...otherModels];
       };
 

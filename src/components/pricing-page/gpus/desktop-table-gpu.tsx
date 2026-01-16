@@ -72,28 +72,29 @@ const DesktopTableGpu = ({
                   model?.model?.toLowerCase() !== "b300",
               )
               ?.map((rawModel, index) => {
-              const model = normalizeGpuModel(rawModel);
-              const modelLower = model?.model?.toLowerCase();
-              const isB200 = modelLower === "b200";
-              const isB300 = modelLower === "b300";
-              const isSpecialModel = isB200 || isB300;
-              const providerCount = model?.providerAvailability?.available || 0;
+                const model = normalizeGpuModel(rawModel);
+                const modelLower = model?.model?.toLowerCase();
+                const isB200 = modelLower === "b200";
+                const isB300 = modelLower === "b300";
+                const isSpecialModel = isB200 || isB300;
+                const providerCount =
+                  model?.providerAvailability?.available || 0;
 
-              return (
-                <GpuTableRow
-                  key={index}
-                  model={modifyModel(model?.model) || ""}
-                  ram={model?.ram || ""}
-                  interface={model?.interface || ""}
-                  minPrice={model?.price?.min || 0}
-                  maxPrice={model?.price?.max || 0}
-                  avgPrice={model?.price?.weightedAverage || 0}
-                  providerCount={providerCount}
-                  isB200={isSpecialModel}
-                  id={`${model?.model}-(gpu-rent)`}
-                />
-              );
-            })}
+                return (
+                  <GpuTableRow
+                    key={index}
+                    model={modifyModel(model?.model) || ""}
+                    ram={model?.ram || ""}
+                    interface={model?.interface || ""}
+                    minPrice={model?.price?.min || 0}
+                    maxPrice={model?.price?.max || 0}
+                    avgPrice={model?.price?.weightedAverage || 0}
+                    providerCount={providerCount}
+                    isB200={isSpecialModel}
+                    id={`${model?.model}-(gpu-rent)`}
+                  />
+                );
+              })}
       </div>
     </div>
   );
