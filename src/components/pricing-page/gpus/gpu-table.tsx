@@ -1,12 +1,4 @@
-import OFilter from "@/components/gpu-table/filter";
 
-import { buttonVariantsSecondary } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import TryAkashForm from "@/components/ui/try-akash-form";
 import { gpus } from "@/utils/api";
 import {
@@ -16,15 +8,12 @@ import {
 } from "@tanstack/react-query";
 import axios from "axios";
 import clsx from "clsx";
-import { ArrowRight, Info } from "lucide-react";
 import React from "react";
-import { Skeleton } from "../../ui/skeleton";
-import AvailabilityBar from "./availability-bar";
 import DesktopTableGpu from "./desktop-table-gpu";
 import { DUMMY_GPU_DATA } from "./dummy-gpu-data";
 import Filter, { defaultFilters, type Filters } from "./filter";
-import GpusComingSoon from "./GpusComingSoon";
-import Sort from "./sort";
+import GpuTableRow from "./gpu-table-row";
+import GpuTableRowSkeleton from "./gpu-table-row-skeleton";
 export interface Gpus {
   availability: { total: number; available: number };
   models: Array<{
@@ -146,7 +135,7 @@ export const modifyModel = (model: string) => {
 export const price = (price: number) => {
   if (!price) return "--";
   // Format with comma as decimal separator (European format)
-  const formatted = price.toFixed(2).replace(".", ",");
+  const formatted = price.toFixed(2);
   return `$${formatted}`;
 };
 
@@ -216,17 +205,17 @@ export const Tables = ({
   const totalGpus =
     filteredData?.length > 0
       ? filteredData?.reduce(
-          (prev, curr) => prev + (curr?.availability?.total ?? 0),
-          0,
-        )
+        (prev, curr) => prev + (curr?.availability?.total ?? 0),
+        0,
+      )
       : 0;
 
   const totalAvailableGpus =
     filteredData?.length > 0
       ? filteredData?.reduce(
-          (prev, curr) => prev + (curr?.availability?.available ?? 0),
-          0,
-        )
+        (prev, curr) => prev + (curr?.availability?.available ?? 0),
+        0,
+      )
       : 0;
 
   const normalizedData = React.useMemo(() => {
@@ -247,6 +236,31 @@ export const Tables = ({
     return [...b200Models, ...b300Models, ...otherModels];
   }, [filteredData]);
 
+  const HeaderSection = () => (
+    <div className="flex flex-col gap-2 xl:gap-[18px]">
+      <h1 className="text-[28px] font-semibold leading-tight xl:text-[40px] xl:leading-[48px]">
+        GPU Pricing
+      </h1>
+      <p className="text-base leading-relaxed text-para xl:text-base xl:leading-[24px]">
+        Real-time availability for high-demand compute. Transparent hourly
+        pricing with no hidden fees.
+      </p>
+    </div>
+  );
+
+  const CtaSection = ({ className }: { className?: string }) => (
+    <div className={clsx("flex flex-col gap-4 xl:gap-5", className)}>
+      <h2 className="text-lg font-semibold leading-snug text-foreground xl:leading-[28px]">
+        Looking for NVIDIA B200s, Bulk Orders, or Custom Configurations?
+      </h2>
+      <TryAkashForm
+        type="customButton"
+        linkText="Get a Custom Quote"
+        className="h-10 w-full rounded-lg bg-[#171717] px-4 py-2 text-sm font-medium text-[#fafafa] transition-all hover:bg-[#171717]/90 dark:bg-white dark:text-black dark:hover:bg-white/90 xl:h-9"
+      />
+    </div>
+  );
+
   return (
     <section
       className={clsx(
@@ -256,25 +270,8 @@ export const Tables = ({
     >
       <div className="hidden flex-row gap-16 xl:flex">
         <div className="flex w-[289px] flex-shrink-0 flex-col gap-[70px]">
-          <div className="flex flex-col gap-[18px]">
-            <h1 className="text-[40px] font-semibold leading-[48px] ">
-              GPU Pricing
-            </h1>
-            <p className="leading-[24px] ">
-              Real-time availability for high-demand compute. Transparent hourly
-              pricing with no hidden fees.
-            </p>
-          </div>
-          <div className="flex flex-col gap-5">
-            <h2 className="text-lg font-semibold leading-[28px] !text-foreground">
-              Looking for NVIDIA B200s, Bulk Orders, or Custom Configurations?
-            </h2>
-            <TryAkashForm
-              type="customButton"
-              linkText="Get a Custom Quote"
-              className="h-9 w-full rounded-lg bg-[#171717] px-4 py-2 text-sm font-medium text-[#fafafa] transition-all hover:bg-[#171717]/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
-            />
-          </div>
+          <HeaderSection />
+          <CtaSection />
         </div>
 
         <div className="flex flex-1 flex-col gap-5">
@@ -283,6 +280,9 @@ export const Tables = ({
             setFilters={setFilters}
             setFilteredData={setFilteredDataWithB200First}
             res={data}
+            totalAvailableGpus={totalAvailableGpus}
+            totalGpus={totalGpus}
+            isLoading={isLoading || false}
           />
 
           <div className="h-px w-full bg-defaultBorder md:hidden" />
@@ -295,283 +295,73 @@ export const Tables = ({
         </div>
       </div>
 
-      <div className="flex flex-col gap-1 xl:hidden">
-        {counts && (
-          <p className="text-sm text-[#7E868C] md:text-base">
-            Total Available GPUs
-          </p>
-        )}
-        <div className="my-2 flex justify-between">
-          {counts && (
-            <Card className="px-2 py-1">
-              <span className="font-bold text-[#09090B] dark:text-[#EDEDED]">
-                {totalAvailableGpus || 0}{" "}
-              </span>
-              <span className="text-sm text-[#71717A]">
-                (of {totalGpus || 0})
-              </span>
-            </Card>
-          )}
-          <div className="flex gap-1">
-            <OFilter
-              filters={filters}
-              setFilters={setFilters}
-              setFilteredData={setFilteredDataWithB200First}
-              res={data}
-            />
-            <Sort
-              setFilteredData={setFilteredDataWithB200First}
-              res={data}
-              filters={filters}
-            />
-          </div>
+      <div className="flex flex-col gap-4 px-4 xl:hidden">
+        {/* Mobile Header */}
+        <div className="flex flex-col gap-6">
+          <HeaderSection />
+          <CtaSection />
         </div>
-        <div className=" md:hidden ">
-          <GpusComingSoon />
+
+        {/* Mobile Filters */}
+        <div className="mt-8 flex flex-wrap gap-2">
+          <Filter
+            filters={filters}
+            setFilters={setFilters}
+            setFilteredData={setFilteredDataWithB200First}
+            res={data}
+            totalAvailableGpus={totalAvailableGpus}
+            totalGpus={totalGpus}
+            isLoading={isLoading || false}
+          />
+        </div>
+
+        <div className="flex items-center justify-between border-b border-defaultBorder pb-3 pt-3 text-sm font-light text-para">
+          <span>GPU Model</span>
+          <span>Price (Starting at)</span>
         </div>
       </div>
-      <div className="hidden md:block xl:hidden">
-        <DesktopTableGpu
-          subCom={subCom || false}
-          isLoading={isLoading || false}
-          filteredData={normalizedData}
-          counts={counts}
-        />
-      </div>
+
       <div
         className={clsx(
-          "flex w-full flex-col gap-4",
-          subCom ? "lg:hidden" : "md:hidden",
+          "flex w-full flex-col px-4 xl:hidden",
+
         )}
       >
-        {/* //most availability at top */}
-
+        {/* Mobile GPU List - Using same GpuTableRow component as desktop */}
         {isLoading ? (
-          new Array(10).fill(0).map((_, index) => (
-            <div
-              key={index}
-              className="flex flex-col gap-5  rounded-xl border bg-background2  p-3 shadow-sm"
-            >
-              <div className="flex  items-center gap-3 p-2 ">
-                <Skeleton className="h-5 w-5" />
-                <Skeleton className="h-5 w-20" />
-              </div>
-              <div className="h-px w-full bg-defaultBorder"></div>
-              <div className=" flex  flex-col gap-2">
-                <div className="flex items-center justify-between gap-1">
-                  <Skeleton className="h-5 w-20" />
-                  <Skeleton className="h-5 w-20" />
-                </div>
-                <div className="flex items-center justify-between gap-1">
-                  <Skeleton className="h-5 w-20" />
-                  <Skeleton className="h-5 w-20" />
-                </div>
-                <div className="flex items-center justify-between gap-1">
-                  <Skeleton className="h-5 w-20" />
-                  <Skeleton className="h-5 w-20" />
-                </div>
-              </div>
-              <div className="h-px w-full bg-defaultBorder"></div>
-              <div className="flex flex-col items-start gap-1 ">
-                <div className="rounded-x-md relative min-w-[170px]  rounded-md border px-2 py-1 text-sm font-medium md:min-w-[100px] md:text-xs">
-                  <Skeleton className="h-5 w-20" />
-                </div>
-                <div className="rounded-x-md relative min-w-[170px]  rounded-md border px-2 py-1 text-sm font-medium md:min-w-[100px] md:text-xs">
-                  <Skeleton className="h-5 w-20" />
-                </div>
-              </div>
-            </div>
-          ))
+          new Array(10)
+            .fill(0)
+            .map((_, index) => (
+              <GpuTableRowSkeleton key={index} isB200={index < 2} />
+            ))
         ) : (
           <>
-            {/* Hardcoded B200 and B300 for mobile */}
-            <Card className="my-2 flex w-full flex-col p-6">
-              <div className="flex items-center gap-3 ">
-                <div className="rounded-md border p-[14px_10px]">
-                  <img
-                    src="/logos/nvidia.png"
-                    alt="nvidia"
-                    className="h-4 w-6"
-                  />
-                </div>
-                <div className="">
-                  <p className="text-xl font-semibold capitalize text-foreground">
-                    B200
-                  </p>
-                  <p className="text-sm font-medium text-[#71717A] dark:text-[#E4E4EB]">
-                    190GB HBM3e
-                  </p>
-                </div>
-              </div>
 
-              <AvailabilityBar
-                available={1}
-                total={1}
-                className="my-0 border-y py-5"
-                counts={counts}
-              />
+            <GpuTableRow
+              model="B200"
+              ram="180GB"
+              interface="HBM3e"
+              minPrice={5}
+              maxPrice={5}
+              avgPrice={5}
+              providerCount={1}
+              isB200={true}
+              id="b200-(gpu-rent)-mobile"
+              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b200&interface=HBM3e&vram=180GB"
+            />
 
-              <div className="flex flex-col justify-center gap-3 border-b pb-6 pt-2">
-                <div className="flex justify-between border-b pb-1.5 text-lg">
-                  <span className="text-lg font-semibold md:text-base">
-                    Average price:
-                  </span>
-                  <span className="font-semibold">{price(5)}/hr</span>
-                </div>
-                <HoverCard openDelay={50} closeDelay={50}>
-                  <HoverCardTrigger className="flex w-full items-center justify-between pt-1.5">
-                    <div className="flex items-center gap-2 rounded-full border border-defaultBorder bg-[#F6F6F6] px-3 py-1 text-sm font-semibold text-[#475467] dark:border-defaultBorder dark:bg-background">
-                      <span className="text-foreground">min {price(5)}</span>
-                      <span className="text-[#98A2B3]">-</span>
-                      <span className="text-foreground">max {price(5)}</span>
-                    </div>
-                    <Info size={14} className="text-[#71717A]" />
-                  </HoverCardTrigger>
-                  <HoverCardContent align="center" className="w-72">
-                    <div className="flex flex-col gap-3">
-                      <h2 className="text-sm font-medium text-black dark:text-white">
-                        1 provider offering this model:
-                      </h2>
-                      <div className="rounded-xl bg-[#101828] px-4 py-3 text-white shadow-md dark:bg-background2">
-                        <div className="flex items-center justify-between gap-2 border-b border-white/15 pb-2">
-                          <p className="text-base font-semibold">Avg price:</p>
-                          <div className="text-base font-bold">
-                            {price(5)}/h
-                          </div>
-                        </div>
-                        <div className="mt-2 flex items-center justify-between gap-2 text-sm text-[#D0D5DD]">
-                          <span>min {price(5)}</span>
-                          <span>-</span>
-                          <span>max {price(5)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-              </div>
-              <div className="flex flex-col justify-center gap-3 pt-6">
-                <a
-                  id="b200-(gpu-rent)"
-                  href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b200&interface=HBM3e&vram=190GB"
-                  target="_blank"
-                  className={clsx(
-                    buttonVariantsSecondary({
-                      variant: "primary",
-                      size: "sm",
-                    }),
-                    "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-[13px] text-sm font-medium",
-                  )}
-                >
-                  <span>Get Access</span>
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <TryAkashForm
-                  type="customButton"
-                  linkText="Request More"
-                  className={clsx(
-                    buttonVariantsSecondary({
-                      variant: "secondary",
-                      size: "sm",
-                    }),
-                    "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-3.5 text-sm font-medium",
-                  )}
-                />
-              </div>
-            </Card>
-
-            <Card className="my-2 flex w-full flex-col p-6">
-              <div className="flex items-center gap-3 ">
-                <div className="rounded-md border p-[14px_10px]">
-                  <img
-                    src="/logos/nvidia.png"
-                    alt="nvidia"
-                    className="h-4 w-6"
-                  />
-                </div>
-                <div className="">
-                  <p className="text-xl font-semibold capitalize text-foreground">
-                    B300
-                  </p>
-                  <p className="text-sm font-medium text-[#71717A] dark:text-[#E4E4EB]">
-                    190GB HBM3e
-                  </p>
-                </div>
-              </div>
-
-              <AvailabilityBar
-                available={1}
-                total={1}
-                className="my-0 border-y py-5"
-                counts={counts}
-              />
-
-              <div className="flex flex-col justify-center gap-3 border-b pb-6 pt-2">
-                <div className="flex justify-between border-b pb-1.5 text-lg">
-                  <span className="text-lg font-semibold md:text-base">
-                    Average price:
-                  </span>
-                  <span className="font-semibold">{price(6)}/hr</span>
-                </div>
-                <HoverCard openDelay={50} closeDelay={50}>
-                  <HoverCardTrigger className="flex w-full items-center justify-between pt-1.5">
-                    <div className="flex items-center gap-2 rounded-full border border-defaultBorder bg-[#F6F6F6] px-3 py-1 text-sm font-semibold text-[#475467] dark:border-defaultBorder dark:bg-background">
-                      <span className="text-foreground">min {price(6)}</span>
-                      <span className="text-[#98A2B3]">-</span>
-                      <span className="text-foreground">max {price(6)}</span>
-                    </div>
-                    <Info size={14} className="text-[#71717A]" />
-                  </HoverCardTrigger>
-                  <HoverCardContent align="center" className="w-72">
-                    <div className="flex flex-col gap-3">
-                      <h2 className="text-sm font-medium text-black dark:text-white">
-                        1 provider offering this model:
-                      </h2>
-                      <div className="rounded-xl bg-[#101828] px-4 py-3 text-white shadow-md dark:bg-background2">
-                        <div className="flex items-center justify-between gap-2 border-b border-white/15 pb-2">
-                          <p className="text-base font-semibold">Avg price:</p>
-                          <div className="text-base font-bold">
-                            {price(6)}/h
-                          </div>
-                        </div>
-                        <div className="mt-2 flex items-center justify-between gap-2 text-sm text-[#D0D5DD]">
-                          <span>min {price(6)}</span>
-                          <span>-</span>
-                          <span>max {price(6)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-              </div>
-              <div className="flex flex-col justify-center gap-3 pt-6">
-                <a
-                  id="b300-(gpu-rent)"
-                  href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b300&interface=HBM3e&vram=190GB"
-                  target="_blank"
-                  className={clsx(
-                    buttonVariantsSecondary({
-                      variant: "primary",
-                      size: "sm",
-                    }),
-                    "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-[13px] text-sm font-medium",
-                  )}
-                >
-                  <span>Get Access</span>
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-                <TryAkashForm
-                  type="customButton"
-                  linkText="Request More"
-                  className={clsx(
-                    buttonVariantsSecondary({
-                      variant: "secondary",
-                      size: "sm",
-                    }),
-                    "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-3.5 text-sm font-medium",
-                  )}
-                />
-              </div>
-            </Card>
+            <GpuTableRow
+              model="B300"
+              ram="180GB"
+              interface="HBM3e"
+              minPrice={6}
+              maxPrice={6}
+              avgPrice={6}
+              providerCount={1}
+              isB200={true}
+              id="b300-(gpu-rent)-mobile"
+              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b300&interface=HBM3e&vram=180GB"
+            />
 
             {normalizedData
               ?.filter(
@@ -579,118 +369,28 @@ export const Tables = ({
                   model?.model?.toLowerCase() !== "b200" &&
                   model?.model?.toLowerCase() !== "b300",
               )
-              ?.map((model, index) => {
+              ?.map((rawModel, index) => {
+                const model = normalizeGpuModel(rawModel);
                 const modelLower = model?.model?.toLowerCase();
                 const isB200 = modelLower === "b200";
                 const isB300 = modelLower === "b300";
                 const isSpecialModel = isB200 || isB300;
+                const providerCount =
+                  model?.providerAvailability?.available || 0;
 
                 return (
-                  <Card className="my-2 flex w-full flex-col p-6" key={index}>
-                    <div className="flex items-center gap-3 ">
-                      <div className="rounded-md border p-[14px_10px]">
-                        <img
-                          src="/logos/nvidia.png"
-                          alt="nvidia"
-                          className="h-4 w-6"
-                        />
-                      </div>
-                      <div className="">
-                        <p className="text-xl font-semibold capitalize text-foreground">
-                          {modifyModel(model?.model)}
-                        </p>
-                        <p className="text-sm font-medium text-[#71717A] dark:text-[#E4E4EB]">
-                          {model?.ram} {model?.interface}
-                        </p>
-                      </div>
-                    </div>
-
-                    <AvailabilityBar
-                      available={model?.availability?.available}
-                      total={model?.availability?.total}
-                      className="my-0 border-y py-5"
-                      counts={counts}
-                    />
-
-                    <div className="flex flex-col justify-center gap-3 border-b pb-6 pt-2">
-                      <div className="flex justify-between border-b pb-1.5 text-lg">
-                        <span className="text-lg font-semibold md:text-base">
-                          Average price:
-                        </span>
-                        <span className="font-semibold">
-                          {price(model?.price?.weightedAverage)}/hr
-                        </span>
-                      </div>
-                      <HoverCard openDelay={50} closeDelay={50}>
-                        <HoverCardTrigger className="flex w-full items-center justify-between pt-1.5">
-                          <div className="flex items-center gap-2 rounded-full border border-defaultBorder bg-[#F6F6F6] px-3 py-1 text-sm font-semibold text-[#475467] dark:border-defaultBorder dark:bg-background">
-                            <span className="text-foreground">
-                              min {price(model?.price?.min)}
-                            </span>
-                            <span className="text-[#98A2B3]">-</span>
-                            <span className="text-foreground">
-                              max {price(model?.price?.max)}
-                            </span>
-                          </div>
-                          <Info size={14} className="text-[#71717A]" />
-                        </HoverCardTrigger>
-                        <HoverCardContent align="center" className="w-72">
-                          <div className="flex flex-col gap-3">
-                            <h2 className="text-sm font-medium text-black dark:text-white">
-                              {model?.providerAvailability?.available || 0}{" "}
-                              {model?.providerAvailability?.available > 1
-                                ? "providers"
-                                : "provider"}{" "}
-                              offering this model:
-                            </h2>
-                            <div className="rounded-xl bg-[#101828] px-4 py-3 text-white shadow-md dark:bg-background2">
-                              <div className="flex items-center justify-between gap-2 border-b border-white/15 pb-2">
-                                <p className="text-base font-semibold">
-                                  Avg price:
-                                </p>
-                                <div className="text-base font-bold">
-                                  {price(model?.price?.weightedAverage)}/h
-                                </div>
-                              </div>
-                              <div className="mt-2 flex items-center justify-between gap-2 text-sm text-[#D0D5DD]">
-                                <span>min {price(model?.price?.min)}</span>
-                                <span>-</span>
-                                <span>max {price(model?.price?.max)}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </HoverCardContent>
-                      </HoverCard>
-                    </div>
-                    <div className="flex flex-col justify-center gap-3 pt-6">
-                      <a
-                        id={`${model?.model}-(gpu-rent)`}
-                        href={`https://console.akash.network/rent-gpu?vendor=${model?.vendor}&gpu=${model?.model}&interface=${model?.interface}&vram=${model?.ram}`}
-                        target="_blank"
-                        className={clsx(
-                          buttonVariantsSecondary({
-                            variant: "primary",
-                            size: "sm",
-                          }),
-                          "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-[13px] text-sm font-medium",
-                        )}
-                      >
-                        <span>{isSpecialModel ? "Get Access" : "Rent"}</span>
-                        <ArrowRight className="h-4 w-4" />
-                      </a>
-                      <TryAkashForm
-                        type="customButton"
-                        linkText="Request More"
-                        className={clsx(
-                          buttonVariantsSecondary({
-                            variant: "secondary",
-                            size: "sm",
-                          }),
-                          "inline-flex !h-auto w-full justify-center gap-1.5 rounded-md border py-3.5 text-sm font-medium",
-                        )}
-                      />
-                    </div>
-                  </Card>
+                  <GpuTableRow
+                    key={index}
+                    model={modifyModel(model?.model) || ""}
+                    ram={model?.ram || ""}
+                    interface={model?.interface || ""}
+                    minPrice={model?.price?.min || 0}
+                    maxPrice={model?.price?.max || 0}
+                    avgPrice={model?.price?.weightedAverage || 0}
+                    providerCount={providerCount}
+                    isB200={isSpecialModel}
+                    id={`${model?.model}-(gpu-rent)-mobile`}
+                  />
                 );
               })}
           </>

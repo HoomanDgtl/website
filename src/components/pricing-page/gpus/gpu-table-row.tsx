@@ -47,7 +47,7 @@ const GpuTableRow = ({
         className,
       )}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex md:items-center flex-col md:flex-row gap-2 md:gap-4">
         <p className="min-w-[110px] text-base font-medium capitalize text-foreground">
           {model}
         </p>
@@ -62,7 +62,7 @@ const GpuTableRow = ({
       </div>
 
       {/* Price Range & Avg Price */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center md:gap-8 gap-2">
         {/* <div className="flex items-start gap-1">
           <span className="rounded-full border px-4 py-1 text-sm font-normal text-para transition-all duration-200">
             min {formattedMinPrice} - max {formattedMaxPrice}

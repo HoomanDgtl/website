@@ -8,36 +8,22 @@ interface GpuTableRowSkeletonProps {
 
 const GpuTableRowSkeleton = ({
   className,
-  isB200 = false,
 }: GpuTableRowSkeletonProps) => {
   return (
     <div
       className={cn(
-        "flex items-center justify-between overflow-hidden border-b  px-4 py-5",
-        "bg-background",
+        "flex items-center justify-between border-b border-defaultBorder py-4",
         className,
       )}
     >
       {/* GPU Model */}
-      <div className="flex items-center gap-4">
-        <Skeleton className="h-5 w-20" />
-        <div className="flex items-center gap-2">
-          <Skeleton className="h-6 w-16 rounded-full" />
-          <Skeleton className="h-6 w-16 rounded-full" />
-        </div>
+      <div className="flex flex-col gap-1">
+        <Skeleton className="h-5 w-28" />
+        <Skeleton className="h-4 w-20" />
       </div>
 
-      {/* Price Range & Avg Price */}
-      <div className="flex items-center gap-8">
-        <div className="flex items-start gap-1">
-          <Skeleton className="h-8 w-40 rounded-full" />
-          <Skeleton className="h-4 w-4 rounded-full" />
-        </div>
-
-        <Skeleton className="h-5 w-20" />
-
-        <Skeleton className="h-7 w-7 rounded-full bg-[#F5F5F5]" />
-      </div>
+      {/* Price */}
+      <Skeleton className="h-5 w-16" />
     </div>
   );
 };

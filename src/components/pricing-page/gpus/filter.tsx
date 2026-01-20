@@ -27,7 +27,7 @@ interface Options {
   options: { name: string; value: string }[];
 }
 
-export const availabilitySort = () => {};
+export const availabilitySort = () => { };
 
 export default function Filter({
   setFilteredData,
@@ -179,11 +179,11 @@ export default function Filter({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col-reverse md:flex-row  items-start md:items-center justify-between gap-4">
         {isLoading ? (
           <div className="h-9 w-[185px] rounded-full border  bg-transparent" />
         ) : (
-          <div className="inline-flex items-center gap-1 rounded-full border bg-transparent px-[14px] py-1.5  font-normal text-[15px] text-para">
+          <div className="inline-flex items-center gap-1 rounded-full border bg-transparent px-[14px] py-1.5  text-sm md:text-[15px] font-normal text-para">
             GPU Utilization:
             {totalGpus && totalAvailableGpus && totalGpus > 0
               ? Math.round(((totalGpus - totalAvailableGpus) / totalGpus) * 100)
@@ -192,7 +192,7 @@ export default function Filter({
           </div>
         )}
         <div className="flex  flex-col ">
-          <div className=" flex flex-1 flex-wrap gap-3">
+          <div className=" flex flex-1 flex-wrap gap-2 md:gap-3">
             {options?.map((item) => (
               <div key={item.name} className="">
                 <Select>
