@@ -347,7 +347,7 @@ export const Tables = ({
               providerCount={1}
               isB200={true}
               id="b200-(gpu-rent)-mobile"
-              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b200&interface=HBM3e&vram=180GB"
+              href="/gpus-on-demand"
             />
 
             <GpuTableRow
@@ -360,7 +360,7 @@ export const Tables = ({
               providerCount={1}
               isB200={true}
               id="b300-(gpu-rent)-mobile"
-              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b300&interface=HBM3e&vram=180GB"
+              href="/gpus-on-demand"
             />
 
             {normalizedData

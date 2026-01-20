@@ -36,11 +36,13 @@ const GpuTableRow = ({
   const formattedAvgPrice =
     typeof avgPrice === "string" ? avgPrice : price(avgPrice);
 
+  const isInternalLink = href.startsWith("/");
+
   return (
     <a
       id={id}
       href={href}
-      target="_blank"
+      target={isInternalLink ? undefined : "_blank"}
       className={cn(
         "group flex cursor-pointer items-center justify-between overflow-hidden border-b  px-4 py-5 transition-all duration-200 ",
 

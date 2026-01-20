@@ -40,7 +40,7 @@ const DesktopTableGpu = ({
               providerCount={1}
               isB200={true}
               id="b200-(gpu-rent)"
-              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b200&interface=HBM3e&vram=180GB"
+              href="/gpus-on-demand"
             />
             <GpuTableRow
               model="B300"
@@ -52,7 +52,7 @@ const DesktopTableGpu = ({
               providerCount={1}
               isB200={true}
               id="b300-(gpu-rent)"
-              href="https://console.akash.network/rent-gpu?vendor=nvidia&gpu=b300&interface=HBM3e&vram=180GB"
+              href="/gpus-on-demand"
             />
           </>
         )}
