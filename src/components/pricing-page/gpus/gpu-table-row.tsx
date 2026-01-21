@@ -44,7 +44,7 @@ const GpuTableRow = ({
       href={href}
       target={isInternalLink ? undefined : "_blank"}
       className={cn(
-        "group flex cursor-pointer items-center justify-between overflow-hidden border-b  px-4 py-5 transition-all duration-200 ",
+        "group flex cursor-pointer items-center justify-between overflow-hidden border-b  xl:px-4 py-5 transition-all duration-200 ",
 
         className,
       )}
