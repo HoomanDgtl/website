@@ -178,8 +178,8 @@ export default function Filter({
     filters.interface.length > 0;
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-col-reverse md:flex-row  items-start md:items-center justify-between gap-4">
+    <div className="flex flex-col gap-2 w-full">
+      <div className="flex flex-col-reverse md:flex-row w-full   items-start md:items-center justify-between gap-4">
         {isLoading ? (
           <div className="h-9 w-[185px] rounded-full border  bg-transparent" />
         ) : (
@@ -191,7 +191,7 @@ export default function Filter({
             %
           </div>
         )}
-        <div className="flex  flex-col ">
+        <div className="flex  flex-col w-full ">
           <div className=" flex flex-1 flex-wrap gap-2 md:gap-3">
             {options?.map((item) => (
               <div key={item.name} className="">
@@ -233,48 +233,57 @@ export default function Filter({
               </div>
             ))}
           </div>
+          <div className="md:hidden block">
+            <ActiveFilters hasActiveFilters={hasActiveFilters} options={options} filters={filters} removeFilter={removeFilter} setFilters={setFilters} />
+          </div>
         </div>
       </div>
-      {/* Combined badges area */}
-      {hasActiveFilters && (
-        <div className="flex flex-wrap items-center gap-2 border-b  py-3">
-          <div className="mr-2 text-sm font-medium">Active filters:</div>
-          {options.map((item) =>
-            filters[item.value].map((filterValue) => {
-              const optionName =
-                item.options.find((o) => o.value === filterValue)?.name ||
-                filterValue;
-              return (
-                <div
-                  key={`${item.value}-${filterValue}`}
-                  className="inline-flex items-center rounded-full border border-darkGrayBorder bg-lightGray px-3 py-1 text-xs dark:border-defaultBorder dark:bg-background2"
-                >
-                  <span className="mr-1 font-medium text-darkGrayText dark:text-para">
-                    {item.name}:
-                  </span>
-                  <span className="font-semibold text-foreground">
-                    {optionName}
-                  </span>
-                  <button
-                    onClick={() => removeFilter(item.value, filterValue)}
-                    className="ml-1 text-textGray  hover:text-primary"
-                  >
-                    <X className="h-3 w-3 " />
-                  </button>
-                </div>
-              );
-            }),
-          )}
-          {hasActiveFilters && (
-            <button
-              onClick={() => setFilters(defaultFilters)}
-              className="ml-auto text-xs  hover:underline"
-            >
-              Clear all
-            </button>
-          )}
-        </div>
-      )}
+      <div className="md:block hidden">
+        <ActiveFilters hasActiveFilters={hasActiveFilters} options={options} filters={filters} removeFilter={removeFilter} setFilters={setFilters} />
+      </div>
     </div>
   );
+}
+
+
+const ActiveFilters = ({ hasActiveFilters, options, filters, removeFilter, setFilters }: { hasActiveFilters: boolean, options: Options[], filters: Filters, removeFilter: (filterType: "modal" | "ram" | "interface", value: string) => void, setFilters: React.Dispatch<React.SetStateAction<Filters>> }) => {
+  return hasActiveFilters && (
+    <div className="flex flex-wrap items-center gap-2 border-b  py-3">
+      <div className="mr-2 text-sm font-medium">Active filters:</div>
+      {options.map((item) =>
+        filters[item.value].map((filterValue) => {
+          const optionName =
+            item.options.find((o) => o.value === filterValue)?.name ||
+            filterValue;
+          return (
+            <div
+              key={`${item.value}-${filterValue}`}
+              className="inline-flex items-center rounded-full border border-darkGrayBorder bg-lightGray px-3 py-1 text-xs dark:border-defaultBorder dark:bg-background2"
+            >
+              <span className="mr-1 font-medium text-darkGrayText dark:text-para">
+                {item.name}:
+              </span>
+              <span className="font-semibold text-foreground">
+                {optionName}
+              </span>
+              <button
+                onClick={() => removeFilter(item.value, filterValue)}
+                className="ml-1 text-textGray  hover:text-primary"
+              >
+                <X className="h-3 w-3 " />
+              </button>
+            </div>
+          );
+        }),
+      )}
+      {hasActiveFilters && (
+        <button
+          onClick={() => setFilters(defaultFilters)}
+          className="ml-auto text-xs  hover:underline"
+        >
+          Clear all
+        </button>
+      )}
+    </div>
+  )
 }
