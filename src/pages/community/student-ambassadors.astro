@@ -1,13 +1,42 @@
 ---
-import PointerSection from "@/components/community-pages/pointer-section.astro";
 import CommunityHero from "@/components/mdx-cards/community-hero.astro";
-import ButtonLink from "@/components/ui/button-link.astro";
 import TopMargin from "@/components/ui/top-margin.astro";
 import Layout from "@/layouts/layout.astro";
 
 const title = "The Akash Student<br/> Ambassador Program";
 const description =
   "The Akash Student Ambassador Program empowers students to become builders, advocates, and community leaders for the decentralized cloud movement.";
+
+const articles = [
+  {
+    title:
+      "Why Decentralized Cloud Startups Have Weaker Early Moats but Stronger Long-Term Ones",
+    link: "https://www.linkedin.com/pulse/why-decentralized-cloud-startups-have-weaker-early-moats-helen-hui-zef1e/",
+    author: "Ellen Hui",
+    date: "1 Jan 2026",
+  },
+  {
+    title:
+      "Why Decentralized Cloud Startups Have Weaker Early Moats but Stronger Long-Term Ones",
+    link: "https://www.linkedin.com/pulse/why-decentralized-cloud-startups-have-weaker-early-moats-helen-hui-zef1e/",
+    author: "Ellen Hui",
+    date: "1 Jan 2026",
+  },
+  {
+    title:
+      "Why Decentralized Cloud Startups Have Weaker Early Moats but Stronger Long-Term Ones",
+    link: "https://www.linkedin.com/pulse/why-decentralized-cloud-startups-have-weaker-early-moats-helen-hui-zef1e/",
+    author: "Elan Hui",
+    date: "1 Jan 2026",
+  },
+  {
+    title:
+      "Why Decentralized Cloud Startups Have Weaker Early Moats but Stronger Long-Term Ones",
+    link: "https://www.linkedin.com/pulse/why-decentralized-cloud-startups-have-weaker-early-moats-helen-hui-zef1e/",
+    author: "Ellen Hui",
+    date: "1 Jan 2026",
+  },
+];
 ---
 
 <Layout
@@ -17,28 +46,117 @@ const description =
 >
   <TopMargin isNotContainer>
     <CommunityHero container title={title} description={description} />
-    <div class="flex flex-col gap-20 lg:gap-40">
-      <div class="container-reader flex flex-col gap-20">
-        <div class="flex flex-col gap-20 lg:gap-40">
-          <PointerSection
-            type="description"
-            description="Ambassadors play a key role in expanding awareness of Akash Network by hosting campus events, creating content, and connecting peers to opportunities in decentralized computing. More than a marketing initiative, this program focuses on ecosystem development, equipping students to represent a movement they truly believe in and build community from the ground up."
-            image="/images/student-ambassador/1.png"
+
+    <div class="container mx-auto max-w-5xl px-4">
+      <!-- Two Cards Section -->
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
+        <!-- Card 1 -->
+        <div class="flex flex-col">
+          <img
+            src="/images/student-ambassador/1.png"
+            alt="Growing the Open Cloud on Campus"
+            class="h-auto w-full rounded-lg object-cover"
           />
 
-          <PointerSection
-            description="Through hands-on experience, ambassadors gain leadership skills, technical exposure, and real-world collaboration experience while contributing to a project that redefines how cloud infrastructure is built and accessed.<br/><br/>The program is designed around a simple idea: ambassadors succeed when they feel like owners, not just representatives. By connecting through shared values, learning from one another, and co-creating meaningful initiatives, students help shape the future of decentralized cloud computing and the broader Akash ecosystem."
-            image="/images/student-ambassador/2.png"
-            reverse={true}
-            type="description"
-          />
+          <div class="mt-6 flex flex-col gap-3">
+            <h3 class="text-xl font-semibold text-foreground">
+              Growing the Open Cloud on Campus
+            </h3>
+            <p class="text-sm leading-relaxed text-para">
+              Ambassadors play a key role in expanding awareness of Akash
+              Network by hosting campus events, creating content, and connecting
+              peers to opportunities in decentralized computing. More than a
+              marketing initiative, this program focuses on ecosystem
+              development, equipping students to represent a movement they truly
+              believe in and build community from the ground up.
+            </p>
+          </div>
         </div>
-        <div class="not-prose flex flex-col items-center justify-center gap-10">
+
+        <!-- Card 2 -->
+        <div class="flex flex-col">
+          <img
+            src="/images/student-ambassador/2.png"
+            alt="From Participation to Ownership"
+            class="h-auto w-full rounded-lg object-cover"
+          />
+
+          <div class="mt-6 flex flex-col gap-3">
+            <h3 class="text-xl font-semibold text-foreground">
+              From Participation to Ownership
+            </h3>
+            <p class="text-sm leading-relaxed text-para">
+              Through hands-on experience, ambassadors gain leadership skills,
+              technical exposure, and real-world collaboration experience while
+              contributing to a project that redefines how cloud infrastructure
+              is built and accessed.
+            </p>
+            <p class="text-sm leading-relaxed text-para">
+              The program is designed around a simple idea: ambassadors succeed
+              when they feel like owners, not just representatives. By
+              connecting through shared values, learning from one another, and
+              co-creating meaningful initiatives, students help shape the future
+              of decentralized cloud computing and the broader Akash ecosystem.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Voices Section -->
+      <div class="mt-20 lg:mt-32">
+        <div class="mb-8 flex flex-col gap-4">
+          <h2 class="text-2xl font-semibold text-foreground md:text-3xl">
+            Student Voices on the Future of the Open Cloud
+          </h2>
+          <div class="flex items-start gap-4">
+            <!-- Avatar Icon -->
+
+            <p
+              class="max-w-[700px] text-sm leading-relaxed text-para md:text-base"
+            >
+              Student builders and thinkers explore how decentralization, AI,
+              and open infrastructure are reshaping technology, and what it
+              means for the next generation of innovators.
+            </p>
+          </div>
+        </div>
+
+        <!-- Articles Table -->
+        <div class="overflow-hidden">
+          <table class="w-full">
+            <tbody class="divide-y divide-border">
+              {
+                articles.map((article) => (
+                  <tr class="transition-colors hover:bg-background2">
+                    <td class=" py-4 ">
+                      <a
+                        href={article.link}
+                        class="text-sm  text-para underline decoration-para underline-offset-2 transition-colors hover:text-primary hover:decoration-primary md:text-base"
+                      >
+                        {article.title}
+                      </a>
+                    </td>
+                    <td class="hidden whitespace-nowrap px-4 py-4 text-sm text-para md:table-cell md:px-6 md:text-base">
+                      {article.author}
+                    </td>
+                    <td class="whitespace-nowrap px-4 py-4 text-right text-sm text-para md:px-6 md:text-base">
+                      {article.date}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          class="not-prose flex flex-col items-center justify-center gap-10 pb-[180px] pt-[200px]"
+        >
           <h2 class="text-center text-3xl font-semibold">
             Join the Akash Ambassador Program.<br /> Submit your application for Spring
             2026!
           </h2>
-          <ButtonLink
+          <!-- <ButtonLink
             arrow
             className="mt-0"
             link="https://docs.google.com/forms/d/e/1FAIpQLScprUXYrjp9HdwUW_DdTu1UnOvmw2bMfJ0wVKZ1J653uuJsxQ/viewform"
@@ -46,7 +164,7 @@ const description =
             size="lg"
           >
             Apply today!
-          </ButtonLink>
+          </ButtonLink> -->
         </div>
       </div>
     </div>
