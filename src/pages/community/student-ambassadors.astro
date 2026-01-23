@@ -15,14 +15,14 @@ const articles = [
       "Why Decentralized Cloud Startups Have Weaker Early Moats but Stronger Long-Term Ones",
     link: "https://www.linkedin.com/pulse/why-decentralized-cloud-startups-have-weaker-early-moats-helen-hui-zef1e",
     author: "Helen Hui",
-    date: "December, 2025",
+    date: "30 December, 2025",
   },
   {
     title:
       "Why Blockchain Will Reshape Modern AI Training — and How You Can Get Ahead!",
     link: "https://www.linkedin.com/pulse/why-blockchain-reshape-modern-ai-training-how-you-can-helen-hui-dzqhe?trk=public_post_feed-article-content",
     author: "Helen Hui",
-    date: "December, 2025",
+    date: "2 December, 2025",
   },
   {
     title: "Why Decentralized Cloud Matters",
@@ -34,7 +34,7 @@ const articles = [
     title: "How to self-host the cheapest n8n server",
     link: "https://x.com/BotbolLucas/status/2005386440545538217",
     author: "Lucas Botbol",
-    date: "December, 2025",
+    date: "29 December, 2025",
   },
   {
     title: "Akash Network: The Open Cloud for Builders",
@@ -46,7 +46,7 @@ const articles = [
     title: "Akash Network X USC Build Night",
     link: "https://x.com/0xBlockchainSC/status/1998533122133209567?s=20",
     author: "USC Blockchain",
-    date: "December, 2025",
+    date: "10 December, 2025",
   },
 ];
 ---
@@ -143,16 +143,16 @@ const articles = [
                     class="group relative cursor-pointer transition-colors hover:bg-[#F7F7F7] dark:hover:bg-[#18181B]"
                     data-link={article.link}
                   >
-                    <td class="py-4">
-                      <div class="text-param inline-flex items-center gap-1.5 px-4 text-sm text-para no-underline transition-all group-hover:text-foreground group-hover:underline group-hover:decoration-foreground group-hover:underline-offset-2 md:text-base">
+                    <td class="py-4 align-top">
+                      <div class="text-param inline-flex items-start gap-1.5 px-4 text-sm text-para no-underline transition-all group-hover:text-foreground group-hover:underline group-hover:decoration-foreground group-hover:underline-offset-2 md:text-base">
                         <span class="max-w-[470px] ">{article.title}</span>
-                        <ArrowUpRight className="w-4 h-4 hidden group-hover:block" />
+                        <ArrowUpRight className="w-4 h-4 mt-1 flex-shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
                       </div>
                     </td>
-                    <td class="hidden whitespace-nowrap px-4 py-4 text-sm text-para md:table-cell md:px-6 md:text-base">
+                    <td class="hidden whitespace-nowrap px-4 py-4 align-top text-sm text-para md:table-cell md:px-6 md:text-base">
                       {article.author}
                     </td>
-                    <td class="whitespace-nowrap py-4 pr-4 text-right text-sm text-para md:px-6 md:text-base">
+                    <td class="whitespace-nowrap py-4 pr-4 text-right align-top text-sm text-para md:px-6 md:text-base">
                       {article.date}
                     </td>
                   </tr>
