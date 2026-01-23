@@ -432,7 +432,7 @@ export const Tables = ({
             return (
               <React.Fragment key={groupName}>
                 {/* VRAM Group Header */}
-                <div className="bg-[#F5F5F5] w-fit px-4 py-1 font-medium !mb-5 rounded-full !mt-6">
+                <div className="bg-[#F5F5F5] dark:bg-background2 w-fit px-4 py-1 font-medium !mb-5 rounded-full !mt-6">
                   <h3 className="text-para text-sm">
                     {groupName} VRAM
                   </h3>
