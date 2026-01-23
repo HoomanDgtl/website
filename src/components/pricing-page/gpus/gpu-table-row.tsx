@@ -44,7 +44,7 @@ const GpuTableRow = ({
       href={href}
       target={isInternalLink ? undefined : "_blank"}
       className={cn(
-        "group flex cursor-pointer items-start xl:items-center justify-between overflow-hidden border-b  xl:px-4 py-5 transition-all duration-200 ",
+        "group flex cursor-pointer items-start xl:items-center justify-between overflow-hidden border-b px-4 xl:px-4 py-5 transition-all duration-200 ",
 
         className,
       )}
@@ -55,7 +55,7 @@ const GpuTableRow = ({
         </p>
         <div className="flex items-center gap-2">
           <span className="rounded-full border  bg-transparent px-3 py-0.5 text-sm font-normal text-para">
-            {ram}
+            {ram} VRAM
           </span>
           <span className="rounded-full border  bg-transparent px-3 py-0.5 text-sm font-normal text-para">
             {interfaceType}
