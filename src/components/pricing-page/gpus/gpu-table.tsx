@@ -177,20 +177,28 @@ const parseRamToGB = (ram: string): number => {
   return unit === "gi" ? value : value;
 };
 
-// Categorize VRAM into groups
+// Categorize VRAM into groups (matching RunPod.io structure)
 const getVramCategory = (ram: string): string => {
   const ramGB = parseRamToGB(ram);
-  // 100+GB group: B200 (180GB), B300 (180GB), H200 (141GB), and other 100+GB GPUs
-  if (ramGB >= 100) return "100+GB";
+  // >80GB group: greater than 80GB (e.g., B200 180GB, B300 180GB, H200 141GB, H100 NVL 94GB, etc.)
+  if (ramGB > 80) return ">80GB";
   // 80GB group: exactly 80GB
   if (ramGB === 80) return "80GB";
   // 48GB group: exactly 48GB
   if (ramGB === 48) return "48GB";
-  // For values between categories, assign to the lower category to maintain grouping
+  // 32GB group: exactly 32GB
+  if (ramGB === 32) return "32GB";
+  // 24GB group: exactly 24GB
+  if (ramGB === 24) return "24GB";
+  // 12GB group: 12GB or less
+  if (ramGB <= 12) return "12GB";
+  // For values between categories, assign to the nearest lower category
   if (ramGB > 48 && ramGB < 80) return "48GB"; // Between 48 and 80, group with 48GB
-  if (ramGB > 80 && ramGB < 100) return "80GB"; // Between 80 and 100, group with 80GB
-  // Values less than 48GB go to "Other"
-  return "Other";
+  if (ramGB > 32 && ramGB < 48) return "32GB"; // Between 32 and 48, group with 32GB
+  if (ramGB > 24 && ramGB < 32) return "24GB"; // Between 24 and 32, group with 24GB
+  if (ramGB > 12 && ramGB < 24) return "12GB"; // Between 12 and 24, group with 12GB
+  // Fallback (shouldn't happen, but just in case)
+  return "12GB";
 };
 
 export const Tables = ({
@@ -367,10 +375,12 @@ export const Tables = ({
 
     // Group by VRAM category while maintaining current order within each group
     const groupedByVram: Record<string, typeof allModels> = {
-      "100+GB": [],
+      ">80GB": [],
       "80GB": [],
       "48GB": [],
-      "Other": [],
+      "32GB": [],
+      "24GB": [],
+      "12GB": [],
     };
 
     allModels.forEach((model) => {
@@ -420,7 +430,7 @@ export const Tables = ({
           ));
       }
 
-      const vramGroups = ["100+GB", "80GB", "48GB", "Other"];
+      const vramGroups = [">80GB", "80GB", "48GB", "32GB", "24GB", "12GB"];
 
       return (
         <>
