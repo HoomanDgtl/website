@@ -28,20 +28,18 @@ const GpuTableRow = ({
   href = "https://console.akash.network/new-deployment",
   id,
   className,
+
 }: GpuTableRowProps) => {
-  const formattedMinPrice =
-    typeof minPrice === "string" ? minPrice : price(minPrice);
-  const formattedMaxPrice =
-    typeof maxPrice === "string" ? maxPrice : price(maxPrice);
+  const link = isB200 ? '/gpus-on-demand' : href
   const formattedAvgPrice =
     typeof avgPrice === "string" ? avgPrice : price(avgPrice);
 
-  const isInternalLink = href.startsWith("/");
+  const isInternalLink = link.startsWith("/");
 
   return (
     <a
       id={id}
-      href={href}
+      href={link}
       target={isInternalLink ? undefined : "_blank"}
       className={cn(
         "group flex cursor-pointer items-start xl:items-center justify-between overflow-hidden border-b  xl:px-4 py-3 md:py-5 transition-all duration-200 ",
