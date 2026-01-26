@@ -442,7 +442,7 @@ export const Tables = ({
             return (
               <React.Fragment key={groupName}>
                 {/* VRAM Group Header */}
-                <div className="bg-[#F5F5F5] dark:bg-background2 w-fit px-4 py-1 font-medium !mb-5 rounded-full !mt-6">
+                <div className="bg-[#F5F5F5] dark:bg-background2 w-fit px-4 py-0.5 md:py-1 font-medium mt-4 !mb-3 md:!mb-5 rounded-full md:!mt-6">
                   <h3 className="text-para text-sm">
                     {groupName} VRAM
                   </h3>
@@ -484,8 +484,8 @@ export const Tables = ({
       <div className="w-full overflow-x-auto">
         <div className="flex flex-col">
           {/* Header row - visible on both desktop and mobile */}
-          <div className="flex items-center justify-between border-b border-defaultBorder px-4 pb-3 pt-3 text-sm font-light text-para xl:px-0 xl:pb-2 xl:pt-0 xl:text-xs xl:font-normal xl:text-[#71717A] dark:xl:text-[#A1A1AA]">
-            <span className="text-foreground text-xl font-medium">GPU</span>
+          <div className="flex items-center justify-between border-b border-defaultBorder xl:px-4 pb-3 pt-3 text-sm font-light text-para xl:px-0 xl:pb-2 xl:pt-0 xl:text-xs xl:font-normal xl:text-[#71717A] dark:xl:text-[#A1A1AA]">
+            <span className="md:text-foreground text-[15px] md:text-xl md:font-medium">GPU</span>
             <span className="text-[15px]">Price (Starting at)</span>
           </div>
 
@@ -527,7 +527,7 @@ export const Tables = ({
       </div>
 
       {/* Mobile Layout */}
-      <div className="flex flex-col gap-4 px-4 xl:hidden">
+      <div className="flex flex-col gap-4 px-1 md:px-4 xl:hidden">
         <div className="flex flex-col gap-6">
           <HeaderSection />
           <CtaSection />
