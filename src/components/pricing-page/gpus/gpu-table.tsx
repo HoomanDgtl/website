@@ -505,7 +505,7 @@ export const Tables = ({
     >
       {/* Desktop Layout */}
       <div className="hidden flex-row gap-16 xl:flex">
-        <div className="flex w-[289px] flex-shrink-0 flex-col gap-[70px]">
+        <div className="flex w-[289px] flex-shrink-0 flex-col gap-6">
           <HeaderSection />
           <CtaSection />
         </div>
