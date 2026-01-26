@@ -32,7 +32,7 @@ const GpuTableRow = ({
 
   const formattedAvgPrice =
     typeof avgPrice === "string" ? avgPrice : price(avgPrice);
-  const link = isB200 ? '/gpus-on-demand' : href
+  const link = isB200 ? '/nvidia-blackwell-gpus' : href
   const isInternalLink = link.startsWith("/");
 
   return (
