@@ -42,7 +42,7 @@ interface TrustedByItem {
 
 const TrustedByMarquee = ({
   trustedBySection,
-  speed = 500,
+  speed = 50,
   gap = 0,
 }: {
   trustedBySection: TrustedByItem[];
