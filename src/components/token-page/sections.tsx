@@ -9,9 +9,9 @@ import BuyAktButton from "./buy-akt-modal";
 import TokenMetricsSection from "./token-metrics-section";
 
 interface SectionProps {
-  aktFeaturesSection: any;
-  buyingAKTSection: any;
-  faqsSection: any;
+  aktFeaturesSection: Record<string, unknown>;
+  buyingAKTSection: Record<string, unknown>;
+  faqsSection: Record<string, unknown>;
   url: string;
 }
 
@@ -41,8 +41,8 @@ const Query = ({
   faqsSection,
   url,
 }: SectionProps) => {
-  const token = useStorage((state: any) => state?.token);
-  const setToken = useStorage((state: any) => state?.setToken);
+  const token = useStorage((state) => state?.token);
+  const setToken = useStorage((state) => state?.setToken);
 
   const [enabled, setEnabled] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().getTime());

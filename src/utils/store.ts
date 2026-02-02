@@ -1,14 +1,6 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-
-export interface IStore {
-  token: any;
-  setToken: (token: string) => void;
-  gpu: any;
-  setGpu: (gpu: string) => void;
-  docsLinkTracks: { [link: string]: boolean };
-  setDocsLinkTracks: (data: { [link: string]: boolean }) => void;
-}
+import type { IStore, TokenState, GpuState } from "@/types";
 
 export const useStorage = create<IStore>()(
   devtools(
@@ -16,12 +8,12 @@ export const useStorage = create<IStore>()(
       (set) => ({
         token: {
           time: 0,
-        },
-        setToken: (token) => set({ token }),
+        } as TokenState,
+        setToken: (token: TokenState) => set({ token }),
         gpu: {
           time: 0,
-        },
-        setGpu: (gpu) => set({ gpu }),
+        } as GpuState,
+        setGpu: (gpu: GpuState) => set({ gpu }),
         docsLinkTracks: {},
         setDocsLinkTracks: (data) => set((state) => ({ docsLinkTracks: data })),
       }),

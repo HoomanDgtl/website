@@ -5,6 +5,7 @@ import ButtonLink from "../../../components/ui/button-link.astro";
 
 import EventCard from "@/components/community-pages/event-card.astro";
 import TopMargin from "@/components/ui/top-margin.astro";
+import type { EventCardData } from "@/types";
 
 const cards = await getCollection("Community_Akash_Events_Page");
 const { data } = await getEntry("Community_Page", "events/archived");
@@ -20,7 +21,7 @@ const cutoffOffsetDateTime = new Date(
   new Date()?.getTime() - archivePeriodInMilliSeconds,
 ).getTime();
 
-const archivedCards = allCards.filter((curr: any) => {
+const archivedCards = allCards.filter((curr: EventCardData) => {
   if (curr.tbd) {
     return false;
   }
@@ -61,7 +62,7 @@ const sortedCards = archivedCards.sort((a, b) => {
         {
           (
             <div class="mt-10 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 2xl:grid-cols-4">
-              {sortedCards?.reverse()?.map((card: any) => (
+              {sortedCards?.reverse()?.map((card: EventCardData) => (
                 <EventCard card={card} />
               ))}
             </div>

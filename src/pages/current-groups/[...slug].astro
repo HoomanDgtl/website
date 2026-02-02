@@ -14,10 +14,11 @@ import TopMargin from "@/components/ui/top-margin.astro";
 import Layout from "@/layouts/layout.astro";
 import generateToc from "@/lib/generateToc";
 import { proseClasses } from "@/lib/prose-classes";
+import type { NavItem } from "@/types";
 export async function getStaticPaths() {
   const pages = await getCollection("Development_Current_Groups_Page");
 
-  return pages.map((page) => ({
+  return pages.map((page: CollectionEntry<"Development_Current_Groups_Page">) => ({
     params: { slug: page?.slug?.split("/")?.[0] },
     props: page,
   }));
@@ -31,19 +32,22 @@ const { Content, headings } = await page.render();
 
 const pages = await getCollection("Development_Current_Groups_Page");
 
-const nav: any = [];
+const nav: NavItem[] = [];
 
-pages.forEach((item) => {
+pages.forEach((item: CollectionEntry<"Development_Current_Groups_Page">) => {
   let mainLabel = item?.data?.category;
 
   mainLabel = mainLabel
     .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
-  const existingItem = nav.find((navItem: any) => navItem.label === mainLabel);
+  const existingItem = nav.find((navItem: NavItem) => navItem.label === mainLabel);
 
   if (existingItem) {
+    if (!existingItem.subItems) {
+      existingItem.subItems = [];
+    }
     existingItem.subItems.push({
       label: item.data.title,
       link: `/current-groups/${item.slug?.split("/")[0]}/`,
@@ -65,28 +69,31 @@ pages.forEach((item) => {
   }
 });
 
-nav.forEach((navItem: any) => {
+nav.forEach((navItem: NavItem) => {
   if (navItem.subItems && navItem.subItems.length > 0) {
-    navItem.subItems.forEach((subItem: any) => {
-      const slug =
-        subItem.link.split("/")[subItem.link.split("/").length - 3] +
-        "/" +
-        subItem.link.split("/")[subItem.link.split("/").length - 2];
+    navItem.subItems.forEach((subItem: NavItem) => {
+      if (subItem.link) {
+        const linkParts = subItem.link.split("/");
+        const slug =
+          linkParts[linkParts.length - 3] +
+          "/" +
+          linkParts[linkParts.length - 2];
+      }
     });
   }
 });
 
-function findPrevAndNextPages(nav: any, pathname: any) {
-  let allItems: any = [];
+function findPrevAndNextPages(nav: NavItem[], pathname: string) {
+  let allItems: NavItem[] = [];
 
-  nav.forEach((category: any) => {
+  nav.forEach((category: NavItem) => {
     if (category.subItems && category.subItems.length > 0) {
       allItems = allItems.concat(category.subItems);
     }
   });
 
   const currentIndex = allItems.findIndex(
-    (item: any) => item.link === pathname,
+    (item: NavItem) => item.link === pathname,
   );
 
   const prevIndex = currentIndex - 1;
@@ -129,11 +136,11 @@ const pathname = new URL(Astro.request.url).pathname;
             Back
           </a>
           {
-            nav?.map((navItem: any) => (
+            nav?.map((navItem: NavItem) => (
               <div class="flex flex-col gap-y-3">
                 <a
                   href={`${navItem.link}${
-                    navItem.subItems[0].link.split("/")[3]
+                    navItem.subItems?.[0]?.link?.split("/")?.[3] ?? ""
                   }/`}
                   class={`
                    
@@ -143,19 +150,21 @@ const pathname = new URL(Astro.request.url).pathname;
                 </a>
 
                 {navItem.subItems &&
-                  navItem.subItems.map((subItem: any) => (
-                    <div class="flex flex-col gap-y-3">
-                      <a
-                        class={`${
-                          pathname === subItem.link
-                            ? " text-primary"
-                            : "text-para"
-                        }  ml-3 rounded-lg py-1.5   text-base font-medium leading-[24px] `}
-                        href={`${subItem.link}`}
-                      >
-                        {subItem.label}
-                      </a>
-                    </div>
+                  navItem.subItems.map((subItem: NavItem) => (
+                    subItem.link ? (
+                      <div class="flex flex-col gap-y-3">
+                        <a
+                          class={`${
+                            pathname === subItem.link
+                              ? " text-primary"
+                              : "text-para"
+                          }  ml-3 rounded-lg py-1.5   text-base font-medium leading-[24px] `}
+                          href={subItem.link}
+                        >
+                          {subItem.label}
+                        </a>
+                      </div>
+                    ) : null
                   ))}
               </div>
             ))
@@ -179,13 +188,13 @@ const pathname = new URL(Astro.request.url).pathname;
                 <path
                   d="M2 14L8 14L14 14"
                   stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"></path>
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
                 <path
                   d="M8.15049 3.88559L10.0361 1.99997L13.3359 5.2998L11.4503 7.18542M8.15049 3.88559L4.51039 7.52569C4.32285 7.71323 4.21749 7.96758 4.21749 8.2328L4.21749 11.1184L7.10311 11.1184C7.36833 11.1184 7.62268 11.0131 7.81022 10.8255L11.4503 7.18542M8.15049 3.88559L11.4503 7.18542"
                   stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"></path>
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
               </svg>
               Edit page on github</a
             >

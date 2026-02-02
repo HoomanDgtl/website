@@ -1,4 +1,5 @@
 import type { RemarkPlugin } from "@astrojs/markdown-remark";
+import type { Node, Parent } from "unist";
 import { visit } from "unist-util-visit";
 
 const stripBalancedTicks = (value: string) => {
@@ -51,22 +52,37 @@ const asMathHtml = (value: string, display: boolean) => {
 };
 
 export const normalizeMath: RemarkPlugin<[]> = () => (tree) => {
-  visit(tree, (node: any, index: number | null, parent: any) => {
-    if (!parent || typeof index !== "number") return;
+  visit(
+    tree,
+    (
+      node: Node & { type?: string; lang?: string; value?: string },
+      index: number | null,
+      parent: Parent | undefined,
+    ) => {
+      if (!parent || typeof index !== "number") return;
 
-    const language = typeof node.lang === "string" ? node.lang.toLowerCase() : undefined;
+      const language =
+        typeof node.lang === "string" ? node.lang.toLowerCase() : undefined;
 
-    if (node.type === "code" && typeof node.value === "string" && language === "math") {
-      const html = asMathHtml(node.value, true);
+      if (
+        node.type === "code" &&
+        typeof node.value === "string" &&
+        language === "math"
+      ) {
+        const html = asMathHtml(node.value, true);
+        parent.children[index] = { type: "html", value: html };
+        return;
+      }
+
+      if (
+        (node.type !== "inlineMath" && node.type !== "math") ||
+        typeof node.value !== "string"
+      ) {
+        return;
+      }
+
+      const html = asMathHtml(node.value, node.type === "math");
       parent.children[index] = { type: "html", value: html };
-      return;
-    }
-
-    if ((node.type !== "inlineMath" && node.type !== "math") || typeof node.value !== "string") {
-      return;
-    }
-
-    const html = asMathHtml(node.value, node.type === "math");
-    parent.children[index] = { type: "html", value: html };
-  });
+    },
+  );
 };

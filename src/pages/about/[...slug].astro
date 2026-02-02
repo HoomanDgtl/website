@@ -21,8 +21,10 @@ const page = Astro.props;
 
 const { Content, headings } = await page.render();
 
+import type { NavItem } from "@/types";
+
 const pageIndex = nav.findIndex(
-  (item: any) => item.link === `/about/${page.slug}/`,
+  (item: NavItem) => item.link === `/about/${page.slug}/`,
 );
 
 if (pageIndex !== -1) {

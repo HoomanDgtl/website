@@ -1,9 +1,11 @@
+import type { CoinGeckoResponse } from "@/types";
+
 const TokenMetricsSection = ({
   data,
   isLoading,
   isError,
 }: {
-  data: any;
+  data: CoinGeckoResponse | null | undefined;
   isLoading: boolean;
   isError: boolean;
 }) => {
@@ -13,51 +15,53 @@ const TokenMetricsSection = ({
       value: data?.market_data?.circulating_supply,
       format: (value: number) =>
         value
-          ?.toString()
-          ?.split(".")[0]
-          ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          .toString()
+          .split(".")[0]
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
     },
     {
       title: "Total Supply",
       value: data?.market_data?.total_supply,
       format: (value: number) =>
         value
-          ?.toString()
-          ?.split(".")[0]
-          ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          .toString()
+          .split(".")[0]
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
     },
     {
       title: "Maximum Supply",
-      value: data?.market_data?.max_supply,
-      format: (value: number) =>
+      value: data?.market_data?.max_supply ?? null,
+      format: (value: number | null) =>
         value
-          ?.toString()
-          ?.split(".")[0]
-          ?.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          ? value
+              .toString()
+              .split(".")[0]
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          : "N/A",
     },
     {
       title: "Price",
       value: data?.market_data?.current_price.usd,
       format: (value: number) =>
         `$${value
-          ?.toFixed(2)
-          ?.toString()
-          ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+          .toFixed(2)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
     },
     {
       title: "Market Cap",
       value: data?.market_data?.market_cap.usd,
       format: (value: number) =>
         `$${value
-          ?.toString()
-          ?.split(".")[0]
-          ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+          .toString()
+          .split(".")[0]
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
     },
     {
       title: "24h Trading Volume",
       value: data?.market_data?.total_volume.usd,
       format: (value: number) =>
-        `$${value?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+        `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
     },
   ];
 
@@ -69,8 +73,8 @@ const TokenMetricsSection = ({
         </h2>
         <p className="mt-4 text-center text-sm leading-[20px] md:text-base lg:text-lg lg:leading-[32px]">
           As of{" "}
-          {data
-            ? new Date(data?.market_data?.last_updated).toUTCString()
+          {data?.market_data?.last_updated
+            ? new Date(data.market_data.last_updated).toUTCString()
             : "Sat Jan 7 07:57:36 UTC"}
           {", "}
           the following are the AKT metrics, as reported by Coingecko.
@@ -89,9 +93,17 @@ const TokenMetricsSection = ({
               </p>
               <Skeleton
                 isError={isError}
-                number={data && metric.format(metric.value)}
+                number={
+                  data && metric.value !== null && metric.value !== undefined
+                    ? metric.format(metric.value as number)
+                    : undefined
+                }
                 isLoading={isLoading}
-                isNumber={metric.value}
+                isNumber={
+                  metric.value !== null && metric.value !== undefined
+                    ? (metric.value as number)
+                    : undefined
+                }
               />
             </div>
           ))}
@@ -124,7 +136,7 @@ const Skeleton = ({
   isLoading: boolean;
   number?: string;
   isError: boolean;
-  isNumber?: number;
+  isNumber?: number | null;
 }) => {
   return (
     <h4 className="mt-2 text-2xl font-medium leading-none md:text-3xl md:font-medium">

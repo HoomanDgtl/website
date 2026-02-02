@@ -5,8 +5,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function findPrevAndNextPages(nav: any, pathname: any) {
-  const currentIndex = nav.findIndex((item: any) => item.link === pathname);
+import type { NavItem, PrevNextPages } from "@/types";
+
+export function findPrevAndNextPages(
+  nav: NavItem[],
+  pathname: string,
+): PrevNextPages {
+  const currentIndex = nav.findIndex(
+    (item: NavItem) => item.link === pathname,
+  );
 
   const prevIndex = currentIndex - 1;
   const nextIndex = currentIndex + 1;

@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import type { RoadmapEntry } from "@/types";
 
 interface QuarterNavigationProps {
   quarters: {
-    Q1: any[];
-    Q2: any[];
-    Q3: any[];
-    Q4: any[];
+    Q1: RoadmapEntry[];
+    Q2: RoadmapEntry[];
+    Q3: RoadmapEntry[];
+    Q4: RoadmapEntry[];
   };
 }
 
