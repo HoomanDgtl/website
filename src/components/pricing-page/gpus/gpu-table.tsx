@@ -445,7 +445,7 @@ export const Tables = ({
                 <div className={
                   clsx(
                     "bg-[#F5F5F5] dark:bg-background2 w-fit px-4 py-0.5 md:py-1 font-medium  mb-1 md:!mb-0 rounded-full ",
-                    i === 0 ? "mt-[14px] md:mt-4" : "mt-[32px] md:mt-10"
+                    i === 0 ? "mt-[14px] md:mt-4" : "mt-10"
                   )
                 }>
                   <h3 className="text-para text-sm">
