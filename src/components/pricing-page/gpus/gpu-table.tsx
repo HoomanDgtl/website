@@ -435,14 +435,19 @@ export const Tables = ({
       return (
         <>
           {/* Render grouped VRAM sections */}
-          {vramGroups.map((groupName) => {
+          {vramGroups.map((groupName, i) => {
             const groupModels = normalizedData?.groupedByVram?.[groupName] || [];
             if (groupModels.length === 0) return null;
 
             return (
               <React.Fragment key={groupName}>
                 {/* VRAM Group Header */}
-                <div className="bg-[#F5F5F5] dark:bg-background2 w-fit px-4 py-0.5 md:py-1 font-medium mt-[14px] mb-1 md:!mb-0 rounded-full md:mt-10">
+                <div className={
+                  clsx(
+                    "bg-[#F5F5F5] dark:bg-background2 w-fit px-4 py-0.5 md:py-1 font-medium mt-[14px] mb-1 md:!mb-0 rounded-full ",
+                    i === 0 ? "md:mt-4" : "md:mt-10"
+                  )
+                }>
                   <h3 className="text-para text-sm">
                     {groupName} VRAM
                   </h3>
