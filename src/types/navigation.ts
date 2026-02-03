@@ -13,6 +13,7 @@ export interface NavItem {
   enabled?: boolean;
   weight?: number;
   type?: string;
+  meetings?: Array<{ title: string; link: string; label?: string }>;
 }
 
 /**
@@ -47,3 +48,9 @@ export interface PrevNextPages {
   prevPage: NavItem | null;
   nextPage: NavItem | null;
 }
+
+/**
+ * Navigation configuration array type
+ * Used for nav config files
+ */
+export type NavConfig = NavItem[];

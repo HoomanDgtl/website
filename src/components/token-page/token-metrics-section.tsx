@@ -1,15 +1,11 @@
-
-import type { CoinGeckoResponse } from "@/types";
-
+import type { CoinGeckoTokenData } from "@/types/components";
 
 const TokenMetricsSection = ({
   data,
   isLoading,
   isError,
 }: {
-
-  data: CoinGeckoResponse | null | undefined;
-
+  data: CoinGeckoTokenData | null | undefined;
   isLoading: boolean;
   isError: boolean;
 }) => {

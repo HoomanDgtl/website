@@ -153,7 +153,7 @@ function SideNav({
       {nav.map((navItem: NavItem) => (
         <div className="flex flex-col gap-y-3">
           <a
-            href={`${navItem.link}${navItem.subItems?.[0]?.link.split("/")[3]}/`}
+            href={`${navItem.link}${navItem.subItems?.[0]?.link?.split("/")[3]}/`}
             className={`
                    
               border-b  pb-3 pt-[8px] text-base font-medium leading-[24px]  `}
@@ -162,6 +162,7 @@ function SideNav({
           </a>
 
           {navItem.subItems &&
+            navItem.link &&
             currentPath.split("/")[2] === navItem.link.split("/")[2] &&
             navItem.subItems?.map((subItem: NavItem) => (
               <div className="flex flex-col gap-y-3">
@@ -175,9 +176,10 @@ function SideNav({
                 </a>
 
                 {subItem.meetings &&
+                  subItem.link &&
                   currentPath.split("/")[3] === subItem.link.split("/")[3] &&
                   subItem.meetings
-                    .map((meeting) => {
+                    .map((meeting: { title: string; link: string; label?: string }) => {
                       // Extract the date part from the title (assuming the format is '001-2023-01-25')
                       const dateString = meeting.title
                         .split("-")
@@ -194,7 +196,7 @@ function SideNav({
                       };
                     })
                     .sort((a: { date: Date }, b: { date: Date }) => b.date.getTime() - a.date.getTime() as number)
-                    .map((meeting: { label: string; link: string; date: Date, title: string }) => (
+                    .map((meeting: { label?: string; link: string; date: Date, title: string }) => (
                       <a
                         href={`/current-groups/meetings/${meeting.link}`}
                         className={`${

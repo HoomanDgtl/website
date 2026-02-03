@@ -14,3 +14,13 @@ export interface ReadyToDeployCard {
   description: string;
 
 }
+
+/**
+ * Roadmap quarters type
+ */
+export type RoadmapQuarters = {
+  Q1: RoadmapEntry[];
+  Q2: RoadmapEntry[];
+  Q3: RoadmapEntry[];
+  Q4: RoadmapEntry[];
+};

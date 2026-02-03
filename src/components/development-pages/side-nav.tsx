@@ -26,7 +26,7 @@ export function SideNav({ currentPath }: { currentPath: string }) {
                       <a
                         href={item.link}
                         className={` ${
-                          currentPath.startsWith(item.link)
+                          item.link && currentPath.startsWith(item.link)
                             ? "bg-primary/10"
                             : null
                         }  block rounded-md px-2  py-1 text-xs

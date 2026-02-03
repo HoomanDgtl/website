@@ -2,7 +2,7 @@ import QuarterNavigation from "@/components/QuarterNavigation";
 import RoadmapCard from "@/components/roadmap/roadmap-card";
 import YearSelector from "@/components/roadmap/YearSelector";
 
-import type { RoadmapEntry } from "@/types";
+import type { RoadmapEntry, RoadmapQuarters } from "@/types";
 
 import { useMemo, useState } from "react";
 
@@ -92,7 +92,7 @@ export default function Roadmap({ year, quarters, years }: Props) {
           <div className="absolute -top-9 left-5 right-0 flex h-full bg-line-dashed bg-center bg-repeat-y dark:bg-line-dashed-dark md:-top-3 md:left-0 md:right-auto md:w-full"></div>
           <div className="relative z-[1] flex flex-col gap-6 border-l border-[#F0F1F2] md:gap-10 md:border-l-0 md:pt-10">
             {Object.entries(filteredQuarters).map(
-              ([quarter, roadmaps]) =>
+              ([quarter, roadmaps]: [string, RoadmapEntry[]]) =>
                 roadmaps.length > 0 && (
                   <div
                     key={quarter}

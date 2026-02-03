@@ -6,17 +6,8 @@ import {
 } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { TokenSectionsProps, CoinGeckoTokenData } from "@/types/components";
-import type { TokenData } from "@/types/store";
 import BuyAktButton from "./buy-akt-modal";
 import TokenMetricsSection from "./token-metrics-section";
-
-
-interface SectionProps {
-  aktFeaturesSection: Record<string, unknown>;
-  buyingAKTSection: Record<string, unknown>;
-  faqsSection: Record<string, unknown>;
-  url: string;
-}
 
 
 const Sections = ({
@@ -44,11 +35,9 @@ const Query = ({
   buyingAKTSection,
   faqsSection,
   url,
-
-}: SectionProps) => {
+}: TokenSectionsProps) => {
   const token = useStorage((state) => state?.token);
   const setToken = useStorage((state) => state?.setToken);
-
 
   const [enabled, setEnabled] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date().getTime());
@@ -72,7 +61,8 @@ const Query = ({
 
   useEffect(() => {
     if (data && data.time !== token?.time) {
-      const tokenData: TokenData = {
+      const tokenData = {
+        ...data,
         time: new Date().getTime(),
       };
       setToken(tokenData);

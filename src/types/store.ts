@@ -18,3 +18,8 @@ export interface IStore {
   setDocsLinkTracks: (data: { [link: string]: boolean }) => void;
 
 }
+
+/**
+ * Token data type alias
+ */
+export type TokenData = TokenState;
