@@ -8,7 +8,6 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "type-check": "tsc --noEmit",
     "astro": "astro"
   },
   "dependencies": {
@@ -54,6 +53,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^1.0.4",
+    "dayjs": "^1.11.19",
     "firebase": "^11.0.2",
     "fuse.js": "^6.6.2",
     "hastscript": "^8.0.0",

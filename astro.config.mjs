@@ -8,13 +8,14 @@ import remarkDirective from "remark-directive";
 import remarkMath from "remark-math";
 import { customAsidePlugin } from "./src/lib/aside/customAsidePlugin";
 import { normalizeMath } from "./src/lib/markdown/normalizeMath";
+import { remarkModifiedTime } from "./src/lib/remark-modified-time.mjs";
 import { mermaid } from "./src/utils/mermaid";
 import { redirects } from "./src/utils/redirects";
 
 export default defineConfig({
   redirects: redirects,
   markdown: {
-    remarkPlugins: [remarkMath, normalizeMath, remarkDirective, mermaid, customAsidePlugin],
+    remarkPlugins: [remarkMath, normalizeMath, remarkDirective, mermaid, customAsidePlugin, remarkModifiedTime],
   },
   integrations: [
     tailwind(),
