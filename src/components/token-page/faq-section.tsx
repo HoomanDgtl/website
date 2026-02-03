@@ -78,9 +78,7 @@ const FaqSection = ({
   isLoading,
   isError,
 }: {
-
-  data: Record<string, unknown> | null | undefined;
-
+  data: CoinGeckoTokenData | null | undefined;
   isLoading: boolean;
   isError: boolean;
 }) => {
