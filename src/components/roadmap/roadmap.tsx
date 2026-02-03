@@ -1,7 +1,9 @@
 import QuarterNavigation from "@/components/QuarterNavigation";
 import RoadmapCard from "@/components/roadmap/roadmap-card";
 import YearSelector from "@/components/roadmap/YearSelector";
+
 import type { RoadmapEntry } from "@/types";
+
 import { useMemo, useState } from "react";
 
 type Props = {
@@ -12,6 +14,7 @@ type Props = {
     Q3: RoadmapEntry[];
     Q4: RoadmapEntry[];
   };
+
   years: number[];
 };
 
@@ -26,8 +29,9 @@ export default function Roadmap({ year, quarters, years }: Props) {
       return quarters;
     }
 
-    const filtered = {
+    const filtered: RoadmapQuarters = {
       Q1: quarters.Q1.filter(
+
         (roadmap: RoadmapEntry) => roadmap.data.roadmap === "major",
       ),
       Q2: quarters.Q2.filter(
@@ -38,6 +42,7 @@ export default function Roadmap({ year, quarters, years }: Props) {
       ),
       Q4: quarters.Q4.filter(
         (roadmap: RoadmapEntry) => roadmap.data.roadmap === "major",
+
       ),
     };
     return filtered;
@@ -95,7 +100,9 @@ export default function Roadmap({ year, quarters, years }: Props) {
                     data-quarter={quarter}
                   >
                     <div className="flex w-full flex-col gap-10">
+
                       {roadmaps.map((roadmap: RoadmapEntry) => (
+
                         <div
                           key={roadmap.slug}
                           className="flex flex-col items-start gap-4 md:flex-row md:gap-10"

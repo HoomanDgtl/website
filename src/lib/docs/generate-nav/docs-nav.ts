@@ -1,10 +1,12 @@
 import { docsSequence } from "@/content/Docs/_sequence";
 import type { CollectionEntry } from "astro:content";
+
 import type { NavItem, SequenceItem } from "@/types";
 
 const abriviations: {
   [key: string]: string;
 } = {
+
   cli: "CLI",
   api: "API",
   sdk: "SDK",
@@ -96,7 +98,7 @@ export function processPage(
     currentItem.label = indexLinkTitle;
   }
 
-  processPage(currentItem.subItems, idParts, currentIndex + 1, link, linkTitle, weight, indexLinkTitles);
+  processPage(currentItem.subItems || [], idParts, currentIndex + 1, link, linkTitle, weight, indexLinkTitles);
 }
 
 export const generateDocsNav = (
@@ -135,7 +137,9 @@ export const generateDocsNav = (
   function updateLinks(navArray: NavItem[]): NavItem[] {
     return navArray.map((item: NavItem) => ({
       ...item,
+
       link: item.link?.endsWith("/") ? item.link : `${item.link}/`,
+
       subItems: item.subItems ? updateLinks(item.subItems) : undefined,
     }));
   }
@@ -196,13 +200,17 @@ export const generateDocsNav = (
 
   function reorderNav(
     navItem: NavItem[],
+
     navSequence: SequenceItem[],
+
   ): NavItem[] {
     const navMap = new Map<string, NavItem>();
     navItem.forEach((item: NavItem) => navMap.set(item.label, item));
 
     const orderedNav = navSequence
+
       .map((seqItem: SequenceItem) => {
+
         // Skip headers in the output
         if (seqItem.type === "Header") {
           return null;
@@ -214,7 +222,7 @@ export const generateDocsNav = (
           if (item.subItems && item.subItems.length > 0) {
             if (seqItem.subItems && seqItem.subItems.length > 0) {
               // Recursively reorder subItems based on sequence, then sort by weight
-              item.subItems = reorderNav(item.subItems, seqItem.subItems);
+              item.subItems = reorderNav(item.subItems, seqItem.subItems as Array<{ label: string; type?: string; subItems?: unknown[] }>);
             }
             // Always sort by weight, regardless of whether sequence has subItems
             item.subItems = sortByWeight(item.subItems);
@@ -223,7 +231,9 @@ export const generateDocsNav = (
         }
         return null;
       })
+
       .filter((item): item is NavItem => item !== null && item !== undefined);
+
 
     // Add items not present in navSequence to the end of orderedNav
     // Sort them by weight before adding
@@ -257,11 +267,13 @@ export const generateDocsNav = (
   const { subItems: docsSeq } = docsSequence[0];
   
   // Add items in sequence order
+
   docsSeq.forEach((seqItem: SequenceItem) => {
     if (seqItem.type === "Header") return; // Skip headers
     if (navMap.has(seqItem.label)) {
       orderedTopLevel.push(navMap.get(seqItem.label)!);
       navMap.delete(seqItem.label);
+
     }
   });
   
@@ -277,6 +289,7 @@ export const generateDocsNav = (
     {
       label: "Docs",
       link: "/docs/",
+      enabled: true,
       subItems: navWithLabels,
     },
   ];

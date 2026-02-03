@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type { IStore, TokenState, GpuState } from "@/types";
 
+
 export const useStorage = create<IStore>()(
   devtools(
     persist(

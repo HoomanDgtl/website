@@ -10,6 +10,10 @@ import { customAsidePlugin } from "./src/lib/aside/customAsidePlugin";
 import { normalizeMath } from "./src/lib/markdown/normalizeMath";
 import { mermaid } from "./src/utils/mermaid";
 import { redirects } from "./src/utils/redirects";
+import { getLastmodMap } from "./src/utils/sitemap-lastmod";
+
+// Build the lastmod map at config load time
+const lastmodMapPromise = getLastmodMap();
 
 export default defineConfig({
   redirects: redirects,
@@ -24,6 +28,7 @@ export default defineConfig({
           // Use dynamic import to avoid evaluating astro:content at config load time
           const { getLastmodMap } = await import("./src/utils/sitemap-lastmod.ts");
           const lastmodMap = await getLastmodMap();
+
           const urlPath = new URL(item.url).pathname;
           // Try both with and without trailing slash for robust matching
           const normalizedPath = urlPath.endsWith("/") ? urlPath : `${urlPath}/`;

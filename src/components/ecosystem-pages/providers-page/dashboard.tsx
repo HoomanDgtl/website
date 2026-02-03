@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { IntlProvider } from "react-intl";
 
 import { Skeleton } from "@/components/ui/skeleton";
+
 import type { ApiProviderList } from "@/types";
+
 import ProvidersCard from "./card";
 import SortDropDown from "./sort-dropdown";
 import { useProviderList } from "./useProviderList";
@@ -46,9 +48,11 @@ function ProviderListContent({ pathName }: ProviderListProps) {
 
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState<string>("active-leases-desc");
+
   const [filteredProviders, setFilteredProviders] = useState<ApiProviderList[]>(
     [],
   );
+
   const [search, setSearch] = useState("");
   const [isFilteringActive, setIsFilteringActive] = useState(true);
   const [isFilteringAudited, setIsFilteringAudited] = useState(false);

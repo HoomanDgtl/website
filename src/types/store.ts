@@ -1,3 +1,4 @@
+
 export interface TokenState {
   time: number;
   [key: string]: unknown;
@@ -15,4 +16,5 @@ export interface IStore {
   setGpu: (gpu: GpuState) => void;
   docsLinkTracks: { [link: string]: boolean };
   setDocsLinkTracks: (data: { [link: string]: boolean }) => void;
+
 }

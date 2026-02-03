@@ -45,44 +45,35 @@ const asMathHtml = (value: string, display: boolean) => {
   }
 
   const escaped = escapeHtml(normalized);
-
   return display
-    ? `<div class="math-display">\\[${escaped}\\]</div>`
-    : `<span class="math-inline">\\(${escaped}\\)</span>`;
+    ? `<div class="math math-display">\\[${escaped}\\]</div>`
+    : `<span class="math math-inline">\\(${escaped}\\)</span>`;
 };
 
 export const normalizeMath: RemarkPlugin<[]> = () => (tree) => {
-  visit(
-    tree,
-    (
-      node: Node & { type?: string; lang?: string; value?: string },
-      index: number | null,
-      parent: Parent | undefined,
-    ) => {
-      if (!parent || typeof index !== "number") return;
+  visit(tree, (node, index, parent) => {
+    if (!parent || typeof index !== "number") return;
 
+    // Handle code blocks with language="math"
+    if (node.type === "code" && "lang" in node && "value" in node) {
+      const codeNode = node as { type: string; lang?: string | null; value: string };
       const language =
-        typeof node.lang === "string" ? node.lang.toLowerCase() : undefined;
+        typeof codeNode.lang === "string" ? codeNode.lang.toLowerCase() : undefined;
 
-      if (
-        node.type === "code" &&
-        typeof node.value === "string" &&
-        language === "math"
-      ) {
-        const html = asMathHtml(node.value, true);
-        parent.children[index] = { type: "html", value: html };
+      if (language === "math" && typeof codeNode.value === "string") {
+        const html = asMathHtml(codeNode.value, true);
+        parent.children[index] = { type: "html", value: html } as unknown as typeof node;
         return;
       }
+    }
 
-      if (
-        (node.type !== "inlineMath" && node.type !== "math") ||
-        typeof node.value !== "string"
-      ) {
-        return;
+    // Handle inline math and display math nodes
+    if ((node.type === "inlineMath" || node.type === "math") && "value" in node) {
+      const mathNode = node as { type: string; value: string };
+      if (typeof mathNode.value === "string") {
+        const html = asMathHtml(mathNode.value, mathNode.type === "math");
+        parent.children[index] = { type: "html", value: html } as unknown as typeof node;
       }
-
-      const html = asMathHtml(node.value, node.type === "math");
-      parent.children[index] = { type: "html", value: html };
-    },
-  );
+    }
+  });
 };

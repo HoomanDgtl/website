@@ -12,4 +12,5 @@ export interface WhyChooseCard {
 export interface ReadyToDeployCard {
   title: string;
   description: string;
+
 }

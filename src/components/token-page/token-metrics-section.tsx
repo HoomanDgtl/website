@@ -1,11 +1,15 @@
+
 import type { CoinGeckoResponse } from "@/types";
+
 
 const TokenMetricsSection = ({
   data,
   isLoading,
   isError,
 }: {
+
   data: CoinGeckoResponse | null | undefined;
+
   isLoading: boolean;
   isError: boolean;
 }) => {
@@ -41,7 +45,7 @@ const TokenMetricsSection = ({
     },
     {
       title: "Price",
-      value: data?.market_data?.current_price.usd,
+      value: data?.market_data?.current_price?.usd,
       format: (value: number) =>
         `$${value
           .toFixed(2)
@@ -50,7 +54,7 @@ const TokenMetricsSection = ({
     },
     {
       title: "Market Cap",
-      value: data?.market_data?.market_cap.usd,
+      value: data?.market_data?.market_cap?.usd,
       format: (value: number) =>
         `$${value
           .toString()
@@ -59,7 +63,7 @@ const TokenMetricsSection = ({
     },
     {
       title: "24h Trading Volume",
-      value: data?.market_data?.total_volume.usd,
+      value: data?.market_data?.total_volume?.usd,
       format: (value: number) =>
         `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
     },
@@ -93,11 +97,13 @@ const TokenMetricsSection = ({
               </p>
               <Skeleton
                 isError={isError}
+
                 number={
                   data && metric.value !== null && metric.value !== undefined
                     ? metric.format(metric.value as number)
                     : undefined
                 }
+
                 isLoading={isLoading}
                 isNumber={
                   metric.value !== null && metric.value !== undefined
