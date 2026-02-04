@@ -94,9 +94,13 @@ function ProviderListContent({ pathName }: ProviderListProps) {
           return a.leaseCount - b.leaseCount;
         case "gpu-available-desc":
           const totalGpuB =
-            b.availableStats.gpu + b.pendingStats.gpu + b.activeStats.gpu;
+            (b.availableStats?.gpu ?? 0) +
+            (b.pendingStats?.gpu ?? 0) +
+            (b.activeStats?.gpu ?? 0);
           const totalGpuA =
-            a.availableStats.gpu + a.pendingStats.gpu + a.activeStats.gpu;
+            (a.availableStats?.gpu ?? 0) +
+            (a.pendingStats?.gpu ?? 0) +
+            (a.activeStats?.gpu ?? 0);
           return totalGpuB - totalGpuA;
         default:
           return 0;
