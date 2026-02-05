@@ -6,7 +6,7 @@ import { useLockBody } from "../use-lock-body";
 const navigation = [
   { name: "Development", href: "#" },
   { name: "Community", href: "#" },
-  { name: "Ecosystem", href: "/ecosystem" },
+  { name: "Ecosystem", href: "/ecosystem/akash-tools/" },
   { name: "Token", href: "/token" },
   { name: "Blog", href: "/blog" },
   { name: "Docs", href: "#" },
