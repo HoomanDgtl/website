@@ -27,6 +27,21 @@ projects.forEach((project) => {
     }
   });
 });
+const softwareListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: projects.map((project, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "SoftwareApplication",
+      name: project.data.projectTitle,
+      description: project.data.description,
+      applicationCategory: project.data.tags.join(", "),
+      url: project.data.websiteLink,
+    },
+  })),
+};
 ---
 
 <EcosystemPage
@@ -34,4 +49,9 @@ projects.forEach((project) => {
   tags={tags}
   projects={projects}
   type="tool"
-/>
+>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(softwareListSchema)}
+  />
+</EcosystemPage>

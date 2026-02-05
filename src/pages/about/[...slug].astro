@@ -6,6 +6,53 @@ import TopMargin from "@/components/ui/top-margin.astro";
 import Layout from "@/layouts/layout.astro";
 import { proseClasses } from "@/lib/prose-classes";
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is Akash Network?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Akash Network is a decentralized cloud marketplace for compute resources.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does Akash Network work?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It connects users who need compute resources (tenants) with providers who have spare capacity, similar to an Airbnb for data centers.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What are the key components of Akash Network?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The key components are Akash Providers (who manage infrastructure), the Akash Network (the marketplace platform), and Akash Tenants (who deploy applications).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How is Akash Network different from traditional cloud providers?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Akash Network provides greater flexibility and cost-effectiveness, avoiding vendor lock-in compared to traditional, centralized providers like AWS.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What challenges does Akash Network address?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "It solves infrastructure underutilization for providers through an on-demand marketplace and simplifies the deployment process for users, creating a more streamlined and accessible cloud ecosystem.",
+      },
+    },
+  ],
+};
+
 export async function getStaticPaths() {
   const pages = await getCollection("About_Page");
 
@@ -43,6 +90,7 @@ if (pageIndex !== -1) {
   description="Learn about Akash Network's mission, values, and the vision for revolutionizing cloud computing through decentralization. Explore our journey and commitment to a more open and inclusive cloud infrastructure."
   image="/meta-images/about.png"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <TopMargin>
     <div class="space-y-10">
       <h1 id="overview" class="mt-10 text-3xl md:mt-0 md:text-4xl lg:text-5xl">
