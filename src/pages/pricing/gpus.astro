@@ -1,6 +1,68 @@
 ---
 import GpuTable from "@/components/pricing-page/gpus/gpu-table";
 import PricingHeader from "@/components/pricing-page/pricing-header.astro";
+import { gpus as gpuApi } from "@/utils/api";
+
+interface GpuModel {
+  vendor: string;
+  model: string;
+  ram: string;
+  interface: string;
+  availability: { total: number; available: number };
+  price: {
+    avg: number;
+  };
+}
+
+const response = await fetch(gpuApi);
+const gpusData = await response.json();
+
+const productSchemas = gpusData.models.map((gpu: GpuModel) => ({
+  "@type": "Product",
+  name: `NVIDIA ${gpu.model.toUpperCase()}`,
+  description: `High-performance NVIDIA ${gpu.model.toUpperCase()} GPU with ${gpu.ram} RAM available for rent on the Akash Network.`,
+  offers: {
+    "@type": "Offer",
+    price: gpu.price.avg.toFixed(2),
+    priceCurrency: "USD",
+    availability:
+      gpu.availability.available > 0
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+  },
+}));
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "GPU Pricing and Availability on Akash Network",
+  description:
+    "Browse the list of available GPUs, including their specifications and real-time hourly pricing on the Akash decentralized cloud.",
+  mainEntity: [
+    ...productSchemas,
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How does Akash GPU pricing work?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Akash Network uses a decentralized marketplace where providers set GPU prices based on supply and demand, ensuring competitive rates.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What GPUs are available on Akash Network?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Akash Network offers a wide range of NVIDIA GPUs, including the H100, A100, and various RTX models, to suit different computational needs.",
+          },
+        },
+      ],
+    },
+  ],
+};
 ---
 
 <PricingHeader
@@ -8,5 +70,6 @@ import PricingHeader from "@/components/pricing-page/pricing-header.astro";
   description=" Browse the list of available GPUs along with their hourly rates."
   image="/meta-images/pricing/gpu.jpg"
 >
-  <GpuTable initialData={null} client:load counts />
+  <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+  <GpuTable initialData={gpusData} client:load counts />
 </PricingHeader>
