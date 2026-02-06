@@ -128,7 +128,7 @@ Each commit message should carry a meaningful structure, commencing with a type 
 
 1. Create a new folder under `src/content/Blog/` with the name of the blog. For example, `src/content/Blog/how-to-use-akash-web/`
 2. Create a new file called `index.md` under the new folder. For example, `src/content/Blog/how-to-use-akash-web/index.md`
-3. Copy the following template into the new file and fill in the details.
+3. Copy the following template into the new file and fill in the details..
 
 ```md
 ---
