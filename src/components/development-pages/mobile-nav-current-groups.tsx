@@ -5,7 +5,7 @@ import { useLockBody } from "../use-lock-body";
 const navigation = [
   { name: "Development", href: "#" },
   { name: "Community", href: "#" },
-  { name: "Ecosystem", href: "/ecosystem" },
+  { name: "Ecosystem", href: "/ecosystem/akash-tools" },
   { name: "Token", href: "/token" },
   { name: "Blog", href: "/blog" },
   { name: "Docs", href: "#" },
@@ -176,7 +176,7 @@ function SideNav({
                 {subItem.meetings &&
                   currentPath.split("/")[3] === subItem.link.split("/")[3] &&
                   subItem.meetings
-                    .map((meeting) => {
+                    .map((meeting: any) => {
                       // Extract the date part from the title (assuming the format is '001-2023-01-25')
                       const dateString = meeting.title
                         .split("-")
@@ -192,7 +192,7 @@ function SideNav({
                         date: dateObject,
                       };
                     })
-                    .sort((a, b) => b.date - a.date)
+                    .sort((a: any, b: any) => b.date - a.date)
                     .map((meeting: any) => (
                       <a
                         href={`/current-groups/meetings/${meeting.link}`}
