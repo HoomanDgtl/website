@@ -17,7 +17,9 @@ export default function AkashClubContent() {
                     </div>
                     <div className="flex justify-center py-5">
                         <a
-                            href="#"
+                            href="https://discord.com/invite/akash"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 rounded-lg bg-[#f5f5f5] dark:bg-background2 px-8 py-2.5 text-sm font-medium text-[#171717] dark:text-foreground transition-colors hover:bg-[#ebebeb]"
                         >
                             Join the Club &amp; Start Building

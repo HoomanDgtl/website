@@ -88,14 +88,16 @@ export default function DevelopersContent() {
                 {/* Buttons */}
                 <div className="flex flex-wrap items-center justify-center gap-4 py-6">
                     <a
-                        href="#"
+                        href="https://console.akash.network/"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 rounded-lg bg-[#171717] dark:bg-background2 px-8 py-2.5 text-sm font-medium text-[#fafafa] dark:text-foreground transition-colors hover:bg-[#333]"
                     >
                         Deploy Now on Console
                         <ArrowUpRightIcon className="h-4 w-4" />
                     </a>
                     <a
-                        href="#"
+                        href="/docs"
                         className="inline-flex items-center gap-2 rounded-lg bg-[#f5f5f5] dark:bg-background2 px-8 py-2.5 text-sm font-medium text-[#171717] dark:text-foreground transition-colors hover:bg-[#ebebeb]"
                     >
                         View Documentation

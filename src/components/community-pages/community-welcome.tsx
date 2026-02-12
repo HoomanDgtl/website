@@ -240,13 +240,13 @@ function HowToBuildTabs({
                 How do you want to build?
             </h2>
             {/* Tab Pills */}
-            <div className="w-full rounded-2xl sm:rounded-full bg-[#f5f5f7] dark:bg-background2 p-2">
-                <div className="flex flex-col items-stretch gap-0 sm:flex-row">
+            <div className="w-full overflow-x-auto rounded-full bg-[#f5f5f7] dark:bg-background2 p-2 scrollbar-hide sm:overflow-x-visible">
+                <div className="flex min-w-max items-stretch gap-2 sm:min-w-0 sm:w-full">
                     {tabs.map((tab) => (
                         <button
                             key={tab.key}
                             onClick={() => setActiveTab(tab.key)}
-                            className={`flex flex-1 items-center justify-center gap-4 rounded-2xl sm:rounded-full px-6 py-4 transition-all sm:px-10 ${activeTab === tab.key
+                            className={`flex shrink-0 sm:flex-1 items-center justify-center gap-4 rounded-full px-6 py-4 transition-all sm:px-10 ${activeTab === tab.key
                                 ? "bg-white dark:bg-background shadow-sm"
                                 : "hover:bg-white/50 dark:hover:bg-black/10"
                                 }`}
@@ -418,14 +418,18 @@ function CTASection() {
                     </div>
                     <div className="flex flex-wrap items-center justify-center gap-4">
                         <a
-                            href="#"
+                            href="https://discord.com/invite/akash"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 rounded-lg bg-[#f5f5f5] dark:bg-background2 px-4 py-2 text-sm font-medium text-[#171717] dark:text-foreground transition-colors hover:bg-[#ebebeb]"
                         >
                             Join the Akash Club
                             <ArrowUpRightIcon className="h-4 w-4" />
                         </a>
                         <a
-                            href="#"
+                            href="https://akashnet.typeform.com/to/PXpRWgfD?typeform-source=akash.network"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 rounded-lg bg-[#f5f5f5] dark:bg-background2 px-4 py-2 text-sm font-medium text-[#171717] dark:text-foreground transition-colors hover:bg-[#ebebeb]"
                         >
                             Apply to Insiders
