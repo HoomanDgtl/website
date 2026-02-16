@@ -1,7 +1,7 @@
 ---
 advert: 
-  title: Watch the livestream of Akash Accelerate 2025
-  link: "/akash-accelerate-2025-livestream"
+  title: "The BME Incentivized Testnet is now open. Stress-test the Vault & compete for $10K in $AKT rewards."
+  link: "https://akash.network/docs/testnet/testplan/"
 
 # hero section content
 heroSection:
