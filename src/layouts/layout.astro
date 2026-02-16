@@ -57,9 +57,10 @@ const pathname = Astro.url.pathname;
               : "_blank"
           }
         >
-          <p class="text-center text-sm font-semibold text-white underline">
-            {advert?.title}
-          </p>
+          <p
+            class="text-center text-sm font-semibold text-white underline"
+            set:html={advert?.title}
+          />
         </a>
       </div>
     )
