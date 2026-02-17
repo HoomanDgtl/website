@@ -12,19 +12,21 @@ export default function AkashClubContent() {
             <div className="mx-auto flex max-w-[1240px] flex-col gap-12 lg:flex-row lg:gap-20">
                 {/* Left: Image + Button */}
                 <div className="flex flex-col items-center lg:w-1/2">
-                    <div className="flex aspect-[580/596] w-full items-center justify-center overflow-hidden rounded-[20px] border border-[#e4e4e7] dark:border-defaultBorder bg-gray-100">
-                        <img src="/images/welcome/club.png" alt="Akash Club Hero" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex justify-center py-5">
-                        <a
-                            href="https://discord.com/invite/akash"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-lg bg-[#f5f5f5] dark:bg-background2 px-8 py-2.5 text-sm font-medium text-[#171717] dark:text-foreground transition-colors hover:bg-[#ebebeb]"
-                        >
-                            Join the Club &amp; Start Building
-                            <ArrowUpRightIcon className="h-4 w-4" />
-                        </a>
+                    <div className="sticky top-24">
+                        <div className="flex aspect-[580/596] w-full items-center justify-center overflow-hidden rounded-[20px] border border-[#e4e4e7] dark:border-defaultBorder bg-gray-100">
+                            <img src="/images/welcome/club.png" alt="Akash Club Hero" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex justify-center py-5">
+                            <a
+                                href="https://discord.com/invite/akash"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 rounded-lg bg-[#f5f5f5] dark:bg-background2 px-8 py-2.5 text-sm font-medium text-[#171717] dark:text-foreground transition-colors hover:bg-[#ebebeb]"
+                            >
+                                Join the Club &amp; Start Building
+                                <ArrowUpRightIcon className="h-4 w-4" />
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -36,7 +38,7 @@ export default function AkashClubContent() {
                         <h2 className="text-2xl font-semibold  md:text-[32px] md:leading-10">
                             Shape the Supercloud with Akash Club
                         </h2>
-                        <p className="text-base leading-6 text-para">
+                        <p className="text-base leading-6 text-para font-normal">
                             Akash Club is the official community hub where builders and $AKT enthusiasts collaborate to drive the network forward. Gain insider access to core development, earn rewards for participation, and build with conviction alongside the architects of the Supercloud.
                         </p>
                     </div>
@@ -74,7 +76,7 @@ export default function AkashClubContent() {
                                         <span className="text-2xl">{item.emoji}</span>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <h4 className="text-lg font-semibold text-[#11181c]  dark:text-foreground md:text-2xl">
+                                        <h4 className="text-lg font-semibold text-[#11181c]  dark:text-foreground md:text-xl">
                                             {item.title}
                                         </h4>
                                         <p className="text-sm text-para md:text-base">
@@ -114,7 +116,7 @@ export default function AkashClubContent() {
                                         <span className="text-2xl">{item.emoji}</span>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <h4 className="text-lg font-semibold text-[#11181c]  dark:text-foreground md:text-2xl">
+                                        <h4 className="text-lg font-semibold text-[#11181c]  dark:text-foreground md:text-xl">
                                             {item.title}
                                         </h4>
                                         <p className="text-sm text-para md:text-base">
@@ -137,7 +139,7 @@ export default function AkashClubContent() {
                                     <span className="text-2xl">🎮</span>
                                 </div>
                                 <div className="flex flex-col">
-                                    <h4 className="text-lg font-semibold text-[#11181c] dark:text-foreground md:text-2xl">
+                                    <h4 className="text-lg font-semibold text-[#11181c] dark:text-foreground md:text-xl">
                                         Network with our Community
                                     </h4>
                                     <p className="mt-1 text-sm text-[#687076] dark:text-para md:text-base">

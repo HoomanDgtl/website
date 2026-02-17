@@ -56,7 +56,7 @@ export default function AkashInsidersContent() {
                                         <span className="text-2xl">{item.emoji}</span>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <h4 className="text-lg font-semibold text-[#11181c] dark:text-foreground md:text-2xl">
+                                        <h4 className="text-lg font-semibold text-[#11181c] dark:text-foreground md:text-xl">
                                             {item.title}
                                         </h4>
                                         <p className="text-sm text-[#71717a] dark:text-para md:text-base">
@@ -96,7 +96,7 @@ export default function AkashInsidersContent() {
                                         <span className="text-2xl">{item.emoji}</span>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <h4 className="text-lg font-semibold text-[#11181c] dark:text-foreground md:text-2xl">
+                                        <h4 className="text-lg font-semibold text-[#11181c] dark:text-foreground md:text-xl">
                                             {item.title}
                                         </h4>
                                         <p className="text-sm text-[#71717a] dark:text-para md:text-base">
