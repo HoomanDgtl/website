@@ -1,6 +1,6 @@
 ---
 advert: 
-  title: "The BME Incentivized Testnet is now open.<br/> Stress-test the Vault & compete for $10K in $AKT rewards."
+  title: "The BME Incentivized Testnet is live - earn up to $10k in bounties."
   link: "https://akash.network/docs/testnet/testplan/"
 
 # hero section content
