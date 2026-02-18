@@ -264,7 +264,7 @@ Both should return your provider's public IP.
 
 ```bash
 cd /root/provider
-curl -s https://raw.githubusercontent.com/akash-network/provider/main/price_script_generic.sh > price_script.sh
+curl -s https://raw.githubusercontent.com/akash-network/helm-charts/main/charts/akash-provider/scripts/price_script_generic.sh > price_script.sh
 chmod +x price_script.sh
 ```
 
