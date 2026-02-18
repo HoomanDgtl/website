@@ -508,8 +508,8 @@ export default function CommunityWelcome() {
         <div className="flex flex-col">
             <HeroSection activeTab={activeTab} setActiveTab={setActiveTab} />
             <TabContent activeTab={activeTab} />
-            <QuoteSection />
-            <SocialChannelsSection />
+            {/* <QuoteSection />
+            <SocialChannelsSection /> */}
             {/* <FAQSection /> */}
             <CTASection />
         </div>
