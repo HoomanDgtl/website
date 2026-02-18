@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
     Accordion,
     AccordionContent,
@@ -161,14 +161,14 @@ function HeroSection({
     setActiveTab: (tab: TabKey) => void;
 }) {
     return (
-        <section className=" px-4 py-16 md:px-10 md:pt-[100px] pb-5 sm:pb-20 lg:px-[240px]">
+        <section className=" px-6 py-16 md:px-10 md:pt-[100px] pb-10 sm:pb-20 lg:px-[240px]">
             <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-14">
                 {/* Title Block */}
                 <div className="flex flex-col items-center gap-5">
-                    <h1 className="text-center text-3xl font-semibold  md:text-4xl lg:text-[56px] lg:leading-[1.15]">
+                    <h1 className="text-center text-[40px] font-semibold md:text-4xl lg:text-[56px] leading-[48px] lg:leading-[1.15]">
                         Building the People's Supercloud
                     </h1>
-                    <p className="max-w-[800px] text-center text-base leading-6 text-[#71717a] dark:text-para md:text-lg">
+                    <p className="max-w-[800px] text-center text-sm leading-6 text-[#71717a] dark:text-para md:text-lg">
                         A global community collaboratively managing the future of decentralized cloud computing from code to culture.
                         Whether you are here to learn, deploy, or govern, you belong here.
                     </p>
@@ -176,7 +176,7 @@ function HeroSection({
 
                 {/* Join the Movement */}
                 <div className="flex w-full flex-col items-center gap-5">
-                    <h2 className="text-center text-lg font-semibold ">
+                    <h2 className="text-center text-lg font-medium ">
                         Join the Movement
                     </h2>
                     <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -204,7 +204,7 @@ function HeroSection({
                         ].map((card, i) => (
                             <div
                                 key={i}
-                                className="flex flex-col gap-4 rounded-lg border border-[#e4e4e7] dark:border-defaultBorder p-6"
+                                className="flex flex-col gap-4 rounded-lg border border-[#e4e4e7] dark:border-defaultBorder p-4 md:p-6"
                             >
                                 <div className="flex items-center gap-2">
                                     <card.icon className="h-6 w-6 " />
@@ -235,68 +235,64 @@ const tabs: { key: TabKey; icon: React.FC<{ className?: string }>; label: string
     { key: "developers", icon: SearchCodeIcon, label: "Developers", sub: "For Builders" },
 ];
 
-function HowToBuildTabs({
-    activeTab,
-    setActiveTab,
-}: {
-    activeTab: TabKey;
-    setActiveTab: (tab: TabKey) => void;
-}) {
+function HowToBuildTabs({ activeTab, setActiveTab }: { activeTab: TabKey; setActiveTab: (tab: TabKey) => void }) {
     const activeIndex = tabs.findIndex((t) => t.key === activeTab);
+    const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [pillStyle, setPillStyle] = useState({ width: 0, transform: "translateX(0px)" });
+
+    const updatePill = useCallback(() => {
+        const el = buttonRefs.current[activeIndex];
+        if (el) {
+            setPillStyle({
+                width: el.offsetWidth,
+                transform: `translateX(${el.offsetLeft}px)`,
+            });
+        }
+    }, [activeIndex]);
+
+    useEffect(() => {
+        updatePill();
+    }, [updatePill]);
+
+    // Re-measure when container resizes (handles orientation change, window resize)
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+        const ro = new ResizeObserver(() => updatePill());
+        ro.observe(container);
+        return () => ro.disconnect();
+    }, [updatePill]);
 
     return (
         <div className="flex w-full flex-col items-center gap-5">
             <h2 className="text-center text-lg font-medium text-[#737373] dark:text-para">
                 How do you want to build?
             </h2>
-            {/* Tab Pills */}
-            <div className="w-full overflow-x-auto rounded-full bg-[#f5f5f7] dark:bg-background2 p-2 scrollbar-hide sm:overflow-x-visible">
-                <div className="relative flex min-w-max items-stretch gap-2 sm:min-w-0 sm:w-full">
+            <div className="w-full overflow-x-auto rounded-full bg-[#f5f5f7] dark:bg-background2 p-2 scrollbar-hide">
+                <div ref={containerRef} className="relative flex min-w-max sm:min-w-0 sm:w-full items-center gap-2">
 
-                    {/* Sliding background pill */}
                     <div
-                        className="absolute top-0 h-full rounded-full bg-white dark:bg-[#1c1c1c] shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
-                        style={{
-                            // Each tab is 1/3 of the container. The gap-2 (8px) between 3 tabs
-                            // means we shift by (index * 100%) + (index * gap / tabCount).
-                            width: `calc((100% - ${(tabs.length - 1) * 8}px) / ${tabs.length})`,
-                            transform: `translateX(calc(${activeIndex} * (100% + 8px)))`,
-                        }}
+                        className="absolute top-0 h-full rounded-full bg-white dark:bg-[#1c1c1c] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                        style={{ width: pillStyle.width, transform: pillStyle.transform }}
                     />
 
-                    {tabs.map((tab) => {
+                    {tabs.map((tab, i) => {
                         const isActive = activeTab === tab.key;
                         return (
                             <button
                                 key={tab.key}
+                                ref={(el) => { buttonRefs.current[i] = el; }}
                                 onClick={() => setActiveTab(tab.key)}
-                                className="relative z-10 flex shrink-0 sm:flex-1 items-center justify-center gap-4 rounded-full px-6 py-4 sm:px-10 hover:bg-white/50 dark:hover:bg-black/10"
-                                style={{ flex: "1 1 0" }}
+                                // shrink-0 on mobile → flex-1 on sm+
+                                className="relative z-10 shrink-0 sm:flex-1 flex items-center justify-start gap-2 md:gap-4 rounded-full px-7 py-3 md:py-4 md:px-10 hover:bg-white/50 dark:hover:bg-black/10"
                             >
-                                <tab.icon
-                                    className={`h-8 w-8 transition-colors duration-200 ${
-                                        isActive
-                                            ? "text-[#111111] dark:text-foreground"
-                                            : "text-[#86868b] dark:text-para"
-                                    }`}
-                                />
+                                <tab.icon className={`h-8 w-8 transition-colors duration-200 ${isActive ? "text-[#111111] dark:text-foreground" : "text-[#86868b] dark:text-para"}`} />
                                 <div className="flex flex-col items-start">
-                                    <span
-                                        className={`text-lg font-semibold md:text-2xl transition-colors duration-200 ${
-                                            isActive
-                                                ? "text-[#111111] dark:text-foreground"
-                                                : "text-[#86868b] dark:text-para"
-                                        }`}
-                                    >
+                                    <span className={`font-medium text-2xl whitespace-nowrap transition-colors duration-200 ${isActive ? "text-[#111111] dark:text-foreground" : "text-[#86868b] dark:text-para"}`}>
                                         {tab.label}
                                     </span>
-                                    <span
-                                        className={`text-sm transition-colors duration-200 ${
-                                            isActive
-                                                ? "text-[#737373] dark:text-foreground"
-                                                : "text-[#86868b] dark:text-para"
-                                        }`}
-                                    >
+                                    <span className={`text-sm font-normal whitespace-nowrap transition-colors duration-200 ${isActive ? "text-[#737373] dark:text-foreground" : "text-[#86868b] dark:text-para"}`}>
                                         {tab.sub}
                                     </span>
                                 </div>
@@ -311,80 +307,80 @@ function HowToBuildTabs({
 
 // ─── Quote Section ──────────────────────────────────────────────────────────────
 
-function QuoteSection() {
-    return (
-        <section className="border-y border-[#e4e4e7] dark:border-defaultBorder bg-[#fafafa] dark:bg-background2 px-4 py-20 md:px-10 md:py-[120px]">
-            <div className="mx-auto flex max-w-6xl flex-col items-center gap-8">
-                <blockquote className="text-center font-instrument italic text-xl  leading-relaxed text-[#111827] dark:text-foreground md:text-3xl lg:text-[48px] lg:leading-[1.3]">
-                    "Bull market, bear market, it doesn&apos;t matter.
-                    495 open-source contributors averaging 67 commits per week build Akash regardless of market conditions. Akash is the People&apos;s Supercloud and I&apos;m credibly proud of the $AKT community."
-                </blockquote>
-                <div className="flex flex-col items-center">
-                    <p className="text-lg font-semibold text-[#111827] dark:text-foreground">Greg Osuri</p>
-                    <p className="text-center text-base text-[#71717a] dark:text-para">
-                        Founder of Akash
-                        <br />
-                        Overclock Labs CEO
-                    </p>
-                </div>
-            </div>
-        </section>
-    );
-}
+// function QuoteSection() {
+//     return (
+//         <section className="border-y border-[#e4e4e7] dark:border-defaultBorder bg-[#fafafa] dark:bg-background2 px-4 py-20 md:px-10 md:py-[120px]">
+//             <div className="mx-auto flex max-w-6xl flex-col items-center gap-8">
+//                 <blockquote className="text-center font-instrument italic text-xl  leading-relaxed text-[#111827] dark:text-foreground md:text-3xl lg:text-[48px] lg:leading-[1.3]">
+//                     "Bull market, bear market, it doesn&apos;t matter.
+//                     495 open-source contributors averaging 67 commits per week build Akash regardless of market conditions. Akash is the People&apos;s Supercloud and I&apos;m credibly proud of the $AKT community."
+//                 </blockquote>
+//                 <div className="flex flex-col items-center">
+//                     <p className="text-lg font-semibold text-[#111827] dark:text-foreground">Greg Osuri</p>
+//                     <p className="text-center text-base text-[#71717a] dark:text-para">
+//                         Founder of Akash
+//                         <br />
+//                         Overclock Labs CEO
+//                     </p>
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// }
 
 // ─── Social Channels Section ────────────────────────────────────────────────────
 
-const socialChannels = [
-    { name: "Discord", icon: DiscordIcon, href: "https://discord.com/invite/akash" },
-    { name: "Github", icon: GithubIcon, href: "https://github.com/akash-network" },
-    { name: "X", icon: TwitterIcon, href: "https://x.com/akashnet" },
-    { name: "LinkedIn", icon: LinkedInIcon, href: "https://www.linkedin.com/company/akash-network/" },
-    { name: "Youtube", icon: YoutubeIcon, href: "https://www.youtube.com/c/AkashNetwork" },
-    { name: "Telegram", icon: TelegramIcon, href: "https://t.me/AkashNW" },
-    // { name: "Zealy", icon: ZealyIcon, href: "https://zealy.io/c/akashnetwork" },
-    { name: "Reddit", icon: RedditIcon, href: "https://www.reddit.com/r/AkashNetwork/" },
-];
+// const socialChannels = [
+//     { name: "Discord", icon: DiscordIcon, href: "https://discord.com/invite/akash" },
+//     { name: "Github", icon: GithubIcon, href: "https://github.com/akash-network" },
+//     { name: "X", icon: TwitterIcon, href: "https://x.com/akashnet" },
+//     { name: "LinkedIn", icon: LinkedInIcon, href: "https://www.linkedin.com/company/akash-network/" },
+//     { name: "Youtube", icon: YoutubeIcon, href: "https://www.youtube.com/c/AkashNetwork" },
+//     { name: "Telegram", icon: TelegramIcon, href: "https://t.me/AkashNW" },
+//     // { name: "Zealy", icon: ZealyIcon, href: "https://zealy.io/c/akashnetwork" },
+//     { name: "Reddit", icon: RedditIcon, href: "https://www.reddit.com/r/AkashNetwork/" },
+// ];
 
-function SocialChannelsSection() {
-    return (
-        <section className="border-y border-[#e5e5e5] dark:border-defaultBorder  px-4 py-20 md:px-10 md:py-[120px] lg:px-[240px]">
-            <div className="mx-auto flex max-w-[1240px] flex-col gap-20 lg:flex-row lg:gap-20">
-                {/* Left: Title */}
-                <div className="flex flex-col gap-3 lg:w-1/2">
-                    <h2 className="text-3xl font-semibold text-[#111827] dark:text-foreground md:text-[40px] md:leading-[1.2]">
-                        Explore Social Channels
-                    </h2>
-                    <p className="text-sm leading-5 text-[#71717a]">
-                        Be part of the Akash Network community. Connect, contribute, and collaborate to shape the future of decentralized cloud computing.
-                    </p>
-                </div>
+// function SocialChannelsSection() {
+//     return (
+//         <section className="border-y border-[#e5e5e5] dark:border-defaultBorder  px-4 py-20 md:px-10 md:py-[120px] lg:px-[240px]">
+//             <div className="mx-auto flex max-w-[1240px] flex-col gap-20 lg:flex-row lg:gap-20">
+//                 {/* Left: Title */}
+//                 <div className="flex flex-col gap-3 lg:w-1/2">
+//                     <h2 className="text-3xl font-semibold text-[#111827] dark:text-foreground md:text-[40px] md:leading-[1.2]">
+//                         Explore Social Channels
+//                     </h2>
+//                     <p className="text-sm leading-5 text-[#71717a]">
+//                         Be part of the Akash Network community. Connect, contribute, and collaborate to shape the future of decentralized cloud computing.
+//                     </p>
+//                 </div>
 
-                {/* Right: Channel Cards */}
-                <div className="flex flex-col gap-6 lg:w-1/2">
-                    {socialChannels.map((channel, i) => (
-                        <a
-                            key={i}
-                            href={channel.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-between rounded-lg border border-[#e4e4e7] dark:border-defaultBorder px-5 py-6 transition-colors hover:shadow-lg"
-                        >
-                            <div className="flex items-center gap-3">
+//                 {/* Right: Channel Cards */}
+//                 <div className="flex flex-col gap-6 lg:w-1/2">
+//                     {socialChannels.map((channel, i) => (
+//                         <a
+//                             key={i}
+//                             href={channel.href}
+//                             target="_blank"
+//                             rel="noopener noreferrer"
+//                             className="flex items-center justify-between rounded-lg border border-[#e4e4e7] dark:border-defaultBorder px-5 py-6 transition-colors hover:shadow-lg"
+//                         >
+//                             <div className="flex items-center gap-3">
 
-                                <channel.icon className="h-8 w-8 " />
+//                                 <channel.icon className="h-8 w-8 " />
 
-                                <span className="text-base font-medium ">
-                                    {channel.name}
-                                </span>
-                            </div>
-                            <ChevronRightIcon className="h-6 w-6 " />
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-}
+//                                 <span className="text-base font-medium ">
+//                                     {channel.name}
+//                                 </span>
+//                             </div>
+//                             <ChevronRightIcon className="h-6 w-6 " />
+//                         </a>
+//                     ))}
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// }
 
 // ─── FAQ Section ────────────────────────────────────────────────────────────────
 
@@ -437,7 +433,7 @@ function SocialChannelsSection() {
 
 function CTASection() {
     return (
-        <section className="border-t border-[#e4e4e7] dark:border-defaultBorder px-4 py-20 md:px-10 md:py-[180px] lg:px-[240px]">
+        <section className="border-t border-[#e4e4e7] dark:border-defaultBorder px-6 py-20 md:px-10 md:py-[180px] lg:px-[240px]">
             <div className="mx-auto flex max-w-[1240px] flex-col items-center gap-8 md:gap-[60px]">
                 <div className="flex flex-col items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
