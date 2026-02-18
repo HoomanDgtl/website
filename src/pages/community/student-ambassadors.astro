@@ -1,9 +1,23 @@
 ---
 import CommunityHero from "@/components/mdx-cards/community-hero.astro";
-import ButtonLink from "@/components/ui/button-link.astro";
+import ButtonLink from "@/components/ui/button-link-ambassador.astro";
 import TopMargin from "@/components/ui/top-margin.astro";
 import Layout from "@/layouts/layout.astro";
 import { ArrowUpRight } from "lucide-react";
+import { Carousel } from "@/components/community-pages/custom-carousel/Carousel";
+import TrustedByMarquee from "@/components/home/TrustedByMarquee.tsx";
+import { LogosSection } from "@/components/student-ambassador/logos.ts";
+
+const images = [
+  { src: "/images/slides/student/s1.png", alt: "Slide 1" },
+  { src: "/images/slides/student/s2.png", alt: "Slide 2" },
+  { src: "/images/slides/student/s3.png", alt: "Slide 3" },
+  { src: "/images/slides/student/s4.png", alt: "Slide 4" },
+  { src: "/images/slides/student/s5.png", alt: "Slide 5" },
+  { src: "/images/slides/student/s6.png", alt: "Slide 6" },
+  { src: "/images/slides/student/s7.png", alt: "Slide 7" },
+  { src: "/images/slides/student/s8.png", alt: "Slide 8" },
+];
 
 const title = "The Akash Student<br/> Ambassador Program";
 const description =
@@ -71,22 +85,54 @@ const articles = [
   <TopMargin isNotContainer>
     <CommunityHero container title={title} description={description} />
     <div
-      class="not-prose flex flex-col items-center justify-center gap-10 pb-[120px]"
+      class="not-prose flex flex-col items-center justify-center gap-10 pb-20"
     >
       <h2 class="text-center text-3xl font-semibold">
         Join the Akash Ambassador Program.<br /> Submit your application for Spring
         Cohort 2026!
       </h2>
+      <div class="flex flex-col items-center justify-center gap-2 md:flex-row">
+        <ButtonLink
+          className="mt-0"
+          link="https://docs.google.com/forms/d/e/1FAIpQLScprUXYrjp9HdwUW_DdTu1UnOvmw2bMfJ0wVKZ1J653uuJsxQ/viewform"
+          variant="primary"
+          size="lg"
+        >
+          Submit your application
+        </ButtonLink>
+        <ButtonLink
+          className="mt-0"
+          link="https://x.com/AkashStudents"
+          variant="secondary"
+          size="lg"
+        >
+          Akash Students on X.com
+        </ButtonLink>
+      </div>
       <ButtonLink
-        arrow
         className="mt-0"
-        link="https://docs.google.com/forms/d/e/1FAIpQLScprUXYrjp9HdwUW_DdTu1UnOvmw2bMfJ0wVKZ1J653uuJsxQ/viewform"
-        variant="secondary"
+        link="https://akash.network/blog/introducing-the-akash-student-ambassador-program-a-new-chapter-for-decentralized-cloud/"
+        variant="ghost"
         size="lg"
       >
-        Apply today!
+        Learn More About University Program
       </ButtonLink>
     </div>
+
+    <div
+      class="relative mx-auto w-full max-w-[1400px] py-24 md:pb-32 md:pt-0 md:before:absolute md:before:left-0 md:before:top-0 md:before:z-10 md:before:h-full md:before:w-32 md:before:bg-gradient-to-r md:before:from-white md:before:to-transparent md:before:content-[''] md:after:absolute md:after:right-0 md:after:top-0 md:after:z-10 md:after:h-full md:after:w-32 md:after:bg-gradient-to-l md:after:from-white md:after:to-transparent md:after:content-[''] dark:md:before:from-[#1c1c1c] dark:md:after:from-[#1c1c1c]"
+    >
+      <TrustedByMarquee trustedBySection={LogosSection} client:only />
+    </div>
+    <!-- <div class="flex flex-row items-center justify-between max-w-7xl mx-auto py-24 md:py-32">
+      {Logos.map((logo) => (
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          class="h-6 w-auto md:h-10 dark:brightness-0 dark:invert pointer-events-none select-none"
+        />
+      ))}
+    </div> -->
     <div class="container mx-auto max-w-5xl px-4">
       <!-- Two Cards Section -->
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
@@ -154,7 +200,7 @@ const articles = [
             <p
               class="max-w-[700px] text-sm leading-relaxed text-para md:text-base"
             >
-              Student builders and thinkers explore how decentralization, AI,
+              Emerging builders and thinkers explore how decentralization, AI,
               and open infrastructure are reshaping technology, and what it
               means for the next generation of innovators.
             </p>
@@ -190,6 +236,9 @@ const articles = [
           </table>
         </div>
       </div>
+    </div>
+    <div class="mt-20">
+      <Carousel client:only images={images} speed={100} gap={50} />
     </div>
   </TopMargin>
 </Layout>
