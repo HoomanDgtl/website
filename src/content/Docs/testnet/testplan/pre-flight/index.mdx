@@ -7,6 +7,54 @@ description: "BME module pre-flight health checks and baseline verification"
 weight: 1
 ---
 
+## Prerequisites — Version Check
+
+**⚠️ IMPORTANT: Verify your environment before proceeding.**
+
+Many testnet users have encountered issues due to incorrect binary versions. Run the following commands and confirm your output matches **exactly**:
+
+```bash
+echo "=== VERSION CHECK ==="
+echo ""
+echo "Akash CLI:"
+akash version
+echo ""
+echo "Provider Services:"
+provider-services version
+echo ""
+echo "Chain ID:"
+echo $AKASH_CHAIN_ID
+echo ""
+echo "RPC Node:"
+echo $AKASH_NODE
+```
+
+**Your output MUST match:**
+
+```
+=== VERSION CHECK ===
+
+Akash CLI:
+2.1.0-a17
+
+Provider Services:
+v0.10.5
+
+Chain ID:
+testnet-8
+
+RPC Node:
+https://testnetrpc.akashnet.net:443
+```
+
+**❌ DO NOT PROCEED if your output differs.**
+
+**Akash CLI Download:**
+If your `akash version` does not show `2.1.0-a17`, download the correct version directly from:
+https://github.com/akash-network/node/releases/tag/v2.1.0-a17
+
+---
+
 Before running functional tests, verify the BME module and dependencies are healthy. These checks establish a baseline and confirm the testnet is ready for testing.
 
 ---
