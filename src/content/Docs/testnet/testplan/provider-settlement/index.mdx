@@ -154,17 +154,20 @@ When a deployment runs on Akash, the provider earns compute payment in **ACT**. 
 
 **Objective:** Verify provider receives correct ACT payment based on lease rate and duration
 
-**Note:** Providers have a configurable withdrawal period (default 12 hours) before settlement funds transfer to their wallet. Instead of waiting for this, we verify the `withdrawn` amount in the lease state after closing, which shows the payment calculated for the provider.
-
 **User Actions:**
 
-1. Create deployment:
+1. Record provider's initial ACT balance:
+   ```bash
+   akash query bank balances <provider-address>
+   ```
+
+2. Create deployment:
    ```bash
    akash tx deployment create deploy.yml --deposit 50000000uact --from <wallet> -y
    ```
    Note the DSEQ from the output.
 
-2. Create lease and note the `created_at` block:
+3. Create lease and note the `created_at` block:
    ```bash
    sleep 10
    akash query market bid list --owner <user-address> --dseq <dseq>
@@ -173,7 +176,7 @@ When a deployment runs on Akash, the provider earns compute payment in **ACT**. 
      --provider <provider-address> --from <wallet> -y
    ```
 
-3. Query lease to get `created_at` and `rate`:
+4. Query lease to get `created_at` and `rate`:
    ```bash
    akash query market lease get --owner <user-address> --dseq <dseq> \
      --gseq 1 --oseq 1 --provider <provider-address>
@@ -182,27 +185,27 @@ When a deployment runs on Akash, the provider earns compute payment in **ACT**. 
    - `lease.created_at` (block number)
    - `escrow_payment.state.rate.amount` (uact per block)
 
-4. Send manifest and let deployment run briefly (~2-5 minutes):
+5. Send manifest and let deployment run briefly (~2-5 minutes):
    ```bash
    provider-services send-manifest deploy.yml --dseq <dseq> --from <wallet>
    sleep 180
    ```
 
-5. Close deployment:
+6. Close deployment:
    ```bash
    akash tx deployment close --dseq <dseq> --from <wallet> -y
    ```
 
-6. Query lease state after close:
+7. Query lease state after close:
    ```bash
    akash query market lease get --owner <user-address> --dseq <dseq> \
      --gseq 1 --oseq 1 --provider <provider-address>
    ```
    Note the `escrow_payment.state.withdrawn.amount` value.
 
-7. Get current block height (approximate close block):
+8. Check provider's final ACT balance:
    ```bash
-   akash status 2>&1 | jq '.sync_info.latest_block_height'
+   akash query bank balances <provider-address>
    ```
 
 **Verification Math:**
@@ -225,12 +228,22 @@ Compare `expected_payment` to `withdrawn` amount — they should be approximatel
 - Lease state shows `state: closed`
 - `withdrawn` amount is > 0
 - `withdrawn` ≈ blocks_run × rate (within rounding)
+- Provider ACT balance increased
 
-**Proof to Submit:**
+**Proof to Submit (either method):**
+
+**Option 1 — Lease State (Recommended):**
 - Lease `created_at` block
 - Lease `rate`
 - Lease state after close showing `withdrawn` amount
 - Calculation showing withdrawn ≈ expected
+
+**Option 2 — Provider Balance:**
+- Provider ACT balance before deployment
+- Provider ACT balance after close
+- Confirmation balance increased
+
+*We recommend Option 1 during busy testnet periods, as it isolates your specific lease payment. Provider balance can change from multiple concurrent deployments, making it harder to attribute the increase to your specific deployment.*
 
 ---
 
@@ -240,6 +253,6 @@ Compare `expected_payment` to `withdrawn` amount — they should be approximatel
 |------|-----------|------------------|
 | 3.1 | Provider receives ACT | Provider ACT balance increased after deployment |
 | 3.2 | Lease pricing correct | Lease shows uact denom, price ≤ SDL max |
-| 3.3 | Provider payment correct | withdrawn ≈ blocks_run × rate |
+| 3.3 | Provider payment correct | withdrawn ≈ blocks_run × rate, or provider balance increased |
 
 **Note:** Provider burn-act (ACT → AKT conversion) is functionally identical to user burn-act tested in Category 2. Since provider accounts are standard Cosmos accounts, no additional burn testing is required here.
