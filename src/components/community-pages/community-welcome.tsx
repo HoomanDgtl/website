@@ -205,7 +205,7 @@ function HowToBuildTabs({ activeTab, setActiveTab }: { activeTab: TabKey; setAct
                 ref={scrollContainerRef}
                 className="w-full overflow-x-auto rounded-full bg-[#f5f5f7] dark:bg-background2 p-2 scrollbar-hide"
             >
-                <div ref={containerRef} className="relative flex min-w-max sm:min-w-0 sm:w-full items-center gap-2">
+                <div ref={containerRef} className="relative flex min-w-max sm:min-w-0 sm:w-full items-center">
 
                     <div
                         className="absolute top-0 h-full rounded-full bg-white dark:bg-[#1c1c1c] shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
@@ -436,7 +436,7 @@ export default function CommunityWelcome() {
     const [activeTab, setActiveTab] = useState<TabKey>("akash-club");
 
     return (
-        <div className="flex flex-col overflow-x-hidden">
+        <div className="flex flex-col">
             <HeroSection activeTab={activeTab} setActiveTab={setActiveTab} />
             <TabContent activeTab={activeTab} />
             {/* <QuoteSection />
