@@ -79,7 +79,7 @@ export default function DevelopersContent() {
             <div className="mx-auto flex max-w-[1080px] flex-col items-center gap-6">
                 {/* Header */}
                 <div className="flex flex-col items-center gap-4">
-                    <h2 className="text-center font-semibold text-[#09090b] dark:text-foreground text-[32px] md:leading-10 px-6 sm:px-0">
+                    <h2 className="text-center font-semibold text-[#09090b] dark:text-foreground text-[32px] leading-10 px-6 sm:px-0">
                         Power Your Applications with Decentralized Compute
                     </h2>
                     <p className="max-w-6xl text-center text-base leading-6 text-[#71717a] dark:text-para font-normal">
