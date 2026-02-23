@@ -1,51 +1,33 @@
 ---
-import AiModelsAndApps from "@/components/home/aiModelsAndApps/aiModelsAndApps.astro";
+import CaseStudies from "@/components/home/case-studies.astro";
 import Fuel from "@/components/home/Fuel";
-
 import Hero from "@/components/home/hero/hero.astro";
-import Infrastructure from "@/components/home/infrastructure/infrastructure.astro";
-import ReadyToDeploy from "@/components/home/ready-to-deploy.astro";
+import JustShipIt from "@/components/home/just-ship-it.astro";
 import TrustedBy from "@/components/home/trustedby/trusted-by.astro";
+import UVP from "@/components/home/uvp.astro";
+import WhyAkash from "@/components/home/why-akash.astro";
 import Layout from "@/layouts/layout.astro";
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
 
 const homepage = await getEntry("Homepage", "index");
 
-type BlogPost = CollectionEntry<"Blog">;
-
-const posts = (await getCollection("Blog"))
-  .filter((post) => {
-    return post.data.archive !== true;
-  })
-  .sort((a, b) => {
-    const dateA = new Date(a.data.pubDate);
-    const dateB = new Date(b.data.pubDate);
-    return dateB.getTime() - dateA.getTime();
-  });
-const {
-  advert,
-  heroSection,
-  infrastructureSection,
-  featureSection,
-  aiModelsAndAppsSection,
-  testimonialsSection,
-} = homepage?.data;
+const { heroSection } = homepage?.data;
 ---
 
 <Layout
-  classname=" dark:bg-[#000000] "
-  headerClassName="bg-white dark:bg-[#000000] top-0 sticky z-[30] border-b dark:border-0"
+  classname="dark:bg-[#0a0a0a]"
+  headerClassName="bg-[#0a0a0a] dark:bg-[#0a0a0a] top-0 sticky z-[30] border-b border-[#282828] dark:border-[#282828]"
   title="Akash Network - Decentralized Compute Marketplace"
-  footerClassName="dark:bg-[#000000] container-home border-t dark:border-0"
+  footerClassName="dark:bg-[#101010] container-home border-t dark:border-[#282828]"
   description="Akash is an open network that lets users buy and sell computing resources securely and efficiently. Purpose-built for public utility."
 >
-  <div>
+  <div class="bg-[#0a0a0a]">
     <Hero heroSection={heroSection} />
     <TrustedBy />
-
-    <Infrastructure infrastructureSection={infrastructureSection} />
+    <WhyAkash />
     <Fuel client:load />
-    <AiModelsAndApps aiModelsAndAppsSection={aiModelsAndAppsSection} />
-    <ReadyToDeploy />
+    <UVP />
+    <CaseStudies />
+    <JustShipIt />
   </div>
 </Layout>

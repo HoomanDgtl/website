@@ -1,94 +1,206 @@
 ---
-import TryAkashForm from "@/components/ui/try-akash-form";
 import type { CollectionEntry } from "astro:content";
-import clsx from "clsx";
-import { ArrowRight, Award, Info } from "lucide-react";
 
 interface Props {
   heroSection: CollectionEntry<"Homepage">["data"]["heroSection"];
 }
 
 const { heroSection } = Astro.props;
-const pathname = Astro.url.pathname;
 ---
 
-<section class="relative overflow-hidden dark:bg-[#181818]">
-  <!-- <div class="glow"></div> -->
-  <div class="container relative z-[2] py-12 md:py-20">
-    {
-      pathname.includes("meetingconfirmation") && (
-        <div class="relative mx-auto mt-10 flex w-fit items-center justify-center gap-2  rounded-lg border !border-primary px-4 py-3 text-sm text-primary">
-          <Info className="size-4 shrink-0" />
-          Thanks for booking your meeting, we look forward to speaking with you!
-        </div>
-      )
-    }
-    <h1
-      class={clsx(
-        "mx-auto  text-center font-instrument text-6xl font-normal leading-[1] tracking-[-0.88px] lg:text-[94px]",
-        pathname.includes("meetingconfirmation") ? "mt-7" : "mt-10"
-      )}
-      set:html={heroSection.title}
-    />
-
-    <p
-      class="mx-auto mt-4 text-center text-lg md:text-xl lg:text-2xl"
-      set:html={heroSection.description}
-    />
-
-    <div class="mt-12 flex flex-col justify-center gap-4">
-      <div
-        class="mx-auto flex items-center gap-2 rounded-full border bg-background2 px-6 py-2.5 text-center text-sm dark:bg-[#18181B] md:py-3 md:text-base"
-      >
-        <Award className="size-5 text-primary" />
-        <p class="text-foreground">Get up to $500 in GPU credits</p>
+<section class="relative overflow-hidden bg-[#030303]">
+  <div class="mx-auto max-w-[1317px] px-5 pb-0 pt-16 md:pt-20 xl:px-10">
+    <div class="flex flex-col items-center gap-6 md:gap-12">
+      <div class="flex flex-col items-center gap-3">
+        <h1
+          class="mx-auto max-w-[1100px] text-center font-instrument text-4xl font-normal leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[88px]"
+          set:html={heroSection.title}
+        />
+        <p class="text-center text-base text-[#8c8e91] md:text-xl">
+          Tap into global GPU power at a fraction of the cost.
+        </p>
       </div>
-      <div class="flex justify-center">
-        <TryAkashForm client:load type="hero" />
-      </div>
-      <div
-        class="mt-8 flex flex-col items-center justify-center gap-5 md:flex-row md:gap-6"
-      >
+
+      <div class="flex flex-col items-center gap-4">
         <a
-          href="/providers"
-          class="flex items-center gap-1.5 font-medium text-foreground transition-all hover:text-primary"
+          href="#"
+          class="inline-flex items-center gap-2 rounded-full border border-[#3e3e44] bg-[#242429]/40 px-5 py-2 text-sm text-[#8c8e91] transition-colors hover:bg-[#242429]/70"
         >
-          Become a GPU Provider <ArrowRight className="size-4" />
+          💸 Get up to $500 in GPU credits
         </a>
-        <div class="hidden h-6 w-px bg-defaultBorder md:block"></div>
         <a
-          href="/pricing/gpus"
-          class="flex items-center gap-1.5 font-medium text-foreground transition-all hover:text-primary"
+          href="https://console.akash.network/"
+          target="_blank"
+          rel="noopener noreferrer"
+          id="hero-deploy-btn"
+          class="inline-flex items-center justify-center rounded-md bg-[#ef4444] px-6 py-3 text-base font-medium text-white transition-colors hover:bg-[#dc2626] md:px-8 md:py-3.5 md:text-lg"
         >
-          See GPU Availability
-          <ArrowRight className="size-4" />
+          Deploy On Console
         </a>
       </div>
     </div>
+  </div>
 
-    <!-- <div
-      class="mx-auto mt-20 grid w-fit gap-6 sm:grid-cols-2 md:mt-24 lg:grid-cols-3"
-    >
-      {
-        heroSection.cards.map((card) => (
-          <div class="flex flex-col gap-2 rounded-lg border bg-background2 p-6 md:rounded-xl">
-            <h3 class="font-semibold">{card.title}</h3>
-            <p class="text-sm">{card.description}</p>
-            <div class="mt-auto flex flex-wrap gap-2 pt-2">
-              {card.buttons.map((button) => (
-                <Button
-                  aria-label={button.label}
-                  link={button.link}
-                  variant={button.type}
-                  size="lg"
+  <div class="mt-12 bg-[#0e0e0e] md:mt-16">
+    <div class="mx-auto max-w-[1440px] px-5 xl:px-0">
+      <div class="mx-auto max-w-[960px] pb-6 pt-6 md:pt-8">
+        <div
+          class="flex flex-col gap-5 md:flex-row"
+          id="hero-product-tiles"
+        >
+          <button
+            class="hero-tile group flex-1 cursor-pointer rounded-lg border border-white/20 bg-[#29292b] p-4 text-left transition-all"
+            data-tile="0"
+            data-active="true"
+          >
+            <div class="flex flex-col gap-3">
+              <div
+                class="inline-flex w-fit items-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-white"
+              >
+                AkashChat API
+              </div>
+              <p class="text-sm leading-snug text-[#86868b]">
+                Run AI Inference models on a high-performance managed API.
+              </p>
+            </div>
+          </button>
+
+          <div class="flex flex-1 flex-col gap-5 pt-3 md:flex-row">
+            <button
+              class="hero-tile group flex-1 cursor-pointer rounded-lg border border-white/10 bg-[#1b1b1d] p-4 text-left transition-all hover:border-white/20 hover:bg-[#29292b]"
+              data-tile="1"
+            >
+              <div class="flex flex-col gap-3">
+                <div
+                  class="inline-flex w-fit items-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-white"
                 >
-                  {button.label}
-                </Button>
-              ))}
+                  Akash Console
+                </div>
+                <p class="text-sm leading-snug text-[#86868b]">
+                  Deploy and manage workloads through an intuitive web interface.
+                </p>
+              </div>
+            </button>
+
+            <button
+              class="hero-tile group flex-1 cursor-pointer rounded-lg border border-white/10 bg-[#1b1b1d] p-4 text-left transition-all hover:border-white/20 hover:bg-[#29292b]"
+              data-tile="2"
+            >
+              <div class="flex flex-col gap-3">
+                <div
+                  class="inline-flex w-fit items-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-white"
+                >
+                  Become a Provider
+                </div>
+                <p class="text-sm leading-snug text-[#86868b]">
+                  Earn by offering your hardware on the decentralized cloud.
+                </p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-5 flex gap-8 px-1">
+          <div class="relative flex-1">
+            <div class="h-px w-full bg-white/20"></div>
+            <div
+              class="hero-tile-indicator absolute left-0 top-0 h-px w-[36%] bg-[#ff3b30] transition-all duration-300"
+              data-tile="0"
+              data-active="true"
+            >
             </div>
           </div>
-        ))
-      }
-    </div> -->
+          <div class="flex-1">
+            <div class="h-px w-full bg-white/20"></div>
+          </div>
+          <div class="flex-1">
+            <div class="h-px w-full bg-white/20"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-[1136px] px-4 pb-0">
+      <div
+        class="overflow-hidden rounded-t-3xl border border-b-0 border-[#303030]"
+      >
+        <div class="bg-[#1b1b1d] p-4 pt-2">
+          <div
+            class="overflow-hidden rounded-2xl border border-black/60 bg-[#1b1b1d]"
+          >
+            <div
+              class="flex items-center justify-between border-b border-[#e5e5e5]/10 px-4 py-2"
+            >
+              <div class="flex items-center gap-1.5">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-[#8c8e91]">
+                <span>console.akash.network</span>
+              </div>
+            </div>
+            <div class="flex min-h-[300px] md:min-h-[460px]">
+              <div
+                class="hidden w-[140px] flex-shrink-0 border-r border-[#e5e5e5]/10 bg-[#fafafa] p-3 md:block"
+              >
+                <div class="flex flex-col gap-2">
+                  <div class="h-3 w-20 rounded bg-[#e5e5e5]"></div>
+                  <div class="h-3 w-16 rounded bg-[#e5e5e5]"></div>
+                  <div class="h-3 w-24 rounded bg-[#d4d4d4]"></div>
+                  <div class="h-3 w-14 rounded bg-[#e5e5e5]"></div>
+                  <div class="mt-4 h-3 w-20 rounded bg-[#e5e5e5]"></div>
+                  <div class="h-3 w-18 rounded bg-[#e5e5e5]"></div>
+                </div>
+              </div>
+              <div class="flex-1 bg-[#f5f5f5] p-4">
+                <div class="flex flex-col gap-4">
+                  <div class="flex gap-3">
+                    <div class="h-20 flex-1 rounded-lg bg-white p-3 shadow-sm">
+                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
+                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
+                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
+                    </div>
+                    <div class="h-20 flex-1 rounded-lg bg-white p-3 shadow-sm">
+                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
+                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
+                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
+                    </div>
+                    <div
+                      class="hidden h-20 flex-1 rounded-lg bg-white p-3 shadow-sm md:block"
+                    >
+                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
+                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
+                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
+                    </div>
+                    <div
+                      class="hidden h-20 flex-1 rounded-lg bg-white p-3 shadow-sm lg:block"
+                    >
+                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
+                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
+                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
+                    </div>
+                  </div>
+                  <div
+                    class="h-48 rounded-lg bg-white p-4 shadow-sm md:h-64 lg:h-80"
+                  >
+                    <div class="flex items-center justify-between">
+                      <div class="h-3 w-24 rounded bg-[#d4d4d4]"></div>
+                      <div class="h-3 w-16 rounded bg-[#e5e5e5]"></div>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-3">
+                      <div class="h-8 w-full rounded bg-[#f5f5f5]"></div>
+                      <div class="h-8 w-full rounded bg-[#f5f5f5]"></div>
+                      <div class="h-8 w-full rounded bg-[#f5f5f5]"></div>
+                      <div class="h-8 w-3/4 rounded bg-[#f5f5f5]"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>

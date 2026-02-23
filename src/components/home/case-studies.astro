@@ -1,0 +1,83 @@
+---
+const caseStudies = [
+  {
+    title:
+      "Eliminating Cloud Cost Opacity: How Sigea Cloud Labs Rebuilt Enterprise Storage on...",
+    description:
+      "Sigea Cloud Labs deployed privacy-first cloud storage on Akash Network's decentralized GPU infrastructure,...",
+    link: "/blog/eliminating-cloud-cost-opacity-how-sigea-cloud-labs-rebuilt-enterprise-storage-on-decentralized-infrastructure/",
+    initials: "SC",
+  },
+  {
+    title:
+      "Why Levangie Labs Chose Akash to Power the First Semi-Autonomous AI Organization",
+    description:
+      "Levangie Laboratories built cognitive architecture that enables AI agents to operate independently, learn from...",
+    link: "/blog/why-levangie-labs-chose-akash-to-power-the-first-semi-autonomous-ai-organization/",
+    initials: "LL",
+  },
+  {
+    title: "How Flashback Labs Scaled Privacy-First AI on Akash",
+    description:
+      "Flashback Labs built a privacy-first AI platform that lets users create lifelike AI twins trained entirely on their own...",
+    link: "/blog/how-flashback-labs-scaled-privacy-first-ai-on-akash/",
+    initials: "FL",
+  },
+];
+---
+
+<section class="bg-[#101010] px-5 py-20 md:py-[120px] xl:px-10">
+  <div class="mx-auto max-w-[1477px]">
+    <div class="mb-12 flex flex-col items-center gap-4 md:mb-16">
+      <h2 class="text-center text-2xl font-medium text-white md:text-[26px]">
+        Case Studies
+      </h2>
+      <p
+        class="max-w-[800px] text-center text-sm leading-relaxed text-[#71717a] md:text-base"
+      >
+        The future of DePIN is sovereign, distributed, and builder-owned.<br />
+        See how the world's most resilient projects deploy on a global GPU grid that
+        can't be shut down.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+      {
+        caseStudies.map((study) => (
+          <div class="flex flex-col gap-8 rounded-[20px] border border-white/10 bg-[#0f0f0f] p-6">
+            <div class="flex h-16 w-16 items-center justify-center rounded-[10px] border border-white/10 bg-[#101010] text-lg font-semibold text-white">
+              {study.initials}
+            </div>
+            <div class="flex flex-col gap-4">
+              <h3 class="text-base font-medium leading-relaxed text-white md:text-lg">
+                {study.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-[#7e868c]">
+                {study.description}
+              </p>
+            </div>
+            <a
+              href={study.link}
+              class="mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-[#101010] px-4 py-2 text-sm font-medium text-[#e5e5e5] transition-colors hover:bg-[#1a1a1a]"
+            >
+              Read More
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
