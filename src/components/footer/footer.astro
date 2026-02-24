@@ -15,8 +15,8 @@ import {
   YoutubeIcon,
 } from "../header/icons";
 import SpeakToExpert from "../pricing-page/SpeakToExpert";
+import TryAkashForm from "../home/hero/try-akash-form";
 import FooterYear from "./footer-year";
-import SubscribeButton from "./subscribe-button.astro";
 import Superclound from "./superclound.astro";
 
 type Props = {
@@ -353,7 +353,13 @@ const shouldHide = shouldHideCta(pathname);
     </div>
     <div class="flex flex-col items-center gap-3 pt-6 md:items-end md:pt-0">
       <p class="text-sm text-linkText">Stay up to date with Akash Newsletter</p>
-      <SubscribeButton />
+      <TryAkashForm
+        type="custom"
+        id="2d808d3b-402c-4b34-a9aa-36ffe5026063"
+        text="Subscribe Now"
+        className="flex cursor-pointer items-center justify-center rounded-md border border-primary bg-primary/5 px-[13px] py-2 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary hover:text-white dark:border-primary"
+        client:load
+      />
     </div>
   </div>
 
