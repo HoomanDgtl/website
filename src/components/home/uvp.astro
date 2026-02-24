@@ -32,42 +32,40 @@ const iconMap: Record<string, string> = {
 };
 ---
 
-<section class="bg-[#0d0d0e] px-5 py-20 md:py-[120px] xl:px-10">
+<section class="bg-[#0d0d0e] px-6 py-20 md:px-5 md:py-[120px] xl:px-10">
   <div class="mx-auto max-w-[1397px]">
     <div class="mb-12 flex flex-col items-center gap-3 md:mb-16">
       <h2
-        class="max-w-[800px] text-center text-xl font-medium text-white md:text-[28px] md:leading-tight"
+        class="max-w-[800px] text-center text-[28px] font-medium leading-tight text-white"
       >
         Permissionless Infrastructure. Unlimited Supply.
       </h2>
-      <p class="text-center text-base text-[#8a8f98] md:text-lg">
+      <p class="text-center text-lg text-[#8a8f98]">
         Access a global network of high-performance compute on demand.
       </p>
     </div>
 
-    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+    <div
+      class="uvp-scroll -mx-6 flex gap-6 overflow-x-auto px-6 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-8 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4"
+    >
       {
         features.map((feature) => {
           const lines = feature.description.split("\n");
           const firstTwo = lines.slice(0, 2).join("\n");
           const rest = lines.slice(2).filter(Boolean).join(" ");
           return (
-            <div class="flex flex-col gap-6">
-              <div class="flex flex-col gap-4">
-                <div class="flex h-12 w-12 items-center justify-center rounded-lg border border-[#383838] bg-[#191818] text-white">
+            <div class="flex min-w-[200px] max-w-[280px] shrink-0 flex-col gap-4 sm:min-w-0 sm:max-w-none sm:gap-6">
+              <div class="flex flex-col gap-3 sm:gap-4">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg border border-[#383838] bg-[#191818] text-white sm:h-12 sm:w-12">
                   <Fragment set:html={iconMap[feature.icon]} />
                 </div>
-                <h3 class="text-lg font-medium text-white md:text-xl">
-                  {feature.title}
-                </h3>
+                <h3 class="text-base font-medium text-white sm:text-xl">{feature.title}</h3>
               </div>
-              <p class="text-[15px] leading-relaxed md:text-[17px]">
+              <p class="text-[15px] leading-relaxed sm:text-[17px]">
                 <span class="block whitespace-pre-line text-white">
                   {firstTwo}
                 </span>
-                {rest && (
-                  <span class="mt-2 block text-[#8c8e91]">{rest}</span>
-                )}
+                {rest && <span class="mt-2 block text-[#8c8e91]">{rest}</span>}
               </p>
             </div>
           );
@@ -76,3 +74,13 @@ const iconMap: Record<string, string> = {
     </div>
   </div>
 </section>
+
+<style>
+  .uvp-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .uvp-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

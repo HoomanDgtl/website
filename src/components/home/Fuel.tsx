@@ -4,7 +4,7 @@ const Fuel = () => {
       className="relative bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: "url('/images/home/AKT.png')" }}
     >
-      <div className="relative z-10 flex flex-col items-center justify-center py-12 md:h-[720px]">
+      <div className="relative z-10 flex flex-col items-center justify-center py-8 md:h-[720px]">
         <img src="/images/akashstar.svg" alt="Akash Star" className="h-12" />
         <div className="mt-5 flex flex-col md:gap-2">
           <h2 className="text-center text-2xl font-semibold leading-[50px] text-white md:text-5xl">
