@@ -1,10 +1,41 @@
 ---
-import { subscribeLink } from "@/lib/constants";
 import { ArrowUpCircle } from "lucide-react";
 ---
 
-<a
-  href={subscribeLink}
+<button
+  id="open-hubspot-form"
   class="flex cursor-pointer items-center justify-center rounded-md border border-primary bg-primary/5 px-[13px] py-2 text-sm font-medium text-primary transition-all duration-300 hover:bg-primary hover:text-white dark:border-primary"
-  ><ArrowUpCircle className="mr-2 h-4 w-4 rotate-45" />Subscribe Now</a
 >
+  <ArrowUpCircle className="mr-2 h-4 w-4 rotate-45" />
+  Subscribe Now
+</button>
+
+<div id="hubspot-modal" class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50">
+  <div class="bg-white p-6 rounded-lg w-full max-w-xl relative">
+    <button id="close-hubspot-form" class="absolute top-3 right-3 text-xl uppercase text-black">x</button>
+
+    <script src="https://js.hsforms.net/forms/embed/47519938.js" defer></script>
+    <div
+      class="hs-form-frame"
+      data-region="na1"
+      data-form-id="2d808d3b-402c-4b34-a9aa-36ffe5026063"
+      data-portal-id="47519938"
+    ></div>
+  </div>
+</div>
+
+<script>
+  const openBtn = document.getElementById("open-hubspot-form");
+  const closeBtn = document.getElementById("close-hubspot-form");
+  const modal = document.getElementById("hubspot-modal");
+
+  openBtn?.addEventListener("click", () => {
+    modal?.classList.remove("hidden");
+    modal?.classList.add("flex");
+  });
+
+  closeBtn?.addEventListener("click", () => {
+    modal?.classList.add("hidden");
+    modal?.classList.remove("flex");
+  });
+</script>
