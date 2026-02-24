@@ -1,0 +1,180 @@
+---
+const steps = [
+  {
+    title: "Deploy AI models on AkashML",
+    description:
+      "Run AI inference models on a high-performance managed API.",
+    image: "/images/heroNew1.png",
+  },
+  {
+    title: "Browse Templates on Akash Console",
+    description:
+      "Explore pre-configured environments for Llama-3, DeepSeek, and more.",
+    image: "/images/heroNew1.png",
+  },
+  {
+    title: "Become an Akash Provider",
+    description:
+      "Monetize your servers by joining the network.",
+    image: "/images/heroNew1.png",
+  },
+];
+---
+
+<div class="mt-16 mb-16 md:mb-0">
+
+  <!-- Cards -->
+  <div class="flex flex-col gap-6 md:grid md:grid-cols-3 max-w-5xl mx-auto">
+
+    {steps.map((step, index) => (
+      <div class="flex flex-col">
+
+        <button
+          data-index={index}
+          class={`hero-tab relative flex flex-col gap-3 rounded-lg p-4 text-left transition-all duration-300
+          ${
+            index === 0
+              ? "bg-[#29292B] md:-translate-y-3"
+              : "bg-[#1B1B1D]"
+          }`}
+        >
+
+          <!-- Arrow -->
+          <div
+            class={`hero-arrow absolute right-4 top-4 ${
+              index === 0 ? "block" : "hidden"
+            }`}
+          >
+            <svg
+              width="8"
+              height="8"
+              viewBox="0 0 8 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0.665001 0.664978H7.33167M7.33167 0.664978V7.33164M7.33167 0.664978L0.665001 7.33164"
+                stroke="white"
+                stroke-width="1.33"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <h3
+            class={`hero-title text-base font-medium max-w-[160px] ${
+              index === 0 ? "text-white" : "text-[#86868B]"
+            }`}
+          >
+            {step.title}
+          </h3>
+
+          <p
+            class={`hero-desc text-sm max-w-xs ${
+              index === 0 ? "text-[#86868B]" : "text-[#86868B]"
+            }`}
+          >
+            {step.description}
+          </p>
+
+        </button>
+
+        <!-- MOBILE IMAGE -->
+        <div
+          data-mobile-image={index}
+          class={`md:hidden mt-4 ${
+            index === 0 ? "block" : "hidden"
+          }`}
+        >
+          <div class="relative overflow-hidden">
+            <img
+              src={step.image}
+              alt="Console Preview"
+              class="w-[200%] max-w-none rounded-xl"
+            />
+          </div>
+        </div>
+
+      </div>
+    ))}
+
+  </div>
+
+  <!-- DESKTOP IMAGE -->
+  <div class="hidden md:block mt-8 relative overflow-hidden">
+    {steps.map((step, index) => (
+      <img
+        src={step.image}
+        alt="Console Preview"
+        data-desktop-image={index}
+        class={`hero-image w-full h-auto transition-opacity duration-500 ${
+          index === 0 ? "opacity-100 relative" : "opacity-0 absolute inset-0"
+        }`}
+      />
+    ))}
+  </div>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll(".hero-tab");
+  const desktopImages = document.querySelectorAll("[data-desktop-image]");
+  const mobileImages = document.querySelectorAll("[data-mobile-image]");
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+
+      tabs.forEach((t, i) => {
+        // Reset card bg + lift
+        t.classList.remove("bg-[#29292B]", "md:-translate-y-3");
+        t.classList.add("bg-[#1B1B1D]");
+
+        // Hide arrow
+        const arrow = t.querySelector(".hero-arrow");
+        arrow.classList.remove("block");
+        arrow.classList.add("hidden");
+
+        // Reset title color
+        const title = t.querySelector(".hero-title");
+        title.classList.remove("text-white");
+        title.classList.add("text-[#86868B]");
+
+        // Reset description color
+        const desc = t.querySelector(".hero-desc");
+        desc.classList.remove("text-white");
+        desc.classList.add("text-[#86868B]");
+
+        // Hide mobile image
+        mobileImages[i]?.classList.add("hidden");
+      });
+
+      // Activate clicked
+      tab.classList.remove("bg-[#1B1B1D]");
+      tab.classList.add("bg-[#29292B]", "md:-translate-y-3");
+
+      const activeArrow = tab.querySelector(".hero-arrow");
+      activeArrow.classList.remove("hidden");
+      activeArrow.classList.add("block");
+
+      const activeTitle = tab.querySelector(".hero-title");
+      activeTitle.classList.remove("text-[#86868B]");
+      activeTitle.classList.add("text-white");
+
+      // Show mobile image
+      mobileImages[index]?.classList.remove("hidden");
+
+      // Desktop image switch
+      desktopImages.forEach((img, i) => {
+        if (i === index) {
+          img.classList.remove("opacity-0", "absolute");
+          img.classList.add("opacity-100", "relative");
+        } else {
+          img.classList.add("opacity-0", "absolute");
+          img.classList.remove("opacity-100", "relative");
+        }
+      });
+
+    });
+  });
+</script>

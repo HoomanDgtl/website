@@ -1,0 +1,104 @@
+---
+interface Feature {
+  title: string;
+  description: {
+    primary: string;
+    secondary: string;
+  };
+  image: string;
+  mobileImage: string;
+}
+
+const features: Feature[] = [
+  {
+    title: "Train 3x Longer",
+    description: {
+      primary:
+        "H100s for $1.33/hr vs AWS at $3.93/hr.",
+      secondary:
+        "Get nearly 3 hours of compute for the price of 1. Transparent pricing, no hidden fees.",
+    },
+    image: "/images/infrastructure/feat1.png",
+    mobileImage: "/images/infrastructure/feat1sm.png",
+  },
+  {
+    title: "Ray Distributed Clusters",
+    description: {
+      primary:
+        "Scale training instantly.",
+      secondary:
+        "Spin up multi-node Ray clusters to train and fine-tune massive models without DevOps overhead.",
+    },
+    image: "/images/infrastructure/feat2.png",
+    mobileImage: "/images/infrastructure/feat2sm.png",
+  },
+  {
+    title: "1-Click Templates",
+    description: {
+      primary:
+        "Deploy faster.",
+      secondary:
+        "Launch pre-configured environments for Llama, Mistral, and Stable Diffusion in seconds.",
+    },
+    image: "/images/infrastructure/feat3.png",
+    mobileImage: "/images/infrastructure/feat3sm.png",
+  },
+  {
+    title: "Docker Native",
+    description: {
+      primary:
+        "No refactoring required.",
+      secondary:
+        "If it runs in a container, it runs here. Full Kubernetes support with zero vendor lock-in.",
+    },
+    image: "/images/infrastructure/feat4.png",
+    mobileImage: "/images/infrastructure/feat4sm.png",
+  },
+];
+---
+
+<section class="w-full text-white py-20 container-home">
+    <!-- Header -->
+    <div class="text-center mb-14">
+      <h2 class="text-[28px] md:text-[40px] font-semibold">
+        The Infrastructure for AI & Data
+      </h2>
+      <p class="mt-3 text-[#8C8E91] max-w-2xl mx-auto text-base md:text-lg">
+        Train, deploy, and scale on the world's most cost-effective decentralized cloud.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 -mx-4">
+      {features.map((feature) => (
+        <div class="relative overflow-hidden">
+
+          <!-- Desktop / Tablet -->
+          <img
+            src={feature.image}
+            alt={feature.title}
+            class="hidden md:block w-full h-auto select-none pointer-events-none max-w-2xs md:max-w-full"
+          />
+
+          <!-- Mobile -->
+          <img
+            src={feature.mobileImage}
+            alt={feature.title}
+            class="block md:hidden w-full h-full object-cover select-none pointer-events-none"
+          />
+
+          <!-- Content -->
+          <div class="absolute bottom-14 md:bottom-16 left-10 space-y-2 max-w-[80%]">
+            <h3 class="text-[22px] md:text-[28px] text-white font-semibold flex items-center gap-2">
+              {feature.title}
+            </h3>
+
+            <p class="text-sm md:text-base text-white font-medium">
+              {feature.description.primary} <span class="text-[#8C8E91] font-normal">{feature.description.secondary}</span>
+            </p>
+          </div>
+
+        </div>
+      ))}
+    </div>
+</section>
