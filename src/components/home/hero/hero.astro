@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import HeroTile from "./HeroTile.astro";
 
 interface Props {
   heroSection: CollectionEntry<"Homepage">["data"]["heroSection"];
@@ -41,166 +42,166 @@ const { heroSection } = Astro.props;
     </div>
   </div>
 
-  <div class="mt-12 bg-[#0e0e0e] md:mt-16">
+  <div class="mt-12 md:mt-16">
     <div class="mx-auto max-w-[1440px] px-5 xl:px-0">
       <div class="mx-auto max-w-[960px] pb-6 pt-6 md:pt-8">
         <div
-          class="flex flex-col gap-5 md:flex-row"
+          class="flex flex-col gap-5 md:flex-row md:items-start"
           id="hero-product-tiles"
         >
-          <button
-            class="hero-tile group flex-1 cursor-pointer rounded-lg border border-white/20 bg-[#29292b] p-4 text-left transition-all"
-            data-tile="0"
-            data-active="true"
-          >
-            <div class="flex flex-col gap-3">
-              <div
-                class="inline-flex w-fit items-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-white"
-              >
-                AkashChat API
-              </div>
-              <p class="text-sm leading-snug text-[#86868b]">
-                Run AI Inference models on a high-performance managed API.
-              </p>
-            </div>
-          </button>
-
-          <div class="flex flex-1 flex-col gap-5 pt-3 md:flex-row">
-            <button
-              class="hero-tile group flex-1 cursor-pointer rounded-lg border border-white/10 bg-[#1b1b1d] p-4 text-left transition-all hover:border-white/20 hover:bg-[#29292b]"
-              data-tile="1"
-            >
-              <div class="flex flex-col gap-3">
-                <div
-                  class="inline-flex w-fit items-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-white"
-                >
-                  Akash Console
-                </div>
-                <p class="text-sm leading-snug text-[#86868b]">
-                  Deploy and manage workloads through an intuitive web interface.
-                </p>
-              </div>
-            </button>
-
-            <button
-              class="hero-tile group flex-1 cursor-pointer rounded-lg border border-white/10 bg-[#1b1b1d] p-4 text-left transition-all hover:border-white/20 hover:bg-[#29292b]"
-              data-tile="2"
-            >
-              <div class="flex flex-col gap-3">
-                <div
-                  class="inline-flex w-fit items-center rounded-lg bg-transparent px-3 py-2 text-sm font-medium text-white"
-                >
-                  Become a Provider
-                </div>
-                <p class="text-sm leading-snug text-[#86868b]">
-                  Earn by offering your hardware on the decentralized cloud.
-                </p>
-              </div>
-            </button>
-          </div>
+          <HeroTile
+            tileIndex={0}
+            title={"Deploy AI models<br />on AkashML"}
+            description={"Run AI Inference models on a high-performance managed API."}
+          />
+          <HeroTile
+            tileIndex={1}
+            title={"Browse Templates on<br />Akash Console"}
+            description={"Explore pre-configured environments for Llama-3, DeepSeek, and more."}
+          />
+          <HeroTile
+            tileIndex={2}
+            title={"Become an<br />Akash Provider"}
+            description={"Monetize your servers by joining the network."}
+          />
         </div>
 
-        <div class="mt-5 flex gap-8 px-1">
+        <div class="mt-5 flex gap-5 px-1">
           <div class="relative flex-1">
             <div class="h-px w-full bg-white/20"></div>
             <div
-              class="hero-tile-indicator absolute left-0 top-0 h-px w-[36%] bg-[#ff3b30] transition-all duration-300"
+              class="hero-progress absolute left-0 top-0 h-px bg-[#ff3b30]"
               data-tile="0"
-              data-active="true"
             >
             </div>
           </div>
-          <div class="flex-1">
+          <div class="relative flex-1">
             <div class="h-px w-full bg-white/20"></div>
+            <div
+              class="hero-progress absolute left-0 top-0 h-px w-0 bg-[#ff3b30]"
+              data-tile="1"
+            >
+            </div>
           </div>
-          <div class="flex-1">
+          <div class="relative flex-1">
             <div class="h-px w-full bg-white/20"></div>
+            <div
+              class="hero-progress absolute left-0 top-0 h-px w-0 bg-[#ff3b30]"
+              data-tile="2"
+            >
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="mx-auto max-w-[1136px] px-4 pb-0">
-      <div
-        class="overflow-hidden rounded-t-3xl border border-b-0 border-[#303030]"
-      >
-        <div class="bg-[#1b1b1d] p-4 pt-2">
-          <div
-            class="overflow-hidden rounded-2xl border border-black/60 bg-[#1b1b1d]"
-          >
-            <div
-              class="flex items-center justify-between border-b border-[#e5e5e5]/10 px-4 py-2"
-            >
-              <div class="flex items-center gap-1.5">
-                <span class="h-2.5 w-2.5 rounded-full bg-[#ff5f57]"></span>
-                <span class="h-2.5 w-2.5 rounded-full bg-[#febc2e]"></span>
-                <span class="h-2.5 w-2.5 rounded-full bg-[#28c840]"></span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-[#8c8e91]">
-                <span>console.akash.network</span>
-              </div>
-            </div>
-            <div class="flex min-h-[300px] md:min-h-[460px]">
-              <div
-                class="hidden w-[140px] flex-shrink-0 border-r border-[#e5e5e5]/10 bg-[#fafafa] p-3 md:block"
-              >
-                <div class="flex flex-col gap-2">
-                  <div class="h-3 w-20 rounded bg-[#e5e5e5]"></div>
-                  <div class="h-3 w-16 rounded bg-[#e5e5e5]"></div>
-                  <div class="h-3 w-24 rounded bg-[#d4d4d4]"></div>
-                  <div class="h-3 w-14 rounded bg-[#e5e5e5]"></div>
-                  <div class="mt-4 h-3 w-20 rounded bg-[#e5e5e5]"></div>
-                  <div class="h-3 w-18 rounded bg-[#e5e5e5]"></div>
-                </div>
-              </div>
-              <div class="flex-1 bg-[#f5f5f5] p-4">
-                <div class="flex flex-col gap-4">
-                  <div class="flex gap-3">
-                    <div class="h-20 flex-1 rounded-lg bg-white p-3 shadow-sm">
-                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
-                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
-                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
-                    </div>
-                    <div class="h-20 flex-1 rounded-lg bg-white p-3 shadow-sm">
-                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
-                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
-                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
-                    </div>
-                    <div
-                      class="hidden h-20 flex-1 rounded-lg bg-white p-3 shadow-sm md:block"
-                    >
-                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
-                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
-                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
-                    </div>
-                    <div
-                      class="hidden h-20 flex-1 rounded-lg bg-white p-3 shadow-sm lg:block"
-                    >
-                      <div class="h-2 w-16 rounded bg-[#d4d4d4]"></div>
-                      <div class="mt-2 h-4 w-12 rounded bg-[#171717]"></div>
-                      <div class="mt-1 h-2 w-20 rounded bg-[#d4d4d4]"></div>
-                    </div>
-                  </div>
-                  <div
-                    class="h-48 rounded-lg bg-white p-4 shadow-sm md:h-64 lg:h-80"
-                  >
-                    <div class="flex items-center justify-between">
-                      <div class="h-3 w-24 rounded bg-[#d4d4d4]"></div>
-                      <div class="h-3 w-16 rounded bg-[#e5e5e5]"></div>
-                    </div>
-                    <div class="mt-4 flex flex-col gap-3">
-                      <div class="h-8 w-full rounded bg-[#f5f5f5]"></div>
-                      <div class="h-8 w-full rounded bg-[#f5f5f5]"></div>
-                      <div class="h-8 w-full rounded bg-[#f5f5f5]"></div>
-                      <div class="h-8 w-3/4 rounded bg-[#f5f5f5]"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div
+      class="mx-auto max-w-[1136px] rounded-t-3xl border-x border-t border-defaultBorder px-4 pb-0 pt-4"
+    >
+      <img src="/images/console.png" alt="Hero Image" class="w-full" />
     </div>
   </div>
 </section>
+
+<style>
+  @keyframes heroProgressFill {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  .hero-progress.active {
+    animation: heroProgressFill 5s linear forwards;
+  }
+
+  .hero-progress.completed {
+    width: 100%;
+    animation: none;
+  }
+
+  .hero-tile[data-active="true"] .hero-icon-arrow {
+    display: block;
+  }
+  .hero-tile[data-active="true"] .hero-icon-chevron {
+    display: none;
+  }
+  .hero-tile:not([data-active="true"]) .hero-icon-arrow {
+    display: none;
+  }
+  .hero-tile:not([data-active="true"]) .hero-icon-chevron {
+    display: block;
+  }
+</style>
+
+<script>
+  const TILE_COUNT = 3;
+  let current = 0;
+  let paused = false;
+
+  const tiles = document.querySelectorAll<HTMLButtonElement>(".hero-tile");
+  const bars = document.querySelectorAll<HTMLElement>(".hero-progress");
+
+  function activate(index: number) {
+    current = index;
+
+    tiles.forEach((tile, i) => {
+      const isActive = i === index;
+      tile.dataset.active = isActive ? "true" : "";
+
+      if (isActive) {
+        tile.classList.replace("border-white/10", "border-white/20");
+        tile.classList.replace("bg-[#1b1b1d]", "bg-[#29292b]");
+        tile.classList.remove("md:mt-3");
+        tile
+          .querySelector(".hero-tile-title")
+          ?.classList.replace("text-[#86868b]", "text-white");
+      } else {
+        tile.classList.replace("border-white/20", "border-white/10");
+        tile.classList.replace("bg-[#29292b]", "bg-[#1b1b1d]");
+        tile.classList.add("md:mt-3");
+        tile
+          .querySelector(".hero-tile-title")
+          ?.classList.replace("text-white", "text-[#86868b]");
+      }
+    });
+
+    bars.forEach((bar, i) => {
+      bar.classList.remove("active", "completed");
+      bar.style.width = "";
+
+      if (i < index) {
+        bar.classList.add("completed");
+      } else if (i === index) {
+        void bar.offsetWidth;
+        bar.classList.add("active");
+      } else {
+        bar.style.width = "0%";
+      }
+    });
+  }
+
+  bars.forEach((bar) => {
+    bar.addEventListener("animationend", () => {
+      if (!paused) {
+        activate((current + 1) % TILE_COUNT);
+      }
+    });
+  });
+
+  tiles.forEach((tile, i) => {
+    tile.addEventListener("click", () => {
+      activate(i);
+    });
+  });
+
+  const section = document.querySelector("#hero-product-tiles")!;
+  section.addEventListener("mouseenter", () => (paused = true));
+  section.addEventListener("mouseleave", () => {
+    paused = false;
+    activate(current);
+  });
+
+  activate(0);
+</script>

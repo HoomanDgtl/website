@@ -6,7 +6,7 @@ const caseStudies = [
     description:
       "Sigea Cloud Labs deployed privacy-first cloud storage on Akash Network's decentralized GPU infrastructure,...",
     link: "/blog/eliminating-cloud-cost-opacity-how-sigea-cloud-labs-rebuilt-enterprise-storage-on-decentralized-infrastructure/",
-    initials: "SC",
+    icon: "/images/home/icons/1.png",
   },
   {
     title:
@@ -14,14 +14,14 @@ const caseStudies = [
     description:
       "Levangie Laboratories built cognitive architecture that enables AI agents to operate independently, learn from...",
     link: "/blog/why-levangie-labs-chose-akash-to-power-the-first-semi-autonomous-ai-organization/",
-    initials: "LL",
+    icon: "/images/home/icons/2.png",
   },
   {
     title: "How Flashback Labs Scaled Privacy-First AI on Akash",
     description:
       "Flashback Labs built a privacy-first AI platform that lets users create lifelike AI twins trained entirely on their own...",
     link: "/blog/how-flashback-labs-scaled-privacy-first-ai-on-akash/",
-    initials: "FL",
+    icon: "/images/home/icons/3.png",
   },
 ];
 ---
@@ -45,8 +45,12 @@ const caseStudies = [
       {
         caseStudies.map((study) => (
           <div class="flex flex-col gap-8 rounded-[20px] border border-white/10 bg-[#0f0f0f] p-6">
-            <div class="flex h-16 w-16 items-center justify-center rounded-[10px] border border-white/10 bg-[#101010] text-lg font-semibold text-white">
-              {study.initials}
+            <div class="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-[10px] border border-white/10 bg-[#101010] p-2">
+              <img
+                src={study.icon}
+                alt=""
+                class="h-full w-full object-contain"
+              />
             </div>
             <div class="flex flex-col gap-4">
               <h3 class="text-base font-medium leading-relaxed text-white md:text-lg">

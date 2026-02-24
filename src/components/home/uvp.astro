@@ -47,22 +47,31 @@ const iconMap: Record<string, string> = {
 
     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
       {
-        features.map((feature) => (
-          <div class="flex flex-col gap-6">
-            <div class="flex flex-col gap-4">
-              <div class="flex h-12 w-12 items-center justify-center rounded-lg border border-[#383838] bg-[#191818] text-white">
-                <Fragment set:html={iconMap[feature.icon]} />
+        features.map((feature) => {
+          const lines = feature.description.split("\n");
+          const firstTwo = lines.slice(0, 2).join("\n");
+          const rest = lines.slice(2).filter(Boolean).join(" ");
+          return (
+            <div class="flex flex-col gap-6">
+              <div class="flex flex-col gap-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-lg border border-[#383838] bg-[#191818] text-white">
+                  <Fragment set:html={iconMap[feature.icon]} />
+                </div>
+                <h3 class="text-lg font-medium text-white md:text-xl">
+                  {feature.title}
+                </h3>
               </div>
-              <h3 class="text-lg font-medium text-white md:text-xl">
-                {feature.title}
-              </h3>
+              <p class="text-[15px] leading-relaxed md:text-[17px]">
+                <span class="block whitespace-pre-line text-white">
+                  {firstTwo}
+                </span>
+                {rest && (
+                  <span class="mt-2 block text-[#8c8e91]">{rest}</span>
+                )}
+              </p>
             </div>
-            <p
-              class="whitespace-pre-line text-[15px] leading-relaxed text-[#8c8e91] md:text-[17px]"
-              set:html={feature.description}
-            />
-          </div>
-        ))
+          );
+        })
       }
     </div>
   </div>

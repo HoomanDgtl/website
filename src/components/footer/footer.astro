@@ -22,9 +22,11 @@ import Superclound from "./superclound.astro";
 type Props = {
   overrideClassName?: string;
   hideDarkToggle?: boolean;
+
+  className?: string;
 };
 
-const { overrideClassName, hideDarkToggle }: Props = Astro.props;
+const { overrideClassName, hideDarkToggle, className }: Props = Astro.props;
 
 const socials = [
   {
@@ -203,10 +205,10 @@ const shouldHide = shouldHideCta(pathname);
     shouldHide && "border-t  mt-20",
     overrideClassName
       ? overrideClassName
-      : "bg-white dark:bg-background container"
+      : "bg-white dark:bg-background container",
   )}
 >
-  <div class="border-b pb-6 md:pb-20">
+  <div class={clsx("border-b pb-6 md:pb-20", className)}>
     <div class="justify-between md:mx-auto lg:flex lg:gap-5">
       <Superclound className="flex border-b pb-6 md:hidden" />
       <div
@@ -234,7 +236,7 @@ const shouldHide = shouldHideCta(pathname);
         }
       </div>
       <div
-        class="hidden flex-col gap-8 pb-[40px] text-left text-base font-[300] md:flex px-4 sm:px-0"
+        class="hidden flex-col gap-8 px-4 pb-[40px] text-left text-base font-[300] sm:px-0 md:flex"
       >
         <div class="flex flex-col">
           <svg
@@ -343,7 +345,10 @@ const shouldHide = shouldHideCta(pathname);
     </div>
   </div>
   <div
-    class="flex flex-col justify-between border-b py-6 md:flex-row md:items-center md:py-8"
+    class={clsx(
+      "flex flex-col justify-between border-b py-6 md:flex-row md:items-center md:py-8",
+      className,
+    )}
   >
     <div
       class="flex flex-col items-center gap-3 border-b pb-6 md:items-start md:border-b-0 md:pb-0"
@@ -357,7 +362,12 @@ const shouldHide = shouldHideCta(pathname);
     </div>
   </div>
 
-  <div class="relative flex flex-col justify-center pt-6 text-center md:pt-14">
+  <div
+    class={clsx(
+      "relative flex flex-col justify-center pt-6 text-center md:pt-14",
+      className,
+    )}
+  >
     <Superclound className="mb-4 hidden md:flex" />
     <div
       class="flex w-full flex-col items-center justify-center gap-y-[16px] lg:flex-row lg:items-center"

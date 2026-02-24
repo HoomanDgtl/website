@@ -19,6 +19,7 @@ interface Props {
   headerClassName?: string;
   footerClassName?: string;
   hideDarkToggle?: boolean;
+  footerSubclassName?: string;
 }
 
 const homepage = await getEntry("Homepage", "index");
@@ -34,6 +35,7 @@ const {
   headerClassName,
   footerClassName,
   hideDarkToggle,
+  footerSubclassName,
 } = Astro.props;
 const pathname = Astro.url.pathname;
 ---
@@ -77,13 +79,14 @@ const pathname = Astro.url.pathname;
       pathname.includes("akash-accelerate-2024") ||
         pathname.includes("akash-accelerate-2025")
         ? "hidden"
-        : "block"
+        : "block",
     )}
   >
     <CTA />
     <Footer
       overrideClassName={footerClassName}
       hideDarkToggle={hideDarkToggle}
+      className={footerSubclassName}
     />
   </div>
 </BaseLayout>
