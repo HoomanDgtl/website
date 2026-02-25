@@ -1,17 +1,20 @@
 ---
+import Dither from "@/components/backgrounds/Dither";
 ---
 
 <section
-  class="relative w-full h-[80vh] bg-cover bg-center bg-no-repeat"
-  style="background-image: url('/images/fuelBgSM.png');"
+  class="relative w-full h-[80vh] overflow-hidden"
 >
-  <style>
-    @media (min-width: 768px) {
-      section {
-        background-image: url('/images/fuelBg.png');
-      }
-    }
-  </style>
+  <div class="absolute inset-0 z-0 opacity-15">
+    <Dither
+      client:load
+      waveColor={[0.5,0.5,0.5]}
+      colorNum={4}
+      waveAmplitude={0.3}
+      waveFrequency={3}
+      waveSpeed={0.05}
+    />
+  </div>
 
   <div class="relative z-10 flex h-full flex-col items-center justify-center py-12 md:py-20 text-center">
 
@@ -27,14 +30,14 @@
       </h2>
 
       <p class="text-[#8A8F98] text-base md:text-lg">
-        AKT is the utility token that powers every GPU transaction on the
-        Akash decentralized cloud.
+        AKT is the utility token that powers <br class="block md:hidden" /> every GPU transaction on the
+        Akash <br class="block md:hidden" /> decentralized cloud.
       </p>
     </div>
 
     <a
       href="/token/"
-      class="flex items-center rounded-lg bg-[#333336] px-4 py-2 text-white transition-all duration-300 hover:brightness-110"
+      class="flex text-sm items-center rounded-lg bg-[#333336] px-4 py-2 text-white transition-all duration-300 hover:brightness-110"
     >
       Learn How AKT Works
     </a>

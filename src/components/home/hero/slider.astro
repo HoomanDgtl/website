@@ -1,181 +1,37 @@
 ---
-const steps = [
-  {
-    title: "Deploy AI models on AkashML",
-    description:
-      "Run AI inference models on a high-performance managed API.",
-    image: "/images/heroNew1.png",
-  },
-  {
-    title: "Browse Templates on Akash Console",
-    description:
-      "Explore pre-configured environments for Llama-3, DeepSeek, and more.",
-    image: "/images/heroNew1.png",
-  },
-  {
-    title: "Become an Akash Provider",
-    description:
-      "Monetize your servers by joining the network.",
-    image: "/images/heroNew1.png",
-  },
-];
+interface Props {
+  tileIndex: number;
+  title: string;
+  description: string;
+}
+
+const { tileIndex, title, description } = Astro.props;
 ---
 
-<div class="mt-16 mb-16 md:mb-0">
-
-  <!-- Cards -->
-  <div class="flex flex-col gap-6 md:grid md:grid-cols-3 max-w-5xl mx-auto">
-
-    {steps.map((step, index) => (
-      <div class="flex flex-col">
-
-        <button
-          data-index={index}
-          class={`hero-tab relative flex flex-col gap-3 rounded-lg p-4 text-left border shadow-xl transition-all duration-300
-          ${
-            index === 0
-              ? "bg-[#F5F5F5] dark:bg-[#29292B] border-[#E3E3E3] dark:border-transparent md:-translate-y-3"
-              : "bg-[#F1F1F1] dark:bg-[#1B1B1D] border-[#E3E3E3] dark:border-transparent"
-          }`}
-        >
-
-          <!-- Arrow -->
-          <div
-            class={`hero-arrow absolute right-4 top-4 ${
-              index === 0 ? "block" : "hidden"
-            } text-[#171717] dark:text-white`}
-          >
-            <svg
-              width="8"
-              height="8"
-              viewBox="0 0 8 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0.665001 0.664978H7.33167M7.33167 0.664978V7.33164M7.33167 0.664978L0.665001 7.33164"
-                stroke="currentColor"
-                stroke-width="1.33"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-
-          <h3
-            class={`hero-title text-base font-medium max-w-[160px] ${
-              index === 0 ? "text-[#171717] dark:text-white" : "text-[#86868B]"
-            }`}
-          >
-            {step.title}
-          </h3>
-
-          <p
-            class={`hero-desc text-sm max-w-xs text-[#86868B]`}
-          >
-            {step.description}
-          </p>
-
-        </button>
-
-        <!-- MOBILE IMAGE -->
-        <div
-          data-mobile-image={index}
-          class={`md:hidden mt-4 ${
-            index === 0 ? "block" : "hidden"
-          }`}
-        >
-          <div class="relative overflow-hidden">
-            <img
-              src={step.image}
-              alt="Console Preview"
-              class="w-[200%] max-w-none rounded-xl"
-            />
-          </div>
-        </div>
-
-      </div>
-    ))}
-
-  </div>
-
-  <!-- DESKTOP IMAGE -->
-  <div class="hidden md:block mt-8 relative overflow-hidden">
-    {steps.map((step, index) => (
-      <img
-        src={step.image}
-        alt="Console Preview"
-        data-desktop-image={index}
-        class={`hero-image w-full h-auto transition-opacity duration-500 ${
-          index === 0 ? "opacity-100 relative" : "opacity-0 absolute inset-0"
-        }`}
+<button
+  class="hero-tile w-full flex-1 cursor-pointer rounded-lg border border-[#E3E3E3] dark:border-white/10 bg-[#F1F1F1] dark:bg-[#1b1b1d] p-4 text-left transition-all duration-500 ease-out md:mt-3"
+  data-tile={tileIndex}
+  data-active=""
+>
+  <div class="flex flex-col gap-3">
+    <div class="flex items-start justify-between gap-2">
+      <span
+        class="hero-tile-title text-sm font-medium leading-snug text-[#86868b] transition-colors duration-300"
+        set:html={title}
       />
-    ))}
+      <svg
+        class="hero-icon-arrow h-4 w-4 shrink-0"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="7" y1="17" x2="17" y2="7"></line>
+        <polyline points="7 7 17 7 17 17"></polyline>
+      </svg>
+    </div>
+    <p class="text-sm leading-snug text-[#86868b]" set:html={description} />
   </div>
-
-</div>
-
-<script>
-  const tabs = document.querySelectorAll(".hero-tab");
-  const desktopImages = document.querySelectorAll("[data-desktop-image]");
-  const mobileImages = document.querySelectorAll("[data-mobile-image]");
-
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => {
-
-      tabs.forEach((t, i) => {
-        // Reset card bg + lift
-        t.classList.remove("bg-[#F5F5F5]", "dark:bg-[#29292B]", "md:-translate-y-3");
-        t.classList.add("bg-[#F1F1F1]", "dark:bg-[#1B1B1D]");
-
-        // Hide arrow
-        const arrow = t.querySelector(".hero-arrow");
-        if (arrow) {
-          arrow.classList.remove("block");
-          arrow.classList.add("hidden");
-        }
-
-        // Reset title color
-        const title = t.querySelector(".hero-title");
-        if (title) {
-          title.classList.remove("text-[#171717]", "dark:text-white");
-          title.classList.add("text-[#86868B]");
-        }
-
-        // Hide mobile image
-        mobileImages[i]?.classList.add("hidden");
-      });
-
-      // Activate clicked
-      tab.classList.remove("bg-[#F1F1F1]", "dark:bg-[#1B1B1D]");
-      tab.classList.add("bg-[#F5F5F5]", "dark:bg-[#29292B]", "md:-translate-y-3");
-
-      const activeArrow = tab.querySelector(".hero-arrow");
-      if (activeArrow) {
-        activeArrow.classList.remove("hidden");
-        activeArrow.classList.add("block");
-      }
-
-      const activeTitle = tab.querySelector(".hero-title");
-      if (activeTitle) {
-        activeTitle.classList.remove("text-[#86868B]");
-        activeTitle.classList.add("text-[#171717]", "dark:text-white");
-      }
-
-      // Show mobile image
-      mobileImages[index]?.classList.remove("hidden");
-
-      // Desktop image switch
-      desktopImages.forEach((img, i) => {
-        if (i === index) {
-          img.classList.remove("opacity-0", "absolute");
-          img.classList.add("opacity-100", "relative");
-        } else {
-          img.classList.add("opacity-0", "absolute");
-          img.classList.remove("opacity-100", "relative");
-        }
-      });
-
-    });
-  });
-</script>
+</button>
