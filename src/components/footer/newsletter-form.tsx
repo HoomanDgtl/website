@@ -52,7 +52,7 @@ export default function NewsletterForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            fields: [{ name: "email", value: email }],
+            fields: [{ name: "0-1/email", value: email }],
             context: buildHSContext(),
             skipValidation: false,
             includeFreemailSuggestions: true,
