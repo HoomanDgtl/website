@@ -219,7 +219,7 @@ export default function TryAkashForm({
       </DialogTrigger>
       <DialogContent
         hideCloseButton
-        className="hide-scrollbar  max-h-[95vh] overflow-hidden overflow-y-auto !border-none bg-white  p-0 shadow-none sm:max-w-[600px] rounded-lg"
+        className="hide-scrollbar  max-h-[95vh] overflow-hidden overflow-y-auto !border-none bg-transparent  p-0 shadow-none sm:max-w-[600px]"
       >
         <button
           onClick={() => {
