@@ -31,11 +31,11 @@ const steps = [
 
         <button
           data-index={index}
-          class={`hero-tab relative flex flex-col gap-3 rounded-lg p-4 text-left transition-all duration-300
+          class={`hero-tab relative flex flex-col gap-3 rounded-lg p-4 text-left border shadow-xl transition-all duration-300
           ${
             index === 0
-              ? "bg-[#29292B] md:-translate-y-3"
-              : "bg-[#1B1B1D]"
+              ? "bg-[#F5F5F5] dark:bg-[#29292B] border-[#E3E3E3] dark:border-transparent md:-translate-y-3"
+              : "bg-[#F1F1F1] dark:bg-[#1B1B1D] border-[#E3E3E3] dark:border-transparent"
           }`}
         >
 
@@ -43,7 +43,7 @@ const steps = [
           <div
             class={`hero-arrow absolute right-4 top-4 ${
               index === 0 ? "block" : "hidden"
-            }`}
+            } text-[#171717] dark:text-white`}
           >
             <svg
               width="8"
@@ -54,7 +54,7 @@ const steps = [
             >
               <path
                 d="M0.665001 0.664978H7.33167M7.33167 0.664978V7.33164M7.33167 0.664978L0.665001 7.33164"
-                stroke="white"
+                stroke="currentColor"
                 stroke-width="1.33"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -64,16 +64,14 @@ const steps = [
 
           <h3
             class={`hero-title text-base font-medium max-w-[160px] ${
-              index === 0 ? "text-white" : "text-[#86868B]"
+              index === 0 ? "text-[#171717] dark:text-white" : "text-[#86868B]"
             }`}
           >
             {step.title}
           </h3>
 
           <p
-            class={`hero-desc text-sm max-w-xs ${
-              index === 0 ? "text-[#86868B]" : "text-[#86868B]"
-            }`}
+            class={`hero-desc text-sm max-w-xs text-[#86868B]`}
           >
             {step.description}
           </p>
@@ -127,39 +125,42 @@ const steps = [
 
       tabs.forEach((t, i) => {
         // Reset card bg + lift
-        t.classList.remove("bg-[#29292B]", "md:-translate-y-3");
-        t.classList.add("bg-[#1B1B1D]");
+        t.classList.remove("bg-[#F5F5F5]", "dark:bg-[#29292B]", "md:-translate-y-3");
+        t.classList.add("bg-[#F1F1F1]", "dark:bg-[#1B1B1D]");
 
         // Hide arrow
         const arrow = t.querySelector(".hero-arrow");
-        arrow.classList.remove("block");
-        arrow.classList.add("hidden");
+        if (arrow) {
+          arrow.classList.remove("block");
+          arrow.classList.add("hidden");
+        }
 
         // Reset title color
         const title = t.querySelector(".hero-title");
-        title.classList.remove("text-white");
-        title.classList.add("text-[#86868B]");
-
-        // Reset description color
-        const desc = t.querySelector(".hero-desc");
-        desc.classList.remove("text-white");
-        desc.classList.add("text-[#86868B]");
+        if (title) {
+          title.classList.remove("text-[#171717]", "dark:text-white");
+          title.classList.add("text-[#86868B]");
+        }
 
         // Hide mobile image
         mobileImages[i]?.classList.add("hidden");
       });
 
       // Activate clicked
-      tab.classList.remove("bg-[#1B1B1D]");
-      tab.classList.add("bg-[#29292B]", "md:-translate-y-3");
+      tab.classList.remove("bg-[#F1F1F1]", "dark:bg-[#1B1B1D]");
+      tab.classList.add("bg-[#F5F5F5]", "dark:bg-[#29292B]", "md:-translate-y-3");
 
       const activeArrow = tab.querySelector(".hero-arrow");
-      activeArrow.classList.remove("hidden");
-      activeArrow.classList.add("block");
+      if (activeArrow) {
+        activeArrow.classList.remove("hidden");
+        activeArrow.classList.add("block");
+      }
 
       const activeTitle = tab.querySelector(".hero-title");
-      activeTitle.classList.remove("text-[#86868B]");
-      activeTitle.classList.add("text-white");
+      if (activeTitle) {
+        activeTitle.classList.remove("text-[#86868B]");
+        activeTitle.classList.add("text-[#171717]", "dark:text-white");
+      }
 
       // Show mobile image
       mobileImages[index]?.classList.remove("hidden");

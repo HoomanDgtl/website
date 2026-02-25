@@ -229,25 +229,26 @@ const ExpandedGpu = () => {
           GPU's at Costs That Scale
         </h2>
       </div>
-      <div className="shadow">
-        <div className="grid w-full grid-cols-5 rounded-t-lg border border-black dark:border-[#2E2E2E]">
+      <div className="shadow-sm">
+        <div className="grid w-full grid-cols-5 rounded-t-lg border border-[#D1D1D1] dark:border-[#2E2E2E]">
           {gpuTypes.map((item, index) => (
             <div
+              key={index}
               className={clsx(
                 "flex flex-col",
                 item.selected && " -mt-1 md:-mt-2",
-                index !== gpuTypes.length - 1 && index !== 1 && "border-r border-black dark:border-[#2E2E2E]",
+                index !== gpuTypes.length - 1 && index !== 1 && "border-r border-[#D1D1D1] dark:border-[#2E2E2E]",
               )}
             >
               <h3
                 className={clsx(
-                  "flex w-full items-center  justify-center gap-1 py-2.5 text-[10px] md:gap-1.5  md:py-4  md:text-sm lg:text-lg",
+                  "flex w-full items-center justify-center gap-1 py-2.5 text-[10px] md:gap-1.5 md:py-4 md:text-sm lg:text-lg",
                   index === 0 && "rounded-tl-md md:rounded-tl-lg",
                   index === gpuTypes.length - 1 &&
                     "rounded-tr-md md:rounded-tr-lg",
                   item.selected
-                    ? "rounded-t-md border-b !border-[#DC1D28] bg-primary py-3 text-white md:rounded-t-lg  md:py-5"
-                    : "border-b border-black dark:border-[#2E2E2E] bg-[#080808] text-[#8A8F9D]",
+                    ? "rounded-t-md border-b !border-[#DC1D28] bg-[linear-gradient(180deg,#FF414C_36.11%,#DA2832_100%)] border-t border-t-[#DC1D28] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] py-3 text-white md:rounded-t-lg md:py-5"
+                    : "border-b border-[#D1D1D1] dark:border-[#2E2E2E] bg-[#F7F7F7] dark:bg-[#080808] text-[#8A8F98] dark:text-[#8A8F9D]",
                 )}
               >
                 {item?.svg && (
@@ -274,10 +275,10 @@ const ExpandedGpu = () => {
                 //     : {}
                 // }
                 className={clsx(
-                  "py-2.5 text-center text-sm font-normal dark:font-semibold md:py-4 md:text-xl text-black dark:text-white border-t border-black dark:border-[#2E2E2E]",
+                  "py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl border-t border-[#D1D1D1] dark:border-[#2E2E2E]",
                   item.selected
-                    ? "bg-[linear-gradient(180deg,#FF414C_36.11%,#DA2832_100%)]"
-                    : "dark:bg-[linear-gradient(16.2deg,#121212_16.73%,#191818_88.7%)] bg-white",
+                    ? "bg-[linear-gradient(180deg,#FF414C_36.11%,#DA2832_100%)] text-white"
+                    : "dark:bg-[linear-gradient(16.2deg,#121212_16.73%,#191818_88.7%)] bg-[#EAEAEA] text-black dark:text-white",
                 )}
               >
                 {prices[0][index]}
@@ -303,14 +304,14 @@ const ExpandedGpu = () => {
                       // }
                       key={i}
                       className={clsx(
-                        " py-2.5 text-center text-sm dark:font-semibold md:py-4 md:text-xl ",
+                        " py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl ",
                         i === 1
-                          ? " border-t !border-[#DC1D28] text-black dark:text-white"
-                          : "border-t border-black dark:border-[#2E2E2E]",
+                          ? " border-t !border-[#DC1D28] text-white"
+                          : "border-t border-[#D1D1D1] dark:border-[#2E2E2E]",
                         i === 1
-                          ? "bg-[linear-gradient(180deg,#FF414C_36.11%,#DA2832_100%)] text-black dark:text-white"
-                          : "dark:bg-[linear-gradient(16.2deg,#121212_16.73%,#191818_88.7%)] bg-white text-black dark:text-white",
-                        i !== item.length - 1 && i !== 1 && "border-r border-black dark:border-[#2E2E2E]",
+                          ? "bg-[linear-gradient(180deg,#FF414C_36.11%,#DA2832_100%)]"
+                          : "dark:bg-[linear-gradient(16.2deg,#121212_16.73%,#191818_88.7%)] bg-[#EAEAEA] text-black dark:text-white",
+                        i !== item.length - 1 && i !== 1 && "border-r border-[#D1D1D1] dark:border-[#2E2E2E]",
                       )}
                     >
                       {item}
@@ -328,7 +329,7 @@ const ExpandedGpu = () => {
         </div>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex w-full items-center justify-center gap-1 rounded-b-md border-x border-b border-black dark:border-[#2E2E2E] bg-background dark:bg-[#191818] py-2.5 font-medium md:rounded-b-lg md:py-4 group/gpuprice"
+          className="flex w-full items-center justify-center gap-1 rounded-b-md border-x border-b border-[#D1D1D1] dark:border-[#2E2E2E] bg-[#EAEAEA] dark:bg-[#191818] py-2.5 font-medium md:rounded-b-lg md:py-4 group/gpuprice"
         >
           <p className="text-currentColor text-xs md:text-base group-hover/gpuprice:dark:text-white group-hover/gpuprice:text-black">
             View more GPU pricing

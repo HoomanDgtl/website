@@ -10,8 +10,8 @@ const caseStudies: CaseStudy[] = [
   {
     icon: `<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g filter="url(#filter0_d_403_3419)">
-<rect x="2" y="1" width="64" height="64" rx="10" fill="#101010"/>
-<rect x="2.5" y="1.5" width="63" height="63" rx="9.5" stroke="white" stroke-opacity="0.1"/>
+<rect x="2" y="1" width="64" height="64" rx="10" fill="currentColor"/>
+<rect x="2.5" y="1.5" width="63" height="63" rx="9.5" stroke="currentColor"/>
 <rect x="19" y="12.7637" width="32" height="40.4725" fill="url(#pattern0_403_3419)"/>
 </g>
 <defs>
@@ -39,8 +39,8 @@ const caseStudies: CaseStudy[] = [
   {
     icon: `<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g filter="url(#filter0_d_403_3426)">
-<rect x="2" y="1" width="64" height="64" rx="10" fill="#101010"/>
-<rect x="2.5" y="1.5" width="63" height="63" rx="9.5" stroke="white" stroke-opacity="0.1"/>
+<rect x="2" y="1" width="64" height="64" rx="10" fill="currentColor"/>
+<rect x="2.5" y="1.5" width="63" height="63" rx="9.5" stroke="currentColor"/>
 <rect x="13.6666" y="14.2402" width="42.6668" height="37.5194" fill="url(#pattern0_403_3426)"/>
 </g>
 <defs>
@@ -68,8 +68,8 @@ const caseStudies: CaseStudy[] = [
   {
     icon: `<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g filter="url(#filter0_d_403_3433)">
-<rect x="2" y="1" width="64" height="64" rx="10" fill="#101010"/>
-<rect x="2.5" y="1.5" width="63" height="63" rx="9.5" stroke="white" stroke-opacity="0.1"/>
+<rect x="2" y="1" width="64" height="64" rx="10" fill="currentColor"/>
+<rect x="2.5" y="1.5" width="63" height="63" rx="9.5" stroke="currentColor"/>
 <rect x="19.5" y="16" width="31" height="34" fill="url(#pattern0_403_3433)"/>
 </g>
 <defs>
@@ -121,7 +121,7 @@ const caseStudies: CaseStudy[] = [
 
           <!-- Icon -->
           <div
-            class="aspect-square w-[48px]"
+            class="aspect-square w-[48px] bg-[#EEEEEE] dark:bg-[#101010] border-[#e3e3e3] dark:border-white/10"
             set:html={study.icon}
           />
 
@@ -138,9 +138,9 @@ const caseStudies: CaseStudy[] = [
 
           <a
             href={study.link}
-            class="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 px-4 py-2 text-sm text-white transition-all duration-300 hover:border-black/60 dark:hover:border-white/60"
+            class="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 px-4 py-2 text-sm text-[#171717] dark:text-white transition-all duration-300 hover:border-black/60 dark:hover:border-white/60"
           >
-            <span>Read More</span>
+            <span class="font-medium">Read More</span>
 
             <svg
               width="20"
@@ -152,7 +152,7 @@ const caseStudies: CaseStudy[] = [
             >
               <path
                 d="M9 6L15 12L9 18"
-                stroke="white"
+                stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
