@@ -7,6 +7,7 @@ interface TryAkashFormProps extends VariantProps<typeof speakToExpertVariants> {
   type:
     | "hero"
     | "header"
+    | "headerDeploy"
     | "speckToExpert"
     | "speakToExpertHeader"
     | "linkButton"
@@ -34,6 +35,19 @@ export default function TryAkashForm({
       })}
     >
       Get in Touch
+    </button>
+  );
+
+  const headerDeployButton = (
+    <button
+      type="button"
+      className={buttonVariants({
+        variant: "default",
+        size: "sm",
+        className: "!h-auto !rounded px-[11px] py-[7px] text-xs",
+      })}
+    >
+      Deploy Now
     </button>
   );
 
@@ -171,8 +185,10 @@ export default function TryAkashForm({
     </button>
   );
 
-  return type === "hero" ? (
-    <a href="https://console.akash.network">{heroButton}</a>
+  return type === "hero" || type === "headerDeploy" ? (
+    <a href="https://console.akash.network/">
+      {type === "hero" ? heroButton : headerDeployButton}
+    </a>
   ) : (
     <a href="/gpus-on-demand">
       {type === "speckToExpert"

@@ -17,17 +17,20 @@ const tiles = [
     title: "Deploy AI models<br />on AkashML",
     description: "Run AI Inference models on a high-performance managed API.",
     image: "/images/heroNew1.png",
+    url: "https://akashml.com",
   },
   {
     title: "Browse Templates on<br />Akash Console",
     description:
       "Explore pre-configured environments for Llama-3, DeepSeek, and more.",
-    image: "/images/heroNew1.png",
+    image: "/images/heroNew2.png",
+    url: "https://console.akash.network/templates",
   },
   {
     title: "Become an<br />Akash Provider",
     description: "Monetize your servers by joining the network.",
-    image: "/images/heroNew1.png",
+    image: "/images/heroNew3.png",
+    url: "https://providers-console.akash.network",
   },
 ];
 
@@ -84,6 +87,7 @@ const tiles = [
                       tileIndex={i}
                       title={tile.title}
                       description={tile.description}
+                      url={tile.url}
                     />
                   </div>
 
@@ -170,19 +174,6 @@ const tiles = [
     animation: none;
   }
 
-  .hero-tile[data-active="true"] .hero-icon-arrow {
-    display: block;
-  }
-  .hero-tile[data-active="true"] .hero-icon-chevron {
-    display: none;
-  }
-  .hero-tile:not([data-active="true"]) .hero-icon-arrow {
-    display: none;
-  }
-  .hero-tile:not([data-active="true"]) .hero-icon-chevron {
-    display: block;
-  }
-
   /* Mobile block: hidden by default, shown when active */
   .hero-mobile-block {
     max-height: 0;
@@ -210,7 +201,7 @@ const tiles = [
   function setupHeroTiles() {
     const TILE_COUNT = 3;
     let current = 0;
-    let paused = false;
+
 
     const tiles = document.querySelectorAll<HTMLButtonElement>(".hero-tile");
     const desktopBars = document.querySelectorAll<HTMLElement>(
@@ -259,7 +250,7 @@ const tiles = [
       desktopBars.forEach((bar, i) => {
         bar.classList.remove("active", "completed");
         bar.style.width = "";
-        bar.style.animationPlayState = paused ? "paused" : "running";
+        bar.style.animationPlayState = "running";
 
         if (i < index) {
           bar.classList.add("completed");
@@ -275,7 +266,7 @@ const tiles = [
       mobileBars.forEach((bar, i) => {
         bar.classList.remove("active", "completed");
         bar.style.width = "";
-        bar.style.animationPlayState = paused ? "paused" : "running";
+        bar.style.animationPlayState = "running";
 
         if (i < index) {
           bar.classList.add("completed");
@@ -301,35 +292,11 @@ const tiles = [
     // Event Listeners
     [...desktopBars, ...mobileBars].forEach((bar) => {
       bar.addEventListener("animationend", () => {
-        if (!paused && bar.offsetParent !== null) {
+        if (bar.offsetParent !== null) {
           activate((current + 1) % TILE_COUNT);
         }
       });
     });
-
-    tiles.forEach((tile, i) => {
-      tile.addEventListener("click", () => {
-        activate(i);
-      });
-    });
-
-    const section = document.querySelector("#hero-product-tiles");
-    if (section) {
-      const pause = () => {
-        paused = true;
-        [...desktopBars, ...mobileBars].forEach((bar) => {
-          bar.style.animationPlayState = "paused";
-        });
-      };
-      const resume = () => {
-        paused = false;
-        [...desktopBars, ...mobileBars].forEach((bar) => {
-          bar.style.animationPlayState = "running";
-        });
-      };
-      section.addEventListener("mouseenter", pause);
-      section.addEventListener("mouseleave", resume);
-    }
 
     let resizeTimer: number;
     const handleResize = () => {

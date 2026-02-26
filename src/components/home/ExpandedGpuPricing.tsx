@@ -275,7 +275,7 @@ const ExpandedGpu = () => {
                 //     : {}
                 // }
                 className={clsx(
-                  "py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl border-t border-[#D1D1D1] dark:border-[#2E2E2E]",
+                  "py-2.5 text-center text-sm font-semibold md:py-4 md:text-xl",
                   item.selected
                     ? "bg-[linear-gradient(180deg,#FF414C_36.11%,#DA2832_100%)] text-white"
                     : "dark:bg-[linear-gradient(16.2deg,#121212_16.73%,#191818_88.7%)] bg-[#EAEAEA] text-black dark:text-white",
