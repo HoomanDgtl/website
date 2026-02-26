@@ -92,7 +92,7 @@ const tiles = [
                     <div class="hero-mobile-line relative">
                       <div class="h-px w-full bg-white/20" />
                       <div
-                        class="hero-progress hero-progress-mobile absolute left-0 right-5 top-0 h-px bg-primary"
+                        class="hero-progress hero-progress-mobile absolute left-0 top-0 h-px bg-primary w-0"
                         data-tile={i}
                       />
                     </div>
@@ -119,7 +119,7 @@ const tiles = [
                 <div class="relative flex-1">
                   <div class="h-px w-full bg-white/20" />
                   <div
-                    class={`hero-progress hero-progress-desktop absolute left-0 top-0 h-px bg-primary ${i > 0 ? "w-0" : ""}`}
+                    class="hero-progress hero-progress-desktop absolute left-0 top-0 h-px bg-primary w-0"
                     data-tile={i}
                   />
                 </div>
@@ -207,135 +207,148 @@ const tiles = [
 </style>
 
 <script>
-  const TILE_COUNT = 3;
-  let current = 0;
-  let paused = false;
+  function setupHeroTiles() {
+    const TILE_COUNT = 3;
+    let current = 0;
+    let paused = false;
 
-  const tiles = document.querySelectorAll<HTMLButtonElement>(".hero-tile");
-  const desktopBars = document.querySelectorAll<HTMLElement>(
-    ".hero-progress-desktop",
-  );
-  const mobileBars = document.querySelectorAll<HTMLElement>(
-    ".hero-progress-mobile",
-  );
-  const desktopImages = document.querySelectorAll<HTMLElement>(
-    ".hero-desktop-image",
-  );
-  const mobileBlocks =
-    document.querySelectorAll<HTMLElement>(".hero-mobile-block");
+    const tiles = document.querySelectorAll<HTMLButtonElement>(".hero-tile");
+    const desktopBars = document.querySelectorAll<HTMLElement>(
+      ".hero-progress-desktop",
+    );
+    const mobileBars = document.querySelectorAll<HTMLElement>(
+      ".hero-progress-mobile",
+    );
+    const desktopImages = document.querySelectorAll<HTMLElement>(
+      ".hero-desktop-image",
+    );
+    const mobileBlocks =
+      document.querySelectorAll<HTMLElement>(".hero-mobile-block");
 
-  function activate(index: number) {
-    current = index;
+    if (tiles.length === 0) return;
+
+    function activate(index: number) {
+      current = index;
+
+      tiles.forEach((tile, i) => {
+        const isActive = i === index;
+        tile.dataset.active = isActive ? "true" : "";
+
+        // Style updates
+        const title = tile.querySelector(".hero-tile-title");
+        if (isActive) {
+          tile.classList.add("dark:border-white/20", "dark:bg-[#29292b]");
+          tile.classList.remove("dark:border-white/10", "dark:bg-[#1b1b1d]", "md:mt-3");
+          
+          if (title) {
+            title.classList.add("text-[#171717]", "dark:text-white");
+            title.classList.remove("text-[#86868b]");
+          }
+        } else {
+          tile.classList.add("dark:border-white/10", "dark:bg-[#1b1b1d]", "md:mt-3");
+          tile.classList.remove("dark:border-white/20", "dark:bg-[#29292b]");
+          
+          if (title) {
+            title.classList.add("text-[#86868b]");
+            title.classList.remove("text-[#171717]", "dark:text-white");
+          }
+        }
+      });
+
+      // Desktop progress bars
+      desktopBars.forEach((bar, i) => {
+        bar.classList.remove("active", "completed");
+        bar.style.width = "";
+        bar.style.animationPlayState = paused ? "paused" : "running";
+
+        if (i < index) {
+          bar.classList.add("completed");
+        } else if (i === index) {
+          void bar.offsetWidth;
+          bar.classList.add("active");
+        } else {
+          bar.style.width = "0%";
+        }
+      });
+
+      // Mobile progress bars
+      mobileBars.forEach((bar, i) => {
+        bar.classList.remove("active", "completed");
+        bar.style.width = "";
+        bar.style.animationPlayState = paused ? "paused" : "running";
+
+        if (i < index) {
+          bar.classList.add("completed");
+        } else if (i === index) {
+          void bar.offsetWidth;
+          bar.classList.add("active");
+        } else {
+          bar.style.width = "0%";
+        }
+      });
+
+      // Desktop images
+      desktopImages.forEach((img, i) => {
+        img.classList.toggle("hidden", i !== index);
+      });
+
+      // Mobile blocks
+      mobileBlocks.forEach((block, i) => {
+        block.classList.toggle("active", i === index);
+      });
+    }
+
+    // Event Listeners
+    [...desktopBars, ...mobileBars].forEach((bar) => {
+      bar.addEventListener("animationend", () => {
+        if (!paused && bar.offsetParent !== null) {
+          activate((current + 1) % TILE_COUNT);
+        }
+      });
+    });
 
     tiles.forEach((tile, i) => {
-      const isActive = i === index;
-      tile.dataset.active = isActive ? "true" : "";
-
-      if (isActive) {
-        tile.classList.replace("border-white/10", "border-white/20");
-        tile.classList.replace("bg-[#1b1b1d]", "bg-[#29292b]");
-        tile.classList.remove("md:mt-3");
-        tile
-          .querySelector(".hero-tile-title")
-          ?.classList.replace("text-[#86868b]", "text-currentColor");
-      } else {
-        tile.classList.replace("border-white/20", "border-white/10");
-        tile.classList.replace("bg-[#29292b]", "bg-[#1b1b1d]");
-        tile.classList.add("md:mt-3");
-        tile
-          .querySelector(".hero-tile-title")
-          ?.classList.replace("text-white", "text-[#86868b]");
-      }
+      tile.addEventListener("click", () => {
+        activate(i);
+      });
     });
 
-    // Desktop progress bars
-    desktopBars.forEach((bar, i) => {
-      bar.classList.remove("active", "completed");
-      bar.style.width = "";
-      bar.style.animationPlayState = paused ? "paused" : "running";
+    const section = document.querySelector("#hero-product-tiles");
+    if (section) {
+      const pause = () => {
+        paused = true;
+        [...desktopBars, ...mobileBars].forEach((bar) => {
+          bar.style.animationPlayState = "paused";
+        });
+      };
+      const resume = () => {
+        paused = false;
+        [...desktopBars, ...mobileBars].forEach((bar) => {
+          bar.style.animationPlayState = "running";
+        });
+      };
+      section.addEventListener("mouseenter", pause);
+      section.addEventListener("mouseleave", resume);
+    }
 
-      if (i < index) {
-        bar.classList.add("completed");
-      } else if (i === index) {
-        void bar.offsetWidth;
-        bar.classList.add("active");
-      } else {
-        bar.style.width = "0%";
-      }
-    });
+    let resizeTimer: number;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        activate(current);
+      }, 200);
+    };
+    window.addEventListener("resize", handleResize);
 
-    // Mobile progress bars
-    mobileBars.forEach((bar, i) => {
-      bar.classList.remove("active", "completed");
-      bar.style.width = "";
-      bar.style.animationPlayState = paused ? "paused" : "running";
+    // Initial activation
+    activate(0);
 
-      if (i < index) {
-        bar.classList.add("completed");
-      } else if (i === index) {
-        void bar.offsetWidth;
-        bar.classList.add("active");
-      } else {
-        bar.style.width = "0%";
-      }
-    });
-
-    // Desktop images
-    desktopImages.forEach((img, i) => {
-      if (i === index) {
-        img.classList.remove("hidden");
-      } else {
-        img.classList.add("hidden");
-      }
-    });
-
-    // Mobile blocks (line + image) — show only the active tile's
-    mobileBlocks.forEach((block, i) => {
-      if (i === index) {
-        block.classList.add("active");
-      } else {
-        block.classList.remove("active");
-      }
-    });
+    // Cleanup for View Transitions
+    document.addEventListener("astro:before-swap", () => {
+      window.removeEventListener("resize", handleResize);
+    }, { once: true });
   }
 
-  // Only advance from whichever progress bar set is currently visible
-  [...desktopBars, ...mobileBars].forEach((bar) => {
-    bar.addEventListener("animationend", () => {
-      if (!paused && bar.offsetParent !== null) {
-        activate((current + 1) % TILE_COUNT);
-      }
-    });
-  });
-
-  tiles.forEach((tile, i) => {
-    tile.addEventListener("click", () => {
-      activate(i);
-    });
-  });
-
-  const section = document.querySelector("#hero-product-tiles")!;
-  section.addEventListener("mouseenter", () => {
-    paused = true;
-    [...desktopBars, ...mobileBars].forEach((bar) => {
-      bar.style.animationPlayState = "paused";
-    });
-  });
-  section.addEventListener("mouseleave", () => {
-    paused = false;
-    [...desktopBars, ...mobileBars].forEach((bar) => {
-      bar.style.animationPlayState = "running";
-    });
-  });
-
-  // Re-activate on resize so desktop/mobile bars stay in sync
-  let resizeTimer: number;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(() => {
-      activate(current);
-    }, 200);
-  });
-
-  activate(0);
+  // Initialize on every page load (View Transitions compatible)
+  document.addEventListener("astro:page-load", setupHeroTiles);
 </script>

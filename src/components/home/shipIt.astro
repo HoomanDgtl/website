@@ -8,10 +8,13 @@ import Dither from "@/components/backgrounds/Dither";
       client:load
       waveColor={[0.5,0.5,0.5]}
       colorNum={4}
+      disableAnimation={false}
       waveAmplitude={0.3}
       waveFrequency={3}
       waveSpeed={0.05}
       enableMouseInteraction
+      mouseRadius={0.5}
+      pixelSize={2}
     />
   </div>
 
@@ -34,14 +37,14 @@ import Dither from "@/components/backgrounds/Dither";
 
     <div class="mt-8 flex flex-wrap gap-2">
       <a
-        href="/token/"
+        href="https://console.akash.network/"
         class="flex items-center rounded-lg bg-[#E5E5E5] px-4 py-2 text-[#171717] transition-all duration-300 hover:brightness-110"
       >
         Deploy Now
       </a>
 
       <a
-        href="/token/"
+        href="/gpus-on-demand"
         class="flex items-center rounded-lg bg-[#333336] px-4 py-2 text-white transition-all duration-300 hover:brightness-110"
       >
         Get In Touch
