@@ -148,12 +148,20 @@ const tiles = [
                 <img
                   src={tile.image}
                   alt=""
-                  class="w-full transition-[filter] duration-300 group-hover/img:blur-[4px]"
+                  class="w-full transition-[filter] duration-150 group-hover/img:blur-[4px] group-hover/img:brightness-[40%]"
                 />
                 <span class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/img:opacity-100">
                   <span class="flex items-center gap-2 rounded-xl bg-[#1b1b1d] px-6 py-3.5 text-base font-medium text-white shadow-lg">
                     {tile.buttonText}
-                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      class="h-4 w-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <line x1="7" y1="17" x2="17" y2="7" />
                       <polyline points="7 7 17 7 17 17" />
                     </svg>
@@ -343,4 +351,3 @@ const tiles = [
   // Initialize on every page load (View Transitions compatible)
   document.addEventListener("astro:page-load", setupHeroTiles);
 </script>
-

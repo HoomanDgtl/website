@@ -242,11 +242,11 @@ const ExpandedGpu = () => {
             >
               <h3
                 className={clsx(
-                  "flex w-full items-center gap-1 text-[10px] md:gap-1.5 md:text-sm lg:text-lg",
+                  "flex w-full items-center gap-1 text-[10px] md:gap-1.5 md:text-sm lg:text-lg whitespace-nowrap truncate",
                   index === 0 ? "justify-start px-4 md:px-8" : "justify-center",
                   index === 0 && "rounded-tl-md md:rounded-tl-lg",
                   index === gpuTypes.length - 1 &&
-                    "rounded-tr-md md:rounded-tr-lg",
+                  "rounded-tr-md md:rounded-tr-lg",
                   item.selected
                     ? "rounded-t-md border-b !border-[#DC1D28] bg-[#FF414C] border-t border-t-[#DC1D28] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] text-white md:rounded-t-lg pt-2.5 pb-[14px] md:pt-5 md:pb-[28px]"
                     : "border-b border-[#D1D1D1] dark:border-[#2E2E2E] bg-[#F7F7F7] dark:bg-[#080808] text-[#8A8F98] dark:text-[#8A8F9D] py-2.5 md:py-5",
