@@ -57,7 +57,7 @@ const features: Feature[] = [
 ];
 ---
 
-<section class="w-full text-white py-20 container-home">
+<section class="w-full text-white py-20 container-nav-3">
     <!-- Header -->
     <div class="text-center mb-14">
       <h2 class="text-[28px] md:text-[40px] font-semibold">
@@ -77,18 +77,18 @@ const features: Feature[] = [
           <img
             src={feature.image}
             alt={feature.title}
-            class="hidden md:block w-full h-auto select-none pointer-events-none max-w-2xs md:max-w-full"
+            class="feature-img-desktop w-full h-auto select-none pointer-events-none max-w-2xs md:max-w-full"
           />
 
           <!-- Mobile -->
           <img
             src={feature.mobileImage}
             alt={feature.title}
-            class="block md:hidden w-full h-full object-cover select-none pointer-events-none"
+            class="feature-img-mobile w-full h-full object-cover select-none pointer-events-none"
           />
 
           <!-- Content -->
-          <div class="absolute bottom-[60px] left-10 space-y-2 max-w-[80%]">
+          <div class="feature-content absolute bottom-[15%] space-y-2 max-w-[80%]">
             <h3 class="text-[22px] md:text-[28px] text-white font-semibold flex items-center gap-2">
               {feature.title}
             </h3>
@@ -102,3 +102,27 @@ const features: Feature[] = [
       ))}
     </div>
 </section>
+
+<style>
+  .feature-img-mobile {
+    display: none;
+  }
+  .feature-img-desktop {
+    display: block;
+  }
+  .feature-content {
+    left: 7%;
+  }
+
+  @media (max-width: 450px) {
+    .feature-img-mobile {
+      display: block;
+    }
+    .feature-img-desktop {
+      display: none;
+    }
+    .feature-content {
+      left: 10%;
+    }
+  }
+</style>
