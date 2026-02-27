@@ -2,13 +2,11 @@
 import Dither from "@/components/backgrounds/Dither";
 ---
 
-<section
-  class="relative w-full h-[80vh] overflow-hidden"
->
+<section class="relative h-[85vh] w-full overflow-hidden">
   <div class="absolute inset-0 z-0 opacity-15">
     <Dither
       client:load
-      waveColor={[0.5,0.5,0.5]}
+      waveColor={[0.5, 0.5, 0.5]}
       colorNum={3}
       disableAnimation={false}
       waveAmplitude={0.25}
@@ -20,31 +18,35 @@ import Dither from "@/components/backgrounds/Dither";
     />
   </div>
 
-  <div class="relative z-10 flex h-full flex-col items-center justify-center py-12 md:py-20 text-center">
-
+  <div
+    class="relative z-10 flex h-full flex-col items-center justify-center py-12 text-center md:py-20"
+  >
     <img
       src="/images/akashstar.svg"
       alt="Akash Star"
-      class="h-12 select-none pointer-events-none"
+      class="pointer-events-none h-12 select-none"
     />
 
-    <div class="my-10 flex flex-col gap-2 md:gap-4 px-6">
-      <h2 class="text-[40px] font-semibold leading-[50px] text-white md:text-[64px]">
+    <div class="my-10 flex flex-col gap-2 px-6 md:gap-4">
+      <h2
+        class="text-[40px] font-semibold leading-[50px] text-white md:text-[64px]"
+      >
         AKT: The Fuel Behind Akash
       </h2>
 
-      <p class="text-[#8A8F98] text-base md:text-lg">
-        AKT is the utility token that powers <br class="block md:hidden" /> every GPU transaction on the
-        Akash <br class="block md:hidden" /> decentralized cloud.
+      <p class="text-base text-[#8A8F98] md:text-lg">
+        AKT is the utility token that powers <br class="block md:hidden" /> every
+        GPU transaction on the Akash <br class="block md:hidden" /> decentralized
+        cloud.
       </p>
     </div>
 
     <a
       href="/token/"
-      class="flex text-sm items-center rounded-lg bg-[#333336] px-4 py-2 text-white transition-all duration-300 hover:brightness-110"
+      class="flex items-center rounded-lg bg-[#333336] px-4 py-2 text-sm text-white transition-all duration-300 hover:brightness-110"
     >
       Learn How AKT Works
     </a>
-
   </div>
 </section>
+

@@ -18,6 +18,7 @@ const tiles = [
     description: "Run AI Inference models on a high-performance managed API.",
     image: "/images/heroNew1.png",
     url: "https://akashml.com",
+    buttonText: "Deploy Now on Console",
   },
   {
     title: "Browse Templates on<br />Akash Console",
@@ -25,15 +26,16 @@ const tiles = [
       "Explore pre-configured environments for Llama-3, DeepSeek, and more.",
     image: "/images/heroNew2.png",
     url: "https://console.akash.network/templates",
+    buttonText: "Explore Templates",
   },
   {
     title: "Become an<br />Akash Provider",
     description: "Monetize your servers by joining the network.",
     image: "/images/heroNew3.png",
     url: "https://provider-console.akash.network",
+    buttonText: "Become an Akash Provider",
   },
 ];
-
 ---
 
 <section class="relative overflow-hidden bg-[#FCFCFC] dark:bg-[#030303]">
@@ -50,7 +52,7 @@ const tiles = [
     <h1
       class={clsx(
         "mx-auto text-center font-instrument text-[54px] font-normal leading-[1] tracking-[-0.88px] lg:text-[88px]",
-        pathname.includes("meetingconfirmation") ? "mt-7" : "mt-10"
+        pathname.includes("meetingconfirmation") ? "mt-7" : "mt-10",
       )}
       set:html={heroSection.title}
     />
@@ -96,7 +98,7 @@ const tiles = [
                     <div class="hero-mobile-line relative">
                       <div class="h-px w-full bg-white/20" />
                       <div
-                        class="hero-progress hero-progress-mobile absolute left-0 top-0 h-px bg-primary w-0"
+                        class="hero-progress hero-progress-mobile absolute left-0 top-0 h-px w-0 bg-primary"
                         data-tile={i}
                       />
                     </div>
@@ -123,7 +125,7 @@ const tiles = [
                 <div class="relative flex-1">
                   <div class="h-px w-full bg-white/20" />
                   <div
-                    class="hero-progress hero-progress-desktop absolute left-0 top-0 h-px bg-primary w-0"
+                    class="hero-progress hero-progress-desktop absolute left-0 top-0 h-px w-0 bg-primary"
                     data-tile={i}
                   />
                 </div>
@@ -135,23 +137,34 @@ const tiles = [
 
       {/* Desktop: image container */}
       <div class="hidden md:block">
-        <div
-          class="mx-auto max-w-[1136px] rounded-t-3xl px-4 pb-0 pt-4"
-        >
+        <div class="mx-auto max-w-[1136px] rounded-t-3xl px-4 pb-0 pt-4">
           {
             tiles.map((tile, i) => (
-              <img
-                src={tile.image}
-                alt=""
-                class={`hero-desktop-image w-full ${i > 0 ? "hidden" : ""}`}
+              <a
+                href={tile.url}
+                class={`hero-desktop-image group/img relative block cursor-pointer ${i > 0 ? "hidden" : ""}`}
                 data-tile={i}
-              />
+              >
+                <img
+                  src={tile.image}
+                  alt=""
+                  class="w-full transition-[filter] duration-300 group-hover/img:blur-[4px]"
+                />
+                <span class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover/img:opacity-100">
+                  <span class="flex items-center gap-2 rounded-xl bg-[#1b1b1d] px-6 py-3.5 text-base font-medium text-white shadow-lg">
+                    {tile.buttonText}
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7" />
+                      <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
             ))
           }
         </div>
       </div>
     </div>
-    
   </div>
 </section>
 
@@ -202,7 +215,6 @@ const tiles = [
     const TILE_COUNT = 3;
     let current = 0;
 
-
     const tiles = document.querySelectorAll<HTMLButtonElement>(".hero-tile");
     const desktopBars = document.querySelectorAll<HTMLElement>(
       ".hero-progress-desktop",
@@ -229,16 +241,24 @@ const tiles = [
         const title = tile.querySelector(".hero-tile-title");
         if (isActive) {
           tile.classList.add("dark:border-white/20", "dark:bg-[#29292b]");
-          tile.classList.remove("dark:border-white/10", "dark:bg-[#1b1b1d]", "md:mt-3");
-          
+          tile.classList.remove(
+            "dark:border-white/10",
+            "dark:bg-[#1b1b1d]",
+            "md:mt-3",
+          );
+
           if (title) {
             title.classList.add("text-[#171717]", "dark:text-white");
             title.classList.remove("text-[#86868b]");
           }
         } else {
-          tile.classList.add("dark:border-white/10", "dark:bg-[#1b1b1d]", "md:mt-3");
+          tile.classList.add(
+            "dark:border-white/10",
+            "dark:bg-[#1b1b1d]",
+            "md:mt-3",
+          );
           tile.classList.remove("dark:border-white/20", "dark:bg-[#29292b]");
-          
+
           if (title) {
             title.classList.add("text-[#86868b]");
             title.classList.remove("text-[#171717]", "dark:text-white");
@@ -311,11 +331,16 @@ const tiles = [
     activate(0);
 
     // Cleanup for View Transitions
-    document.addEventListener("astro:before-swap", () => {
-      window.removeEventListener("resize", handleResize);
-    }, { once: true });
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        window.removeEventListener("resize", handleResize);
+      },
+      { once: true },
+    );
   }
 
   // Initialize on every page load (View Transitions compatible)
   document.addEventListener("astro:page-load", setupHeroTiles);
 </script>
+
