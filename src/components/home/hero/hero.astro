@@ -18,6 +18,7 @@ const tiles = [
     description: "Run AI Inference models on a high-performance managed API.",
     image: "/images/heroNew1.png",
     url: "https://akashml.com",
+    buttonText: "Deploy Now on Console",
   },
   {
     title: "Browse Templates on<br />Akash Console",
@@ -25,12 +26,14 @@ const tiles = [
       "Explore pre-configured environments for Llama-3, DeepSeek, and more.",
     image: "/images/heroNew2.png",
     url: "https://console.akash.network/templates",
+    buttonText: "Explore Templates",
   },
   {
     title: "Become an<br />Akash Provider",
     description: "Monetize your servers by joining the network.",
     image: "/images/heroNew3.png",
     url: "https://provider-console.akash.network",
+    buttonText: "Become an Akash Provider",
   },
 ];
 
@@ -93,22 +96,24 @@ const tiles = [
 
                   {/* Mobile: progress bar + image below each card (only visible when active) */}
                   <div class="hero-mobile-block pl-5 md:hidden">
-                    <div class="hero-mobile-line relative">
-                      <div class="h-px w-full bg-white/20" />
+                    <div class="min-h-0">
+                      <div class="hero-mobile-line relative">
+                        <div class="h-px w-full bg-white/20" />
+                        <div
+                          class="hero-progress hero-progress-mobile absolute left-0 top-0 h-px bg-primary w-0"
+                          data-tile={i}
+                        />
+                      </div>
                       <div
-                        class="hero-progress hero-progress-mobile absolute left-0 top-0 h-px bg-primary w-0"
+                        class="hero-mobile-image overflow-hidden pl-4 pt-4"
                         data-tile={i}
-                      />
-                    </div>
-                    <div
-                      class="hero-mobile-image overflow-hidden pl-4 pt-4"
-                      data-tile={i}
-                    >
-                      <img
-                        src={tile.image}
-                        alt=""
-                        class="h-[350px] w-full  rounded-tl-2xl object-cover object-left-top"
-                      />
+                      >
+                        <img
+                          src={tile.image}
+                          alt=""
+                          class="h-[350px] w-full block rounded-tl-2xl object-cover object-left-top"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -135,19 +140,36 @@ const tiles = [
 
       {/* Desktop: image container */}
       <div class="hidden md:block">
-        <div
-          class="mx-auto max-w-[1136px] rounded-t-3xl px-4 pb-0 pt-4"
-        >
-          {
-            tiles.map((tile, i) => (
-              <img
-                src={tile.image}
-                alt=""
-                class={`hero-desktop-image w-full ${i > 0 ? "hidden" : ""}`}
-                data-tile={i}
-              />
-            ))
-          }
+        <div class="mx-auto max-w-[1136px] px-4 pb-0 pt-4">
+          <div class="relative group">
+            {
+              tiles.map((tile, i) => (
+                <div
+                  class={`hero-desktop-image-container relative overflow-hidden rounded-t-[20px] ${i > 0 ? "hidden" : ""}`}
+                  data-tile={i}
+                >
+                  <img
+                    src={tile.image}
+                    alt=""
+                    class="w-full block"
+                  />
+                  <div class="hero-image-overlay absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                    <a
+                      href={tile.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="hero-visit-btn"
+                    >
+                      {tile.buttonText}
+                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.665039 0.665039H7.33171M7.33171 0.665039V7.33171M7.33171 0.665039L0.665039 7.33171" stroke="#FAFAFA" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>
@@ -176,24 +198,56 @@ const tiles = [
 
   /* Mobile block: hidden by default, shown when active */
   .hero-mobile-block {
-    max-height: 0;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
     margin-top: 0;
     overflow: hidden;
     transition:
-      max-height 0.4s ease,
+      grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
       opacity 0.3s ease,
       margin-top 0.3s ease;
   }
 
   .hero-mobile-block.active {
-    max-height: 700px;
+    grid-template-rows: 1fr;
     opacity: 1;
     margin-top: 0.75rem;
   }
 
   .hero-mobile-image {
     margin-top: 1rem;
+  }
+
+  .hero-image-overlay {
+    background: rgba(20, 20, 22, 0.8);
+    border: 1.12708px solid rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    border-radius: 16px 16px 0px 0px;
+    z-index: 10;
+  }
+
+  .hero-visit-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 32px;
+    gap: 8px;
+    width: fit-content;
+    min-width: 264px;
+    height: 40px;
+    background: #171717;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    color: #FAFAFA;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+  }
+
+  .hero-visit-btn:hover {
+    transform: scale(1.02);
   }
 </style>
 
@@ -211,7 +265,7 @@ const tiles = [
       ".hero-progress-mobile",
     );
     const desktopImages = document.querySelectorAll<HTMLElement>(
-      ".hero-desktop-image",
+      ".hero-desktop-image-container",
     );
     const mobileBlocks =
       document.querySelectorAll<HTMLElement>(".hero-mobile-block");
