@@ -2,9 +2,10 @@
 import Dither from "@/components/backgrounds/Dither";
 ---
 
-<section
-  class="relative w-full h-[80vh] max-h-[1080px] overflow-hidden"
->
+<div class="container-nav-3">
+  <section
+    class="relative w-full h-fit overflow-hidden rounded-2xl bg-[#171717]"
+  >
   <div class="absolute inset-0 z-0 opacity-15">
     <Dither
       client:load
@@ -20,7 +21,7 @@ import Dither from "@/components/backgrounds/Dither";
     />
   </div>
 
-  <div class="relative z-10 flex h-full flex-col items-center justify-center py-12 md:py-20 text-center">
+  <div class="relative z-10 flex h-full flex-col items-center justify-center py-40 text-center">
 
     <img
       src="/images/akashstar.svg"
