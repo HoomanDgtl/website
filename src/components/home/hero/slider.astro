@@ -14,7 +14,7 @@ const { tileIndex, title, description, url } = Astro.props;
   data-tile={tileIndex}
   data-url={url}
   data-active=""
-  onclick={`window.location.href='${url}'`}
+  onclick={`window.open('${url}', '_blank')`}
 >
   <div class="flex flex-col gap-3">
     <div class="flex items-start justify-between gap-2">
