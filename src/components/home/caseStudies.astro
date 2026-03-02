@@ -98,7 +98,7 @@ const caseStudies: CaseStudy[] = [
 ---
 
 <section class="w-full text-white py-20 lg:py-[120px]">
-  <div class="container-home">
+  <div class="container-nav-3">
 
     <!-- Header -->
     <div class="text-center mb-16">
@@ -113,10 +113,10 @@ const caseStudies: CaseStudy[] = [
     </div>
 
     <!-- Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
       {caseStudies.map((study) => (
-        <div class="rounded-[20px] border border-black/10 dark:border-white/10 p-6 h-fit">
+        <div class="rounded-[20px] border border-black/10 dark:border-white/10 p-6 flex flex-col h-full">
 
           <!-- Icon -->
           <div
@@ -125,19 +125,19 @@ const caseStudies: CaseStudy[] = [
           />
 
           <!-- Content -->
-          <div class="my-4 md:my-8 space-y-2">
-            <h3 class="text-lg font-semibold leading-snug">
+          <div class="my-4 md:my-8 space-y-2 flex-grow">
+            <h3 class="text-lg font-semibold leading-snug line-clamp-2">
               {study.title}
             </h3>
 
-            <p class="text-sm text-[#7E868C] leading-relaxed">
+            <p class="text-sm text-[#7E868C] leading-relaxed line-clamp-2">
               {study.description}
             </p>
           </div>
 
           <a
             href={study.link}
-            class="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 px-4 py-2 text-sm text-[#171717] dark:text-white transition-all duration-300 hover:bg-white/30 dark:hover:bg-white/5"
+            class="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 px-4 py-2 text-sm text-[#171717] dark:text-white transition-all duration-300 hover:bg-white/30 dark:hover:bg-white/5 w-fit mt-auto"
           >
             <span class="font-medium">Read More</span>
 
