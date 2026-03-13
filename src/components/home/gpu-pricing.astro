@@ -1,0 +1,473 @@
+---
+import { getEntry } from "astro:content";
+import axios from "axios";
+import { gpus } from "@/utils/api";
+
+const content = await getEntry("Homepage", "index");
+const data = content.data.gpuPricing;
+
+const gpuModels = ["H200", "H100", "A100", "5090", "4090"];
+
+const staticPrices = {
+  H200: { aws: 7.91, gcp: 10.44, coreweave: 6.31 },
+  H100: { aws: 6.88, gcp: 14.19, coreweave: 6.16 },
+  A100: { aws: 3.43, gcp: 4.03, coreweave: 2.70 },
+  "5090": { aws: 5.10, gcp: 4.80, coreweave: 6.90 },
+  "4090": { aws: 2.50, gcp: 2.20, coreweave: 3.60 }
+};
+
+let akashPrices = {
+  H200: 0,
+  H100: 0,
+  A100: 0,
+  "5090": 0,
+  "4090": 0
+};
+
+try {
+
+  const res = await axios.get(gpus);
+  const models = res?.data?.models || [];
+
+  const findPrice = (name: string) =>
+    models.find((m: any) => m?.model?.toLowerCase().includes(name))
+      ?.price?.weightedAverage;
+
+  const h200 = findPrice("h200");
+  const h100 = findPrice("h100");
+  const a100 = findPrice("a100");
+  const rtx5090 = findPrice("rtx5090");
+  const rtx4090 = findPrice("rtx4090");
+
+  if (h200) akashPrices.H200 = Number(h200.toFixed(2));
+  if (h100) akashPrices.H100 = Number(h100.toFixed(2));
+  if (a100) akashPrices.A100 = Number(a100.toFixed(2));
+  if (rtx5090) akashPrices["5090"] = Number(rtx5090.toFixed(2));
+  if (rtx4090) akashPrices["4090"] = Number(rtx4090.toFixed(2));
+
+} catch {}
+---
+
+<section>
+<div class="container-nav-3">
+
+<!-- HEADER -->
+
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+<div>
+
+<h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold">
+{data.title}
+</h2>
+
+<p class="text-[#86868B] mt-2 text-base">
+{data.subtitle}
+</p>
+
+</div>
+
+<a
+href={data.ctaLink}
+class="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 px-8 py-2 text-sm text-[#171717] dark:text-white transition-all duration-300 hover:bg-white/30 dark:hover:bg-white/5 w-fit mt-auto"
+>
+
+{data.ctaText}
+<svg
+  width="20"
+  height="20"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class="transition-transform duration-300 group-hover:translate-x-1"
+>
+  <path
+    d="M9 6L15 12L9 18"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
+</a>
+
+</div>
+
+<hr class="border-[#86868B] border-t my-8"/>
+
+<p class="text-[#86868B] mb-2 text-base">
+  Choose a GPU Model
+</p>
+
+<!-- CONTROLS -->
+
+<div class="flex flex-wrap items-center gap-4 mb-10">
+
+<!-- GPU COUNT -->
+
+<div class="flex items-center justify-center gap-3 h-[52px] px-4 bg-white counter-shadow rounded-full">
+
+  <button
+    id="gpu-dec"
+    class="flex items-center justify-center w-[28px] h-[28px] rounded-full bg-white counter-shadow text-[#86868B] hover:bg-[#F5F5F7]"
+  >
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.33331 8H12.6666" stroke="#86868B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  </button>
+
+  <span id="gpu-count" class="text-[18px] font-medium text-[#1D1D1F] w-8 text-center">
+  1
+  </span>
+
+  <button
+  id="gpu-inc"
+  class="flex items-center justify-center w-[28px] h-[28px] rounded-full bg-white counter-shadow text-[#86868B] hover:bg-[#F5F5F7]"
+  >
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.33331 8.00004H12.6666M7.99998 3.33337V12.6667" stroke="#86868B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+  </button>
+
+</div>
+
+
+<!-- GPU SELECTOR -->
+
+<div class="flex items-center h-[54px] p-[6px] gap-2 bg-[#F5F5F7] border border-[#F0F0F0] gpu-tab-shadow rounded-full">
+
+{gpuModels.map((gpu,i)=>(
+<button
+class={`gpu-tab flex items-center justify-center h-[42px] px-4 rounded-[20px] text-[18px] font-medium transition duration-300
+${i===0
+? "bg-white gpu-tab-shadow text-[#1D1D1F]"
+: "text-[#86868B] hover:text-[#1D1D1F]"
+}`}
+data-gpu={gpu}
+>
+{gpu}
+</button>
+))}
+
+</div>
+
+
+<!-- HOURS -->
+
+<div class="flex items-center justify-center gap-3 h-[52px] px-4 bg-white counter-shadow rounded-full">
+
+<button
+id="hour-dec"
+class="flex items-center justify-center w-[28px] h-[28px] rounded-full bg-white counter-shadow text-[#86868B] hover:bg-[#F5F5F7]"
+>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.33331 8H12.6666" stroke="#86868B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+
+<span id="hour-count" class="text-[18px] font-medium text-[#1D1D1F] w-8 text-center">
+1h
+</span>
+
+<button
+id="hour-inc"
+class="flex items-center justify-center w-[28px] h-[28px] rounded-full bg-white counter-shadow text-[#86868B] hover:bg-[#F5F5F7]"
+>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.33331 8.00004H12.6666M7.99998 3.33337V12.6667" stroke="#86868B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</button>
+
+</div>
+
+</div>
+
+<!-- BARS -->
+
+<div class="space-y-6">
+
+<!-- AKASH -->
+
+<div class="flex flex-col md:flex-row md:items-center gap-4">
+
+<div class="w-44 text-[#A6FA99] flex gap-2 items-center justify-start font-medium">
+  <span>
+    <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.714 21.8881L26.6378 26.2633L28.0054 28.8309H20.0029L15.9995 21.8881H22.714Z" fill="#A6FA99"/>
+      <path d="M28.0032 28.8317L32 21.8889L23.9998 8H15.9995L28.0032 28.8317Z" fill="#A6FA99"/>
+      <path d="M12.0001 14.9413H20.0004L12.0034 28.8303L8 21.8875L12.0001 14.9413Z" fill="#A6FA99"/>
+    </svg>
+  </span>
+  Akash
+</div>
+
+<div class="flex items-center w-full bg-transparent border border-white h-[44px] rounded gap-2">
+
+<div
+id="bar-akash"
+class="bg-[#A6FA99] h-[44px] rounded flex items-center justify-end px-4 text-black font-medium transition-all duration-300 min-w-[150px]"
+>
+
+🔥 <span id="price-akash" class="text-[#1D1D1F] font-semibold text-sm lg:text-xl"></span>
+
+</div>
+
+<span
+id="save-percent"
+class="bg-[#A6FA99] text-[#0C3205] px-4 py-2 rounded-full text-sm whitespace-nowrap font-medium"
+>Save %</span>
+
+<a href="https://console.akash.network/"
+class="bg-[#A6FA99] text-[#0C3205] px-4 py-2 rounded-full text-sm whitespace-nowrap inline-flex items-center gap-1 cursor-pointer hover:brightness-90"
+>
+  <span class="font-medium">{data.deployText}</span>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.25 10.5L8.75 7L5.25 3.5" stroke="#0C3304" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
+</div>
+
+</div>
+
+<!-- AWS -->
+
+<div class="flex flex-col md:flex-row md:items-center gap-4">
+
+<div class="w-44 text-[#8A8F98] flex gap-2 items-center justify-start font-medium">
+  <span>
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_565_2277)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6519 18.6899C15.6519 18.9486 15.6798 19.1583 15.7287 19.3121C15.7847 19.4659 15.8546 19.6337 15.9525 19.8154C15.9874 19.8714 16.0014 19.9273 16.0014 19.9762C16.0014 20.0462 15.9595 20.116 15.8686 20.186L15.4282 20.4796C15.3652 20.5215 15.3023 20.5425 15.2464 20.5425C15.1765 20.5425 15.1066 20.5076 15.0367 20.4447C14.9388 20.3398 14.8549 20.2279 14.785 20.1161C14.7151 19.9972 14.6452 19.8644 14.5683 19.7036C14.023 20.3468 13.3379 20.6683 12.5129 20.6683C11.9257 20.6683 11.4573 20.5005 11.1148 20.165C10.7723 19.8294 10.5975 19.382 10.5975 18.8227C10.5975 18.2285 10.8072 17.7461 11.2337 17.3826C11.6602 17.0191 12.2264 16.8373 12.9464 16.8373C13.1841 16.8373 13.4288 16.8583 13.6875 16.8932C13.9462 16.9282 14.2118 16.9841 14.4914 17.047V16.5367C14.4914 16.0054 14.3796 15.6349 14.1628 15.4182C13.9391 15.2014 13.5616 15.0966 13.0233 15.0966C12.7786 15.0966 12.527 15.1245 12.2683 15.1874C12.0096 15.2504 11.758 15.3272 11.5133 15.4251C11.4014 15.474 11.3176 15.502 11.2686 15.516C11.2197 15.53 11.1847 15.5369 11.1568 15.5369C11.0589 15.5369 11.01 15.467 11.01 15.3202V14.9776C11.01 14.8658 11.024 14.7819 11.0589 14.733C11.0938 14.684 11.1568 14.6351 11.2546 14.5862C11.4993 14.4603 11.7929 14.3555 12.1355 14.2716C12.4781 14.1807 12.8416 14.1388 13.2261 14.1388C14.058 14.1388 14.6662 14.3275 15.0577 14.705C15.4422 15.0826 15.6379 15.6558 15.6379 16.4248V18.6898H15.6519L15.6519 18.6899H15.6519ZM12.8135 19.7525C13.0443 19.7525 13.2819 19.7106 13.5336 19.6267C13.7853 19.5428 14.009 19.389 14.1977 19.1793C14.3096 19.0465 14.3934 18.8996 14.4354 18.7319C14.4774 18.5641 14.5053 18.3613 14.5053 18.1237V17.83C14.3026 17.7811 14.0858 17.7392 13.8622 17.7112C13.6384 17.6832 13.4218 17.6692 13.205 17.6692C12.7366 17.6692 12.3941 17.7601 12.1634 17.9489C11.9326 18.1376 11.8208 18.4033 11.8208 18.7528C11.8208 19.0814 11.9047 19.3261 12.0795 19.4938C12.2473 19.6686 12.492 19.7525 12.8136 19.7525L12.8135 19.7524L12.8135 19.7525ZM18.4272 20.5075C18.3013 20.5075 18.2175 20.4866 18.1615 20.4376C18.1056 20.3957 18.0567 20.2978 18.0147 20.1649L16.3719 14.761C16.33 14.6212 16.3089 14.5303 16.3089 14.4814C16.3089 14.3695 16.3649 14.3066 16.4767 14.3066H17.1619C17.2947 14.3066 17.3856 14.3276 17.4346 14.3765C17.4905 14.4184 17.5324 14.5163 17.5743 14.6492L18.7488 19.2771L19.8394 14.6492C19.8744 14.5094 19.9163 14.4184 19.9722 14.3765C20.0282 14.3345 20.126 14.3066 20.2519 14.3066H20.8111C20.9439 14.3066 21.0349 14.3276 21.0908 14.3765C21.1467 14.4184 21.1957 14.5163 21.2236 14.6492L22.3281 19.333L23.5376 14.6492C23.5795 14.5094 23.6285 14.4184 23.6774 14.3765C23.7333 14.3346 23.8242 14.3066 23.9501 14.3066H24.6002C24.7121 14.3066 24.775 14.3625 24.775 14.4814C24.775 14.5163 24.768 14.5513 24.761 14.5932C24.754 14.6352 24.74 14.6911 24.712 14.768L23.0273 20.172C22.9853 20.3118 22.9364 20.4026 22.8805 20.4446C22.8245 20.4866 22.7337 20.5146 22.6148 20.5146H22.0136C21.8807 20.5146 21.7898 20.4936 21.7339 20.4446C21.678 20.3957 21.6291 20.3049 21.6011 20.165L20.5175 15.6559L19.4409 20.158C19.406 20.2978 19.364 20.3887 19.3081 20.4376C19.2521 20.4865 19.1543 20.5075 19.0285 20.5075H18.4272ZM27.4105 20.6962C27.0469 20.6962 26.6834 20.6543 26.3339 20.5704C25.9843 20.4866 25.7117 20.3957 25.5299 20.2908C25.418 20.2279 25.3412 20.158 25.3132 20.0951C25.2852 20.0321 25.2713 19.9623 25.2713 19.8993V19.5428C25.2713 19.396 25.3272 19.3261 25.4321 19.3261C25.474 19.3261 25.5159 19.3331 25.5579 19.3471C25.5998 19.361 25.6627 19.389 25.7326 19.417C25.9703 19.5219 26.229 19.6057 26.5016 19.6616C26.7813 19.7176 27.0539 19.7455 27.3336 19.7455C27.774 19.7455 28.1166 19.6686 28.3542 19.5148C28.5919 19.361 28.7178 19.1373 28.7178 18.8507C28.7178 18.6549 28.6548 18.4941 28.529 18.3613C28.4032 18.2285 28.1655 18.1097 27.823 17.9978L26.8093 17.6832C26.299 17.5224 25.9214 17.2847 25.6907 16.9701C25.4601 16.6626 25.3412 16.32 25.3412 15.9565C25.3412 15.6629 25.4042 15.4042 25.53 15.1805C25.6558 14.9568 25.8236 14.761 26.0333 14.6072C26.2431 14.4464 26.4807 14.3276 26.7604 14.2437C27.04 14.1598 27.3337 14.1248 27.6413 14.1248C27.7951 14.1248 27.9559 14.1318 28.1097 14.1527C28.2705 14.1737 28.4173 14.2016 28.5641 14.2296C28.7038 14.2645 28.8367 14.2995 28.9625 14.3414C29.0883 14.3834 29.1863 14.4253 29.2561 14.4673C29.354 14.5232 29.424 14.5792 29.4659 14.642C29.5078 14.698 29.5288 14.7749 29.5288 14.8728V15.2014C29.5288 15.3482 29.4729 15.4251 29.368 15.4251C29.3121 15.4251 29.2212 15.3971 29.1024 15.3412C28.7039 15.1594 28.2564 15.0685 27.7601 15.0685C27.3616 15.0685 27.047 15.1314 26.8303 15.2642C26.6136 15.397 26.5017 15.5998 26.5017 15.8864C26.5017 16.0822 26.5716 16.25 26.7114 16.3828C26.8512 16.5156 27.1099 16.6484 27.4804 16.7672L28.4731 17.0818C28.9765 17.2426 29.34 17.4664 29.5567 17.753C29.7735 18.0396 29.8783 18.3682 29.8783 18.7317C29.8783 19.0323 29.8154 19.305 29.6966 19.5426C29.5707 19.7804 29.403 19.99 29.1863 20.1578C28.9695 20.3326 28.7109 20.4584 28.4103 20.5493C28.0957 20.6472 27.7672 20.6961 27.4105 20.6961L27.4105 20.6962L27.4105 20.6962Z" fill="#8A8F98"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M28.7337 24.0936C26.4338 25.7924 23.0921 26.6942 20.2189 26.6942C16.1921 26.6942 12.5639 25.2051 9.82341 22.7304C9.60667 22.5346 9.80247 22.269 10.0611 22.4228C13.0253 24.1425 16.6815 25.1842 20.4635 25.1842C23.0152 25.1842 25.8185 24.6528 28.3982 23.5622C28.7827 23.3875 29.1113 23.8139 28.7337 24.0936V24.0936Z" fill="#8A8F98"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M29.6896 23.003C29.396 22.6254 27.7461 22.8212 26.9981 22.9121C26.7744 22.9401 26.7394 22.7443 26.9422 22.5975C28.2564 21.6747 30.4166 21.9404 30.6683 22.248C30.92 22.5626 30.5984 24.7228 29.368 25.7574C29.1793 25.9182 28.9975 25.8343 29.0814 25.6246C29.3611 24.9325 29.9832 23.3735 29.6896 23.003H29.6896V23.003Z" fill="#8A8F98"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_565_2277">
+      <rect width="21.0195" height="12.5697" fill="white" transform="translate(9.73047 14.125)"/>
+      </clipPath>
+      </defs>
+    </svg>
+  </span>
+  AWS
+</div>
+
+<div class="w-full bg-transparent border border-white h-[44px] rounded">
+
+<div id="bar-aws"
+class="bg-[#F5F5F7] h-[44px] rounded flex items-center justify-end px-4 transition-all duration-300 min-w-[150px] text-[#1D1D1F] font-semibold text-sm lg:text-xl"><span id="price-aws"></span></div>
+
+</div>
+
+</div>
+
+<!-- GCP -->
+
+<div class="flex flex-col md:flex-row md:items-center gap-4">
+
+<div class="w-44 text-[#8A8F98] flex gap-2 items-center justify-start font-medium">
+  <span>
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_565_2292)">
+        <path d="M22.6839 16.6058L23.3474 16.6155L25.1502 14.8127L25.2376 14.0488C23.807 12.7768 21.92 12 19.855 12C16.1199 12 12.9673 14.5408 12.0352 17.9846C12.2326 17.8487 12.6534 17.949 12.6534 17.949L16.2558 17.3567C16.2558 17.3567 16.4403 17.0492 16.5342 17.0654C17.3854 16.13 18.5927 15.596 19.8582 15.596C20.9264 15.596 21.9103 15.9747 22.6839 16.5993V16.6058Z" fill="#8A8F98"/>
+        <path d="M27.6792 17.9911C27.2617 16.4472 26.3975 15.0846 25.2323 14.0488L22.6785 16.6026C23.7013 17.4279 24.3584 18.6902 24.3584 20.1047V20.5546C25.6013 20.5546 26.6079 21.5644 26.6079 22.8041C26.6079 24.0437 25.598 25.0536 24.3584 25.0536H19.8562L19.4062 25.5067V28.2094L19.8562 28.656H24.3584C27.5886 28.6528 30.2071 26.0343 30.2103 22.8041C30.2103 20.8135 29.207 19.0495 27.676 17.9879L27.6792 17.9911Z" fill="#8A8F98"/>
+        <path d="M15.3502 28.6637H19.8492V25.058H15.3502C15.0298 25.058 14.7158 24.9901 14.4245 24.8574L13.7739 25.058L11.9711 26.8609L11.8125 27.4694C12.8288 28.2429 14.0717 28.6637 15.3502 28.6637Z" fill="#8A8F98"/>
+        <path d="M15.3519 16.9571C12.1217 16.9603 9.50324 19.5788 9.5 22.809C9.5 24.709 10.4095 26.4018 11.8207 27.4699L14.4295 24.8611C13.6235 24.4986 13.1024 23.6959 13.1024 22.809C13.1024 21.5661 14.1123 20.5595 15.3519 20.5595C16.2647 20.5595 17.048 21.1098 17.404 21.8866L20.0128 19.2778C18.9414 17.8698 17.2519 16.9571 15.3519 16.9571Z" fill="#8A8F98"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_565_2292">
+      <rect width="20.7148" height="16.6625" fill="white" transform="translate(9.5 12)"/>
+      </clipPath>
+      </defs>
+    </svg>
+  </span>
+  Google Cloud
+</div>
+
+<div class="w-full bg-transparent border border-white h-[44px] rounded">
+
+<div id="bar-gcp"
+class="bg-[#F5F5F7] h-[44px] rounded flex items-center justify-end px-4 transition-all duration-300 min-w-[150px]">
+<span id="price-gcp" class="text-[#1D1D1F] font-semibold text-sm lg:text-xl"></span>
+</div>
+
+</div>
+
+</div>
+
+<!-- COREWEAVE -->
+
+<div class="flex flex-col md:flex-row md:items-center gap-4">
+
+<div class="w-44 text-[#8A8F98] flex gap-2 items-center justify-start font-medium">
+  <span>
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clip-path="url(#clip0_565_2306)">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4713 23.5622H14.0186C13.8124 23.5622 13.5985 23.4319 13.4729 23.2167L11.8729 20.3C11.7923 20.0849 11.7923 19.8697 11.8729 19.7L13.4729 16.7834C13.5985 16.5682 13.8124 16.4379 14.0186 16.4379H15.9985C16.2124 16.4379 16.4186 16.3076 16.552 16.0925L17.9783 13.4819C18.1054 13.2667 17.938 13.0061 17.7318 13.0061H12.4186C11.9597 13.0061 11.5799 13.2667 11.3256 13.6516L8.16747 19.4016C8.11785 19.4965 8.07961 19.596 8.05274 19.7C8.0269 19.8041 8.01398 19.9106 8.01398 20.0197C8.01398 20.1278 8.0269 20.2339 8.05274 20.3379C8.07961 20.443 8.11785 20.543 8.16747 20.6379L11.3256 26.3485C11.3794 26.4445 11.446 26.5314 11.5256 26.6091C11.6011 26.6869 11.6879 26.7566 11.7861 26.8182C11.8791 26.8748 11.9814 26.9157 12.093 26.941C12.1995 26.9713 12.308 26.9864 12.4186 26.9864H19.2047C19.4574 26.9864 19.5845 26.7334 19.4574 26.5182L17.9783 23.8622C17.938 23.647 17.7318 23.5561 17.4791 23.5561L17.4713 23.5622Z" fill="#8A8F98"/>
+        <path d="M26.8233 15.5394L25.4775 13.2212C25.3504 13.0061 25.0574 13.0061 24.9303 13.2212L19.245 23.5167C19.1582 23.7318 19.1582 23.9455 19.245 24.1152L20.7179 26.8182C20.845 27.0318 21.138 27.0318 21.2636 26.8182L26.8233 16.7834C26.877 16.6874 26.9168 16.5854 26.9427 16.4773C26.9695 16.3733 26.983 16.2667 26.983 16.1576C26.983 16.0495 26.9695 15.9435 26.9427 15.8394C26.9168 15.7354 26.877 15.6354 26.8233 15.5394Z" fill="#8A8F98"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.9581 20.2546L21.6434 17.2137C21.7302 17.038 21.7302 16.7834 21.6434 16.5683L19.7039 13.1819C19.5783 12.9683 19.2853 12.9683 19.1581 13.1819L17.5178 16.138C17.431 16.3077 17.431 16.5683 17.5178 16.738L19.4108 20.2152C19.538 20.4683 19.8713 20.4683 19.9581 20.2546Z" fill="#8A8F98"/>
+        <path d="M31.7891 15.5394L30.4418 13.2212C30.3162 13.0061 30.0232 13.0061 29.8961 13.2212L24.2108 23.5167C24.1302 23.7318 24.1302 23.9455 24.2108 24.1152L25.7302 26.8182C25.8573 27.0318 26.1503 27.0318 26.2759 26.8182L31.8356 16.7834C32.0418 16.3925 32.0418 15.9243 31.7891 15.5394Z" fill="#8A8F98"/>
+      </g>
+      <defs>
+      <clipPath id="clip0_565_2306">
+      <rect width="24" height="14" fill="white" transform="translate(8 13)"/>
+      </clipPath>
+      </defs>
+    </svg>
+  </span>
+  Coreweave
+</div>
+
+<div class="w-full bg-transparent border border-white h-[44px] rounded">
+
+<div id="bar-core"
+class="bg-[#F5F5F7] h-[44px] rounded flex items-center justify-end px-4 transition-all duration-300 min-w-[150px]">😵 <span id="price-core" class="text-[#1D1D1F] font-semibold text-sm lg:text-xl"></span></div>
+
+</div>
+
+</div>
+
+</div>
+
+<hr class="border-[#86868B] border-t my-8"/>
+
+
+<p class="text-base text-[#8A8F98] max-w-[980px]">
+{data.description}
+</p>
+
+</div>
+</section>
+
+<style>
+  .counter-shadow {
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+  .gpu-tab-shadow {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.06);
+  }
+</style>
+
+<script type="module" define:vars={{ akashPrices, staticPrices }}>
+
+let gpu = "H200"
+let gpuCount = 1
+let hours = 1
+
+const priceAkash = document.getElementById("price-akash")
+const savePercent = document.getElementById("save-percent")
+
+const barAkash = document.getElementById("bar-akash")
+const barAws = document.getElementById("bar-aws")
+const barGcp = document.getElementById("bar-gcp")
+const priceGcp = document.getElementById("price-gcp")
+const priceCore = document.getElementById("price-core")
+const priceAWS = document.getElementById("price-aws")
+const barCore = document.getElementById("bar-core")
+
+const gpuCountEl = document.getElementById("gpu-count")
+const hourCountEl = document.getElementById("hour-count")
+
+const gpuInc = document.getElementById("gpu-inc")
+const gpuDec = document.getElementById("gpu-dec")
+const hourInc = document.getElementById("hour-inc")
+const hourDec = document.getElementById("hour-dec")
+
+const tabs = document.querySelectorAll(".gpu-tab")
+
+function update() {
+
+const akash = akashPrices[gpu] || 0
+const aws = staticPrices[gpu].aws
+const gcp = staticPrices[gpu].gcp
+const core = staticPrices[gpu].coreweave
+
+const totalAkash = akash * gpuCount * hours
+const totalAws = aws * gpuCount * hours
+const totalGcp = gcp * gpuCount * hours
+const totalCore = core * gpuCount * hours
+
+const unit = hours === 1 ? 'hr' : `${hours}hrs`;
+
+const maxCompetitor = Math.max(totalAws, totalGcp, totalCore)
+const baseWidth = 70
+const scale = baseWidth / maxCompetitor
+
+let akashWidth = totalAkash * scale
+let awsWidth = totalAws * scale
+let gcpWidth = totalGcp * scale
+let coreWidth = totalCore * scale
+
+const MIN_BAR = 8
+
+akashWidth = Math.max(akashWidth, MIN_BAR)
+awsWidth = Math.max(awsWidth, MIN_BAR)
+gcpWidth = Math.max(gcpWidth, MIN_BAR)
+coreWidth = Math.max(coreWidth, MIN_BAR)
+
+priceAkash.textContent = `$${totalAkash.toFixed(2)}/${unit}`
+priceAWS.textContent = `$${totalAws.toFixed(2)}/${unit}`
+priceGcp.textContent = `$${totalGcp.toFixed(2)}/${unit}`
+priceCore.textContent = `$${totalCore.toFixed(2)}/${unit}`
+
+barAkash.style.width = akashWidth + "%"
+barAws.style.width = awsWidth + "%"
+barGcp.style.width = gcpWidth + "%"
+barCore.style.width = coreWidth + "%"
+
+const minOther = Math.min(totalAws, totalGcp, totalCore)
+const save = ((minOther - totalAkash) / minOther) * 100
+savePercent.textContent = `Save ${save.toFixed(0)}%`
+
+}
+
+update()
+
+tabs.forEach(tab => {
+
+tab.addEventListener("click", () => {
+
+tabs.forEach(t => {
+  t.classList.remove("bg-white","gpu-tab-shadow","text-[#1D1D1F]")
+  t.classList.add("text-[#86868B]")
+})
+
+tab.classList.add("bg-white","gpu-tab-shadow","text-[#1D1D1F]")
+tab.classList.remove("text-[#86868B]")
+
+gpu = tab.dataset.gpu
+update()
+
+})
+
+})
+
+gpuInc.addEventListener("click", () => {
+gpuCount++
+gpuCountEl.textContent = gpuCount
+update()
+})
+
+gpuDec.addEventListener("click", () => {
+if (gpuCount > 1) {
+gpuCount--
+gpuCountEl.textContent = gpuCount
+update()
+}
+})
+
+hourInc.addEventListener("click", () => {
+hours++
+hourCountEl.textContent = hours + "h"
+update()
+})
+
+hourDec.addEventListener("click", () => {
+if (hours > 1) {
+hours--
+hourCountEl.textContent = hours + "h"
+update()
+}
+})
+
+</script>
