@@ -6,22 +6,20 @@ import { gpus } from "@/utils/api";
 const content = await getEntry("Homepage", "index");
 const data = content.data.gpuPricing;
 
-const gpuModels = ["H200", "H100", "A100", "5090", "4090"];
+const gpuModels = ["H200", "H100", "A100", "A6000"];
 
 const staticPrices = {
   H200: { aws: 7.91, gcp: 10.44, coreweave: 6.31 },
   H100: { aws: 6.88, gcp: 14.19, coreweave: 6.16 },
   A100: { aws: 3.43, gcp: 4.03, coreweave: 2.70 },
-  "5090": { aws: 5.10, gcp: 4.80, coreweave: 6.90 },
-  "4090": { aws: 2.50, gcp: 2.20, coreweave: 3.60 }
+  "A6000": { aws: 5.10, gcp: 4.80, coreweave: 6.90 }
 };
 
 let akashPrices = {
   H200: 0,
   H100: 0,
   A100: 0,
-  "5090": 0,
-  "4090": 0
+  "A6000": 0
 };
 
 try {
@@ -36,14 +34,12 @@ try {
   const h200 = findPrice("h200");
   const h100 = findPrice("h100");
   const a100 = findPrice("a100");
-  const rtx5090 = findPrice("rtx5090");
-  const rtx4090 = findPrice("rtx4090");
+  const rtxa6000 = findPrice("rtxa6000");
 
   if (h200) akashPrices.H200 = Number(h200.toFixed(2));
   if (h100) akashPrices.H100 = Number(h100.toFixed(2));
   if (a100) akashPrices.A100 = Number(a100.toFixed(2));
-  if (rtx5090) akashPrices["5090"] = Number(rtx5090.toFixed(2));
-  if (rtx4090) akashPrices["4090"] = Number(rtx4090.toFixed(2));
+  if (rtxa6000) akashPrices["A6000"] = Number(rtxa6000.toFixed(2));
 
 } catch {}
 ---
