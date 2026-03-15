@@ -109,19 +109,19 @@ Choose a GPU Model
 
 <!-- GPU SELECTOR -->
 
-<div class="relative flex items-center h-[54px] p-[6px] bg-[#F5F5F7] border border-[#F0F0F0] gpu-tab-shadow rounded-full">
+<div id="gpu-selector-desktop"
+class="relative flex items-center h-[54px] p-[6px] gap-[12px] bg-[#F5F5F7] border border-[#F0F0F0] gpu-tab-shadow rounded-full">
 
-<div id="tab-slider" class="absolute top-1.5 h-[42px] bg-white gpu-tab-shadow rounded-[20px] transition-all duration-500"></div>
+<div id="tab-slider"
+class="absolute top-[6px] left-0 h-[42px] w-[72px] bg-white gpu-tab-shadow rounded-[20px] transition-all duration-500 ease-out"></div>
 
-{gpuModels.map((gpu,i)=>(
-
+{gpuModels.map((gpu)=>(
 <button
-class="gpu-tab relative z-10 flex items-center justify-center h-[42px] w-[72px] mx-[4px] rounded-[20px] text-[18px] pl-1 font-medium text-[#86868B]"
+class="gpu-tab relative z-10 w-[72px] h-[42px] flex items-center justify-center pl-1 rounded-[20px] text-[18px] font-medium text-[#86868B]"
 data-gpu={gpu}
 >
 {gpu}
 </button>
-
 ))}
 
 </div>
@@ -157,19 +157,19 @@ data-gpu={gpu}
 
 <!-- GPU SELECTOR -->
 
-<div class="relative flex items-center h-[54px] p-[6px] bg-[#F5F5F7] border border-[#F0F0F0] gpu-tab-shadow rounded-full">
+<div id="gpu-selector-mobile"
+class="relative flex items-center w-full h-[54px] p-[6px] gap-[12px] bg-[#F5F5F7] border border-[#F0F0F0] gpu-tab-shadow rounded-full">
 
-<div id="tab-slider-mobile" class="absolute top-1.5 h-[42px] bg-white gpu-tab-shadow rounded-[20px] transition-all duration-500"></div>
+<div id="tab-slider-mobile"
+class="absolute top-[6px] left-0 h-[42px] bg-white gpu-tab-shadow rounded-[20px] transition-all duration-500 ease-out"></div>
 
 {gpuModels.map((gpu)=>(
-
 <button
-class="gpu-tab-mobile relative z-10 flex items-center justify-center h-[42px] w-[72px] rounded-[20px] text-[18px] font-medium text-[#86868B]"
+class="gpu-tab-mobile relative z-10 flex-1 h-[42px] flex items-center justify-center pl-1 rounded-[20px] text-[18px] font-medium text-[#86868B]"
 data-gpu={gpu}
 >
 {gpu}
 </button>
-
 ))}
 
 </div>
@@ -415,83 +415,156 @@ box-shadow:0px 1px 5px rgba(0,0,0,0.06);
 
 </style>
 
+<script is:inline type="module" define:vars={{ akashPrices, staticPrices }}>
 
-<script type="module" define:vars={{ akashPrices, staticPrices }}>
+let gpu = "H200"
+let gpuCount = 1
+let hours = 1
 
-let gpu="H200"
-let gpuCount=1
-let hours=1
+const tabs = document.querySelectorAll(".gpu-tab")
+const tabsMobile = document.querySelectorAll(".gpu-tab-mobile")
 
-const tabs=document.querySelectorAll(".gpu-tab")
-const tabsMobile=document.querySelectorAll(".gpu-tab-mobile")
+const slider = document.getElementById("tab-slider")
+const sliderMobile = document.getElementById("tab-slider-mobile")
 
-const slider=document.getElementById("tab-slider")
-const sliderMobile=document.getElementById("tab-slider-mobile")
+const gpuCountEl = document.getElementById("gpu-count")
+const gpuCountMobileEl = document.getElementById("gpu-count-mobile")
 
-function moveSlider(tab,slider){
+const hourCountEl = document.getElementById("hour-count")
+const hourCountMobileEl = document.getElementById("hour-count-mobile")
 
-slider.style.width="72px"
-slider.style.transform=`translateX(${tab.offsetLeft - 4}px)`
+const gpuInc = document.getElementById("gpu-inc")
+const gpuDec = document.getElementById("gpu-dec")
+const gpuIncMobile = document.getElementById("gpu-inc-mobile")
+const gpuDecMobile = document.getElementById("gpu-dec-mobile")
 
+const hourInc = document.getElementById("hour-inc")
+const hourDec = document.getElementById("hour-dec")
+const hourIncMobile = document.getElementById("hour-inc-mobile")
+const hourDecMobile = document.getElementById("hour-dec-mobile")
+
+let activeDesktopTab = tabs[0]
+let activeMobileTab = tabsMobile[0]
+
+function moveSlider(tab, slider){
+
+  const container = slider.parentElement
+  const containerLeft = container.getBoundingClientRect().left
+  const tabLeft = tab.getBoundingClientRect().left
+
+  const offset = tabLeft - containerLeft
+
+  slider.style.width = tab.offsetWidth + "px"
+  slider.style.transform = `translateX(${offset}px)`
 }
 
-setTimeout(()=>{
-moveSlider(tabs[0],slider)
-moveSlider(tabsMobile[0],sliderMobile)
-},50)
+function initSliders(){
+  if(slider && activeDesktopTab) moveSlider(activeDesktopTab, slider)
+  if(sliderMobile && activeMobileTab) moveSlider(activeMobileTab, sliderMobile)
+}
+
+setTimeout(initSliders, 50)
 
 tabs.forEach(tab=>{
-tab.onclick=()=>{
-gpu=tab.dataset.gpu
-moveSlider(tab,slider)
-update()
-}
+  tab.onclick = ()=>{
+    gpu = tab.dataset.gpu
+    activeDesktopTab = tab
+    moveSlider(tab, slider)
+    update()
+  }
 })
 
 tabsMobile.forEach(tab=>{
-tab.onclick=()=>{
-gpu=tab.dataset.gpu
-moveSlider(tab,sliderMobile)
-update()
-}
+  tab.onclick = ()=>{
+    gpu = tab.dataset.gpu
+    activeMobileTab = tab
+    moveSlider(tab, sliderMobile)
+    update()
+  }
 })
+
+window.addEventListener("resize", () => {
+  initSliders()
+})
+
+function renderCounters(){
+  gpuCountEl.textContent = gpuCount
+  gpuCountMobileEl.textContent = gpuCount
+
+  hourCountEl.textContent = `${hours}h`
+  hourCountMobileEl.textContent = `${hours}h`
+}
+
+gpuInc.onclick = () => {
+  gpuCount++
+  renderCounters()
+  update()
+}
+
+gpuDec.onclick = () => {
+  if(gpuCount > 1){
+    gpuCount--
+    renderCounters()
+    update()
+  }
+}
+
+gpuIncMobile.onclick = gpuInc.onclick
+gpuDecMobile.onclick = gpuDec.onclick
+
+hourInc.onclick = () => {
+  hours++
+  renderCounters()
+  update()
+}
+
+hourDec.onclick = () => {
+  if(hours > 1){
+    hours--
+    renderCounters()
+    update()
+  }
+}
+
+hourIncMobile.onclick = hourInc.onclick
+hourDecMobile.onclick = hourDec.onclick
 
 
 function update(){
 
-const akash=akashPrices[gpu]||0
-const aws=staticPrices[gpu].aws
-const gcp=staticPrices[gpu].gcp
-const core=staticPrices[gpu].coreweave
+  const akash = akashPrices[gpu] || 0
+  const aws = staticPrices[gpu].aws
+  const gcp = staticPrices[gpu].gcp
+  const core = staticPrices[gpu].coreweave
 
-const totalAkash=akash*gpuCount*hours
-const totalAws=aws*gpuCount*hours
-const totalGcp=gcp*gpuCount*hours
-const totalCore=core*gpuCount*hours
+  const totalAkash = akash * gpuCount * hours
+  const totalAws = aws * gpuCount * hours
+  const totalGcp = gcp * gpuCount * hours
+  const totalCore = core * gpuCount * hours
 
-const unit=hours===1?'hr':`${hours}hrs`
+  const unit = hours === 1 ? 'hr' : `${hours}hrs`
 
-const max=Math.max(totalAws,totalGcp,totalCore)
-const scale=70/max
+  const max = Math.max(totalAws, totalGcp, totalCore)
+  const scale = 70 / max
 
-document.getElementById("price-akash").textContent=`$${totalAkash.toFixed(2)}/${unit}`
-document.getElementById("price-aws").textContent=`$${totalAws.toFixed(2)}/${unit}`
-document.getElementById("price-gcp").textContent=`$${totalGcp.toFixed(2)}/${unit}`
-document.getElementById("price-core").textContent=`$${totalCore.toFixed(2)}/${unit}`
+  document.getElementById("price-akash").textContent = `$${totalAkash.toFixed(2)}/${unit}`
+  document.getElementById("price-aws").textContent = `$${totalAws.toFixed(2)}/${unit}`
+  document.getElementById("price-gcp").textContent = `$${totalGcp.toFixed(2)}/${unit}`
+  document.getElementById("price-core").textContent = `$${totalCore.toFixed(2)}/${unit}`
 
-document.getElementById("bar-akash").style.width=Math.max(totalAkash*scale,8)+"%"
-document.getElementById("bar-aws").style.width=Math.max(totalAws*scale,8)+"%"
-document.getElementById("bar-gcp").style.width=Math.max(totalGcp*scale,8)+"%"
-document.getElementById("bar-core").style.width=Math.max(totalCore*scale,8)+"%"
+  document.getElementById("bar-akash").style.width = Math.max(totalAkash * scale, 8) + "%"
+  document.getElementById("bar-aws").style.width = Math.max(totalAws * scale, 8) + "%"
+  document.getElementById("bar-gcp").style.width = Math.max(totalGcp * scale, 8) + "%"
+  document.getElementById("bar-core").style.width = Math.max(totalCore * scale, 8) + "%"
 
-const minOther=Math.min(totalAws,totalGcp,totalCore)
-const save=((minOther-totalAkash)/minOther)*100
+  const minOther = Math.min(totalAws, totalGcp, totalCore)
+  const save = ((minOther - totalAkash) / minOther) * 100
 
-document.getElementById("save-percent").textContent=`Save ${save.toFixed(0)}%`
-document.getElementById("mobile-deploy").childNodes[0].textContent=`Save ${save.toFixed(0)}% Deploy Now`
-
+  document.getElementById("save-percent").textContent = `Save ${save.toFixed(0)}%`
+  document.getElementById("mobile-deploy").childNodes[0].textContent = `Save ${save.toFixed(0)}% Deploy Now`
 }
 
 update()
+renderCounters()
 
 </script>
