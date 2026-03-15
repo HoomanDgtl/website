@@ -1,5 +1,5 @@
 ---
-import ExpandedGpuPricing from "../ExpandedGpuPricing";
+import GpuPricing from "../gpu-pricing.astro";
 import TrustedByMarquee from "../TrustedByMarquee";
 import { trustedBySection } from "./trustedby";
 ---
@@ -17,8 +17,8 @@ import { trustedBySection } from "./trustedby";
         <TrustedByMarquee trustedBySection={trustedBySection} client:only />
       </div>
     </div>
-    <div class="container-nav-3 w-full">
-      <ExpandedGpuPricing client:load />
+    <div class="mx-auto max-w-[1510px] w-full">
+      <GpuPricing />
     </div>
   </div>
 </div>
