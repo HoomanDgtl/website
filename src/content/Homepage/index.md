@@ -37,7 +37,7 @@ gpuPricing:
   subtitle: "The price of centralization vs. the open market."
 
   ctaText: "View Pricing Page"
-  ctaLink: "/pricing"
+  ctaLink: "/pricing/gpus"
 
   savePercent: 80
   deployText: "Deploy Now"
