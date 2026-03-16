@@ -1,0 +1,36 @@
+---
+import ProviderCard from "./provider-card.astro";
+---
+
+<section class="w-full p-20 text-[#171717] dark:text-white lg:p-[100px]">
+  <div class="mb-16">
+    <h2 class="text-[40px] leading-[48px]">Global Grid. No Off Switch.</h2>
+    <p class="mt-2 text-base text-[#8A8F98] dark:text-[#8A8F9D]">
+      Access a permissionless grid of providers spanning 24 countries. <br /> While
+      centralized clouds have outages, the Supercloud has resilience.
+    </p>
+  </div>
+  <div
+    class="mt-16 flex w-full justify-between border-b border-[#8A8F98]/25 pb-6 font-jetBrainsMono text-[#8A8F98] dark:border-[#8A8F9D]/25 dark:text-[#8A8F9D]/70"
+  >
+    <span class="origin-left scale-90">Active Leases: 4303</span>
+    <span class="origin-left scale-90">Memory: 100TB</span>
+    <span class="origin-left scale-90">CPUs: 1000</span>
+    <span class="origin-left scale-90">Storage: 1PB</span>
+    <span class="origin-right scale-90">Total GPUs: 505</span>
+  </div>
+
+  <div class="flex justify-center gap-10 py-[80px]">
+    <div class="h-[500px] w-3/5 bg-slate-800"></div>
+    <div class="h-[500px] w-1/5">
+      <ProviderCard />
+    </div>
+  </div>
+
+  <div
+    class="flex w-full justify-between border-t border-[#8A8F98]/25 pt-6 font-jetBrainsMono text-[#8A8F98] dark:border-[#8A8F9D]/25 dark:text-[#8A8F9D]/70"
+  >
+    <span class="origin-left scale-90">Uptime: 🟢 99.99%</span>
+    <span class="origin-right scale-90">Avg Latency: 42ms</span>
+  </div>
+</section>

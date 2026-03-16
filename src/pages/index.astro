@@ -2,6 +2,7 @@
 import AiModelsAndApps from "@/components/home/aiModelsAndApps/aiModelsAndApps.astro";
 import FuelNew from "@/components/home/fuelNew.astro";
 import CaseStudies from "@/components/home/caseStudies.astro";
+import GlobalGrid from "@/components/home/global-grid/index.astro";
 import ShipIt from "@/components/home/shipIt.astro";
 import Hero from "@/components/home/hero/hero.astro";
 import Infrastructure from "@/components/home/infrastructure/infrastructure.astro";
@@ -44,10 +45,17 @@ const {
 >
   <div>
     <Hero heroSection={heroSection} />
-    <div class="bg-[#F1F1F1] dark:bg-[#101010] w-full h-fit"><TrustedBy /></div>
-    <div class="bg-[#E3E3E3] dark:bg-[#0D0D0E] w-full h-fit"><InfrastructureNew /></div>
-    <div class="bg-[#E3E3E3] dark:bg-[#0D0D0E] w-full h-fit"><FuelNew /></div>
-    <div class="bg-[#EAEAEA] dark:bg-[#0D0D0E] w-full h-fit"><Permissionless /></div>
+    <div class="h-fit w-full bg-[#F1F1F1] dark:bg-[#101010]"><TrustedBy /></div>
+    <div class="h-fit w-full bg-[#E3E3E3] dark:bg-[#0D0D0E]">
+      <InfrastructureNew />
+    </div>
+    <div class="h-fit w-full bg-[#FCFCFC] dark:bg-[#030303]">
+      <GlobalGrid />
+    </div>
+    <div class="h-fit w-full bg-[#EAEAEA] dark:bg-[#0D0D0E]">
+      <Permissionless />
+    </div>
+    <div class="h-fit w-full bg-[#E3E3E3] dark:bg-[#0D0D0E]"><FuelNew /></div>
     <div class="bg-[#EEEEEE] dark:bg-[#101010]"><CaseStudies /></div>
     <div class="bg-[#171717]"><ShipIt /></div>
   </div>
