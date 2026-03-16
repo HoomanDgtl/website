@@ -74,7 +74,7 @@ class="md:inline-flex hidden items-center gap-2 rounded-full border border-black
 
 </div>
 
-<hr class="border-black/10 dark:border-[#86868B] border-t my-8"/>
+<hr class="border-black/10 dark:border-white/10 border-t my-8"/>
 
 <p class="text-[#86868B] mb-2 text-sm md:text-base">
 Choose a GPU Model
@@ -212,11 +212,11 @@ data-gpu={gpu}
 
 <!-- BARS -->
 
-<div class="space-y-3 md:space-y-4">
+<div id="pricing-bars" class="space-y-3 md:space-y-4">
 
 <!-- AKASH -->
 
-<div class="flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-akash" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-black dark:text-[#A6FA99] flex gap-2 items-center font-medium text-base">
 <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -230,7 +230,7 @@ Akash
 <div class="flex items-center w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded gap-2">
 
 <div id="bar-akash"
-class="bg-[#8BFE79] dark:bg-[#A6FA99] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 text-black transition-all duration-700 ease-out w-fit min-w-fit text-lg md:text-xl font-semibold">
+class="bg-[#8BFE79] dark:bg-[#A6FA99] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 text-black transition-[width] duration-700 ease-out w-fit min-w-fit text-lg md:text-xl font-semibold">
 
 <span id="emoji-akash"></span>
 <span id="price-akash"></span>
@@ -257,7 +257,7 @@ class="hidden md:inline-flex bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover
 
 <!-- AWS -->
 
-<div class="flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-aws" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-[#8A8F98] flex gap-2 items-center font-medium text-base">
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -279,7 +279,7 @@ AWS
 <div class="w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
 
 <div id="bar-aws"
-class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-all duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F] text-lg md:text-xl font-semibold">
+class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-[width] duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F] text-lg md:text-xl font-semibold">
 
 <span id="emoji-aws"></span>
 <span id="price-aws"></span>
@@ -293,7 +293,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 <!-- GCP -->
 
-<div class="flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-gcp" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-[#8A8F98] flex gap-2 items-center font-medium text-base">
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -316,7 +316,7 @@ Google Cloud
 <div class="w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
 
 <div id="bar-gcp"
-class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-all duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F] text-lg md:text-xl font-semibold">
+class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-[width] duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F] text-lg md:text-xl font-semibold">
 
 <span id="emoji-gcp"></span>
 <span id="price-gcp"></span>
@@ -330,7 +330,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 <!-- COREWEAVE -->
 
-<div class="flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-core" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-[#8A8F98] flex gap-2 items-center font-medium text-base">
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -353,7 +353,7 @@ Coreweave
 <div class="w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
 
 <div id="bar-core"
-class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-all text-lg md:text-xl font-semibold duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F]">
+class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-[width] duration-700 ease-out text-lg md:text-xl font-semibold w-fit min-w-fit text-white dark:text-[#1D1D1F]">
 
 <span id="emoji-core"></span>
 <span id="price-core"></span>
@@ -366,7 +366,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 </div>
 
-<hr class="border-black/10 dark:border-[#86868B] border-t my-8"/>
+<hr class="border-black/10 dark:border-white/10 border-t my-8"/>
 
 
 <!-- MOBILE PRICING BUTTON -->
@@ -580,7 +580,6 @@ let maxWidth=70
 if(isMobile)maxWidth=95
 else if(isTablet)maxWidth=80
 
-
 function width(val){
 
 if(max===min)return maxWidth
@@ -591,12 +590,10 @@ return 25+ratio*(maxWidth-25)
 
 }
 
-
 $("bar-akash").style.width=width(prices.akash)+"%"
 $("bar-aws").style.width=width(prices.aws)+"%"
 $("bar-gcp").style.width=width(prices.gcp)+"%"
 $("bar-core").style.width=width(prices.core)+"%"
-
 
 $("price-akash").textContent=`$${prices.akash.toFixed(2)}/${unit}`
 $("price-aws").textContent=`$${prices.aws.toFixed(2)}/${unit}`
@@ -604,17 +601,52 @@ $("price-gcp").textContent=`$${prices.gcp.toFixed(2)}/${unit}`
 $("price-core").textContent=`$${prices.core.toFixed(2)}/${unit}`
 
 
+/* ---------- DYNAMIC ORDERING ---------- */
+
+const entries = Object.entries(prices).sort((a,b)=>a[1]-b[1])
+
+setTimeout(()=>{
+
+  const container=$("pricing-bars")
+
+  entries.forEach(([provider])=>{
+    const row=document.getElementById(`row-${provider}`)
+    if(row)container.appendChild(row)
+  })
+
+},700)
+
+
+/* ---------- RESET EMOJIS ---------- */
+
 $("emoji-akash").textContent=""
 $("emoji-aws").textContent=""
 $("emoji-gcp").textContent=""
 $("emoji-core").textContent=""
 
-const cheapest=Object.keys(prices).find(k=>prices[k]===min)
-const expensive=Object.keys(prices).find(k=>prices[k]===max)
+const cheapest=entries[0][0]
+const expensive=entries[entries.length-1][0]
 
-if(cheapest)$(`emoji-${cheapest}`).textContent="🔥 "
-if(expensive)$(`emoji-${expensive}`).textContent="😵 "
+$(`emoji-${cheapest}`).textContent="🔥 "
+$(`emoji-${expensive}`).textContent="😵 "
 
+
+/* ---------- COLOR LOGIC ---------- */
+
+document.querySelectorAll("#bar-akash,#bar-aws,#bar-gcp,#bar-core").forEach(bar=>{
+bar.classList.remove("bg-[#8BFE79]","dark:bg-[#A6FA99]")
+bar.classList.add("bg-[#1D1D1F]","dark:bg-[#F5F5F7]")
+})
+
+const cheapestBar=document.getElementById(`bar-${cheapest}`)
+
+if(cheapestBar){
+cheapestBar.classList.remove("bg-[#1D1D1F]","dark:bg-[#F5F5F7]")
+cheapestBar.classList.add("bg-[#8BFE79]","dark:bg-[#A6FA99]")
+}
+
+
+/* ---------- SAVE PERCENT ---------- */
 
 let save=0
 
@@ -631,23 +663,25 @@ requestAnimationFrame(adjustMobileArrow)
 
 }
 
+
 function adjustMobileArrow(){
-  const text=document.getElementById("mobile-deploy-text")
-  const arrow=document.getElementById("mobile-deploy-arrow")
 
-  if(!text||!arrow)return
+const text=document.getElementById("mobile-deploy-text")
+const arrow=document.getElementById("mobile-deploy-arrow")
 
-  const lineHeight=parseFloat(getComputedStyle(text).lineHeight)
-  const lines=Math.round(text.offsetHeight/lineHeight)
+if(!text||!arrow)return
 
-  arrow.classList.remove("h-3.5","w-3.5","h-5","w-5")
+const lineHeight=parseFloat(getComputedStyle(text).lineHeight)
+const lines=Math.round(text.offsetHeight/lineHeight)
 
-  if(lines>1){
-    arrow.classList.add("h-5","w-5")
+arrow.classList.remove("h-3.5","w-3.5","h-5","w-5")
 
-  } else{
-    arrow.classList.add("h-3.5","w-3.5")
-  }
+if(lines>1){
+arrow.classList.add("h-5","w-5")
+}else{
+arrow.classList.add("h-3.5","w-3.5")
+}
+
 }
 
 update()
