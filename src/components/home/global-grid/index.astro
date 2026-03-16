@@ -1,5 +1,6 @@
 ---
 import ProviderCard from "./provider-card.astro";
+import Globe from "./globe.tsx";
 ---
 
 <section class="w-full p-20 text-[#171717] dark:text-white lg:p-[100px]">
@@ -21,7 +22,9 @@ import ProviderCard from "./provider-card.astro";
   </div>
 
   <div class="flex justify-center gap-10 py-[80px]">
-    <div class="h-[500px] w-3/5 bg-slate-800"></div>
+    <div class="flex h-[500px] w-3/5 items-center justify-center">
+      <Globe client:only="react" />
+    </div>
     <div class="h-[500px] w-1/5">
       <ProviderCard />
     </div>
