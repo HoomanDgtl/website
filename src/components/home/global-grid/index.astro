@@ -1,6 +1,5 @@
 ---
-import ProviderCard from "./provider-card.astro";
-import Globe from "./globe.tsx";
+import GlobalGridClient from "./global-grid-client.tsx";
 ---
 
 <section class="w-full p-20 text-[#171717] dark:text-white lg:p-[100px]">
@@ -21,14 +20,7 @@ import Globe from "./globe.tsx";
     <span class="origin-right scale-90">Total GPUs: 505</span>
   </div>
 
-  <div class="flex justify-center gap-10 py-[80px]">
-    <div class="flex h-[500px] w-3/5 items-center justify-center">
-      <Globe client:only="react" />
-    </div>
-    <div class="h-[500px] w-1/5">
-      <ProviderCard />
-    </div>
-  </div>
+  <GlobalGridClient client:only="react" />
 
   <div
     class="flex w-full justify-between border-t border-[#8A8F98]/25 pt-6 font-jetBrainsMono text-[#8A8F98] dark:border-[#8A8F9D]/25 dark:text-[#8A8F9D]/70"
