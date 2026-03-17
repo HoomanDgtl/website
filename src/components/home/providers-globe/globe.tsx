@@ -187,7 +187,6 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         style={{ contain: 'layout paint size' }}
       />
 
-      {/* Interactive pin overlay */}
       {providers.map((pin) => {
         const isSelected = pin.id === selectedId
         const isHovered = pin.id === hoveredId
@@ -212,11 +211,10 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
               onMouseLeave={() => setHoveredId(null)}
               className="relative flex items-center justify-center w-6 h-6 cursor-pointer group"
             >
-              {/* Dot label pill */}
               {showLabel && (
                 <div className="absolute left-[80%] top-1/2 -translate-y-1/2 z-20 pointer-events-none origin-left transition-all duration-200 scale-100 opacity-100">
-                  <div className="bg-[#212124] pl-2.5 pr-4 py-1.5 rounded-xl flex items-center gap-2.5 whitespace-nowrap shadow-xl">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#FF414C] red-glow-dot shrink-0" />
+                  <div className="bg-[#212124] px-4 py-2 rounded-xl flex items-center gap-2 whitespace-nowrap">
+                    <span className="w-3 h-3 rounded-full bg-[#FF2903] shrink-0" />
                     <span className="text-[13px] text-white font-medium tracking-wide">
                       {pin.name}
                     </span>
@@ -224,12 +222,11 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
                 </div>
               )}
 
-              {/* Central interactive dot */}
               <span
                 className={`block rounded-full transition-all duration-300 ${isSelected
-                  ? 'w-3.5 h-3.5 bg-[#FF414C] red-glow-dot'
+                  ? 'w-3 h-3 bg-[#FF2903]'
                   : isHovered
-                    ? 'w-3 h-3 bg-white glow-dot'
+                    ? 'w-3 h-3 bg-white'
                     : 'w-1.5 h-1.5 bg-transparent'
                   }`}
               />

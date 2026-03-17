@@ -21,7 +21,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
     <div className="relative">
       <button
         onClick={onClose}
-        className="absolute -top-10 right-0 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-[#E3E3E3] dark:bg-[#171717] border border-black/10 dark:border-white/10 text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors cursor-pointer"
+        className="absolute -top-10 right-0 z-20 w-8 h-8 flex items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-black/5 hover:dark:bg-white/5 transition-colors duration-300 cursor-pointer"
         aria-label="Close"
       >
         <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,7 +29,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
         </svg>
       </button>
 
-      <div className="bg-[#E3E3E3] dark:bg-[#212123] rounded-[20px] px-6 py-5 min-w-[340px] relative z-10">
+      <div className="bg-[#f5f5f5] dark:bg-[#212123] rounded-[20px] px-6 py-5 min-w-[340px] relative z-10">
         <div className="flex justify-between items-center">
           <span className="text-sm text-[#86868B]">Provider:</span>
           {provider.audited && (
@@ -55,10 +55,10 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
         <div className="space-y-2">
           {fields.map((field) => (
             <div key={field.label} className="flex items-center">
-              <span className="min-w-[80px] shrink-0 text-[#171717] dark:text-white text-sm">
+              <span className="min-w-[84px] shrink-0 text-[#171717] dark:text-white text-sm font-medium">
                 {field.label}
               </span>
-              <div className="flex-grow max-w-[180px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/15 rounded-[8px] px-3 py-2 flex items-center justify-between text-[#666666] dark:text-[#A3A3A3] text-sm">
+              <div className="flex-grow bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/15 rounded-[8px] px-3 py-2 flex items-center justify-between text-[#666666] dark:text-[#A3A3A3] text-sm">
                 <span>{field.value}</span>
               </div>
             </div>
@@ -69,11 +69,11 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
           href={`https://console.akash.network/providers/${provider.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full mt-8 py-3.5 border border-black/10 dark:border-white/10 rounded-full text-sm font-medium text-[#171717] dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full mt-6 px-4 py-3 border border-black/10 dark:border-[#4B4B4D] rounded-full text-sm font-medium text-[#171717] dark:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           View on Console
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </a>
       </div>
