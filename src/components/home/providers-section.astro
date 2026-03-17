@@ -1,43 +1,42 @@
 ---
 import axios from "axios"
 import { BASE_API_URL } from "@/lib/constants"
+import Globe from "@/components/home/providers-globe/globe"
 
 const API = `${BASE_API_URL}/v1/providers`
 
-type Provider = {
-  ipLat: string | null
-  ipLon: string | null
-  owner: string
-  organization?: string
-  ipRegion?: string
-  ipCountry?: string
-  uptime30d: number
-  leaseCount: number
-  isAudited: boolean
-  stats?: {
-    cpu?: { active: number; total: number }
-    gpu?: { active: number; total: number }
-    memory?: { active: number; total: number }
-    storage?: { total?: { total: number } }
-  }
-}
-
-let providers: Provider[] = []
+let providers = []
 
 try {
   const res = await axios.get(API)
   providers = res.data
-} catch(e) {
+} catch (e) {
   console.error(e)
 }
 
-const points = providers
+type GlobeProvider = {
+  id: string
+  lat: number
+  lng: number
+  name: string
+  region?: string
+  country?: string
+  uptime: number
+  leases: number
+  cpu: { active: number; total: number }
+  gpu: { active: number; total: number }
+  memory: { active: number; total: number }
+  audited: boolean
+}
+
+const globeProviders: GlobeProvider[] = providers
   .filter(p => p.ipLat && p.ipLon)
   .map(p => ({
+    id: p.owner,
     lat: Number(p.ipLat),
     lng: Number(p.ipLon),
-    owner: p.owner,
-    org: p.organization,
+    name: p.organization || p.owner.slice(0, 10),
+
     region: p.ipRegion,
     country: p.ipCountry,
 
@@ -59,19 +58,15 @@ const points = providers
       total: p.stats?.memory?.total ?? 0
     },
 
-    storage: {
-      total: p.stats?.storage?.total?.total ?? 0
-    },
-
     audited: p.isAudited ?? false
   }))
 
-const firstProvider = points[0]
+const firstProvider = globeProviders[0]
 
-const totalLeases = points.reduce((sum, p) => sum + p.leases, 0)
-const totalCPU = points.reduce((sum, p) => sum + p.cpu.total, 0)
-const totalGPU = points.reduce((sum, p) => sum + p.gpu.total, 0)
-const totalMemoryBytes = points.reduce((sum, p) => sum + p.memory.total, 0)
+const totalLeases = globeProviders.reduce((s, p) => s + p.leases, 0)
+const totalCPU = globeProviders.reduce((s, p) => s + p.cpu.total, 0)
+const totalGPU = globeProviders.reduce((s, p) => s + p.gpu.total, 0)
+const totalMemoryBytes = globeProviders.reduce((s, p) => s + p.memory.total, 0)
 const totalMemoryTB = (totalMemoryBytes / 1024 / 1024 / 1024 / 1024).toFixed(1)
 ---
 
@@ -86,344 +81,110 @@ Access a permissionless grid of providers spanning 24 countries.
 While centralized clouds have outages, the Supercloud has resilience.
 </p>
 
-<div class="mt-[60px] flex w-full justify-between border-b border-black/10 dark:border-[#39393B] pb-6 font-jetBrainsMono text-[#86868B]">
-  <span class="scale-90">Active Leases: {totalLeases}</span>
-  <span class="scale-90">Memory: {totalMemoryTB} TB</span>
-  <span class="scale-90">CPUs: {totalCPU}</span>
-  <span class="scale-90">Total GPUs: {totalGPU}</span>
+<div class="mt-[60px] flex justify-between border-b border-[#39393B] pb-6 text-[#86868B] font-jetBrainsMono">
+  <span>Active Leases: {totalLeases}</span>
+  <span>Memory: {totalMemoryTB} TB</span>
+  <span>CPUs: {totalCPU}</span>
+  <span>Total GPUs: {totalGPU}</span>
 </div>
 
 <div class="grid lg:grid-cols-[1fr_360px] gap-12 mt-[60px] items-center max-w-6xl mx-auto">
 
 <!-- Globe -->
-
-<div class="globe-wrapper">
-<div id="active-provider-label" class="active-label hidden"></div>
-<div id="globe"></div>
+<div class="relative h-[450px] max-w-[740px] overflow-hidden bg-[#0e0e0e]">
+  <Globe
+    client:only="react"
+    providers={globeProviders}
+    selectedId={firstProvider?.id}
+    onSelect={(id) => {
+      window.dispatchEvent(new CustomEvent("provider-select", { detail: id }))
+    }}
+  />
 </div>
-
 
 <!-- Provider Card -->
+<div class="bg-gradient-to-b from-[#1f1f22] to-[#1a1a1c] border border-white/10 rounded-2xl p-7">
 
-<div class="provider-card">
+<div class="flex justify-between mb-5">
+  <div>
+    <p class="text-xs text-[#8A8F98]">Provider</p>
+    <p id="provider-name" class="text-lg mt-1"></p>
+  </div>
 
-<div class="card-header">
-
-<div>
-<p class="card-label">Provider</p>
-<p id="provider-name" class="card-provider"></p>
+  <span id="provider-audited" class="bg-[#9EF29E] text-[#0c3205] px-4 py-1 rounded-full text-xs flex items-center gap-1">
+    Audited
+  </span>
 </div>
 
-<span id="provider-audited" class="audit-pill hidden">
-Audited 
-<svg
-  width="12"
-  height="12"
-  viewBox="0 0 12 12"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <path
-    d="M4.10559 5.59753L5.10559 6.59753L7.10559 4.59753M1.53057 3.90758C1.45759 3.57885 1.46879 3.237 1.56314 2.91375C1.6575 2.5905 1.83194 2.29631 2.0703 2.05844C2.30866 1.82058 2.60322 1.64676 2.92667 1.55308C3.25012 1.45941 3.59198 1.44892 3.92057 1.52258C4.10142 1.23973 4.35057 1.00696 4.64504 0.845726C4.93951 0.684489 5.26984 0.599976 5.60557 0.599976C5.94129 0.599976 6.27162 0.684489 6.56609 0.845726C6.86056 1.00696 7.10971 1.23973 7.29057 1.52258C7.61965 1.44859 7.9621 1.45904 8.28606 1.55294C8.61003 1.64684 8.90498 1.82115 9.14349 2.05966C9.38199 2.29817 9.55631 2.59312 9.65021 2.91708C9.74411 3.24105 9.75455 3.5835 9.68056 3.91258C9.96341 4.09344 10.1962 4.34258 10.3574 4.63706C10.5187 4.93153 10.6032 5.26186 10.6032 5.59758C10.6032 5.93331 10.5187 6.26363 10.3574 6.55811C10.1962 6.85258 9.96341 7.10173 9.68056 7.28258C9.75423 7.61117 9.74374 7.95303 9.65007 8.27648C9.55639 8.59993 9.38257 8.89449 9.1447 9.13285C8.90684 9.37121 8.61265 9.54565 8.2894 9.64C7.96614 9.73436 7.6243 9.74556 7.29557 9.67258C7.11495 9.95652 6.8656 10.1903 6.57063 10.3522C6.27565 10.5142 5.94458 10.5991 5.60807 10.5991C5.27155 10.5991 4.94048 10.5142 4.6455 10.3522C4.35053 10.1903 4.10118 9.95652 3.92057 9.67258C3.59198 9.74625 3.25012 9.73576 2.92667 9.64209C2.60322 9.54841 2.30866 9.37458 2.0703 9.13672C1.83194 8.89886 1.6575 8.60466 1.56314 8.28141C1.46879 7.95816 1.45759 7.61632 1.53057 7.28758C1.24554 7.1072 1.01077 6.85767 0.848089 6.56219C0.685407 6.26671 0.600098 5.93489 0.600098 5.59758C0.600098 5.26028 0.685407 4.92845 0.848089 4.63298C1.01077 4.3375 1.24554 4.08796 1.53057 3.90758Z"
-    stroke="#0C3205"
-    stroke-width="1.2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-</svg>
-</span>
+<div class="flex flex-col gap-3 text-sm">
 
+<div class="grid grid-cols-[90px_1fr] items-center gap-3">
+<span class="text-[#8A8F98]">Location</span>
+<div id="provider-location" class="bg-[#232326] border border-white/10 rounded-lg px-3 py-2"></div>
 </div>
 
-
-<div class="provider-grid">
-
-<div class="card-row">
-<span>Location</span>
-<div class="value-box" id="provider-location"></div>
+<div class="grid grid-cols-[90px_1fr] items-center gap-3">
+<span class="text-[#8A8F98]">Uptime</span>
+<div id="provider-uptime" class="bg-[#232326] border border-white/10 rounded-lg px-3 py-2"></div>
 </div>
 
-<div class="card-row">
-<span>Uptime</span>
-<div class="value-box" id="provider-uptime"></div>
+<div class="grid grid-cols-[90px_1fr] items-center gap-3">
+<span class="text-[#8A8F98]">CPU</span>
+<div id="provider-cpu" class="bg-[#232326] border border-white/10 rounded-lg px-3 py-2"></div>
 </div>
 
-<div class="card-row">
-<span>CPU</span>
-<div class="value-box" id="provider-cpu"></div>
+<div class="grid grid-cols-[90px_1fr] items-center gap-3">
+<span class="text-[#8A8F98]">GPUs</span>
+<div id="provider-gpu" class="bg-[#232326] border border-white/10 rounded-lg px-3 py-2"></div>
 </div>
 
-<div class="card-row">
-<span>GPUs</span>
-<div class="value-box" id="provider-gpu"></div>
+<div class="grid grid-cols-[90px_1fr] items-center gap-3">
+<span class="text-[#8A8F98]">Memory</span>
+<div id="provider-memory" class="bg-[#232326] border border-white/10 rounded-lg px-3 py-2"></div>
 </div>
 
-<div class="card-row">
-<span>Memory</span>
-<div class="value-box" id="provider-memory"></div>
-</div>
-
-<div class="card-row">
-<span>Leases</span>
-<div class="value-box" id="provider-leases"></div>
+<div class="grid grid-cols-[90px_1fr] items-center gap-3">
+<span class="text-[#8A8F98]">Leases</span>
+<div id="provider-leases" class="bg-[#232326] border border-white/10 rounded-lg px-3 py-2"></div>
 </div>
 
 </div>
 
-<button class="console-btn" id="console-btn">
-  View on Console
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 12L10 8L6 4" stroke="white" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-
+<button id="console-btn" class="mt-6 w-full border border-white/20 rounded-full py-3 hover:bg-[#1f1f22]">
+View on Console →
 </button>
 
 </div>
-
-</div>
-
-<div class="flex w-full justify-between border-t border-black/10 dark:border-[#39393B] pt-6 mt-12 font-jetBrainsMono text-[#86868B]">
-  <span class="scale-90">
-    Uptime: 🟢 {firstProvider ? (firstProvider.uptime * 100).toFixed(2) : "0"}%
-  </span>
-  <span class="scale-90">
-    Providers: {points.length}
-  </span>
 </div>
 
 </section>
 
-
-<style>
-
-.globe-wrapper{
-height:450px;
-max-width:740px;
-overflow:hidden;
-position:relative;
-background:#0e0e0e;
-}
-
-#globe{
-position:absolute;
-width:100%;
-height:900px;
-bottom:-400px;
-left:0;
-}
-
-.provider-card{
-background:linear-gradient(180deg,#1f1f22 0%,#1a1a1c 100%);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:24px;
-padding:28px;
-}
-
-.card-header{
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-margin-bottom:20px;
-}
-
-.card-label{
-font-size:13px;
-color:#8A8F98;
-}
-
-.card-provider{
-font-size:18px;
-margin-top:4px;
-}
-
-.audit-pill{
-background:#9EF29E;
-color:#0c3205;
-padding:6px 12px;
-border-radius:999px;
-font-size:13px;
-display:flex;
-align-items:center;
-gap: 2px;
-}
-
-.provider-grid{
-display:flex;
-flex-direction:column;
-gap:14px;
-}
-
-.card-row{
-display:grid;
-grid-template-columns:90px 1fr;
-align-items:center;
-gap:12px;
-font-size:14px;
-}
-
-.card-row span{
-color:#8A8F98;
-}
-
-.value-box{
-background:#232326;
-border:1px solid rgba(255,255,255,0.08);
-border-radius:10px;
-padding:10px 12px;
-color:#d1d5db;
-}
-
-.console-btn{
-margin-top:24px;
-width:100%;
-border:1px solid rgba(255,255,255,0.12);
-border-radius:999px;
-padding:14px;
-background:transparent;
-display: flex;
-gap: 4px;
-justify-content: center;
-align-items: center;
-}
-
-.console-btn:hover{
-background:#1f1f22;
-}
-
-/* kill globe.gl wrapper background */
-.globe-wrapper .scene-tooltip,
-.globe-wrapper .globe-tooltip,
-.globe-wrapper .globe-point-label {
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-}
-
-/* fallback for CSS2DRenderer wrappers */
-.globe-wrapper div[style*="position: absolute"] {
-  background: transparent !important;
-}
-
-.globe-label{
-  background:#212124;
-  border-radius:16px;
-  padding:16px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#fff;
-  font-size:14px;
-  white-space:nowrap;
-}
-
-.globe-label .dot{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:#FF2903;
-}
-
-.active-label{
-  position:absolute;
-  top:16px;
-  left:16px;
-  background:#212124;
-  border-radius:16px;
-  padding:16px;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#fff;
-  font-size:14px;
-  z-index:10;
-}
-
-.active-label .dot{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:#FF2903;
-}
-
-</style>
-
-
-<script type="module" define:vars={{points, firstProvider}}>
-
-import Globe from "https://esm.sh/globe.gl"
-
-const container = document.getElementById("globe")
-
-let activeOwner = firstProvider.owner
+<script define:vars={{ globeProviders, firstProvider }}>
 
 function bytesToGB(bytes){
   return (bytes / 1024 / 1024 / 1024).toFixed(1)
 }
 
-const globe = Globe()(container)
-
-.width(container.clientWidth)
-.height(900)
-
-.globeImageUrl("/earth-square.webp")
-
-.backgroundColor("rgba(23,23,23,0)")
-
-.showAtmosphere(false)
-
-.pointOfView({
-  lat:50,
-  lng:10,
-  altitude:1.8
-})
-
-.pointsData(points)
-
-.pointAltitude(0.01)
-
-.pointResolution(4)
-
-.pointColor(d =>
-  d.owner === activeOwner ? "#FF2903" : "rgba(255,255,255,0.7)"
-)
-
-.pointRadius(d =>
-  d.owner === activeOwner ? 0.5 : 0.35
-)
-
-.pointLabel(d => `
-<div class="globe-label">
-  <span class="dot"></span>
-  ${d.org || d.owner.slice(0,10)}
-</div>
-`)
-
-.onPointClick(d=>{
-activeOwner=d.owner
-showProvider(d)
-globe.pointsData([...points])
-})
-
 function showProvider(p){
 
-document.getElementById("provider-name").textContent =
-p.org || p.owner.slice(0,10)
+document.getElementById("provider-name").textContent = p.name
 
 document.getElementById("provider-location").textContent =
-`${p.region}, ${p.country}`
+`${p.region || "Unknown"}${p.country ? ", "+p.country : ""}`
 
 document.getElementById("provider-uptime").textContent =
 `${(p.uptime*100).toFixed(2)}%`
 
-document.getElementById("provider-cpu").textContent = p.cpu
+document.getElementById("provider-cpu").textContent =
+`${p.cpu.active}/${p.cpu.total}`
 
-document.getElementById("provider-gpu").textContent = p.gpu
+document.getElementById("provider-gpu").textContent =
+`${p.gpu.active}/${p.gpu.total}`
 
 document.getElementById("provider-memory").textContent =
-bytesToGB(p.memory)+" GB"
+`${bytesToGB(p.memory.active)} / ${bytesToGB(p.memory.total)} GB`
 
-document.getElementById("provider-leases").textContent =
-p.leases
+document.getElementById("provider-leases").textContent = p.leases
 
 if(p.audited){
 document.getElementById("provider-audited").classList.remove("hidden")
@@ -431,27 +192,19 @@ document.getElementById("provider-audited").classList.remove("hidden")
 document.getElementById("provider-audited").classList.add("hidden")
 }
 
-const label = document.getElementById("active-provider-label")
-
-  label.innerHTML = `
-    <span class="dot"></span>
-    ${p.org || p.owner.slice(0,10)}
-  `
-
-  label.classList.remove("hidden")
-
 document.getElementById("console-btn").onclick = () => {
-  window.location.href = `https://console.akash.network/providers/${p.owner}`
+  window.location.href = `https://console.akash.network/providers/${p.id}`
 }
 
 }
+
+window.addEventListener("provider-select", (e) => {
+  const selected = globeProviders.find(p => p.id === e.detail)
+  if (selected) showProvider(selected)
+})
 
 if(firstProvider){
   showProvider(firstProvider)
 }
-
-window.addEventListener("resize",()=>{
-globe.width(container.clientWidth).height(900)
-})
 
 </script>
