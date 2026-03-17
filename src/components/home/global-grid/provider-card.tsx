@@ -2,9 +2,10 @@ import type { Provider } from './globe'
 
 interface Props {
   provider: Provider
+  onClose: () => void
 }
 
-export default function ProviderCard({ provider }: Props) {
+export default function ProviderCard({ provider, onClose }: Props) {
   const rows = [
     { label: 'Location', value: `${provider.location} ${provider.locationFlag}` },
     { label: 'Uptime', value: provider.uptime },
@@ -17,11 +18,11 @@ export default function ProviderCard({ provider }: Props) {
   return (
     <div>
       <div className="mb-2 flex w-full justify-end">
-        <button className="flex aspect-square size-8 items-center justify-center rounded-full border border-[#4B4B4C]">
+        <button onClick={onClose} className="flex aspect-square size-8 items-center justify-center rounded-full border border-[#4B4B4C]">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M8.66504 0.664978L0.665039 8.66498M0.665039 0.664978L8.66504 8.66498"
-              stroke="#FAFAFA"
+              stroke="currentColor"
               strokeWidth="1.33"
               strokeLinecap="round"
               strokeLinejoin="round"
