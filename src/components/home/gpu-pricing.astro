@@ -216,7 +216,7 @@ data-gpu={gpu}
 
 <!-- AKASH -->
 
-<div id="row-akash" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-akash" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2 group/akash">
 
 <div class="w-44 text-black dark:text-[#A6FA99] flex gap-2 items-center font-medium text-base">
 <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -227,7 +227,7 @@ data-gpu={gpu}
 Akash
 </div>
 
-<div class="flex items-center w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded gap-2">
+<div class="flex items-center w-full bg-transparent border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded group-hover/akash:bg-white/5 transition-colors duration-300">
 
 <div id="bar-akash"
 class="bg-[#8BFE79] dark:bg-[#A6FA99] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 text-black transition-[width] duration-700 ease-out w-fit min-w-fit text-lg md:text-xl font-semibold">
@@ -237,18 +237,20 @@ class="bg-[#8BFE79] dark:bg-[#A6FA99] h-[39px] md:h-[43px] rounded flex items-ce
 
 </div>
 
+<div class="w-full flex justify-between px-2 gap-2">
 <span id="save-percent"
 class="inline-flex bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] px-4 py-2 rounded-full text-xs md:text-sm whitespace-nowrap font-medium">
 Save %
 </span>
 
 <a href="https://console.akash.network/"
-class="hidden md:inline-flex bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover:brightness-90 px-4 py-2 rounded-full text-sm whitespace-nowrap items-center gap-1">
+class="hidden sm:group-hover/akash:inline-flex transition-all duration-300 bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover:brightness-90 px-4 py-2 rounded-full text-sm whitespace-nowrap items-center gap-1">
 <span class="font-medium">{data.deployText}</span>
 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M5.25 10.5L8.75 7L5.25 3.5" stroke="#0C3304" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 </a>
+</div>
 
 </div>
 
@@ -257,7 +259,7 @@ class="hidden md:inline-flex bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover
 
 <!-- AWS -->
 
-<div id="row-aws" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-aws" class="provider-row group/aws flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-[#8A8F98] flex gap-2 items-center font-medium text-base">
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -276,7 +278,7 @@ class="hidden md:inline-flex bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover
 AWS
 </div>
 
-<div class="w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
+<div class="flex items-center w-full bg-transparent group-hover/aws:bg-white/5 transition-colors duration-300 border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
 
 <div id="bar-aws"
 class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-[width] duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F] text-lg md:text-xl font-semibold">
@@ -286,6 +288,16 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 </div>
 
+<div class="w-full flex justify-end px-2">
+<a href="https://console.akash.network/"
+class="hidden sm:group-hover/aws:inline-flex transition-all duration-300 bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover:brightness-90 px-4 py-2 rounded-full text-sm whitespace-nowrap items-center gap-1">
+<span class="font-medium">{data.deployText}</span>
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.25 10.5L8.75 7L5.25 3.5" stroke="#0C3304" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+</div>
+
 </div>
 
 </div>
@@ -293,7 +305,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 <!-- GCP -->
 
-<div id="row-gcp" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-gcp" class="provider-row group/gcp flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-[#8A8F98] flex gap-2 items-center font-medium text-base">
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,7 +325,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 Google Cloud
 </div>
 
-<div class="w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
+<div class="flex items-center w-full bg-transparent group-hover/gcp:bg-white/5 transition-colors duration-300 border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
 
 <div id="bar-gcp"
 class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-[width] duration-700 ease-out w-fit min-w-fit text-white dark:text-[#1D1D1F] text-lg md:text-xl font-semibold">
@@ -323,6 +335,16 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 </div>
 
+<div class="w-full flex justify-end px-2">
+<a href="https://console.akash.network/"
+class="hidden sm:group-hover/gcp:inline-flex transition-all duration-300 bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover:brightness-90 px-4 py-2 rounded-full text-sm whitespace-nowrap items-center gap-1">
+<span class="font-medium">{data.deployText}</span>
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.25 10.5L8.75 7L5.25 3.5" stroke="#0C3304" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
+</div>
+
 </div>
 
 </div>
@@ -330,7 +352,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 
 <!-- COREWEAVE -->
 
-<div id="row-core" class="provider-row flex flex-col md:flex-row md:items-center md:gap-2">
+<div id="row-core" class="provider-row group/core flex flex-col md:flex-row md:items-center md:gap-2">
 
 <div class="w-44 text-[#8A8F98] flex gap-2 items-center font-medium text-base">
   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -350,7 +372,7 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 Coreweave
 </div>
 
-<div class="w-full border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
+<div class="flex items-center w-full bg-transparent group-hover/core:bg-white/5 transition-colors duration-300 border border-black/10 dark:border-white/10 h-[40px] md:h-[44px] rounded">
 
 <div id="bar-core"
 class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-center justify-end px-4 transition-[width] duration-700 ease-out text-lg md:text-xl font-semibold w-fit min-w-fit text-white dark:text-[#1D1D1F]">
@@ -358,6 +380,16 @@ class="bg-[#1D1D1F] dark:bg-[#F5F5F7] h-[39px] md:h-[43px] rounded flex items-ce
 <span id="emoji-core"></span>
 <span id="price-core"></span>
 
+</div>
+
+<div class="w-full flex justify-end px-2">
+<a href="https://console.akash.network/"
+class="hidden sm:group-hover/core:inline-flex transition-all duration-300 bg-[#8BFE79] dark:bg-[#A6FA99] text-[#0C3205] hover:brightness-90 px-4 py-2 rounded-full text-sm whitespace-nowrap items-center gap-1">
+<span class="font-medium">{data.deployText}</span>
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.25 10.5L8.75 7L5.25 3.5" stroke="#0C3304" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</a>
 </div>
 
 </div>
