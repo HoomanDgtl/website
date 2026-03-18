@@ -1,4 +1,4 @@
-import type { Provider } from './globe'
+import type { Provider } from '@/components/home/gpu-providers/types'
 
 interface Props {
   provider: Provider

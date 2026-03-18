@@ -2,21 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import createGlobe from 'cobe'
-
-export interface Provider {
-  id: string
-  name: string
-  lat: number
-  lng: number
-  location: string
-  locationFlag: string
-  uptime: string
-  cpu: string
-  gpus: string
-  memory: string
-  leases: number
-  audited: boolean
-}
+import type { Provider } from '@/components/home/gpu-providers/types'
 
 interface GlobeProps {
   providers?: Provider[]
@@ -137,7 +123,7 @@ export default function Globe({
       mapSamples: 30000,
       mapBrightness: isDark ? 6 : 8,
       baseColor: isDark ? [0.1, 0.1, 0.1] : [0.85, 0.85, 0.85],
-      markerColor: isDark ? [1, 1, 1] : [0.85, 0.13, 0.13],
+      markerColor: [1, 0.2, 0.2],
       glowColor: isDark ? [0.03, 0.03, 0.03] : [0.9, 0.9, 0.9],
       markers: initialMarkers,
       onRender: (state) => {
