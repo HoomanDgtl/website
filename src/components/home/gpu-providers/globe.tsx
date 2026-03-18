@@ -97,7 +97,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
       diffuse: 1.2,
       mapSamples: 16000,
       mapBrightness: 6,
-      baseColor: [0.337, 0.337, 0.337],
+      baseColor: [0.5, 0.5, 0.5],
       markerColor: [1, 1, 1],
       glowColor: [0, 0, 0],
       markers: initialMarkers,
