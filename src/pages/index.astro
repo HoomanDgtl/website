@@ -1,7 +1,11 @@
 ---
 import AiModelsAndApps from "@/components/home/aiModelsAndApps/aiModelsAndApps.astro";
 import FuelNew from "@/components/home/fuelNew.astro";
-import CaseStudies from "@/components/home/caseStudies.astro";
+import CaseStudies from "@/components/home/case-studies/index.astro";
+import Providers from "@/components/home/gpu-providers/providers-section";
+import { fetchProviderData } from "@/utils/provider-data";
+
+const { providers: initialProviders, stats: initialStats } = await fetchProviderData();
 import ShipIt from "@/components/home/shipIt.astro";
 import Hero from "@/components/home/hero/hero.astro";
 import Infrastructure from "@/components/home/infrastructure/infrastructure.astro";
@@ -46,9 +50,10 @@ const {
     <Hero heroSection={heroSection} />
     <div class="bg-[#F1F1F1] dark:bg-[#101010] w-full h-fit"><TrustedBy /></div>
     <div class="bg-[#E3E3E3] dark:bg-[#0D0D0E] w-full h-fit"><InfrastructureNew /></div>
-    <div class="bg-[#E3E3E3] dark:bg-[#0D0D0E] w-full h-fit"><FuelNew /></div>
+    <div class="bg-[#FFFFFF] dark:bg-[#030303] w-full h-fit"><Providers initialProviders={initialProviders} initialStats={initialStats} client:load /></div>
     <div class="bg-[#EAEAEA] dark:bg-[#0D0D0E] w-full h-fit"><Permissionless /></div>
-    <div class="bg-[#EEEEEE] dark:bg-[#101010]"><CaseStudies /></div>
+    <div class="bg-[#E3E3E3] dark:bg-[#0D0D0E] w-full h-fit"><FuelNew /></div>
+    <div class="bg-[#EEEEEE] dark:bg-[#030303]"><CaseStudies /></div>
     <div class="bg-[#171717]"><ShipIt /></div>
   </div>
 </Layout>
