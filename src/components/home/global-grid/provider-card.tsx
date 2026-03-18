@@ -18,7 +18,7 @@ export default function ProviderCard({ provider, onClose }: Props) {
   return (
     <div>
       <div className="mb-2 flex w-full justify-end">
-        <button onClick={onClose} className="flex aspect-square size-8 items-center justify-center rounded-full border border-[#4B4B4C]">
+        <button onClick={onClose} className="flex aspect-square size-8 items-center justify-center rounded-full border border-[#D1D5DB] dark:border-[#4B4B4C]">
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M8.66504 0.664978L0.665039 8.66498M0.665039 0.664978L8.66504 8.66498"
@@ -31,7 +31,7 @@ export default function ProviderCard({ provider, onClose }: Props) {
         </button>
       </div>
 
-      <div className="flex h-full w-full flex-col justify-between rounded-3xl bg-[#242424] p-6">
+      <div className="flex h-full w-full flex-col justify-between rounded-3xl bg-[#F5F5F5] dark:bg-[#242424] p-6">
         {/* Header */}
         <div>
           <div className="mb-0.5 flex items-start justify-between gap-2">
@@ -51,16 +51,16 @@ export default function ProviderCard({ provider, onClose }: Props) {
               </span>
             )}
           </div>
-          <h3 className="font-sans text-xl text-white">{provider.name}</h3>
+          <h3 className="font-sans text-xl text-[#171717] dark:text-white">{provider.name}</h3>
         </div>
 
         {/* Spec Rows */}
         <div className="mt-5 flex flex-col gap-2.5">
           {rows.map(({ label, value }) => (
             <div key={label} className="flex items-center justify-between gap-3">
-              <span className="w-1/3 shrink-0 font-sans text-sm text-white">{label}</span>
-              <div className="flex w-2/3 items-center rounded-xl border-2 border-[#4B4B4C] bg-[#333333] px-3 py-2.5">
-                <span className="font-sans text-sm text-[#8A8F98]">{value}</span>
+              <span className="w-1/3 shrink-0 font-sans text-sm text-[#171717] dark:text-white">{label}</span>
+              <div className="flex w-2/3 items-center rounded-xl border-2 border-[#D1D5DB] bg-[#E5E7EB] dark:border-[#4B4B4C] dark:bg-[#333333] px-3 py-2.5">
+                <span className="font-sans text-sm text-[#6B7280] dark:text-[#8A8F98]">{value}</span>
               </div>
             </div>
           ))}
@@ -71,7 +71,7 @@ export default function ProviderCard({ provider, onClose }: Props) {
           href="https://console.akash.network/providers"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full border-[0.075rem] border-[#4B4B4C] bg-[#333333] px-4 py-3.5 font-sans text-sm font-semibold text-white transition-colors hover:bg-[#3d3d3d]"
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full border-[0.075rem] border-[#D1D5DB] bg-[#E5E7EB] dark:border-[#4B4B4C] dark:bg-[#333333] px-4 py-3.5 font-sans text-sm font-semibold text-[#171717] dark:text-white transition-colors hover:bg-[#D1D5DB] dark:hover:bg-[#3d3d3d]"
         >
           View on Console
           <svg

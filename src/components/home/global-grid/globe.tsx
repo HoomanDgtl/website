@@ -314,6 +314,7 @@ interface GlobeProps {
   providers?: Provider[]
   selectedId?: string | null
   onSelect?: (id: string) => void
+  isDark?: boolean
 }
 
 function projectPoint(
@@ -354,6 +355,7 @@ export default function Globe({
   providers: providersProp,
   selectedId: selectedIdProp,
   onSelect: onSelectProp,
+  isDark: isDarkProp,
 }: GlobeProps) {
   const [internalSelectedId, setInternalSelectedId] = useState<string | null>(null)
   const providers = providersProp ?? defaultProviders
@@ -370,6 +372,21 @@ export default function Globe({
   const lastPos = useRef({ x: 0, y: 0 })
   const sizeRef = useRef(600)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [isDark, setIsDark] = useState(isDarkProp ?? true)
+
+  useEffect(() => {
+    if (isDarkProp !== undefined) {
+      setIsDark(isDarkProp)
+      return
+    }
+    const html = document.documentElement
+    setIsDark(html.classList.contains('dark'))
+    const observer = new MutationObserver(() => {
+      setIsDark(html.classList.contains('dark'))
+    })
+    observer.observe(html, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [isDarkProp])
 
   const selectedIdRef = useRef(selectedId)
   useEffect(() => {
@@ -407,13 +424,13 @@ export default function Globe({
       height: size * 2,
       phi: phiRef.current,
       theta: thetaRef.current,
-      dark: 1,
-      diffuse: 1.2,
+      dark: isDark ? 1 : 0,
+      diffuse: isDark ? 1.2 : 2,
       mapSamples: 30000,
-      mapBrightness: 6,
-      baseColor: [0.1, 0.1, 0.1],
-      markerColor: [1, 1, 1],
-      glowColor: [0.03, 0.03, 0.03],
+      mapBrightness: isDark ? 6 : 8,
+      baseColor: isDark ? [0.1, 0.1, 0.1] : [0.85, 0.85, 0.85],
+      markerColor: isDark ? [1, 1, 1] : [0.2, 0.2, 0.2],
+      glowColor: isDark ? [0.03, 0.03, 0.03] : [0.9, 0.9, 0.9],
       markers: initialMarkers,
       onRender: (state) => {
         // Hide WebGL dot for selected and hovered — HTML dots handle those states
@@ -488,7 +505,7 @@ export default function Globe({
       window.removeEventListener('pointerup', onUp)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [providers])
+  }, [providers, isDark])
 
   return (
     <div
@@ -528,7 +545,7 @@ export default function Globe({
                 className={`block rounded-full transition-all duration-150 ${isSelected
                   ? 'w-2.5 h-2.5 bg-red-500 red-glow-dot'
                   : isHovered
-                    ? 'w-2 h-2 bg-white glow-dot'
+                    ? 'w-2 h-2 bg-[#171717] dark:bg-white glow-dot'
                     : 'w-1.5 h-1.5 bg-transparent' // Hide base HTML dot to relying on WebGL dot, removing twins
                   }`}
               />
@@ -537,7 +554,8 @@ export default function Globe({
             {/* Floating label */}
             {(isHovered || isSelected) && (
               <div className="absolute left-6 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-10">
-                <span className="bg-black/80 backdrop-blur-sm border border-white/10 px-2 py-1 rounded text-[10px] text-white font-mono whitespace-nowrap">
+                <span className="bg-white/80 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center gap-2 border border-black/10 dark:border-white/10 px-2 pr-3 py-2 rounded-xl text-[12px] text-[#171717] dark:text-white font-mono whitespace-nowrap">
+                  <div className='size-2 bg-red-600 rounded-full'></div>
                   {pin.name}
                 </span>
               </div>
