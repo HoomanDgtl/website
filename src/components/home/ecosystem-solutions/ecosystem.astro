@@ -6,36 +6,33 @@ import {
   getPriorityIndex,
 } from "@/utils/sequences/deployedOnAkash";
 
-const ecosystemItems = [
+const desktopItems = [
   {
     id: 1,
     name: "console",
     image: "/images/ecosystem-homepage/console.png",
-    mobileImage: "/images/ecosystem-homepage/console-mob.png",
     title: "Akash Console",
     description: "Monetize your servers by joining the network.",
     button: {
       text: "Open Provider Console",
-      url: "/",
+      url: "https://console.akash.network/",
     },
   },
   {
     id: 2,
     name: "ML",
     image: "/images/ecosystem-homepage/ml.png",
-    mobileImage: "/images/ecosystem-homepage/ml-mob.png",
     title: "Akash ML",
     description: "Run AI Inference models on high-performance managed API.",
     button: {
       text: "Explore Playground",
-      url: "/",
+      url: "https://akashml.com/",
     },
   },
   {
     id: 3,
     name: "homenode",
     image: "/images/ecosystem-homepage/homenode.png",
-    mobileImage: "/images/ecosystem-homepage/homenode-mob.png",
     title: "Akash Homenode",
     description: "Rent idle compute to developers and earn passive income.",
     button: {
@@ -47,7 +44,6 @@ const ecosystemItems = [
     id: 4,
     name: "agents",
     image: "/images/ecosystem-homepage/agents.png",
-    mobileImage: "/images/ecosystem-homepage/agents-mob.png",
     title: "Akash Agents",
     description: "Launch autonomous intelligence on the world's first decentralized compute marketplace.",
     button: {
@@ -60,12 +56,11 @@ const ecosystemItems = [
     name: "console",
     label: "provider",
     image: "/images/ecosystem-homepage/console2.png",
-    mobileImage: "/images/ecosystem-homepage/console2-mob.png",
     title: "Akash Provider Console",
     description: "Monetize your servers by joining the network.",
     button: {
       text: "Become a Provider",
-      url: "/",
+      url: "https://provider-console.akash.network/",
     },
   },
   {
@@ -73,7 +68,6 @@ const ecosystemItems = [
     name: "starcluster",
     label: "coming-soon",
     image: "/images/ecosystem-homepage/starcluster.png",
-    mobileImage: "/images/ecosystem-homepage/starcluster-mob.png",
     title: "Akash Starcluster",
     description: "A planetary-scale mesh of decentralized AI compute designed to democratize access to GPU and CPU resources worldwide",
     button: {
@@ -85,31 +79,28 @@ const ecosystemItems = [
     id: 7,
     name: "chat",
     image: "/images/ecosystem-homepage/chat.png",
-    mobileImage: "/images/ecosystem-homepage/chat-mob.png",
     title: "Akash Chat",
     description: "A live chat app running on Akash Network, showcasing how modern apps run without central servers, powered by global, permissionless infrastructure.",
     button: {
       text: "Open Akash Chat",
-      url: "/",
+      url: "https://chat.akash.network/",
     },
   },
   {
     id: 8,
     name: "gen",
     image: "/images/ecosystem-homepage/gen.png",
-    mobileImage: "/images/ecosystem-homepage/gen-mob.png",
     title: "Akash Gen",
     description: "A live “gen” app powered by Akash Network, turning text prompts into high-quality images using distributed GPU compute.",
     button: {
       text: "Open Akash Gen",
-      url: "/",
+      url: "https://gen.akash.network/",
     },
   },
   {
     id: 9,
     name: "stats",
     image: "/images/ecosystem-homepage/stats.png",
-    mobileImage: "/images/ecosystem-homepage/stats-mob.png",
     title: "Akash Stats",
     description: "A live dashboard showcasing real-time network activity, deployments, and resource usage, highlighting the scale, transparency, and performance of decentralized cloud infrastructure.",
     button: {
@@ -117,6 +108,119 @@ const ecosystemItems = [
       url: "/",
     },
   },
+];
+
+const mobileItems = [
+  {
+    id: 1,
+    name: "console",
+    image: "/images/ecosystem-homepage/console-mob.png",
+    title: "Akash Console",
+    description: "Monetize your servers by joining the network.",
+    button: {
+      text: "Deploy Now",
+      url: "https://console.akash.network/",
+    },
+  },
+  {
+    id: 2,
+    name: "ML",
+    image: "/images/ecosystem-homepage/ml-mob.png",
+    title: "Akash ML",
+    description: "Run AI Inference models on high-performance managed API.",
+    button: {
+      text: "Explore Playground",
+      url: "https://akashml.com/",
+    },
+  },
+  {
+    id: 3,
+    name: "homenode",
+    image: "/images/ecosystem-homepage/homenode-mob.png",
+    title: "Akash Homenode",
+    description: "Rent idle compute to developers and earn passive income.",
+    button: {
+      text: "View Homenode",
+      url: "/",
+    },
+  },
+  {
+    id: 4,
+    name: "agents",
+    image: "/images/ecosystem-homepage/agents-mob.png",
+    title: "Akash Agents",
+    description: "Launch autonomous intelligence on the world's first decentralized compute marketplace.",
+    button: {
+      text: "Open Akash Agents",
+      url: "/",
+    },
+  },
+  {
+    id: 5,
+    name: "console",
+    label: "provider",
+    image: "/images/ecosystem-homepage/console2-mob.png",
+    title: "Akash Provider Console",
+    description: "Monetize your servers by joining the network.",
+    button: {
+      text: "Become a Provider",
+      url: "https://provider-console.akash.network/",
+    },
+  },
+  {
+    id: 6,
+    name: "starcluster",
+    label: "coming-soon",
+    image: "/images/ecosystem-homepage/starcluster-mob.png",
+    title: "Akash Starcluster",
+    description: "A planetary-scale mesh of decentralized AI compute designed to democratize access to GPU and CPU resources worldwide",
+    button: {
+      text: "Coming Soon",
+      url: "/",
+    },
+  },
+  {
+    id: 7,
+    name: "chat",
+    image: "/images/ecosystem-homepage/chat-mob.png",
+    title: "Akash Chat",
+    description: "A live chat app running on Akash Network, showcasing how modern apps run without central servers, powered by global, permissionless infrastructure.",
+    button: {
+      text: "Open Akash Chat",
+      url: "https://chat.akash.network/",
+    },
+  },
+  {
+    id: 8,
+    name: "gen",
+    image: "/images/ecosystem-homepage/gen-mob.png",
+    title: "Akash Gen",
+    description: "A live “gen” app powered by Akash Network, turning text prompts into high-quality images using distributed GPU compute.",
+    button: {
+      text: "Open Akash Gen",
+      url: "https://gen.akash.network/",
+    },
+  },
+  {
+    id: 9,
+    name: "stats",
+    image: "/images/ecosystem-homepage/stats-mob.png",
+    title: "Akash Stats",
+    description: "A live dashboard showcasing real-time network activity, deployments, and resource usage, highlighting the scale, transparency, and performance of decentralized cloud infrastructure.",
+    button: {
+      text: "View Akash Stats",
+      url: "/",
+    },
+  },
+];
+
+const featuredTitles = [
+  "University of Texas at Austin",
+  "Nous Research",
+  "Prime Intellect",
+  "Envision Labs",
+  "Eliza",
+  "Saga",
 ];
 
 const priorityProjects = (await getCollection("Ecosystem_Page"))
@@ -144,14 +248,24 @@ const nonPriorityProjects = (await getCollection("Ecosystem_Page"))
       new Date(a.data.pubDate).getTime()
   );
 
-const deployedProjects = [...priorityProjects, ...nonPriorityProjects];
+const allProjectsMap = new Map(
+  [...priorityProjects, ...nonPriorityProjects].map((p) => [
+    p.data.projectTitle,
+    p,
+  ])
+);
+
+const deployedProjects = featuredTitles
+  .map((title) => allProjectsMap.get(title))
+  .filter(Boolean);
 ---
 
 <section class="py-20 lg:py-[120px]">
   <div class="container-nav-3 mx-auto">
     <EcosystemTabs
       client:load
-      items={ecosystemItems}
+      desktopItems={desktopItems}
+      mobileItems={mobileItems}
       deployedProjects={deployedProjects}
     />
   </div>

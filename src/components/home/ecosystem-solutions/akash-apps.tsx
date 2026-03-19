@@ -14,7 +14,7 @@ type Item = {
   };
 };
 
-export default function AkashApps({ items }: { items: Item[] }) {
+export default function AkashApps({ desktopItems, mobileItems }: { desktopItems: Item[]; mobileItems: Item[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
@@ -37,14 +37,14 @@ export default function AkashApps({ items }: { items: Item[] }) {
         const progress = scrolled / totalHeight;
 
         const newIndex = Math.min(
-          Math.floor(progress * items.length),
-          items.length - 1
+          Math.floor(progress * desktopItems.length),
+          desktopItems.length - 1
         );
         setActiveIndex(newIndex);
       } else if (rect.top > 0) {
         setActiveIndex(0);
       } else if (rect.bottom < viewportHeight) {
-        setActiveIndex(items.length - 1);
+        setActiveIndex(desktopItems.length - 1);
       }
     };
 
@@ -53,7 +53,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [items.length]);
+  }, [desktopItems.length]);
 
   const isMobile = windowWidth < 1200;
   const [visibleCount, setVisibleCount] = useState(3);
@@ -61,21 +61,25 @@ export default function AkashApps({ items }: { items: Item[] }) {
   if (isMobile) {
     return (
       <div className="space-y-6 pb-20 mt-[40px]">
-        {items.slice(0, visibleCount).map((item) => {
-          const isConsoleLogo = item.name === "console" && !item.label;
+        {mobileItems.slice(0, visibleCount).map((item) => {
           const isComingSoon = item.label === "coming-soon";
 
           return (
             <div
               key={item.id}
-              className="bg-[#181819] border border-white/5 rounded-[16px] overflow-hidden flex flex-col"
+              className="bg-[#181819] border border-[#2C2C2E] rounded-[16px] overflow-hidden flex flex-col"
             >
-              <div className="py-5 px-4 space-y-3 text-white">
+              <div className="pt-3 pb-6 px-4 space-y-1 text-white">
                 <div className="flex items-center gap-2 md:gap-3">
                   <img src="/akash.svg" alt="Akash Logo" className="h-[22px] md:h-8 select-none pointer-events-none" />
                   <span className="text-[26px] md:text-[36px] tracking-tight">
                     {item.name}
                   </span>
+                  {item.label && (
+                    <span className="text-xs md:text-sm text-white/40 lowercase font-normal -translate-x-1 -translate-y-2">
+                      ({item.label})
+                    </span>
+                  )}
                 </div>
 
                 <p className="text-sm md:text-lg text-[#86868B] leading-relaxed font-normal -mt-2 md:-mt-3">
@@ -83,10 +87,10 @@ export default function AkashApps({ items }: { items: Item[] }) {
                 </p>
 
                 {!isComingSoon && (
-                  <div className="pt-1 md:pt-3">
+                  <div className="pt-2 md:pt-3">
                     <a
                       href={item.button.url}
-                      className="inline-flex items-center gap-2 bg-white text-[#171717] text-xs md:text-base px-3 md:px-6 py-1.5 md:py-3 rounded-full font-medium active:scale-95 transition-all shadow-sm"
+                      className="inline-flex items-center gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-base px-3 md:px-6 py-1.5 md:py-3 rounded-full font-medium active:scale-95 transition-all"
                     >
                       {item.button.text}
                       <svg
@@ -108,26 +112,26 @@ export default function AkashApps({ items }: { items: Item[] }) {
                 )}
               </div>
 
-              <div className="bg-[#212123] border-t border-white/5 flex items-center justify-center relative md:px-[32px]">
+              <div className="bg-[#181819] border-t border-[#2C2C2E] flex items-center justify-center relative md:px-[32px]">
                 <div 
                   className="absolute inset-0 pointer-events-none" 
                   style={{ 
-                    backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 0)', 
+                    backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 0)', 
                     backgroundSize: '20px 20px' 
                   }} 
                 />
 
                 <div className="relative w-full h-auto rounded-[12px] overflow-hidden">
                   <img
-                    src={item.mobileImage}
+                    src={item.image}
                     alt={item.title}
                     className="w-full h-auto select-none pointer-events-none"
                   />
                 </div>
 
                 {isComingSoon && (
-                  <div className="absolute top-[32px] md:top-[64px] left-[32px] md:left-[64px] z-20">
-                    <div className="bg-white text-[#171717] text-xs md:text-sm px-4 md:px-6 py-2 md:py-3 rounded-full font-medium shadow-lg">
+                  <div className="absolute top-2 sm:top-8 md:top-16 left-6 sm:left-8 md:left-16 z-20">
+                    <div className="bg-white text-[#171717] text-[8.5px] sm:text-xs md:text-sm px-2.5 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-full font-medium">
                       Coming Soon
                     </div>
                   </div>
@@ -137,11 +141,11 @@ export default function AkashApps({ items }: { items: Item[] }) {
           );
         })}
 
-        {visibleCount < items.length && (
+        {visibleCount < mobileItems.length && (
           <div className="flex justify-center">
             <button
               onClick={() => setVisibleCount((p) => p + 3)}
-              className="flex items-center justify-center gap-2 px-3 py-2 bg-black/4.5 dark:bg-white/4.5 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 shadow-sm group"
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-black/4.5 dark:bg-white/4.5 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
             >
               <span>Show More</span>
               <svg 
@@ -161,7 +165,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
     <div
       ref={containerRef}
       className="relative"
-      style={{ height: `${items.length * 80}vh` }}
+      style={{ height: `${desktopItems.length * 80}vh` }}
     >
       <div className="sticky top-24 min-h-[600px] h-screen max-h-[900px] flex items-center overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start h-full justify-between">
@@ -182,7 +186,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
                   transform: `translateY(-${activeIndex * (isMobile ? 64 : 88)}px)`
                 }}
               >
-                {items.map((item, i) => {
+                {desktopItems.map((item, i) => {
                   const isActive = i === activeIndex;
 
                   return (
@@ -212,7 +216,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
           <div className="w-full md:w-1/2 flex items-start justify-end h-full mt-6">
             <div className="w-full max-w-[560px] flex flex-col">
 
-              <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-[4/3] flex items-center justify-center relative shadow-2xl">
+              <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-[4/3] flex items-center justify-center relative">
                 <div 
                   className="absolute inset-0 pointer-events-none" 
                   style={{ 
@@ -222,7 +226,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
                 />
 
                 <div className="relative w-full h-full rounded-[12px] overflow-hidden">
-                  {items.map((item, i) => (
+                  {desktopItems.map((item, i) => (
                     <img
                       key={item.id}
                       src={item.image}
@@ -234,7 +238,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
                   ))}
                 </div>
 
-                {items[activeIndex].label === "coming-soon" && (
+                {desktopItems[activeIndex].label === "coming-soon" && (
                   <div className="absolute top-[36px] left-[36px] z-20">
                     <div className="bg-white text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium">
                       Coming Soon
@@ -245,19 +249,19 @@ export default function AkashApps({ items }: { items: Item[] }) {
 
               <div className="mt-5 space-y-5">
                 <h3 className="text-xl md:text-[24px] font-semibold transition-all duration-500 tracking-tight">
-                  {items[activeIndex].title}
+                  {desktopItems[activeIndex].title}
                 </h3>
                 <p className="text-[#86868B] -mt-4 text-sm md:text-base leading-relaxed transition-all duration-500 line-clamp-2">
-                  {items[activeIndex].description}
+                  {desktopItems[activeIndex].description}
                 </p>
                 
-                {items[activeIndex].label !== "coming-soon" && (
+                {desktopItems[activeIndex].label !== "coming-soon" && (
                   <div>
                     <a
-                      href={items[activeIndex].button.url}
-                      className="inline-flex items-center justify-center gap-2 bg-[#212123] dark:bg-white dark:text-[#171717] text-white text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#F5F5F7] transition-all group scale-100 active:scale-95 cursor-pointer"
+                      href={desktopItems[activeIndex].button.url}
+                      className="inline-flex items-center justify-center gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#e8e8e8] transition-all group scale-100 active:scale-95 cursor-pointer"
                     >
-                      {items[activeIndex].button.text}
+                      {desktopItems[activeIndex].button.text}
                       <svg 
                         className="group-hover:rotate-45 transition-transform duration-300 translate-y-px"
                         width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"

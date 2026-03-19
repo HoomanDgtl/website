@@ -28,7 +28,7 @@ const tabs = [
   { key: "deployments", label: "Deployed on Akash", sub: "Live apps" },
 ];
 
-export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]; deployedProjects: any[];}) {
+export default function EcosystemTabs({desktopItems, mobileItems, deployedProjects,}: {desktopItems: Item[]; mobileItems: Item[]; deployedProjects: any[];}) {
   const [activeTab, setActiveTab] = useState<TabKey>("apps");
 
   const activeIndex = tabs.findIndex((t) => t.key === activeTab);
@@ -85,20 +85,20 @@ export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]
               running entirely on the open grid.
             </p>
             
-            <button className="flex md:hidden mt-8 items-center justify-center gap-2 text-sm px-4 py-2 bg-white dark:bg-white/5 border border-[#E5E5E5] dark:border-white/15 active:scale-95 transition-all rounded-full w-fit">
+            <a href="/ecosystem/deployed-on-akash/" className="group flex md:hidden mt-8 items-center justify-center gap-2 text-sm px-4 py-2 bg-white dark:bg-white/5 border border-[#E5E5E5] dark:border-white/15 active:scale-95 transition-all rounded-full w-fit">
               Explore Ecosystem 
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className="transition-transform duration-300 group-hover:-rotate-45" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.3335 8.00016H12.6668M12.6668 8.00016L8.00016 3.3335M12.6668 8.00016L8.00016 12.6668" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </button>
+            </a>
           </div>
 
-          <button className="hidden md:flex cursor-pointer items-center justify-center gap-2 text-sm px-4 py-2 bg-white dark:bg-white/5 border border-[#E5E5E5] dark:border-white/15 hover:bg-black/5 hover:dark:bg-white/10 transition-all duration-300 rounded-full">
+          <a href="/ecosystem/deployed-on-akash/" className="group hidden md:flex cursor-pointer items-center justify-center gap-2 text-sm px-4 py-2 bg-white dark:bg-white/5 border border-[#E5E5E5] dark:border-white/15 hover:bg-black/5 hover:dark:bg-white/10 transition-all duration-300 rounded-full">
             Explore Ecosystem 
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg className="transition-transform duration-300 group-hover:-rotate-45" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3.3335 8.00016H12.6668M12.6668 8.00016L8.00016 3.3335M12.6668 8.00016L8.00016 12.6668" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </button>
+          </a>
         </div>
 
         {/* TAB SWITCHER */}
@@ -107,6 +107,7 @@ export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]
                 <div className="flex sm:inline-flex rounded-full bg-[#f5f5f7] p-1 w-full sm:w-auto">
                 <div ref={containerRef} className="relative flex w-full sm:w-auto gap-2.5">
                     
+                    {/* PILL */}
                     <div
                     className="absolute top-0 h-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
                     style={{
@@ -127,7 +128,7 @@ export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]
                         onClick={() => setActiveTab(tab.key as TabKey)}
                         className={`
                             relative z-10 
-                            ${tab.key === 'apps' ? 'flex-45' : 'flex-65'} sm:flex-none
+                            ${tab.key === 'apps' ? 'flex-[45]' : 'flex-[65]'} sm:flex-none
                             text-center
                             px-5 py-3 sm:py-2
                             text-base sm:text-[17px]
@@ -149,7 +150,7 @@ export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]
         </div>
 
       {activeTab === "apps" ? (
-        <AkashApps items={items} />
+        <AkashApps desktopItems={desktopItems} mobileItems={mobileItems} />
       ) : (
         <Deployments projects={deployedProjects} />
       )}
