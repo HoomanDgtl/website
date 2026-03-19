@@ -56,13 +56,25 @@ function GlobalGridInner() {
     setCardOpen(true)
   }
 
+  const displayStats: NetworkStats | null = selectedProvider
+    ? {
+        activeLeases: selectedProvider.leases,
+        memory: selectedProvider.memory,
+        cpus: Number(selectedProvider.cpu),
+        storage: '—',
+        totalGpus: Number(selectedProvider.gpus),
+        uptime: selectedProvider.uptime,
+        avgLatency: '—',
+      }
+    : stats
+
   return (
     <>
-      <StatsBar stats={stats} position="top" />
+      <StatsBar stats={displayStats} position="top" />
 
       <div className="flex flex-col items-stretch 2xl:mx-32 px-4 py-10 md:flex-row md:justify-center gap-5 md:px-0 md:py-[80px] ">
-        <div className={`w-full bg-[#F5F5F5] dark:bg-[#0E0E0E] overflow-hidden transition-all duration-300 relative min-h-[400px] ${cardOpen ? 'w-2/5' : 'w-3/5 '}`}>
-          <div className="absolute top-0 left-0 w-full">
+        <div className={`w-full bg-[#F5F5F5] dark:bg-[#0E0E0E] overflow-hidden transition-all duration-300 relative min-h-[400px] xl:min-h-[500px] rounded ${cardOpen ? 'w-2/5' : 'w-3/5 '}`}>
+          <div className="absolute top-0 left-0 w-full rounded">
             <Globe providers={providers} selectedId={selectedId} onSelect={handleSelect} />
           </div>
         </div>
@@ -73,7 +85,7 @@ function GlobalGridInner() {
         )}
       </div>
 
-      <StatsBar stats={stats} position="bottom" />
+      <StatsBar stats={displayStats} position="bottom" />
     </>
   )
 }

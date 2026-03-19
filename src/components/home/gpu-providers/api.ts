@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { BASE_API_URL } from '@/lib/constants'
 import type { Provider, NetworkStats } from '@/components/home/gpu-providers/types'
+import { FALLBACK_PROVIDERS, FALLBACK_STATS } from './fallback-data'
 
 function bytesToGB(bytes: number) {
   return (bytes / 1024 / 1024 / 1024).toFixed(1)
@@ -62,7 +63,7 @@ export async function fetchProviderData() {
 
     return { providers, stats }
   } catch (error) {
-    console.error('Error fetching providers:', error)
-    return { providers: [], stats: null }
+    console.error('Error fetching providers, using fallback data:', error)
+    return { providers: FALLBACK_PROVIDERS, stats: FALLBACK_STATS }
   }
 }

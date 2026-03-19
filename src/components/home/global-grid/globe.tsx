@@ -123,7 +123,7 @@ export default function Globe({
       mapSamples: 30000,
       mapBrightness: isDark ? 6 : 8,
       baseColor: isDark ? [0.1, 0.1, 0.1] : [0.85, 0.85, 0.85],
-      markerColor: [1, 0.2, 0.2],
+      markerColor: isDark ? [1, 1, 1] : [1, 0.2, 0.2],
       glowColor: isDark ? [0.03, 0.03, 0.03] : [0.9, 0.9, 0.9],
       markers: initialMarkers,
       onRender: (state) => {
