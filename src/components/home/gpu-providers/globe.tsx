@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import createGlobe from 'cobe'
-import type { Provider } from './types'
+import { type Provider } from './types.ts'
 
 interface GlobeProps {
   providers: Provider[]
@@ -19,51 +18,38 @@ function projectPoint(
   const latRad = (lat * Math.PI) / 180
   const lngRad = (lng * Math.PI) / 180
 
-  // cobe's internal 3D spherical mapping
   const px = Math.cos(latRad) * Math.cos(lngRad)
   const py = Math.sin(latRad)
   const pz = -Math.cos(latRad) * Math.sin(lngRad)
 
-  // Rotate by phi around Y
   const cosPhi = Math.cos(phi)
   const sinPhi = Math.sin(phi)
   const x1 = px * cosPhi + pz * sinPhi
-  const z1 = -px * sinPhi + pz * cosPhi
+  const pz1 = -px * sinPhi + pz * cosPhi
 
-  // Rotate by theta around X
   const cosT = Math.cos(theta)
   const sinT = Math.sin(theta)
-  const y2 = py * cosT - z1 * sinT
-  const z2 = py * sinT + z1 * cosT
+  const y2 = py * cosT - pz1 * sinT
+  const pz2 = py * sinT + pz1 * cosT
 
   return {
-    // Return normalized [0, 1] percentages instead of rigid physical pixels:
-    // radius of globe mapped to coordinates is mathematically exactly 0.4
     x: 0.5 + x1 * 0.4,
-    y: 0.5 - y2 * 0.4, // Invert Y here mapping back to screen space 
-    visible: z2 > 0,
+    y: 0.5 - y2 * 0.4,
+    visible: pz2 > 0,
   }
 }
 
 export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const pinRefs = useRef<Map<string, HTMLDivElement | null>>(new Map())
   const phiRef = useRef(-1.76)
   const thetaRef = useRef(0.26)
   const targetPhi = useRef(-1.76)
   const targetTheta = useRef(0.26)
   const dragging = useRef(false)
   const lastPos = useRef({ x: 0, y: 0 })
-  const sizeRef = useRef(600)
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
-  const selectedIdRef = useRef(selectedId)
-  useEffect(() => {
-    selectedIdRef.current = selectedId
-  }, [selectedId])
-
-  // When selectedId changes, set target rotation to face that provider
   useEffect(() => {
     if (!selectedId) return
     const provider = providers.find((p) => p.id === selectedId)
@@ -73,73 +59,65 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
   }, [selectedId, providers])
 
   useEffect(() => {
+    let globe: any
     const container = containerRef.current
     const canvas = canvasRef.current
     if (!container || !canvas) return
 
     const size = container.clientWidth
-    sizeRef.current = size
-    const radius = size * 0.4 // Mathematically exact sphere radius for cobe
 
-    const initialMarkers = providers.map((p) => ({
-      id: p.id,
-      location: [p.lat, p.lng] as [number, number],
-      size: 0.03,
-    }))
+    const init = async () => {
+      const { default: createGlobe } = await import('cobe')
 
-    const globe = createGlobe(canvas, {
-      devicePixelRatio: 2,
-      width: size * 2,
-      height: size * 2,
-      phi: phiRef.current,
-      theta: thetaRef.current,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.5, 0.5, 0.5],
-      markerColor: [1, 1, 1],
-      glowColor: [0, 0, 0],
-      markers: initialMarkers,
-      onRender: (state) => {
-        // Update webgl marker sizes: hide if selected to allow HTML red dot to cleanly float over the geography without showing a white dot beneath it
-        initialMarkers.forEach((m) => {
-          m.size = m.id === selectedIdRef.current ? 0 : 0.03
-        })
-        state.markers = initialMarkers
+      globe = createGlobe(canvas, {
+        devicePixelRatio: 2,
+        width: size * 2,
+        height: size * 2,
+        phi: phiRef.current,
+        theta: thetaRef.current,
+        dark: 1,
+        diffuse: 1.2,
+        mapSamples: 16000,
+        mapBrightness: 13,
+        baseColor: [0.6, 0.6, 0.6],
+        markerColor: [1, 1, 1],
+        glowColor: [0, 0, 0],
+        markers: [],
+      })
 
-        // Smoothly interpolate toward target (selected provider location)
+      let rafId: number
+      const animate = () => {
         if (!dragging.current) {
-          const ease = 0.15
+          const ease = 0.08
           phiRef.current += (targetPhi.current - phiRef.current) * ease
           thetaRef.current += (targetTheta.current - thetaRef.current) * ease
         }
+        
+        thetaRef.current = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, thetaRef.current))
 
-        thetaRef.current = Math.max(
-          -Math.PI / 3,
-          Math.min(Math.PI / 3, thetaRef.current)
-        )
-
-        state.phi = phiRef.current
-        state.theta = thetaRef.current
-
-        providers.forEach((pin) => {
-          const pos = projectPoint(
-            pin.lat,
-            pin.lng,
-            phiRef.current,
-            thetaRef.current
-          )
-          const el = pinRefs.current.get(pin.id)
-          if (el) {
-            el.style.left = `${pos.x * 100}%`
-            el.style.top = `${pos.y * 100}%`
-            el.style.opacity = pos.visible ? '1' : '0'
-            el.style.pointerEvents = pos.visible ? 'auto' : 'none'
-          }
+        globe.update({
+          phi: phiRef.current,
+          theta: thetaRef.current,
         })
-      },
-    })
+
+        providers.forEach((p) => {
+          const pos = projectPoint(p.lat, p.lng, phiRef.current, thetaRef.current)
+          container.style.setProperty(`--cobe-x-${p.id}`, `${pos.x * 100}%`)
+          container.style.setProperty(`--cobe-y-${p.id}`, `${pos.y * 100}%`)
+          container.style.setProperty(`--cobe-visible-${p.id}`, pos.visible ? '1' : '0')
+        })
+
+        rafId = requestAnimationFrame(animate)
+      }
+      
+      rafId = requestAnimationFrame(animate)
+      return () => {
+        cancelAnimationFrame(rafId)
+        if (globe) globe.destroy()
+      }
+    }
+
+    const cleanupPromise = init()
 
     const onDown = (e: PointerEvent) => {
       if ((e.target as HTMLElement).closest('[data-pin]')) return
@@ -153,7 +131,6 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
       const dy = e.clientY - lastPos.current.y
       phiRef.current += dx * 0.005
       thetaRef.current += dy * 0.005
-      // Sync targets so globe stays where user dragged
       targetPhi.current = phiRef.current
       targetTheta.current = thetaRef.current
       lastPos.current = { x: e.clientX, y: e.clientY }
@@ -168,69 +145,65 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
     window.addEventListener('pointerup', onUp)
 
     return () => {
-      globe.destroy()
+      cleanupPromise.then(cleanup => cleanup && cleanup())
       container.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [providers])
 
   return (
     <div
       ref={containerRef}
-      className="relative aspect-square w-full cursor-grab select-none"
+      className="relative aspect-square w-full cursor-grab select-none overflow-visible"
     >
       <canvas
         ref={canvasRef}
-        className="w-full h-full opacity-80"
+        className="w-full h-full opacity-100"
         style={{ contain: 'layout paint size' }}
       />
 
-      {providers.map((pin) => {
-        const isSelected = pin.id === selectedId
-        const isHovered = pin.id === hoveredId
+      {providers.map((p) => {
+        const isSelected = p.id === selectedId
+        const isHovered = p.id === hoveredId
         const showLabel = isSelected || isHovered
-        
+
         return (
           <div
-            key={pin.id}
-            ref={(el) => {
-              pinRefs.current.set(pin.id, el)
-            }}
+            key={p.id}
             data-pin
-            className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: 0, top: 0, opacity: 0, willChange: 'left, top, opacity' }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none flex items-center justify-center p-4"
+            style={{
+              left: `var(--cobe-x-${p.id})`,
+              top: `var(--cobe-y-${p.id})`,
+              opacity: `var(--cobe-visible-${p.id})`,
+            }}
           >
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                onSelect(pin.id)
-              }}
-              onMouseEnter={() => setHoveredId(pin.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              className="relative flex items-center justify-center w-6 h-6 cursor-pointer group"
-            >
+            <div className="relative flex items-center justify-center w-8 h-8">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onSelect(p.id)
+                }}
+                onMouseEnter={() => setHoveredId(p.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                className={`w-1.5 h-1.5 pointer-events-auto cursor-pointer transition-all duration-300 border-[1.5px] shadow-sm ${
+                  isSelected ? 'bg-[#FF2903] scale-125 border-white' : 
+                  isHovered ? 'bg-[#FF2903] scale-110 border-white/40' : 'bg-white border-transparent'
+                }`}
+              />
+
               {showLabel && (
-                <div className="absolute left-[80%] top-1/2 -translate-y-1/2 z-20 pointer-events-none origin-left transition-all duration-200 scale-100 opacity-100">
-                  <div className="bg-[#212124] px-4 py-2 rounded-xl flex items-center gap-2 whitespace-nowrap">
-                    <span className="w-3 h-3 rounded-full bg-[#FF2903] shrink-0" />
-                    <span className="text-[13px] text-white font-medium tracking-wide">
-                      {pin.name}
+                <div className="absolute left-full top-1/2 -translate-y-1/2 ml-4 pointer-events-none z-20 animate-in fade-in slide-in-from-left-2 duration-300">
+                  <div className="bg-[#212124] px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 whitespace-nowrap shadow-2xl backdrop-blur-md">
+                    <span className="w-2 h-2 rounded-full bg-[#FF2903]" />
+                    <span className="text-[12px] text-white font-medium">
+                      {p.name}
                     </span>
                   </div>
                 </div>
               )}
-
-              <span
-                className={`block rounded-full transition-all duration-300 ${isSelected
-                  ? 'w-3 h-3 bg-[#FF2903]'
-                  : isHovered
-                    ? 'w-3 h-3 bg-white'
-                    : 'w-1.5 h-1.5 bg-transparent'
-                  }`}
-              />
-            </button>
+            </div>
           </div>
         )
       })}

@@ -6,15 +6,6 @@ function bytesToGB(bytes: number) {
   return (bytes / 1024 / 1024 / 1024).toFixed(1)
 }
 
-function getFlagEmoji(countryCode: string | null) {
-  if (!countryCode) return ''
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map(char => 127397 + char.charCodeAt(0))
-  return String.fromCodePoint(...codePoints)
-}
-
 export async function fetchProviderData() {
   try {
     const res = await axios.get(`${BASE_API_URL}/v1/providers`)
@@ -29,7 +20,6 @@ export async function fetchProviderData() {
         lat: Number(p.ipLat),
         lng: Number(p.ipLon),
         location: `${p.ipRegion || ''}${p.ipRegion && p.ipCountry ? ', ' : ''}${p.ipCountry || ''}` || 'Unknown',
-        locationFlag: getFlagEmoji(p.ipCountryCode),
         uptime: `${((p.uptime30d ?? 0) * 100).toFixed(2)}%`,
         cpu: `${p.stats?.cpu?.active ?? 0}`,
         gpus: `${p.stats?.gpu?.active ?? 0}`,
@@ -41,12 +31,12 @@ export async function fetchProviderData() {
     console.log(`[fetchProviderData] Filtered down to ${providers.length} providers with GPS coordinates`);
 
     // Calculate stats
-    const totalLeases = providers.reduce((acc, p) => acc + p.leases, 0)
+    const totalLeases = data.reduce((acc: number, p: any) => acc + (p.leaseCount ?? 0), 0)
     const totalCPU = data.reduce((acc: number, p: any) => acc + (p.stats?.cpu?.total ?? 0), 0)
     const totalGPU = data.reduce((acc: number, p: any) => acc + (p.stats?.gpu?.total ?? 0), 0)
     const totalMemoryBytes = data.reduce((acc: number, p: any) => acc + (p.stats?.memory?.total ?? 0), 0)
     const totalMemoryTB = (totalMemoryBytes / 1024 / 1024 / 1024 / 1024).toFixed(1)
-    
+
     const totalStorageBytes = data.reduce((acc: number, p: any) => acc + (p.stats?.storage?.total?.total ?? 0), 0)
     const totalStorageTB = (totalStorageBytes / 1024 / 1024 / 1024 / 1024).toFixed(1)
 
@@ -63,6 +53,9 @@ export async function fetchProviderData() {
     return { providers, stats }
   } catch (error) {
     console.error('Error fetching providers:', error)
-    return { providers: [], stats: null }
+    return {
+      providers: [],
+      stats: { activeLeases: 0, memory: '0 TB', cpus: 0, storage: '0 TB', totalGpus: 0, uptime: '0%', avgLatency: '0ms' }
+    }
   }
 }

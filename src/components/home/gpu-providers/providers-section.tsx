@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Globe from './globe'
 import ProviderCard from './provider-card'
-import type { Provider, NetworkStats } from './types'
+import { type Provider, type NetworkStats } from './types.ts'
 
 interface GlobalGridProps {
   initialProviders: Provider[]
@@ -50,7 +50,7 @@ export default function GlobalGrid({ initialProviders, initialStats }: GlobalGri
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-20">
           {/* Globe Container */}
           <div
-            className="w-full lg:w-[65%] xl:w-[70%] aspect-video relative bg-[#E3E3E3] dark:bg-[#0e0e0e] overflow-hidden"
+            className="w-full lg:w-[65%] xl:w-[70%] aspect-video relative bg-[#F1F1F1] dark:bg-[#0e0e0e] overflow-hidden"
           >
             <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
               <div className="w-full h-full relative">
