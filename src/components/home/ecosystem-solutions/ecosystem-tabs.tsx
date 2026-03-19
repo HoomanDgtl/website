@@ -100,7 +100,6 @@ export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]
                 <div className="flex sm:inline-flex rounded-full bg-[#f5f5f7] p-1 w-full sm:w-auto">
                 <div ref={containerRef} className="relative flex w-full sm:w-auto gap-2.5">
                     
-                    {/* PILL */}
                     <div
                     className="absolute top-0 h-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
                     style={{

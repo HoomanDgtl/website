@@ -119,7 +119,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
 
                 <div className="relative w-full h-auto rounded-[12px] overflow-hidden">
                   <img
-                    src={item.mobileImage || item.image}
+                    src={item.mobileImage}
                     alt={item.title}
                     className="w-full h-auto select-none pointer-events-none"
                   />
@@ -163,7 +163,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
       className="relative"
       style={{ height: `${items.length * 80}vh` }}
     >
-      <div className="sticky top-0 min-h-[600px] h-screen max-h-[900px] flex items-center overflow-hidden">
+      <div className="sticky top-24 min-h-[600px] h-screen max-h-[900px] flex items-center overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start h-full justify-between">
           
           <div className="w-full md:w-1/2 flex items-start gap-[10px]">
@@ -209,10 +209,10 @@ export default function AkashApps({ items }: { items: Item[] }) {
             </div>
           </div>
 
-          <div className="w-full md:w-1/2 flex items-start justify-end h-full mt-24">
+          <div className="w-full md:w-1/2 flex items-start justify-end h-full mt-12">
             <div className="w-full max-w-[560px] flex flex-col">
 
-              <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-4/3 flex items-center justify-center relative shadow-2xl">
+              <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-[4/3] flex items-center justify-center relative shadow-2xl">
                 <div 
                   className="absolute inset-0 pointer-events-none" 
                   style={{ 
