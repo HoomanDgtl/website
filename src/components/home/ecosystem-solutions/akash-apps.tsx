@@ -138,17 +138,17 @@ export default function AkashApps({ items }: { items: Item[] }) {
         })}
 
         {visibleCount < items.length && (
-          <div className="flex justify-center pt-8 md:pt-12">
+          <div className="flex justify-center">
             <button
               onClick={() => setVisibleCount((p) => p + 3)}
-              className="flex items-center justify-center gap-2 w-[111px] md:w-[140px] h-[32px] md:h-[40px] px-3 py-2 bg-black/4.5 dark:bg-white/4.5 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 shadow-sm"
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-black/4.5 dark:bg-white/4.5 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 shadow-sm group"
             >
-              Show More
+              <span>Show More</span>
               <svg 
-                className="w-4 h-4 md:w-5 md:h-5"
+                className="w-4 h-4 md:w-5 md:h-5 shrink-0 translate-y-px"
                 viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
           </div>
@@ -209,7 +209,7 @@ export default function AkashApps({ items }: { items: Item[] }) {
             </div>
           </div>
 
-          <div className="w-full md:w-1/2 flex items-start justify-end h-full mt-12">
+          <div className="w-full md:w-1/2 flex items-start justify-end h-full mt-6">
             <div className="w-full max-w-[560px] flex flex-col">
 
               <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-[4/3] flex items-center justify-center relative shadow-2xl">

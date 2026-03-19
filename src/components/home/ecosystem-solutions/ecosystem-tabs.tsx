@@ -43,16 +43,23 @@ export default function EcosystemTabs({items, deployedProjects,}: {items: Item[]
 
   const updatePill = useCallback(() => {
     const el = buttonRefs.current[activeIndex];
-    if (el) {
+    const container = containerRef.current;
+    
+    if (el && container) {
+      const elRect = el.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      
       setPillStyle({
-        width: el.offsetWidth,
-        transform: `translateX(${el.offsetLeft}px)`,
+        width: elRect.width,
+        transform: `translateX(${elRect.left - containerRect.left}px)`,
       });
     }
   }, [activeIndex]);
 
   useEffect(() => {
-    updatePill();
+    // Small delay to ensure flex layout has applied correctly
+    const timer = requestAnimationFrame(updatePill);
+    return () => cancelAnimationFrame(timer);
   }, [updatePill]);
 
   useEffect(() => {
