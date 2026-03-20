@@ -156,6 +156,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
     <div
       ref={containerRef}
       className="relative aspect-square w-full cursor-grab select-none overflow-visible"
+      style={{ touchAction: 'none' }}
     >
       <canvas
         ref={canvasRef}
@@ -187,14 +188,14 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
                 }}
                 onMouseEnter={() => setHoveredId(p.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={`w-1.5 h-1.5 pointer-events-auto cursor-pointer transition-all duration-300 border-[1.5px] shadow-sm ${
-                  isSelected ? 'bg-[#FF2903] scale-125 border-white' : 
-                  isHovered ? 'bg-[#FF2903] scale-110 border-white/40' : 'bg-white border-transparent'
+                className={`w-1.5 h-1.5 rounded-full pointer-events-auto cursor-pointer transition-all duration-300 bg-[#FF2903] ${
+                  isSelected ? 'scale-150 border border-white' : 
+                  isHovered ? 'scale-125 border border-white/40' : 'scale-100 border-transparent'
                 }`}
               />
 
               {showLabel && (
-                <div className="absolute left-full top-1/2 -translate-y-1/2 ml-4 pointer-events-none z-20 animate-in fade-in slide-in-from-left-2 duration-300">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none z-20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                   <div className="bg-[#212124] px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 whitespace-nowrap shadow-2xl backdrop-blur-md">
                     <span className="w-2 h-2 rounded-full bg-[#FF2903]" />
                     <span className="text-[12px] text-white font-medium">
@@ -210,3 +211,4 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
     </div>
   )
 }
+
