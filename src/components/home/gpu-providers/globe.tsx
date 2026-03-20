@@ -174,7 +174,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
             key={p.id}
             data-pin
             className={`absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center p-4 ${
-              showLabel ? 'z-100' : 'z-10'
+              showLabel ? 'z-[100]' : 'z-10'
             }`}
             style={{
               left: `var(--cobe-x-${p.id})`,
