@@ -131,7 +131,7 @@ export default function EcosystemTabs({desktopItems, mobileItems, deployedProjec
                             ${tab.key === 'apps' ? 'flex-[45]' : 'flex-[65]'} sm:flex-none
                             text-center
                             px-5 py-3 sm:py-2
-                            text-base sm:text-[17px]
+                            text-[15px] sm:text-[17px]
                             font-medium
                             rounded-full 
                             leading-none
