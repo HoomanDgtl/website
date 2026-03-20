@@ -3,26 +3,24 @@
 import { useState } from 'react'
 import Globe from './globe'
 import ProviderCard from './provider-card'
-import { type Provider, type NetworkStats } from './types.ts'
+import { type Provider } from './types.ts'
 
 interface GlobalGridProps {
   initialProviders: Provider[]
-  initialStats: NetworkStats
 }
 
-export default function GlobalGrid({ initialProviders, initialStats }: GlobalGridProps) {
+export default function GlobalGrid({ initialProviders }: GlobalGridProps) {
   const providers = initialProviders
-  const stats = initialStats
   const [selectedId, setSelectedId] = useState<string | null>(initialProviders[0]?.id || null)
 
   const selectedProvider = providers.find((p) => p.id === selectedId) ?? null
 
   const statsDisplay = [
-    { label: 'Active Leases', value: String(stats?.activeLeases || 0) },
-    { label: 'Memory', value: stats?.memory || '0 TB' },
-    { label: 'CPUs', value: String(stats?.cpus || 0) },
-    { label: 'Storage', value: stats?.storage || '0 TB' },
-    { label: 'Total GPUs', value: String(stats?.totalGpus || 0) },
+    { label: 'Active Leases', value: String(selectedProvider?.leases || 0) },
+    { label: 'Memory', value: selectedProvider?.memory || '0 GB' },
+    { label: 'CPUs', value: selectedProvider?.cpu || '0' },
+    { label: 'Storage', value: selectedProvider?.storage || '0 GB' },
+    { label: 'Total GPUs', value: selectedProvider?.gpus || '0' },
   ]
 
   return (
@@ -82,11 +80,11 @@ export default function GlobalGrid({ initialProviders, initialStats }: GlobalGri
           Uptime:
           <span className="flex items-center gap-1 text-[#86868B]">
             <span>🟢</span>
-            {stats?.uptime || '99.9%'}
+            {selectedProvider?.uptime || '0%'}
           </span>
         </div>
         <div>
-          Avg Latency: <span className="text-[#86868B]">{stats?.avgLatency || '42ms'}</span>
+          Avg Latency: <span className="text-[#86868B]">{selectedProvider?.avgLatency || '0ms'}</span>
         </div>
       </footer>
     </div>

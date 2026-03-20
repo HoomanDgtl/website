@@ -9,16 +9,8 @@ export interface Provider {
   cpu: string
   gpus: string
   memory: string
+  storage: string
   leases: number
   audited: boolean
-}
-
-export interface NetworkStats {
-  activeLeases: number
-  memory: string
-  cpus: number
-  storage: string
-  totalGpus: number
-  uptime: string
   avgLatency: string
 }

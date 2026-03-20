@@ -79,9 +79,9 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         diffuse: 1.2,
         mapSamples: 16000,
         mapBrightness: 13,
-        baseColor: [0.6, 0.6, 0.6],
+        baseColor: [0.7, 0.7, 0.7],
         markerColor: [1, 1, 1],
-        glowColor: [0, 0, 0],
+        glowColor: [0.05, 0.05, 0.05],
         markers: [],
       })
 
@@ -173,7 +173,9 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
           <div
             key={p.id}
             data-pin
-            className="absolute -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none flex items-center justify-center p-4"
+            className={`absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center p-4 ${
+              showLabel ? 'z-100' : 'z-10'
+            }`}
             style={{
               left: `var(--cobe-x-${p.id})`,
               top: `var(--cobe-y-${p.id})`,
