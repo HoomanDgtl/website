@@ -109,7 +109,7 @@ export default function EcosystemTabs({desktopItems, mobileItems, deployedProjec
                     
                     {/* PILL */}
                     <div
-                    className="absolute top-0 h-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                    className="absolute top-0 h-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] pill-shadow"
                     style={{
                         width: pillStyle.width,
                         transform: pillStyle.transform,

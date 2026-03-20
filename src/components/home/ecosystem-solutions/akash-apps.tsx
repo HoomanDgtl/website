@@ -60,7 +60,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
 
   if (isMobile) {
     return (
-      <div className="space-y-6 pb-20 mt-[40px]">
+      <div className="space-y-6 mt-[40px] pb-20">
         {mobileItems.slice(0, visibleCount).map((item) => {
           const isComingSoon = item.label === "coming-soon";
 
@@ -90,6 +90,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                   <div className="pt-2 md:pt-3">
                     <a
                       href={item.button.url}
+                      target="_blank"
                       className="inline-flex items-center gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-base px-3 md:px-6 py-1.5 md:py-3 rounded-full font-medium active:scale-95 transition-all"
                     >
                       {item.button.text}
@@ -145,7 +146,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
           <div className="flex justify-center">
             <button
               onClick={() => setVisibleCount((p) => p + 3)}
-              className="flex items-center justify-center gap-2 px-3 py-2 bg-black/4.5 dark:bg-white/4.5 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
             >
               <span>Show More</span>
               <svg 
@@ -167,7 +168,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
       className="relative"
       style={{ height: `${desktopItems.length * 80}vh` }}
     >
-      <div className="sticky top-24 min-h-[600px] h-screen max-h-[900px] flex items-center overflow-hidden">
+      <div className="sticky top-24 max-w-7xl h-[700px] flex items-center overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start h-full justify-between">
           
           <div className="w-full md:w-1/2 flex items-start gap-[10px]">
@@ -192,16 +193,14 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                   return (
                     <div
                       key={item.id}
-                      className={`flex items-center h-16 md:h-[88px] transition-colors duration-500 ${
-                        isActive ? "text-[#171717] dark:text-white" : "text-[#171717]/40 dark:text-white/40"
-                      }`}
+                      className="flex items-center h-16 md:h-[88px] transition-colors duration-500"
                     >
                       <div className="flex items-baseline gap-3">
-                        <h2 className="text-[32px] md:text-[48px] font-normal tracking-tighter leading-none font-satoshi">
+                        <h2 className={`text-[32px] md:text-[48px] font-normal tracking-tighter leading-none font-satoshi ${isActive ? "text-[#171717] dark:text-white" : "text-[#171717]/40 dark:text-white/40"}`}>
                           {item.name}
                         </h2>
                         {item.label && (
-                          <span className="text-sm md:text-base text-[#171717]/40 dark:text-white/40 lowercase font-normal font-jetBrainsMono -translate-y-5">
+                          <span className={`text-sm md:text-base lowercase font-normal font-jetBrainsMono -translate-y-5 ${isActive ? "text-[#171717] dark:text-white" : "text-[#171717]/40 dark:text-white/40"}`}>
                              ({item.label})
                           </span>
                         )}
@@ -247,11 +246,11 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 )}
               </div>
 
-              <div className="mt-5 space-y-5">
+              <div className="mt-5">
                 <h3 className="text-xl md:text-[24px] font-semibold transition-all duration-500 tracking-tight">
                   {desktopItems[activeIndex].title}
                 </h3>
-                <p className="text-[#86868B] -mt-4 text-sm md:text-base leading-relaxed transition-all duration-500 line-clamp-2">
+                <p className="text-[#86868B] text-sm md:text-base leading-relaxed transition-all duration-500 line-clamp-2 mt-2.5">
                   {desktopItems[activeIndex].description}
                 </p>
                 
@@ -259,7 +258,8 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                   <div>
                     <a
                       href={desktopItems[activeIndex].button.url}
-                      className="inline-flex items-center justify-center gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#e8e8e8] transition-all group scale-100 active:scale-95 cursor-pointer"
+                      target="_blank"
+                      className="inline-flex items-center justify-center mt-5 gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#e8e8e8] transition-all group scale-100 active:scale-95 cursor-pointer"
                     >
                       {desktopItems[activeIndex].button.text}
                       <svg 

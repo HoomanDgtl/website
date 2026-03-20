@@ -11,7 +11,7 @@ export default function Deployments({ projects }: { projects: any[] }) {
         ))}
       </div>
 
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-10 pb-20">
         <a
           href="/ecosystem/deployed-on-akash/"
           className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-[#eeeeee] hover:dark:bg-white/10 transition flex gap-2 items-center justify-center group"
