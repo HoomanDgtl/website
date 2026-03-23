@@ -96,7 +96,7 @@ export default function EcosystemTabs({
         {/* HEADER */}
         <div className="flex flex-col md:flex-row items-start justify-between mb-10 gap-6">
           <div>
-            <h2 className="text-[28px] md:text-4xl lg:text-[40px] font-semibold tracking-tighter">
+            <h2 className="text-[28px] md:text-4xl lg:text-[40px] font-semibold tracking-tight">
               Ecosystem Solutions
             </h2>
             <p className="text-[15px] md:text-base text-[#86868B] mt-2 max-w-md">

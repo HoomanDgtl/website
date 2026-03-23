@@ -28,7 +28,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
   ]
 
   return (
-    <div className="relative w-full sm:w-[360px]">
+    <div className="relative w-full max-w-[500px] lg:w-[360px]">
       <div className={`w-full ${isDark ? 'bg-[#212123]' : 'bg-[#E3E3E3]'} rounded-xl lg:rounded-[20px] px-6 py-6 relative z-10 shadow-sm transition-colors duration-300`}>
         <button
           onClick={onClose}
@@ -43,7 +43,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
         <div className="flex justify-between items-center mb-1">
           <span className="text-[#86868B] text-xs md:text-sm">Provider:</span>
           {provider.audited ? (
-            <span className="bg-[#A6FA99] text-[#0C3205] text-[10px] md:text-sm px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-full flex items-center gap-1.5 font-medium">
+            <span className="bg-[#A6FA99] text-[#0C3205] text-[10px] md:text-xs px-1.5 sm:px-2.5 py-1 sm:py-1 rounded-full flex items-center gap-1.5 font-semibold">
               Audited
               <svg className="w-3 md:w-3.5 h-3 md:h-3.5" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_763_1721)">
@@ -62,17 +62,23 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
             </span>
           )}
         </div>
-        <h2 className="text-sm md:text-[19px] text-[#171717] dark:text-white font-semibold mb-6 truncate overflow-hidden whitespace-nowrap" title={provider.id}>
+        <h2 className={`text-sm md:text-[19px] md:font-medium mb-6 truncate overflow-hidden whitespace-nowrap transition-colors duration-300 ${
+          isDark ? 'text-white' : 'text-[#171717]'
+        }`} title={provider.id}>
           {provider.name}
         </h2>
 
         <div className="space-y-3">
           {fields.map((field) => (
             <div key={field.label} className="flex items-center gap-4">
-              <span className="w-[70px] md:w-[84px] shrink-0 text-[#171717] dark:text-white text-xs md:text-sm font-medium">
+              <span className={`w-[70px] md:w-[84px] shrink-0 text-xs md:text-sm font-medium ${isDark ? 'text-white' : 'text-[#333333]'}`}>
                 {field.label}
               </span>
-              <div className={`flex-grow dark:bg-white/5 dark:border-white/15 border rounded-[10px] px-3 md:px-4 py-2 flex items-center h-fit md:h-10 text-[#666666] dark:text-[#A3A3A3] text-xs md:text-sm shadow-sm`}>
+              <div className={`flex-grow border rounded-[10px] px-3 md:px-4 py-2 flex items-center h-fit md:h-10 text-xs md:text-sm transition-colors duration-300 ${
+                isDark 
+                  ? 'bg-white/5 border-white/15 text-[#A3A3A3]' 
+                  : 'bg-[#F1F1F1] border-transparent text-[#171717]'
+              }`}>
                 <span className="truncate">{field.value}</span>
               </div>
             </div>
@@ -83,7 +89,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
           href={`https://console.akash.network/providers/${provider.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className={`w-full mt-7 px-4 py-3 rounded-full text-[15px] font-medium transition-all hidden lg:flex items-center justify-center gap-2 cursor-pointer ${
+          className={`w-full mt-7 px-4 py-3 rounded-full text-[15px] font-semibold transition-all hidden lg:flex items-center justify-center gap-2 cursor-pointer ${
             isDark 
               ? 'border border-[#4B4B4D] text-white hover:bg-white/5' 
               : 'bg-[#F1F1F1] text-[#171717] hover:bg-[#e8e8e8]'

@@ -77,11 +77,11 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         theta: thetaRef.current,
         dark: 0.95,
         diffuse: 1.2,
-        mapSamples: 40000,
-        mapBrightness: 2,
+        mapSamples: 50000,
+        mapBrightness: 0,
         baseColor: [0.7, 0.7, 0.7],
         markerColor: [1, 1, 1],
-        glowColor: [0.05, 0.05, 0.05],
+        glowColor: [0, 0, 0],
         markers: [],
         scale: 1.2,
       })
@@ -89,8 +89,8 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
       let rafId: number
       const animate = () => {
         if (!dragging.current) {
-          // Auto-rotate: slowly increment targetPhi
-          targetPhi.current += 0.002 
+          
+          targetPhi.current += 0.001
           
           const ease = 0.08
           phiRef.current += (targetPhi.current - phiRef.current) * ease
@@ -198,17 +198,20 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
                 className="p-3 pointer-events-auto cursor-pointer rounded-full group"
               >
                 <span
-                  className={`block w-1.5 h-1.5 rounded-full transition-all duration-300 bg-[#FF2903] ${
-                    isSelected ? 'scale-150 ring-1 ring-white' :
-                    isHovered  ? 'scale-125 ring-1 ring-white/40' : ''
+                  className={`block w-1.5 h-1.5 transition-all duration-300 ${
+                    isSelected 
+                      ? 'bg-[#FF2903] scale-150 ring-1 ring-white shadow-[0_0_12px_rgba(255,41,3,0.8)]' 
+                      : 'bg-white'
+                  } ${
+                    isHovered && !isSelected ? 'scale-125 ring-1 ring-white/40 shadow-[0_0_8px_rgba(255,255,255,0.4)]' : ''
                   }`}
                 />
               </button>
 
               {showLabel && (
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none z-20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                  <div className="bg-[#212124] px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2 whitespace-nowrap shadow-2xl backdrop-blur-md">
-                    <span className="w-2 h-2 rounded-full bg-[#FF2903]" />
+                  <div className="bg-[#212124] px-3 py-1.5 rounded-sm flex items-center gap-2 whitespace-nowrap">
+                    <span className={`w-2 h-2 rounded-full ${isSelected ? 'bg-[#FF2903]' : 'bg-white'}`} />
                     <span className="text-[12px] text-white font-medium">
                       {p.name}
                     </span>

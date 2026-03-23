@@ -12,15 +12,25 @@ interface GlobalGridProps {
 export default function GlobalGrid({ initialData }: GlobalGridProps) {
   const [data, setData] = useState<ProviderDataResponse>(initialData)
   const { providers, stats } = data
-  const [selectedId, setSelectedId] = useState<string | null>(providers[0]?.id || null)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Select first provider by default ONLY on mobile/tablet
+    if (window.innerWidth < 1024 && providers.length > 0) {
+      setSelectedId(providers[0].id)
+    }
+  }, [])
 
   // Fetch fresh data on the client (with cache + fallback)
   useEffect(() => {
     fetchProviderDataClient().then((freshData) => {
       setData(freshData)
       setSelectedId((prev) => {
+        if (prev === null) return null
         const stillValid = freshData.providers.some((p) => p.id === prev)
-        return stillValid ? prev : (freshData.providers[0]?.id ?? null)
+        if (stillValid) return prev
+        // If the selection was lost, fallback to first only on small screens
+        return window.innerWidth < 1024 ? (freshData.providers[0]?.id ?? null) : null
       })
     })
   }, [])
@@ -59,10 +69,16 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
       </section>
 
       <main className="relative grow py-12 lg:py-20 w-full max-w-6xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-6 lg:gap-20">
-          {/* Globe Container */}
+        <div className={`flex flex-col lg:flex-row items-center lg:items-start transition-all duration-500 ease-in-out ${
+          selectedProvider ? 'gap-6 lg:gap-20 justify-between' : 'gap-0'
+        }`}>
+          {/* Globe Container — centered by default, shifts left when card is open */}
           <div
-            className="w-full lg:w-[65%] xl:w-[70%] aspect-video relative bg-transparent overflow-hidden"
+            className={`transition-all duration-500 ease-in-out aspect-video relative bg-transparent overflow-hidden mx-auto ${
+              selectedProvider
+                ? 'w-full lg:w-[65%] xl:w-[70%] lg:shrink-0'
+                : 'w-full max-w-3xl lg:max-w-4xl'
+            }`}
           >
             <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
               <div className="w-full h-full relative">
@@ -75,12 +91,18 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
                 />
               </div>
             </div>
-            {/* Gradient Overlay (Dark Mode Only) */}
-            <div className="absolute inset-x-0 bottom-0 h-[35%] bg-linear-to-t from-[#030303] to-transparent pointer-events-none z-10 hidden dark:block" />
+            {/* Gradient Overlay (Both Modes) */}
+            <div className="absolute translate-y-1 inset-x-0 bottom-0 h-[10%] dark:h-[30%] bg-gradient-to-t from-[#F1F1F1] dark:from-[#030303] to-transparent pointer-events-none z-10" />
           </div>
 
-          {/* Card Container */}
-          <div className="w-full lg:w-[35%] xl:w-[30%] flex justify-center lg:justify-end">
+          {/* Card Container — only rendered when a provider is selected */}
+          <div
+            className={`transition-all duration-500 ease-in-out flex justify-center lg:justify-end ${
+              selectedProvider
+                ? 'w-full lg:w-[35%] xl:w-[30%] opacity-100 translate-x-0'
+                : 'w-0 opacity-0 pointer-events-none overflow-hidden'
+            }`}
+          >
             {selectedProvider && (
               <ProviderCard
                 provider={selectedProvider}

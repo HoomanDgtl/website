@@ -1,26 +1,64 @@
 
 
+'use client'
+
+import { useState, useEffect } from 'react'
+
 export default function Deployments({ projects }: { projects: any[] }) {
-  const visibleProjects = projects.slice(0, 6);
+  const [visibleCount, setVisibleCount] = useState(3)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      const desktop = window.innerWidth >= 1024
+      setIsDesktop(desktop)
+      if (desktop) {
+        setVisibleCount(6)
+      }
+    }
+    
+    checkDesktop()
+    window.addEventListener('resize', checkDesktop)
+    return () => window.removeEventListener('resize', checkDesktop)
+  }, [])
+
+  const visibleProjects = projects.slice(0, visibleCount);
+  const hasMore = visibleCount < 6 && visibleCount < projects.length;
+  const showViewAll = visibleCount >= 6 || visibleCount >= projects.length;
 
   return (
-    <div>
+    <div className="space-y-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {visibleProjects.map((project, i) => (
           <Card key={i} project={project} />
         ))}
       </div>
 
-      <div className="flex justify-center mt-10 pb-20">
-        <a
-          href="/ecosystem/deployed-on-akash/"
-          className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-[#eeeeee] hover:dark:bg-white/10 transition flex gap-2 items-center justify-center group"
-        >
-          <span>View More Projects</span>
-          <svg className="shrink-0 translate-y-px transition-transform duration-300 group-hover:-rotate-45" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.33398 8.00016H12.6673M12.6673 8.00016L8.00065 3.3335M12.6673 8.00016L8.00065 12.6668" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </a>
+      <div className="flex justify-center pb-20">
+        {hasMore ? (
+          <button
+            onClick={() => setVisibleCount((p) => Math.min(p + 3, 6))}
+            className="flex items-center justify-center gap-2 px-3 py-2 bg-transparent dark:bg-white/5 hover:bg-black/5 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
+          >
+            <span>Show More</span>
+            <svg 
+              className="w-4 h-4 md:w-5 md:h-5 shrink-0 translate-y-px"
+              viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        ) : showViewAll && (
+          <a
+            href="/ecosystem/deployed-on-akash/"
+            className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-[#eeeeee] hover:dark:bg-white/10 transition flex gap-2 items-center justify-center group"
+          >
+            <span>View More Projects</span>
+            <svg className="shrink-0 translate-y-px transition-transform duration-300 group-hover:-rotate-45" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.33398 8.00016H12.6673M12.6673 8.00016L8.00065 3.3335M12.6673 8.00016L8.00065 12.6668" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+        )}
       </div>
     </div>
   );

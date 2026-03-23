@@ -1,4 +1,6 @@
-import React from "react";
+'use client'
+
+import React, { useState, useEffect } from "react";
 
 interface CaseStudy {
   icon: string;
@@ -12,12 +14,29 @@ interface CaseStudiesProps {
 }
 
 export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
+  const [visibleCount, setVisibleCount] = useState(3)
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      if (window.innerWidth >= 1024) {
+        setVisibleCount(6)
+      }
+    }
+    checkDesktop()
+    window.addEventListener('resize', checkDesktop)
+    return () => window.removeEventListener('resize', checkDesktop)
+  }, [])
+
+  const visibleStudies = caseStudies.slice(0, visibleCount)
+  const hasMore = visibleCount < 6 && visibleCount < caseStudies.length
+  const showViewAll = visibleCount >= 6 || visibleCount >= caseStudies.length
+
   return (
     <section className="w-full pb-20">
-      <div className="">
+      <div className="space-y-10">
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {caseStudies.map((study, index) => (
+          {visibleStudies.map((study, index) => (
             <div
               key={index}
               className="rounded-[20px] bg-[#F5F5F7] dark:bg-[#181819] border border-[#E4E4E7] dark:border-white/10 p-6 flex flex-col h-full"
@@ -29,7 +48,7 @@ export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
               />
 
               <div className="my-5 space-y-3 grow">
-                <h3 className="text-lg font-semibold leading-snug line-clamp-2">
+                <h3 className="text-lg font-semibold leading-snug line-clamp-2 transition-colors duration-300 dark:text-white">
                   {study.title}
                 </h3>
 
@@ -65,16 +84,31 @@ export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
           ))}
         </div>
 
-        <div className="flex justify-center mt-10">
-          <a
-            href="/case-studies/"
-            className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-white hover:dark:bg-white/10 transition flex gap-2 items-center justify-center group"
-          >
-            <span className="text-[#1D1D1F] dark:text-white">View All Case Studies</span>
-            <svg className="shrink-0 translate-y-px transition-transform duration-300 group-hover:-rotate-45 text-[#1D1D1F] dark:text-white" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.33398 8.00016H12.6673M12.6673 8.00016L8.00065 3.3335M12.6673 8.00016L8.00065 12.6668" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
+        <div className="flex justify-center">
+          {hasMore ? (
+            <button
+              onClick={() => setVisibleCount((p) => Math.min(p + 3, 6))}
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-transparent dark:bg-white/5 hover:bg-black/5 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
+            >
+              <span>Show More</span>
+              <svg 
+                className="w-4 h-4 md:w-5 md:h-5 shrink-0 translate-y-px"
+                viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          ) : showViewAll && (
+            <a
+              href="/case-studies/"
+              className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-white hover:dark:bg-white/10 transition flex gap-3 items-center justify-center group"
+            >
+              <span className="text-[#1D1D1F] dark:text-white">View All Case Studies</span>
+              <svg className="shrink-0 translate-y-px transition-transform duration-300 group-hover:-rotate-45 text-[#1D1D1F] dark:text-white" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.33398 8.00016H12.6673M12.6673 8.00016L8.00065 3.3335M12.6673 8.00016L8.00065 12.6668" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+          )}
         </div>
       </div>
     </section>
