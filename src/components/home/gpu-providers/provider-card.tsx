@@ -28,18 +28,18 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
   ]
 
   return (
-    <div className="relative w-full">
-      <button
-        onClick={onClose}
-        className="absolute -top-10 right-0 z-20 w-8 h-8 hidden lg:flex items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-black/5 hover:dark:bg-white/5 transition-colors duration-300 cursor-pointer"
-        aria-label="Close"
-      >
-        <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-        </svg>
-      </button>
+    <div className="relative w-full sm:w-[360px]">
+      <div className={`w-full ${isDark ? 'bg-[#212123]' : 'bg-[#E3E3E3]'} rounded-xl lg:rounded-[20px] px-6 py-6 relative z-10 shadow-sm transition-colors duration-300`}>
+        <button
+          onClick={onClose}
+          className="absolute -top-10 right-0 z-20 w-8 h-8 hidden lg:flex items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-black/5 hover:dark:bg-white/5 transition-colors duration-300 cursor-pointer"
+          aria-label="Close"
+        >
+          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+          </svg>
+        </button>
 
-      <div className={`w-full sm:w-[360px] mx-auto bg-[#E3E3E3] dark:bg-[#212123] rounded-xl md:rounded-[20px] px-6 py-6 relative z-10 shadow-sm transition-colors duration-300`}>
         <div className="flex justify-between items-center mb-1">
           <span className="text-[#86868B] text-xs md:text-sm">Provider:</span>
           {provider.audited ? (
@@ -62,7 +62,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
             </span>
           )}
         </div>
-        <h2 className="text-sm md:text-[19px] text-[#171717] dark:text-white md:font-medium mb-6 truncate overflow-hidden whitespace-nowrap" title={provider.id}>
+        <h2 className="text-sm md:text-[19px] text-[#171717] dark:text-white font-semibold mb-6 truncate overflow-hidden whitespace-nowrap" title={provider.id}>
           {provider.name}
         </h2>
 
@@ -83,7 +83,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
           href={`https://console.akash.network/providers/${provider.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className={`w-full mt-7 px-4 py-3 rounded-full text-[15px] font-medium transition-all hidden md:flex items-center justify-center gap-2 cursor-pointer ${
+          className={`w-full mt-7 px-4 py-3 rounded-full text-[15px] font-medium transition-all hidden lg:flex items-center justify-center gap-2 cursor-pointer ${
             isDark 
               ? 'border border-[#4B4B4D] text-white hover:bg-white/5' 
               : 'bg-[#F1F1F1] text-[#171717] hover:bg-[#e8e8e8]'

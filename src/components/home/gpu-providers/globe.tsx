@@ -75,10 +75,10 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         height: size * 2,
         phi: phiRef.current,
         theta: thetaRef.current,
-        dark: 1,
+        dark: 0.95,
         diffuse: 1.2,
-        mapSamples: 16000,
-        mapBrightness: 13,
+        mapSamples: 40000,
+        mapBrightness: 2,
         baseColor: [0.7, 0.7, 0.7],
         markerColor: [1, 1, 1],
         glowColor: [0.05, 0.05, 0.05],
@@ -186,19 +186,24 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
               opacity: `var(--cobe-visible-${p.id})`,
             }}
           >
-            <div className="relative flex items-center justify-center w-8 h-8">
+            <div className="relative flex items-center justify-center">
               <button
+                data-pin
                 onClick={(e) => {
                   e.stopPropagation()
                   onSelect(p.id)
                 }}
                 onMouseEnter={() => setHoveredId(p.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={`w-1.5 h-1.5 rounded-full pointer-events-auto cursor-pointer transition-all duration-300 bg-[#FF2903] ${
-                  isSelected ? 'scale-150 border border-white' : 
-                  isHovered ? 'scale-125 border border-white/40' : 'scale-100 border-transparent'
-                }`}
-              />
+                className="p-3 pointer-events-auto cursor-pointer rounded-full group"
+              >
+                <span
+                  className={`block w-1.5 h-1.5 rounded-full transition-all duration-300 bg-[#FF2903] ${
+                    isSelected ? 'scale-150 ring-1 ring-white' :
+                    isHovered  ? 'scale-125 ring-1 ring-white/40' : ''
+                  }`}
+                />
+              </button>
 
               {showLabel && (
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none z-20 animate-in fade-in slide-in-from-bottom-2 duration-300">

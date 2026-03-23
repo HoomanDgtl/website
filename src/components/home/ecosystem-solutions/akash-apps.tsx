@@ -146,7 +146,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
           <div className="flex justify-center">
             <button
               onClick={() => setVisibleCount((p) => p + 3)}
-              className="flex items-center justify-center gap-2 px-3 py-2 bg-black/5 dark:bg-white/5 hover:bg-black/10 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
+              className="flex items-center justify-center gap-2 px-3 py-2 bg-transparent dark:bg-white/5 hover:bg-black/5 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
             >
               <span>Show More</span>
               <svg 

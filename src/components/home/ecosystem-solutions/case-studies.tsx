@@ -68,7 +68,7 @@ export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
         <div className="flex justify-center mt-10">
           <a
             href="/case-studies/"
-            className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-[#eeeeee] hover:dark:bg-white/10 transition flex gap-2 items-center justify-center group"
+            className="px-5 py-2 text-sm rounded-full border border-[#E4E4E7] dark:border-white/20 bg-[#F5F5F5] dark:bg-white/5 hover:bg-white hover:dark:bg-white/10 transition flex gap-2 items-center justify-center group"
           >
             <span className="text-[#1D1D1F] dark:text-white">View All Case Studies</span>
             <svg className="shrink-0 translate-y-px transition-transform duration-300 group-hover:-rotate-45 text-[#1D1D1F] dark:text-white" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

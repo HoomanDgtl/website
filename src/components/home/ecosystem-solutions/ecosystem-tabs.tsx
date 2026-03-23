@@ -96,7 +96,7 @@ export default function EcosystemTabs({
         {/* HEADER */}
         <div className="flex flex-col md:flex-row items-start justify-between mb-10 gap-6">
           <div>
-            <h2 className="text-[28px] md:text-4xl lg:text-[40px] font-semibold tracking-tight">
+            <h2 className="text-[28px] md:text-4xl lg:text-[40px] font-semibold tracking-tighter">
               Ecosystem Solutions
             </h2>
             <p className="text-[15px] md:text-base text-[#86868B] mt-2 max-w-md">
@@ -154,6 +154,7 @@ export default function EcosystemTabs({
                             rounded-full 
                             leading-none
                             cursor-pointer
+                            hover:text-[#1D1D1F]
                             transition-colors duration-200
                             ${isActive ? "text-[#1D1D1F]" : "text-[#86868B]"}
                         `}
@@ -166,15 +167,17 @@ export default function EcosystemTabs({
             </div>
         </div>
 
-      {activeTab === "apps" && (
-        <AkashApps desktopItems={desktopItems} mobileItems={mobileItems} />
-      )}
-      {activeTab === "deployments" && (
-        <Deployments projects={deployedProjects} />
-      )}
-      {activeTab === "case-studies" && (
-        <CaseStudies caseStudies={caseStudies} />
-      )}
+      <div key={activeTab} className="animate-in fade-in duration-300">
+        {activeTab === "apps" && (
+          <AkashApps desktopItems={desktopItems} mobileItems={mobileItems} />
+        )}
+        {activeTab === "deployments" && (
+          <Deployments projects={deployedProjects} />
+        )}
+        {activeTab === "case-studies" && (
+          <CaseStudies caseStudies={caseStudies} />
+        )}
+      </div>
     </div>
   );
 }

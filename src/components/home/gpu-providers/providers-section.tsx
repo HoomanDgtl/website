@@ -1,27 +1,39 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Globe from './globe'
 import ProviderCard from './provider-card'
-import { type ProviderDataResponse } from '@/utils/provider-data.ts'
+import { type ProviderDataResponse, fetchProviderDataClient } from '@/utils/provider-data.ts'
 
 interface GlobalGridProps {
   initialData: ProviderDataResponse
 }
 
 export default function GlobalGrid({ initialData }: GlobalGridProps) {
-  const { providers, stats } = initialData
+  const [data, setData] = useState<ProviderDataResponse>(initialData)
+  const { providers, stats } = data
   const [selectedId, setSelectedId] = useState<string | null>(providers[0]?.id || null)
+
+  // Fetch fresh data on the client (with cache + fallback)
+  useEffect(() => {
+    fetchProviderDataClient().then((freshData) => {
+      setData(freshData)
+      setSelectedId((prev) => {
+        const stillValid = freshData.providers.some((p) => p.id === prev)
+        return stillValid ? prev : (freshData.providers[0]?.id ?? null)
+      })
+    })
+  }, [])
 
   const selectedProvider = providers.find((p) => p.id === selectedId) ?? null
 
   const statsDisplay = [
-    { label: 'Active Leases', value: String(stats.activeLeases || 0) },
-    { label: 'Active Providers', value: String(stats.activeProviders || 0) },
-    { label: 'Memory', value: stats.memory || '0 GB' },
-    { label: 'CPUs', value: String(stats.cpu || '0') },
-    { label: 'Storage', value: stats.storage || '0 GB' },
-    { label: 'Total GPUs', value: String(stats.totalGpu || '0') },
+    { label: 'Active Leases', value: String(stats.activeLeases) },
+    { label: 'Active Providers', value: String(stats.activeProviders) },
+    { label: 'Memory', value: stats.memory },
+    { label: 'CPUs', value: String(stats.cpu) },
+    { label: 'Storage', value: stats.storage },
+    { label: 'Total GPUs', value: String(stats.totalGpu) },
   ]
 
   return (
@@ -64,7 +76,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
               </div>
             </div>
             {/* Gradient Overlay (Dark Mode Only) */}
-            <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-transparent dark:from-[#030303] to-transparent pointer-events-none z-10" />
+            <div className="absolute inset-x-0 bottom-0 h-[35%] bg-linear-to-t from-[#030303] to-transparent pointer-events-none z-10 hidden dark:block" />
           </div>
 
           {/* Card Container */}
