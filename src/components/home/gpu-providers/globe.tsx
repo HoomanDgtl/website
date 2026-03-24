@@ -49,6 +49,18 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
   const dragging = useRef(false)
   const lastPos = useRef({ x: 0, y: 0 })
   const [hoveredId, setHoveredId] = useState<string | null>(null)
+  const [isDark, setIsDark] = useState(true)
+
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    }
+    
+    checkTheme()
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     if (!selectedId) return
@@ -81,7 +93,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         mapBrightness: 0,
         baseColor: [0.7, 0.7, 0.7],
         markerColor: [1, 1, 1],
-        glowColor: [0, 0, 0],
+        glowColor: isDark ? [0, 0, 0] : [0.9, 0.9, 0.9],
         markers: [],
         scale: 1.2,
       })
@@ -154,7 +166,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
     }
-  }, [providers])
+  }, [providers, isDark])
 
   return (
     <div

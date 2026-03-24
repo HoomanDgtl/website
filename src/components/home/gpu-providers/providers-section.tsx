@@ -66,7 +66,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
       </section>
 
       <main className="relative grow py-12 lg:py-20 w-full max-w-6xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full gap-6">
           {/* Globe */}
           <div
             className={`transition-none aspect-video relative bg-transparent overflow-hidden ${
@@ -86,7 +86,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
                 />
               </div>
             </div>
-            <div className="absolute inset-x-0 bottom-0 h-[30%] dark:h-[40%] pointer-events-none z-10 bg-gradient-to-t from-[#f1f1f1] dark:from-[#030303] to-transparent"/>
+            <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-10 bg-gradient-to-t from-[#F1F1F1] dark:from-[#030303] via-[#f1f1f146] dark:via-[#03030381] to-transparent"/>
           </div>
 
           {/* Card */}
@@ -107,7 +107,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
         </div>
       </main>
 
-      <footer className="pt-6 border-black/10 dark:border-[#39393B] text-[#86868B] border-t flex justify-between items-center text-xs md:text-sm font-jetBrainsMono">
+      {/* <footer className="pt-6 border-black/10 dark:border-[#39393B] text-[#86868B] border-t flex justify-between items-center text-xs md:text-sm font-jetBrainsMono">
         <div className="flex items-center gap-2">
           Uptime:
           <span className="flex items-center gap-1 text-[#86868B]">
@@ -118,7 +118,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
         <div>
           Avg Latency: <span className="text-[#86868B]">{stats.avgLatency || '42ms'}</span>
         </div>
-      </footer>
+      </footer> */}
     </div>
   )
 }
