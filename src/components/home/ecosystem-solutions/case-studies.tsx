@@ -17,14 +17,19 @@ export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
   const [visibleCount, setVisibleCount] = useState(3)
 
   useEffect(() => {
-    const checkDesktop = () => {
-      if (window.innerWidth >= 1024) {
+    const checkBreaks = () => {
+      const width = window.innerWidth
+      if (width >= 1024) {
         setVisibleCount(6)
+      } else if (width >= 768) {
+        setVisibleCount(4)
+      } else {
+        setVisibleCount(3)
       }
     }
-    checkDesktop()
-    window.addEventListener('resize', checkDesktop)
-    return () => window.removeEventListener('resize', checkDesktop)
+    checkBreaks()
+    window.addEventListener('resize', checkBreaks)
+    return () => window.removeEventListener('resize', checkBreaks)
   }, [])
 
   const visibleStudies = caseStudies.slice(0, visibleCount)
@@ -87,7 +92,7 @@ export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
         <div className="flex justify-center">
           {hasMore ? (
             <button
-              onClick={() => setVisibleCount((p) => Math.min(p + 3, 6))}
+              onClick={() => setVisibleCount((p) => Math.min(p + (window.innerWidth >= 768 ? 2 : 3), 6))}
               className="flex items-center justify-center gap-2 px-3 py-2 bg-transparent dark:bg-white/5 hover:bg-black/5 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
             >
               <span>Show More</span>

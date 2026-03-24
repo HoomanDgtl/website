@@ -28,7 +28,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
   ]
 
   return (
-    <div className="relative w-full max-w-[500px] lg:w-[360px]">
+    <div className="relative w-full max-w-[500px] lg:max-w-[360px]">
       <div className={`w-full ${isDark ? 'bg-[#212123]' : 'bg-[#E3E3E3]'} rounded-xl lg:rounded-[20px] px-6 py-6 relative z-10 shadow-sm transition-colors duration-300`}>
         <button
           onClick={onClose}

@@ -14,6 +14,26 @@ type Item = {
   };
 };
 
+/* ---------- SKELETON IMAGE COMPONENT ---------- */
+
+function SkeletonImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  return (
+    <div className={`relative overflow-hidden ${className}`}>
+      {!isLoaded && (
+        <div className="absolute inset-0" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        onLoad={() => setIsLoaded(true)}
+        className={`w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+      />
+    </div>
+  );
+}
+
 export default function AkashApps({ desktopItems, mobileItems }: { desktopItems: Item[]; mobileItems: Item[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -113,7 +133,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 )}
               </div>
 
-              <div className="bg-[#181819] border-t border-[#2C2C2E] flex items-center justify-center relative md:px-[32px]">
+              <div className="bg-[#181819] border-t border-[#2C2C2E] flex items-center justify-center relative md:px-[32px] px-4 py-8">
                 <div 
                   className="absolute inset-0 pointer-events-none" 
                   style={{ 
@@ -123,10 +143,10 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 />
 
                 <div className="relative w-full h-auto rounded-[12px] overflow-hidden">
-                  <img
+                  <SkeletonImage
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-auto select-none pointer-events-none"
+                    className="aspect-[16/10]"
                   />
                 </div>
 
@@ -226,14 +246,15 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
 
                 <div className="relative w-full h-full rounded-[12px] overflow-hidden">
                   {desktopItems.map((item, i) => (
-                    <img
-                      key={item.id}
-                      src={item.image}
-                      alt={item.title}
-                      className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
-                        i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
-                      }`}
-                    />
+                    <div key={item.id} className={`absolute inset-0 transition-opacity duration-700 ${
+                      i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
+                    }`}>
+                      <SkeletonImage
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full"
+                      />
+                    </div>
                   ))}
                 </div>
 

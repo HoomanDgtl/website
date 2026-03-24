@@ -15,13 +15,11 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   useEffect(() => {
-    // Select first provider by default ONLY on mobile/tablet
     if (window.innerWidth < 1024 && providers.length > 0) {
       setSelectedId(providers[0].id)
     }
   }, [])
 
-  // Fetch fresh data on the client (with cache + fallback)
   useEffect(() => {
     fetchProviderDataClient().then((freshData) => {
       setData(freshData)
@@ -29,7 +27,6 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
         if (prev === null) return null
         const stillValid = freshData.providers.some((p) => p.id === prev)
         if (stillValid) return prev
-        // If the selection was lost, fallback to first only on small screens
         return window.innerWidth < 1024 ? (freshData.providers[0]?.id ?? null) : null
       })
     })
@@ -69,14 +66,12 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
       </section>
 
       <main className="relative grow py-12 lg:py-20 w-full max-w-6xl mx-auto">
-        <div className={`flex flex-col lg:flex-row items-center lg:items-start transition-all duration-500 ease-in-out ${
-          selectedProvider ? 'gap-6 lg:gap-20 justify-between' : 'gap-0'
-        }`}>
-          {/* Globe Container — centered by default, shifts left when card is open */}
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full">
+          {/* Globe */}
           <div
-            className={`transition-all duration-500 ease-in-out aspect-video relative bg-transparent overflow-hidden mx-auto ${
+            className={`transition-none aspect-video relative bg-transparent overflow-hidden ${
               selectedProvider
-                ? 'w-full lg:w-[65%] xl:w-[70%] lg:shrink-0'
+                ? 'w-full lg:w-[60%] xl:w-[65%] lg:mr-8 xl:mr-12'
                 : 'w-full max-w-3xl lg:max-w-4xl'
             }`}
           >
@@ -91,15 +86,14 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
                 />
               </div>
             </div>
-            {/* Gradient Overlay (Both Modes) */}
-            <div className="absolute translate-y-1 inset-x-0 bottom-0 h-[10%] dark:h-[30%] bg-gradient-to-t from-[#F1F1F1] dark:from-[#030303] to-transparent pointer-events-none z-10" />
+            <div className="absolute inset-x-0 bottom-0 h-[40%] pointer-events-none z-10 bg-gradient-to-t from-[#f1f1f1] dark:from-[#030303] to-transparent"/>
           </div>
 
-          {/* Card Container — only rendered when a provider is selected */}
+          {/* Card */}
           <div
-            className={`transition-all duration-500 ease-in-out flex justify-center lg:justify-end ${
+            className={`flex justify-center lg:justify-end ${
               selectedProvider
-                ? 'w-full lg:w-[35%] xl:w-[30%] opacity-100 translate-x-0'
+                ? 'w-full lg:w-[35%] xl:w-[30%] opacity-100'
                 : 'w-0 opacity-0 pointer-events-none overflow-hidden'
             }`}
           >
