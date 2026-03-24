@@ -14,25 +14,6 @@ type Item = {
   };
 };
 
-/* ---------- SKELETON IMAGE COMPONENT ---------- */
-
-function SkeletonImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  const [isLoaded, setIsLoaded] = useState(false);
-  return (
-    <div className={`relative overflow-hidden ${className}`}>
-      {!isLoaded && (
-        <div className="absolute inset-0" />
-      )}
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        onLoad={() => setIsLoaded(true)}
-        className={`w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-      />
-    </div>
-  );
-}
 
 export default function AkashApps({ desktopItems, mobileItems }: { desktopItems: Item[]; mobileItems: Item[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -143,10 +124,10 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 />
 
                 <div className="relative w-full h-auto rounded-[12px] overflow-hidden">
-                  <SkeletonImage
+                  <img
                     src={item.image}
                     alt={item.title}
-                    className="aspect-[16/10]"
+                    className="w-full h-auto select-none pointer-events-none"
                   />
                 </div>
 
@@ -246,15 +227,14 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
 
                 <div className="relative w-full h-full rounded-[12px] overflow-hidden">
                   {desktopItems.map((item, i) => (
-                    <div key={item.id} className={`absolute inset-0 transition-opacity duration-700 ${
-                      i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
-                    }`}>
-                      <SkeletonImage
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full"
-                      />
-                    </div>
+                    <img
+                      key={item.id}
+                      src={item.image}
+                      alt={item.title}
+                      className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
+                        i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
+                      }`}
+                    />
                   ))}
                 </div>
 
