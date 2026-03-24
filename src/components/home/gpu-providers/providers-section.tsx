@@ -44,7 +44,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
   ]
 
   return (
-    <div className="flex flex-col container-nav-3 py-20 lg:py-[120px]">
+    <div className="flex flex-col container-nav-3 py-[60px] lg:py-[120px]">
 
       <header className="mb-[60px]">
         <h1 className="text-3xl md:text-4xl lg:text-[40px] font-medium mb-4 tracking-tight">
@@ -65,17 +65,17 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
         ))}
       </section>
 
-      <main className="relative grow py-12 lg:py-20 w-full max-w-6xl mx-auto">
+      <main className="relative grow w-full pt-6 md:pt-12 lg:pt-20 max-w-6xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center w-full gap-6">
           {/* Globe */}
           <div
             className={`transition-none aspect-video relative bg-transparent overflow-hidden ${
               selectedProvider
-                ? 'w-full lg:w-[60%] xl:w-[65%] lg:mr-8 xl:mr-12'
+                ? 'w-full lg:w-[65%] xl:w-[70%] lg:mr-8'
                 : 'w-full max-w-3xl lg:max-w-4xl'
             }`}
           >
-            <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
+            <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8 pb-0">
               <div className="w-full h-full relative">
                 <Globe
                   providers={providers}
@@ -86,7 +86,8 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
                 />
               </div>
             </div>
-            <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-10 bg-gradient-to-t from-[#F1F1F1] dark:from-[#030303] via-[#f1f1f146] dark:via-[#03030381] to-transparent"/>
+            <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-10 bg-gradient-to-t from-[#030303] to-transparent hidden dark:block"/>
+            <div className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0)_72.9%,#F1F1F1_100%)] block dark:hidden"/>
           </div>
 
           {/* Card */}

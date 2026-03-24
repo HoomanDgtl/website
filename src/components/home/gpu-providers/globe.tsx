@@ -49,18 +49,18 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
   const dragging = useRef(false)
   const lastPos = useRef({ x: 0, y: 0 })
   const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const [isDark, setIsDark] = useState(true)
+  // const [isDark, setIsDark] = useState(true)
 
-  useEffect(() => {
-    const checkTheme = () => {
-      setIsDark(document.documentElement.classList.contains('dark'))
-    }
+  // useEffect(() => {
+  //   const checkTheme = () => {
+  //     setIsDark(document.documentElement.classList.contains('dark'))
+  //   }
     
-    checkTheme()
-    const observer = new MutationObserver(checkTheme)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
-    return () => observer.disconnect()
-  }, [])
+  //   checkTheme()
+  //   const observer = new MutationObserver(checkTheme)
+  //   observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+  //   return () => observer.disconnect()
+  // }, [])
 
   useEffect(() => {
     if (!selectedId) return
@@ -93,9 +93,9 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         mapBrightness: 0,
         baseColor: [0.7, 0.7, 0.7],
         markerColor: [1, 1, 1],
-        glowColor: isDark ? [0, 0, 0] : [0.9, 0.9, 0.9],
+        glowColor: [0, 0, 0],
         markers: [],
-        scale: 1.2,
+        scale: 1.1,
       })
 
       let rafId: number
@@ -166,7 +166,8 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerup', onUp)
     }
-  }, [providers, isDark])
+  }, [providers])
+  // }, [providers, isDark])
 
   return (
     <div
