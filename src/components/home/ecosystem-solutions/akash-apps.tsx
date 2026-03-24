@@ -14,7 +14,6 @@ type Item = {
   };
 };
 
-
 export default function AkashApps({ desktopItems, mobileItems }: { desktopItems: Item[]; mobileItems: Item[] }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -114,7 +113,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 )}
               </div>
 
-              <div className="bg-[#181819] border-t border-[#2C2C2E] flex items-center justify-center relative md:px-[32px] px-4 py-8">
+              <div className="bg-[#181819] border-t border-[#2C2C2E] flex items-center justify-center relative md:px-[32px]">
                 <div 
                   className="absolute inset-0 pointer-events-none" 
                   style={{ 

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface CaseStudy {
   icon: string;
@@ -15,16 +15,24 @@ interface CaseStudiesProps {
 
 export default function CaseStudies({ caseStudies }: CaseStudiesProps) {
   const [visibleCount, setVisibleCount] = useState(3)
+  const lastBreakpoint = useRef<string>('')
 
   useEffect(() => {
     const checkBreaks = () => {
       const width = window.innerWidth
-      if (width >= 1024) {
-        setVisibleCount(6)
-      } else if (width >= 768) {
-        setVisibleCount(4)
-      } else {
-        setVisibleCount(3)
+      let currentBreakpoint = 'sm'
+      if (width >= 1024) currentBreakpoint = 'lg'
+      else if (width >= 768) currentBreakpoint = 'md'
+
+      if (currentBreakpoint !== lastBreakpoint.current) {
+        lastBreakpoint.current = currentBreakpoint
+        if (width >= 1024) {
+          setVisibleCount(6)
+        } else if (width >= 768) {
+          setVisibleCount(4)
+        } else {
+          setVisibleCount(3)
+        }
       }
     }
     checkBreaks()

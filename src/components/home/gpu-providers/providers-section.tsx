@@ -86,7 +86,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
                 />
               </div>
             </div>
-            <div className="absolute inset-x-0 bottom-0 h-[40%] pointer-events-none z-10 bg-gradient-to-t from-[#f1f1f1] dark:from-[#030303] to-transparent"/>
+            <div className="absolute inset-x-0 bottom-0 h-[30%] dark:h-[40%] pointer-events-none z-10 bg-gradient-to-t from-[#f1f1f1] dark:from-[#030303] to-transparent"/>
           </div>
 
           {/* Card */}

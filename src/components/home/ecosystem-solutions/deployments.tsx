@@ -2,22 +2,31 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export default function Deployments({ projects }: { projects: any[] }) {
   const [visibleCount, setVisibleCount] = useState(3)
   const [isDesktop, setIsDesktop] = useState(false)
+  const lastBreakpoint = useRef<string>('')
 
   useEffect(() => {
     const checkBreaks = () => {
       const width = window.innerWidth
       setIsDesktop(width >= 1024)
-      if (width >= 1024) {
-        setVisibleCount(6)
-      } else if (width >= 768) {
-        setVisibleCount(4)
-      } else {
-        setVisibleCount(3)
+      
+      let currentBreakpoint = 'sm'
+      if (width >= 1024) currentBreakpoint = 'lg'
+      else if (width >= 768) currentBreakpoint = 'md'
+
+      if (currentBreakpoint !== lastBreakpoint.current) {
+        lastBreakpoint.current = currentBreakpoint
+        if (width >= 1024) {
+          setVisibleCount(6)
+        } else if (width >= 768) {
+          setVisibleCount(4)
+        } else {
+          setVisibleCount(3)
+        }
       }
     }
     
@@ -97,6 +106,20 @@ function Card({ project }: { project: any }) {
         {project.data.description}
       </p>
 
+      {/* {project.data.websiteLink && (
+        <a
+          href={project.data.websiteLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex gap-2 items-center justify-center text-xs px-3 py-2 font-medium rounded-full text-[#171717] bg-white hover:brightness-110 transition-all duration-300 cursor-pointer"
+        >
+          View More 
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.66602 4.6665H11.3327M11.3327 4.6665V11.3332M11.3327 4.6665L4.66602 11.3332" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </a>
+      )} */}
     </div>
   );
 
