@@ -29,10 +29,10 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
 
   return (
     <div className="relative w-full max-w-[500px] lg:max-w-[360px]">
-      <div className={`w-full bg-[#e3e3e3] dark:bg-[#212123] rounded-xl lg:rounded-[20px] px-6 py-5 relative z-10 transition-colors duration-300`}>
+      <div className={`w-full bg-[#212123] rounded-xl lg:rounded-[20px] px-6 py-5 relative z-10 transition-colors duration-300`}>
         <button
           onClick={onClose}
-          className="absolute -top-10 right-0 z-20 w-8 h-8 hidden lg:flex items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-black dark:text-white hover:bg-black/5 hover:dark:bg-white/5 transition-colors duration-300 cursor-pointer"
+          className="absolute -top-10 right-0 z-20 w-8 h-8 hidden lg:flex items-center justify-center rounded-full border border-white/10 text-white bg-white/5 transition-colors duration-300 cursor-pointer"
           aria-label="Close"
         >
           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,17 +62,17 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
             </span>
           )}
         </div>
-        <h2 className="text-sm md:text-[19px] md:font-medium mb-6 truncate overflow-hidden whitespace-nowrap transition-colors duration-300" title={provider.id}>
+        <h2 className="text-sm md:text-[19px] text-[#fafafa] md:font-medium mb-6 truncate overflow-hidden whitespace-nowrap transition-colors duration-300" title={provider.id}>
           {provider.name}
         </h2>
 
         <div className="space-y-2">
           {fields.map((field) => (
             <div key={field.label} className="flex items-center gap-2">
-              <span className="w-[70px] md:w-[84px] shrink-0 text-xs md:text-sm font-medium">
+              <span className="w-[70px] md:w-[84px] shrink-0 text-xs md:text-sm font-medium text-[#fafafa]">
                 {field.label}
               </span>
-              <div className="flex-grow shadow-sm border border-white/15 bg-[#f1f1f1] dark:border-white/15 dark:bg-white/5 rounded-[8px] px-3 md:px-4 py-2 flex items-center h-fit md:h-10 text-xs md:text-sm transition-colors duration-300 text-[#171717] dark:text-[#A3A3A3]">
+              <div className="flex-grow shadow-sm border border-white/15 bg-white/5 rounded-[8px] px-3 md:px-4 py-2 flex items-center h-fit md:h-10 text-xs md:text-sm transition-colors duration-300 text-[#A3A3A3]">
                 <span className="truncate">{field.value}</span>
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function ProviderCard({ provider, onClose }: ProviderCardProps) {
           href={`https://console.akash.network/providers/${provider.id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full mt-6 px-4 py-2.5 rounded-full text-[15px] font-semibold transition-all hidden lg:flex items-center justify-center gap-2 cursor-pointer border bg-[#F1F1F1] dark:bg-transparent border-black/10 dark:border-[#4B4B4D] hover:bg-[#ebebeb] hover:dark:bg-white/5">
+          className="w-full text-[#fafafa] mt-6 px-4 py-2.5 rounded-full text-[15px] font-semibold transition-all hidden lg:flex items-center justify-center gap-2 cursor-pointer border bg-transparent border-[#4B4B4D] hover:bg-white/5">
           View on Console
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>

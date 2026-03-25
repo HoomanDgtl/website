@@ -47,7 +47,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
     <div className="flex flex-col container-nav-3 py-[60px] lg:py-[120px]">
 
       <header className="mb-[60px]">
-        <h1 className="text-3xl md:text-4xl lg:text-[40px] font-medium mb-4 tracking-tight">
+        <h1 className="text-3xl md:text-4xl lg:text-[40px] font-medium mb-4 tracking-tight text-[#fafafa]">
           Global Grid. No Off Switch.
         </h1>
         <div className="text-base leading-relaxed text-[#86868B]">
@@ -56,7 +56,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
         </div>
       </header>
 
-      <section className="pb-6 border-black/10 dark:border-[#39393B] text-[#86868B] border-b grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-x-4 sm:gap-x-8 gap-y-4 text-sm font-jetBrainsMono">
+      <section className="pb-6 border-[#39393B] text-[#86868B] border-b grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-between gap-x-4 sm:gap-x-8 gap-y-4 text-sm font-jetBrainsMono">
         {statsDisplay.map((stat) => (
           <div key={stat.label} className="flex flex-col sm:flex-row sm:items-center whitespace-nowrap">
             <span className="text-[#86868B]">{stat.label}:</span>
@@ -86,8 +86,8 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
                 />
               </div>
             </div>
-            <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-10 bg-gradient-to-t from-[#030303] to-transparent hidden dark:block"/>
-            <div className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0)_72.9%,#F1F1F1_100%)] block dark:hidden"/>
+            <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-10 bg-gradient-to-t from-[#030303] to-transparent"/>
+            {/* <div className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0)_72.9%,#F1F1F1_100%)] block dark:hidden"/> */}
           </div>
 
           {/* Card */}

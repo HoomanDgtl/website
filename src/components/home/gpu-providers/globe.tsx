@@ -33,8 +33,8 @@ function projectPoint(
   const pz2 = py * sinT + pz1 * cosT
 
   return {
-    x: 0.5 + x1 * 0.46,
-    y: 0.5 - y2 * 0.46,
+    x: 0.5 + x1 * 0.48,
+    y: 0.5 - y2 * 0.48,
     visible: pz2 > 0,
   }
 }
@@ -96,7 +96,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         markerColor: [1, 1, 1],
         glowColor: [0, 0, 0],
         markers: [],
-        scale: 1.15,
+        scale: 1.2,
       })
 
       let rafId: number
