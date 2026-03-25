@@ -33,8 +33,8 @@ function projectPoint(
   const pz2 = py * sinT + pz1 * cosT
 
   return {
-    x: 0.5 + x1 * 0.48,
-    y: 0.5 - y2 * 0.48,
+    x: 0.5 + x1 * 0.46,
+    y: 0.5 - y2 * 0.46,
     visible: pz2 > 0,
   }
 }
@@ -87,15 +87,16 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
         height: size * 2,
         phi: phiRef.current,
         theta: thetaRef.current,
-        dark: 0.95,
-        diffuse: 1.2,
+        dark: 0.8,
+        diffuse: 0,
         mapSamples: 50000,
-        mapBrightness: 0,
-        baseColor: [0.7, 0.7, 0.7],
+        mapBrightness: 1.5,
+        mapBaseBrightness: 0,
+        baseColor: [0.3, 0.3, 0.3],
         markerColor: [1, 1, 1],
         glowColor: [0, 0, 0],
         markers: [],
-        scale: 1.1,
+        scale: 1.15,
       })
 
       let rafId: number
@@ -211,7 +212,7 @@ export default function Globe({ providers, selectedId, onSelect }: GlobeProps) {
                 className="p-3 pointer-events-auto cursor-pointer rounded-full group"
               >
                 <span
-                  className={`block w-1.5 h-1.5 transition-all duration-300 ${
+                  className={`block w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                     isSelected 
                       ? 'bg-[#FF2903] scale-150 ring-1 ring-white shadow-[0_0_12px_rgba(255,41,3,0.8)]' 
                       : 'bg-white'
