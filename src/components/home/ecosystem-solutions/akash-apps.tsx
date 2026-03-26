@@ -18,42 +18,63 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
+  const activeIndexRef = useRef(0);
+  const scrollCooldown = useRef(false);
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
-    
-    const handleScroll = () => {
-      const el = containerRef.current;
-      if (!el) return;
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-      const rect = el.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || windowWidth < 1200) return;
 
-      if (rect.top <= 0 && rect.bottom >= viewportHeight) {
-        const totalHeight = rect.height - viewportHeight;
-        const scrolled = Math.abs(rect.top);
-        const progress = scrolled / totalHeight;
+    let accumulatedDelta = 0;
+    const DELTA_THRESHOLD = 50;
 
-        const newIndex = Math.min(
-          Math.floor(progress * desktopItems.length),
-          desktopItems.length - 1
-        );
-        setActiveIndex(newIndex);
-      } else if (rect.top > 0) {
-        setActiveIndex(0);
-      } else if (rect.bottom < viewportHeight) {
-        setActiveIndex(desktopItems.length - 1);
+    const handleWheel = (e: WheelEvent) => {
+      const idx = activeIndexRef.current;
+      const atStart = idx === 0 && e.deltaY < 0;
+      const atEnd = idx === desktopItems.length - 1 && e.deltaY > 0;
+
+      if (atStart || atEnd) {
+        accumulatedDelta = 0;
+        return;
+      }
+
+      e.preventDefault();
+
+      if (scrollCooldown.current) return;
+
+      accumulatedDelta += e.deltaY;
+
+      if (Math.abs(accumulatedDelta) >= DELTA_THRESHOLD) {
+        scrollCooldown.current = true;
+        const direction = accumulatedDelta > 0 ? 1 : -1;
+        accumulatedDelta = 0;
+
+        setActiveIndex((prev) => {
+          const next = Math.max(0, Math.min(desktopItems.length - 1, prev + direction));
+          activeIndexRef.current = next;
+          return next;
+        });
+
+        setTimeout(() => {
+          scrollCooldown.current = false;
+        }, 700);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [desktopItems.length]);
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, [desktopItems.length, windowWidth]);
 
   const isMobile = windowWidth < 1200;
   const [visibleCount, setVisibleCount] = useState(3);
@@ -114,12 +135,12 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
               </div>
 
               <div className="bg-[#181819] border-t border-[#2C2C2E] flex items-center justify-center relative md:px-[32px]">
-                <div 
-                  className="absolute inset-0 pointer-events-none" 
-                  style={{ 
-                    backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 0)', 
-                    backgroundSize: '20px 20px' 
-                  }} 
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 0)',
+                    backgroundSize: '20px 20px'
+                  }}
                 />
 
                 <div className="relative w-full h-auto rounded-[12px] overflow-hidden">
@@ -149,11 +170,11 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
               className="flex items-center justify-center gap-2 px-3 py-2 bg-transparent dark:bg-white/5 hover:bg-black/5 hover:dark:bg-white/15 border border-black/10 dark:border-white/15 rounded-[40px] text-black dark:text-[#FAFAFA] text-[13px] md:text-base font-medium transition-all active:scale-95 group"
             >
               <span>Show More</span>
-              <svg 
+              <svg
                 className="w-4 h-4 md:w-5 md:h-5 shrink-0 translate-y-px"
                 viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </div>
@@ -166,22 +187,21 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
     <div
       ref={containerRef}
       className="relative"
-      style={{ height: `${desktopItems.length * 80}vh` }}
     >
-      <div className="sticky top-24 max-w-7xl h-[700px] flex items-center overflow-hidden">
+      <div className="sticky top-24 max-w-7xl flex items-center overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start h-full justify-between">
-          
+
           <div className="w-full md:w-1/2 flex items-start gap-[10px]">
             <div className="w-[180px] h-16 md:h-[88px] flex items-center shrink-0">
-              <img 
-                src="/akash.svg" 
-                alt="Akash" 
+              <img
+                src="/akash.svg"
+                alt="Akash"
                 className="h-[40px] w-auto object-contain invert dark:invert-0 select-none pointer-events-none"
               />
             </div>
 
             <div className="relative overflow-visible">
-              <div 
+              <div
                 className="flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
                 style={{
                   transform: `translateY(-${activeIndex * (isMobile ? 64 : 88)}px)`
@@ -201,7 +221,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                         </h2>
                         {item.label && (
                           <span className={`text-sm md:text-base lowercase font-normal font-jetBrainsMono -translate-y-5 ${isActive ? "text-[#171717] dark:text-white" : "text-[#171717]/40 dark:text-white/40"}`}>
-                             ({item.label})
+                            ({item.label})
                           </span>
                         )}
                       </div>
@@ -216,12 +236,12 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
             <div className="w-full max-w-[560px] flex flex-col">
 
               <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-[4/3] flex items-center justify-center relative">
-                <div 
-                  className="absolute inset-0 pointer-events-none" 
-                  style={{ 
-                    backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 0)', 
-                    backgroundSize: '20px 20px' 
-                  }} 
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 0)',
+                    backgroundSize: '20px 20px'
+                  }}
                 />
 
                 <div className="relative w-full h-full rounded-[12px] overflow-hidden">
@@ -230,9 +250,8 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                       key={item.id}
                       src={item.image}
                       alt={item.title}
-                      className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
-                        i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
-                      }`}
+                      className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
+                        }`}
                     />
                   ))}
                 </div>
@@ -253,7 +272,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 <p className="text-[#86868B] text-sm md:text-base leading-relaxed transition-all duration-500 line-clamp-2 mt-2.5">
                   {desktopItems[activeIndex].description}
                 </p>
-                
+
                 {desktopItems[activeIndex].label !== "coming-soon" && (
                   <div>
                     <a
@@ -262,11 +281,11 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                       className="inline-flex items-center justify-center mt-5 gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#e8e8e8] transition-all group scale-100 active:scale-95 cursor-pointer"
                     >
                       {desktopItems[activeIndex].button.text}
-                      <svg 
+                      <svg
                         className="group-hover:rotate-45 transition-transform duration-300 translate-y-px"
                         width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path d="M4.66663 4.66699H11.3333M11.3333 4.66699V11.3337M11.3333 4.66699L4.66663 11.3337" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M4.66663 4.66699H11.3333M11.3333 4.66699V11.3337M11.3333 4.66699L4.66663 11.3337" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </a>
                   </div>
