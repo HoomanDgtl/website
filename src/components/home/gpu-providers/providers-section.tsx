@@ -44,7 +44,7 @@ export default function GlobalGrid({ initialData }: GlobalGridProps) {
   ]
 
   return (
-    <div className="flex flex-col container-nav-3 py-[60px] lg:py-[120px]">
+    <div className="flex flex-col container-nav-3 py-[60px] lg:py-[120px] h-fit lg:h-[1000px]">
 
       <header className="mb-[60px]">
         <h1 className="text-3xl md:text-4xl lg:text-[40px] font-medium mb-4 tracking-tight text-[#fafafa]">
