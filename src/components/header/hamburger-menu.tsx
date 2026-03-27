@@ -75,14 +75,11 @@ export default function HamburgerMenu({
             <span className="sr-only">Open main menu</span>
             {open ? <XMarkIcon /> : <HamburgerIcon />}
           </Disclosure.Button>
-          <Transition
-            enter="transition ease duration-500 transform"
-            enterFrom="opacity-100 translate-x-full"
-            enterTo="opacity-100 translate-x-0"
-            leave="transition ease duration-300 transform"
-            leaveFrom="opacity-100 translate-x-0"
-            leaveTo="opacity-100 translate-x-full"
-            className="fixed  inset-0 z-[52]  w-full overflow-y-auto  bg-background md:left-auto md:right-0  md:w-1/2 slg:hidden"
+          <div
+            className={clsx(
+              "fixed inset-0 z-[52] w-full overflow-y-auto bg-background transform-gpu transition-transform duration-300 md:left-auto md:right-0 md:w-1/2 slg:hidden",
+              open ? "translate-x-0" : "translate-x-full pointer-events-none"
+            )}
           >
             <Panel
               currentPath={currentPath}
@@ -90,7 +87,7 @@ export default function HamburgerMenu({
               latestRoadmapYear={latestRoadmapYear}
               hideDarkToggle={hideDarkToggle}
             />
-          </Transition>
+          </div>
         </>
       )}
     </Disclosure>
