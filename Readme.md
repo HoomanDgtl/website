@@ -1,259 +1,405 @@
-# Akash Network Website Guide.
+# Akash Network Website
 
-- [Akash Network Website Guide](#akash-network-website-guide)
-  - [Akash Network Website](#akash-network-website)
-  - [Getting Started Locally](#getting-started-locally)
-  - [Contribution Guidelines](#contribution-guidelines)
-    - [File Naming Convention](#file-naming-convention)
-    - [Commit Message Structure](#commit-message-structure)
-    - [Commit Message Best Practices](#commit-message-best-practices)
-    - [How to Contribute to the Akash Website](#how-to-contribute-to-the-akash-website)
-  - [How to write a blog](#how-to-write-a-blog)
-  - [Community](#community)
-    - [How to add to the Events](#how-to-add-to-the-events)
-    - [How to contribute to the Community Contributions](#how-to-contribute-to-the-community-contributions)
-  - [Ecosystem](#ecosystem)
-    - [How to contribute a project to the Ecosystem](#how-to-contribute-a-project-to-the-ecosystem)
-  - [Docs](#docs)
-    - [How to change sequence of docs](#how-to-change-sequence-of-docs)
-    - [How to add new file in docs](#how-to-add-new-file-in-docs)
-  - [Contact](#contact)
+The official website for [Akash Network](https://akash.network/) — the decentralized cloud computing marketplace. Built with [Astro](https://astro.build/), React, Tailwind CSS, and TypeScript.
 
-## Akash Network Website
+---
 
-Explore the repository for the Akash Network website, skillfully developed by [Hooman Digital](https://twitter.com/hooman_digital). The website serves as a dynamic showcase, illustrating the prowess and capabilities of Akash Network—a decentralized cloud computing marketplace revolutionizing the digital landscape...
+## Table of Contents
 
-## Getting Started Locally
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local Development](#local-development)
+  - [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+  - [General Guidelines](#general-guidelines)
+  - [File Naming Convention](#file-naming-convention)
+  - [Commit Message Format](#commit-message-format)
+  - [Pull Request Process](#pull-request-process)
+- [Content Guides](#content-guides)
+  - [Writing a Blog Post](#writing-a-blog-post)
+  - [Contributing a Community Blog](#contributing-a-community-blog)
+  - [Adding a Community Event](#adding-a-community-event)
+  - [Adding an Ecosystem Project](#adding-an-ecosystem-project)
+  - [Editing Documentation](#editing-documentation)
+- [Contact](#contact)
 
-To run the repository locally and explore the website on your machine, follow these simple steps:
+---
 
-1. **Clone the Repository:**
+## Getting Started
 
-   ```bash
-   git clone https://github.com/akash-network/website
-   ```
+### Prerequisites
 
-2. **Navigate to the Project Directory:**
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/)
+- [Git](https://git-scm.com/)
 
-   ```bash
-   cd website
-   ```
+### Local Development
 
-3. **Install Dependencies:**
+```bash
+# Clone the repository
+git clone https://github.com/akash-network/website
+cd website
 
-   ```bash
-   npm install
-   ```
+# Install dependencies
+npm install
 
-4. **Run the Development Server:**
+# Start the dev server
+npm run dev
+```
 
-   ```bash
-   npm run dev
-   ```
+Open [http://localhost:4321](http://localhost:4321) in your browser.
 
-5. **Open Your Browser:**
-   Visit [http://localhost:4321](http://localhost:4321) to view the Akash Network website locally.
+### Available Scripts
 
-## Contribution Guidelines
+| Command             | Description                          |
+| ------------------- | ------------------------------------ |
+| `npm run dev`       | Start local development server       |
+| `npm run build`     | Build the site for production        |
+| `npm run preview`   | Preview the production build locally |
+| `npm run astro`     | Run Astro CLI commands directly      |
 
-Before contributing to the project, please adhere to the following guidelines to ensure the project's integrity and maintainability.
+---
+
+## Project Structure
+
+```
+src/
+├── content/                          # All site content (Astro Content Collections)
+│   ├── Blog/                         # Official blog posts
+│   ├── Community_Contributions_Page/ # Community-authored blogs & content
+│   ├── Community_Akash_Events_Page/  # Community events
+│   ├── Ecosystem_Page/               # Ecosystem project showcases
+│   ├── Docs/                         # Documentation pages
+│   └── config.ts                     # Content collection schemas
+├── components/                       # Reusable Astro & React components
+├── layouts/                          # Page layout wrappers
+├── pages/                            # File-based routing (Astro pages)
+├── lib/                              # Utilities and helpers
+└── styles/                           # Global styles
+```
+
+---
+
+## Contributing
+
+### General Guidelines
+
+1. **Fork** the repository and create a new branch from `main`.
+2. Make your changes locally and test with `npm run build` to ensure the site compiles without errors.
+3. Commit your changes following the [commit message format](#commit-message-format) below.
+4. Open a **Pull Request** against `main` with a clear description of the changes.
 
 ### File Naming Convention
 
-When creating files for components, pages, etc., follow this straightforward file naming convention:
+Use **kebab-case** (lowercase words separated by hyphens) for all content folders and filenames.
 
-- **Component Name:** Utilize kebab-case, featuring lowercase words separated by hyphens.
-
-  Example: `my-component-name.js`
-
-### Commit Message Structure
-
-Each commit message should carry a meaningful structure, commencing with a type and followed by a concise description. Utilize the following types for commit messages:
-
-- **feat:** Introduce a new feature or functionality to the codebase.
-
-  Example: `feat: implement user authentication`
-
-- **fix:** Rectify a bug or address an issue within the code.
-
-  Example: `fix: resolve issue with login page`
-
-- **docs:** Focus on documentation-related changes, such as updating comments, README files, or documentation pages.
-
-  Example: `docs: enhance installation instructions`
-
-- **style:** Implement code style changes, such as formatting, indentation, or variable renaming.
-
-  Example: `style: refactor CSS styles`
-
-- **chore:** Undertake routine tasks, maintenance, or housekeeping activities, often not directly related to code changes.
-
-  Example: `chore: update dependencies`
-
-- **test:** Contribute to or modify tests, including unit tests, integration tests, or end-to-end tests.
-
-  Example: `test: add test cases for login feature`
-
-- **perf:** Optimize the code for better performance.
-
-  Example: `perf: enhance database query efficiency`
-
-- **ci:** Implement changes to the continuous integration (CI) pipeline.
-
-- **refactor:** Enhance code structure without introducing new features or fixing bugs.
-
-  Example: `refactor: extract reusable function`
-
-- **build:** Make changes related to the build process, such as build scripts or tools.
-
-  Example: `build: update webpack configuration`
-
-- **revert:** Revert a previous commit.
-
-  Example: `revert: undo changes from commit abc123`
-
-- **deps:** Update or modify project dependencies, such as npm packages or libraries.
-
-  Example: `deps: upgrade lodash to version 4.0.0`
-
-### Commit Message Best Practices
-
-- Keep commit messages concise and to the point.
-- Utilize the imperative mood (e.g., "add," "fix," "update") in the description.
-- Provide context in the description when necessary..
-
-### How to Contribute to the Akash Website
-
-## How to write a blog
-
-1. Create a new folder under `src/content/Blog/` with the name of the blog. For example, `src/content/Blog/how-to-use-akash-web/`
-2. Create a new file called `index.md` under the new folder. For example, `src/content/Blog/how-to-use-akash-web/index.md`
-3. Copy the following template into the new file and fill in the details.
-
-```md
----
-title: "Example Blog Title" # <--- This is the title of the blog
-description: "Example Blog Description" # <--- This is the description of the blog
-pubDate: "2019-11-25" # <--- This is the date of the blog in the format of "YYYY-MM-DD"
-draft: false # <--- If the blog is not ready to publish, set it to true
-archive: true # <--- If the blog is not ready to publish, set it to true it will not show in the archive page but will show in the blog page
-categories: # <--- This is the category of the blog
-  - Category1
-  - Category2
-tags: # <--- This is the tags of the blog
-  - Tag1
-  - Tag2
-contributors: # <--- This is the contributors of the blog
-  - Greg Osuri
-bannerImage: ./banner-image.jpg # <--- This is the banner image of the blog or the featured image of the blog
----
+```
+src/content/Blog/my-new-blog-post/index.md     ✅
+src/content/Blog/MyNewBlogPost/index.md         ❌
 ```
 
-1. Add the banner image to the same folder as the markdown file. For example, `src/content/Blog/how-to-use-akash-web/banner-image.jpg`
-2. Write the blog content in markdown format in the same file. For example, `src/content/Blog/how-to-use-akash-web/index.md`
-3. Commit and push the changes to the repository. The blog will be published automatically.
+### Commit Message Format
 
-## Community
+Follow [Conventional Commits](https://www.conventionalcommits.org/). Each commit message starts with a **type** followed by a short description:
 
-### How to add to the [Events](https://akash.network/community/events/)
+| Type         | Purpose                                              | Example                                  |
+| ------------ | ---------------------------------------------------- | ---------------------------------------- |
+| `feat:`      | New feature or functionality                         | `feat: implement user authentication`    |
+| `fix:`       | Bug fix                                              | `fix: resolve issue with login page`     |
+| `docs:`      | Documentation changes                                | `docs: update contribution guide`        |
+| `style:`     | Code style / formatting (no logic change)            | `style: reformat CSS styles`             |
+| `refactor:`  | Code restructuring (no new features or bug fixes)    | `refactor: extract reusable function`    |
+| `perf:`      | Performance improvements                             | `perf: optimize image loading`           |
+| `test:`      | Adding or updating tests                             | `test: add test cases for login`         |
+| `chore:`     | Maintenance or housekeeping                          | `chore: update dependencies`             |
+| `ci:`        | CI/CD pipeline changes                               | `ci: add deploy workflow`                |
+| `build:`     | Build system changes                                 | `build: update Astro config`             |
+| `deps:`      | Dependency updates                                   | `deps: upgrade astro to v4.1`            |
+| `revert:`    | Revert a previous commit                             | `revert: undo changes from abc123`       |
 
-1. Create a new folder under `src/content/Community_Akash_Events_Page/` with the name of the event. For example, `src/content/Community_Akash_Events_Page/ai-world-congress/`
-2. Create a new file called `index.md` under the new folder. For example, `src/content/Community_Akash_Events_Page/ai-world-congress/index.md`
-3. Copy the following template into the new file and fill in the details.
+**Tips:**
+- Keep messages concise and use the imperative mood ("add", "fix", "update").
+- Add context in the description when necessary.
 
-```md
+### Pull Request Process
+
+1. Ensure your branch is up to date with `main`.
+2. Run `npm run build` to verify the site builds successfully.
+3. Provide a clear PR title and description explaining **what** changed and **why**.
+4. Add screenshots for visual changes if applicable.
+
 ---
-title: AI World Congress # <--- This is the title of the event
-image: "./project-banner.png" # <--- This is the banner image of the event
-eventDate: "2024" # <--- This is the date of the event in the format of "YYYY"
-tbd: true # <--- If the date is not confirmed yet, set it to true
-location: Singapore # <--- This is the location of the event
-link: "https://www.asia.token2049.com/" # <--- This is the link of the event
-description: ​TOKEN2049 brings together the global Web3 industry, uniting entrepreneurs, investors, developers, industry insiders and global media - and creates unparalleled networking opportunities.
+
+## Content Guides
+
+All content on the site is managed through [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/) using Markdown files. Each content item lives in its own folder with an `index.md` file and any associated assets (images, etc.).
+
+### Writing a Blog Post
+
+Blog posts are official Akash Network articles published at [akash.network/blog](https://akash.network/blog).
+
+**Location:** `src/content/Blog/`
+
+**Steps:**
+
+1. Create a new folder under `src/content/Blog/` using a descriptive kebab-case slug:
+   ```
+   src/content/Blog/my-blog-post-title/
+   ```
+
+2. Create an `index.md` file inside the folder with the following frontmatter:
+
+   ```yaml
+   ---
+   title: "Your Blog Title"
+   description: "A short summary of the blog post."
+   pubDate: "2026-01-15"
+   draft: false
+   archive: false
+   categories:
+     - General
+   tags:
+     - Tag1
+     - Tag2
+   contributors:
+     - Your Name
+   bannerImage: ./banner-image.png
+   ---
+
+   Your blog content goes here in Markdown format.
+   ```
+
+3. Add your banner image to the same folder (e.g., `banner-image.png`).
+
+4. Write the blog content below the frontmatter using standard Markdown.
+
+5. Commit and open a PR. The blog will be published once merged.
+
+**Frontmatter Reference:**
+
+| Field             | Required | Description                                                  |
+| ----------------- | -------- | ------------------------------------------------------------ |
+| `title`           | Yes      | Blog post title                                              |
+| `description`     | Yes      | Short summary (used in previews and SEO)                     |
+| `pubDate`         | Yes      | Publication date in `YYYY-MM-DD` format                      |
+| `draft`           | Yes      | Set to `true` to hide from the site                          |
+| `archive`         | No       | Set to `true` to hide from archive page but show on blog page|
+| `categories`      | Yes      | List of categories (e.g., General, Product, News)            |
+| `tags`            | Yes      | List of tags for filtering                                   |
+| `contributors`    | Yes      | List of author names                                         |
+| `bannerImage`     | Yes      | Relative path to the banner image                            |
+| `pinned`          | No       | Date value to pin the post to the top                        |
+| `homepage`        | No       | Date value to feature on the homepage                        |
+| `metaTitle`       | No       | Custom SEO title                                             |
+| `metaDescription` | No       | Custom SEO description                                       |
+
 ---
-```
 
-4. TBD means the date is not confirmed yet. If the date is confirmed, remove the `tbd: true` line.
+### Contributing a Community Blog
 
-5. Add the banner image to the same folder as the markdown file. For example, `src/content/Community_Akash_Events_Page/ai-world-congress/project-banner.png`
+Community blogs are articles written by community members and published at [akash.network/community/contributions](https://akash.network/community/contributions/). This is the best way for community members to share tutorials, guides, opinion pieces, and project showcases with the Akash ecosystem.
 
-6. Commit and push the changes to the repository. The event will be published automatically.
+**Location:** `src/content/Community_Contributions_Page/`
 
-### How to contribute to the [Community Contributions](https://akash.network/community/community-contributions/)
+**Steps:**
 
-1. Create a new folder under `src/content/Community_Contributions_Page/` with name of the contribution . For example, `src/content/Community_Contributions_Page/akash-101/`
+1. **Fork** the repository and create a new branch:
+   ```bash
+   git checkout -b community/my-blog-title
+   ```
 
-2. Create a new file called `index.md` under the new folder. For example, `src/content/Community_Contributions_Page/akash-101/index.md`
+2. Create a new folder under `src/content/Community_Contributions_Page/` with a descriptive slug:
+   ```
+   src/content/Community_Contributions_Page/my-community-blog/
+   ```
 
-3. Copy the following template into the new file and fill in the details.
+3. Create an `index.md` file inside the folder with this frontmatter:
 
-```md
+   ```yaml
+   ---
+   title: "Your Community Blog Title"
+   description: "A brief description of your article."
+   pubDate: "2026-01-15"
+   draft: false
+   archive: false
+   showcase: true
+   featured: false
+   categories:
+     - General
+   tags:
+     - Tutorial
+   contributors:
+     - Your Name
+   bannerImage: ./banner.png
+   ---
+
+   Your article content goes here in Markdown format.
+   ```
+
+4. Add your banner image (recommended size: 1200x630px) to the same folder.
+
+5. Write your content below the frontmatter. You can use:
+   - Standard Markdown syntax (headings, lists, bold, italic, links)
+   - Code blocks with syntax highlighting
+   - Images (place them in the same folder and reference with `./image-name.png`)
+   - Tables
+
+6. **If linking to external content** (e.g., a YouTube video or external blog), you can add a `link` field to the frontmatter instead of writing the full content in the file:
+   ```yaml
+   link: https://www.youtube.com/watch?v=your-video-id
+   readTime: "10 min"
+   ```
+
+7. **Test locally** — run `npm run build` to verify your content compiles without errors.
+
+8. Commit your changes and open a Pull Request:
+   ```bash
+   git add src/content/Community_Contributions_Page/my-community-blog/
+   git commit -m "add: community blog - my community blog"
+   git push origin community/my-blog-title
+   ```
+
+**Frontmatter Reference:**
+
+| Field          | Required | Description                                                    |
+| -------------- | -------- | -------------------------------------------------------------- |
+| `title`        | Yes      | Article title                                                  |
+| `description`  | Yes      | Short summary                                                  |
+| `pubDate`      | Yes      | Date in `YYYY-MM-DD` format                                   |
+| `draft`        | No       | Set to `true` to hide from the site (default: `false`)         |
+| `archive`      | No       | Set to `true` to hide from archive listing                     |
+| `showcase`     | No       | Set to `true` to highlight in the showcase section             |
+| `featured`     | No       | Set to `true` to feature at the top of the page                |
+| `categories`   | Yes      | List of categories                                             |
+| `tags`         | Yes      | List of tags (e.g., Tutorial, Video, Guide, Opinion)           |
+| `contributors` | Yes      | List of author names                                           |
+| `bannerImage`  | No       | Relative path to banner image                                  |
+| `link`         | No       | URL to external content (YouTube, external blog, etc.)         |
+| `readTime`     | No       | Estimated read time (e.g., "5 min")                            |
+
+**Tips for Community Blogs:**
+- Choose a clear, descriptive title that tells readers what they will learn.
+- Include a banner image — posts with images get more engagement.
+- Use the `tags` field to help readers discover your content (e.g., `Tutorial`, `Guide`, `Video`, `Opinion`, `Showcase`).
+- For video content, set the `link` field to the video URL and add a brief written summary in the body.
+- Keep your writing focused and provide practical value to the Akash community.
+
 ---
-title: "Akash Network Live with Greg Osuri: Akash’s progress in 2023, open community development, and more" # <--- This is the title of the contribution
-image: "./project-banner.png" # <--- This is the banner image of the contribution
-pubDate: "2023-02-24" # <--- This is the date of the contribution in the format of "YYYY-MM-DD"
-readTime: "5 min" # <--- This is the read time of the contribution
-author: "Robert Del Rey" # <--- This is the author of the contribution
-link: https://www.youtube.com/watch?v=aVRqwXOxoe8 # <--- This is the link of the contribution
-tags: # <--- This is the tags of the contribution
-  - Video
-description: Greg Osuri, CEO of Overclock Labs and Founder of Akash Network, will cover the progress Akash has already made in 2023, our new open community group structure, and what to look out for in the coming months.
+
+### Adding a Community Event
+
+Community events are listed at [akash.network/community/events](https://akash.network/community/events/).
+
+**Location:** `src/content/Community_Akash_Events_Page/`
+
+**Steps:**
+
+1. Create a new folder under `src/content/Community_Akash_Events_Page/`:
+   ```
+   src/content/Community_Akash_Events_Page/my-event-name/
+   ```
+
+2. Create an `index.md` file with this frontmatter:
+
+   ```yaml
+   ---
+   title: Event Name
+   image: "./event-banner.png"
+   eventDate: "2026"
+   tbd: false
+   location: City, Country
+   link: "https://event-website.com"
+   description: A brief description of the event and Akash's involvement.
+   ---
+   ```
+
+3. Add the event banner image to the same folder.
+
+4. Commit and open a PR.
+
+**Notes:**
+- Set `tbd: true` if the event date is not yet confirmed.
+- The `eventDate` field uses `YYYY` format for year-only dates.
+
 ---
-```
 
-1. Add the banner image to the same folder as the markdown file. For example, `src/content/Community_Contributions_Page/akash-101/project-banner.png`
+### Adding an Ecosystem Project
 
-2. Commit and push the changes to the repository. The event will be published automatically.
+Ecosystem projects are showcased at [akash.network/ecosystem/showcase/latest](https://akash.network/ecosystem/showcase/latest).
 
-## Ecosystem
+**Location:** `src/content/Ecosystem_Page/`
 
-### How to contribute a project to the [Ecosystem](https://akash.network/ecosystem/showcase/latest)
+**Steps:**
 
-1. Create a new folder under `src/content/Ecosystem_Page/` with the name of the project. For example, `src/content/Ecosystem_Page/akash-chat/`
+1. Create a new folder under `src/content/Ecosystem_Page/`:
+   ```
+   src/content/Ecosystem_Page/my-project/
+   ```
 
-2. Create a new file called `index.md` under the new folder. For example, `src/content/Ecosystem_Page/akash-chat/index.md`
+2. Create an `index.md` file:
 
-3. Copy the following template into the new file and fill in the details.
+   ```yaml
+   ---
+   projectTitle: My Project Name
+   projectImage: "./project-banner.png"
+   pubDate: "2026-01-15"
+   tags:
+     - AI & ML
+   category: deployed_on_akash
+   description: A brief description of the project and how it uses Akash.
+   showcase: true
+   websiteLink: "https://myproject.com"
+   githubLink: "https://github.com/myorg/myproject"
+   twitterLink: "https://x.com/myproject"
+   featured: false
+   ---
+   ```
 
-4. There are four categories `deployed_on_akash`, `akash-tools`
+3. Add the project banner image to the same folder.
 
-```md
+4. Commit and open a PR.
+
+**Notes:**
+- `category` can be `deployed_on_akash` or `akash-tools`.
+- Set `showcase: true` to display the project in the ecosystem showcase.
+- Set `featured: true` to pin the project to the top of the showcase page.
+
 ---
-projectTitle: Akash Chat # <--- This is the title of the project
-projectImage: "./project-banner.png" # <--- This is the banner image of the project
-pubDate: "2021-01-19" # <--- This is the date of the project in the format of "YYYY-MM-DD"
 
-tags: # <--- This is the tags of the project
-  - AI & ML
+### Editing Documentation
 
-category: deployed_on_akash # <--- This is the category of the project which can be "deployed_on_akash", "tools"
+Documentation pages live at [akash.network/docs](https://akash.network/docs/) and are managed in `src/content/Docs/`.
 
-description: Mistral-7B-v0.2 Large Language Model (LLM) is a pretrained generative text model with 7 billion parameters by Mistral AI. This application is running on NVIDIA GPUs leased from the Akash Supercloud.
+#### Adding a New Doc Page
 
-showcase: true # <--- This is the showcase of the project in the ecosystem page/showcase
+1. Create a new folder under `src/content/Docs/`:
+   ```
+   src/content/Docs/my-doc-topic/
+   ```
 
-websiteLink: "https://chat.akash.network/" # <--- This is the website link of the project
-githubLink: "https://chat.akash.network/" # <--- This is the github link of the project
-twitterLink: "https://chat.akash.network" # <--- This is the twitter link of the project
+2. Create an `index.md` file:
 
-featured: true # <--- This is the featured of the project in the ecosystem page/showcase
----
-```
+   ```yaml
+   ---
+   categories: ["Getting Started"]
+   tags: ["Guides"]
+   weight: 1
+   title: "My Doc Page Title"
+   linkTitle: "My Doc Page Title"
+   ---
 
-5. Showcase is used to show the card in [showcase](https://akash.network/ecosystem/showcase/latest) in ecosystem tag
+   Documentation content here.
+   ```
 
-6. Featured is used to show the card on the top of the page
+3. For nested pages, create sub-folders:
+   ```
+   src/content/Docs/my-doc-topic/sub-page/index.md
+   ```
 
-7. Add the banner image to the same folder as the markdown file. For example, `src/content/Ecosystem_Page/akash-chat/project-banner.png`
+#### Changing Doc Order
 
-8. Commit and push the changes to the repository. The event will be published automatically.
-
-## Docs
-
-### How to change sequence of docs
-
-1. Go to the `src/content/Docs/sequence.ts`
-2. Change the sequence of the docs
+Edit `src/content/Docs/sequence.ts` to control the sidebar ordering:
 
 ```ts
 export const docsSequence = [
@@ -261,54 +407,25 @@ export const docsSequence = [
     label: "Docs",
     subItems: [
       {
-        label: "Getting Started", // <--- Change the sequence here
-        subItems: [ // <--- Change the sequence here
-          { label: "Intro To Akash" }, // <--- Change the sequence here
-          { label: "Akash Overview" }
-          { label: "Stack Definition Language (SDL)" },
-          { label: "Tokens and Wallets" },
+        label: "Getting Started",
+        subItems: [
+          { label: "Intro To Akash" },
+          { label: "Akash Overview" },
         ],
       },
-  }
-]
+    ],
+  },
+];
 ```
 
-3. Name of the label should same as rendered name of the doc in the website
+The `label` values must match the rendered page titles exactly.
 
-4. Commit and push the changes to the repository. The event will be published automatically.
-
-### How to add new file in docs
-
-1. Create a new folder under `src/content/docs` with the name of the file. For example, `src/content/docs/akash-101/`
-
-2. Create a new file called `index.md` under the new folder. For example, `src/content/docs/akash-101/index.md`
-
-3. Copy the following template into the new file and fill in the details.
-
-```md
 ---
-categories: ["Akash Nodes"] # <--- Change the category here
-tags: ["Blockchain"] # <--- Change the tag here
-weight: 1 # <--- Change the weight here
-title: "Akash Node CLI Build" # <--- Change the title here
-linkTitle: "Akash Node CLI Build" # <--- Change the link title here
----
-```
-
-4. If you want to add sub items, add the folder under the folder of the doc. For example, `src/content/docs/akash-101/akash-node-cli-build/`
-
-5. Create a new file called `index.md` under the new folder. For example, `src/content/docs/akash-101/akash-node-cli-build/index.md`
 
 ## Contact
 
-- Discord: [Akash Network](https://discord.com/invite/akash)
-
-- X/Twitter: [Akash Network](https://x.com/akashnet)
-
-- Website: [Akash Network](https://akash.network/)
-
-- Telegram: [Akash Network](https://t.me/AkashNW)
-
-- YouTube: [Akash Network](https://www.youtube.com/c/AkashNetwork)
-
-
+- **Discord:** [Akash Network](https://discord.com/invite/akash)
+- **X / Twitter:** [Akash Network](https://x.com/akashnet)
+- **Website:** [akash.network](https://akash.network/)
+- **Telegram:** [Akash Network](https://t.me/AkashNW)
+- **YouTube:** [Akash Network](https://www.youtube.com/c/AkashNetwork)
