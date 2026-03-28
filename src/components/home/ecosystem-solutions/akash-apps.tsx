@@ -136,14 +136,16 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
   }
 
   const ROW_HEIGHT = 72;
+  const activeItem = desktopItems[activeIndex];
+  const isComingSoon = activeItem.label === "coming-soon";
 
   return (
     <div className="pt-8 pb-16">
       <div className="max-w-7xl flex flex-row items-start justify-between gap-12">
 
-        {/* Left side: Akash logo + sliding name list */}
+        {/* Left side: Akash logo + full item list */}
         <div className="w-[45%] flex items-start">
-          {/* Akash logo — fixed, vertically centered to the first row */}
+          {/* Akash logo — aligned to first row */}
           <div className="shrink-0 flex items-center" style={{ height: `${ROW_HEIGHT}px` }}>
             <img
               src="/akash.svg"
@@ -152,58 +154,47 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
             />
           </div>
 
-          {/* Name list with overflow hidden — only shows active + items below */}
-          <div
-            className="relative ml-3 overflow-hidden"
-            style={{ height: `${Math.min(desktopItems.length - activeIndex, 7) * ROW_HEIGHT}px`, transition: 'height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)' }}
-          >
-            <div
-              className="flex flex-col will-change-transform"
-              style={{
-                transform: `translateY(-${activeIndex * ROW_HEIGHT}px)`,
-                transition: 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
-              }}
-            >
-              {desktopItems.map((item, i) => {
-                const isActive = i === activeIndex;
+          {/* All items always visible and clickable */}
+          <div className="flex flex-col ml-3">
+            {desktopItems.map((item, i) => {
+              const isActive = i === activeIndex;
 
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveIndex(i)}
-                    className="flex items-center cursor-pointer text-left"
-                    style={{ height: `${ROW_HEIGHT}px` }}
-                  >
-                    <div className="flex items-baseline gap-2">
-                      <h2
-                        className="text-[44px] font-normal tracking-tighter leading-none font-Satoshi text-[#171717] dark:text-white"
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveIndex(i)}
+                  className="flex items-center cursor-pointer text-left"
+                  style={{ height: `${ROW_HEIGHT}px` }}
+                >
+                  <div className="flex items-baseline gap-2">
+                    <h2
+                      className="text-[44px] font-normal tracking-tighter leading-none font-Satoshi text-[#171717] dark:text-white"
+                      style={{
+                        transition: 'opacity 0.35s ease-out',
+                        opacity: isActive ? 1 : 0.3,
+                      }}
+                    >
+                      {item.name}
+                    </h2>
+                    {item.label && (
+                      <span
+                        className="text-sm lowercase font-normal font-jetBrainsMono -translate-y-4 text-[#171717] dark:text-white"
                         style={{
                           transition: 'opacity 0.35s ease-out',
-                          opacity: isActive ? 1 : 0.3,
+                          opacity: isActive ? 0.7 : 0.25,
                         }}
                       >
-                        {item.name}
-                      </h2>
-                      {item.label && (
-                        <span
-                          className="text-sm lowercase font-normal font-jetBrainsMono -translate-y-4 text-[#171717] dark:text-white"
-                          style={{
-                            transition: 'opacity 0.35s ease-out',
-                            opacity: isActive ? 0.7 : 0.25,
-                          }}
-                        >
-                          ({item.label})
-                        </span>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+                        ({item.label})
+                      </span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Right side: Image card + details */}
+        {/* Right side: Image card + details (fixed height to prevent layout shift) */}
         <div className="w-[55%] flex items-start justify-end">
           <div className="w-full max-w-[560px] flex flex-col">
 
@@ -232,7 +223,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                 ))}
               </div>
 
-              {desktopItems[activeIndex].label === "coming-soon" && (
+              {isComingSoon && (
                 <div className="absolute top-[36px] left-[36px] z-20">
                   <div className="bg-white text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium">
                     Coming Soon
@@ -241,22 +232,23 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
               )}
             </div>
 
-            <div className="mt-5">
+            {/* Fixed-height details area to prevent layout shift */}
+            <div className="mt-5 min-h-[140px]">
               <h3 className="text-xl md:text-[24px] font-semibold tracking-tight">
-                {desktopItems[activeIndex].title}
+                {activeItem.title}
               </h3>
               <p className="text-[#86868B] text-sm md:text-base leading-relaxed line-clamp-2 mt-2.5">
-                {desktopItems[activeIndex].description}
+                {activeItem.description}
               </p>
 
-              {desktopItems[activeIndex].label !== "coming-soon" && (
-                <div>
+              <div className="mt-5 h-[36px]">
+                {!isComingSoon && (
                   <a
-                    href={desktopItems[activeIndex].button.url}
+                    href={activeItem.button.url}
                     target="_blank"
-                    className="inline-flex items-center justify-center mt-5 gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#e8e8e8] transition-all group scale-100 active:scale-95 cursor-pointer"
+                    className="inline-flex items-center justify-center gap-2 bg-[#F5F5F7] text-[#171717] text-xs md:text-sm px-4 py-2 rounded-full font-medium hover:bg-[#e8e8e8] transition-all group scale-100 active:scale-95 cursor-pointer"
                   >
-                    {desktopItems[activeIndex].button.text}
+                    {activeItem.button.text}
                     <svg
                       className="group-hover:rotate-45 transition-transform duration-300 translate-y-px"
                       width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -264,8 +256,8 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                       <path d="M4.66663 4.66699H11.3333M11.3333 4.66699V11.3337M11.3333 4.66699L4.66663 11.3337" stroke="currentColor" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </a>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
