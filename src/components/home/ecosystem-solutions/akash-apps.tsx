@@ -135,60 +135,76 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
     );
   }
 
-  return (
-    <div className="pt-6 pb-10">
-      <div className="max-w-7xl flex flex-row items-start justify-between gap-10">
+  const ROW_HEIGHT = 72;
 
-        {/* Left: Logo + clickable item list */}
-        <div className="w-1/2 flex items-start gap-[10px]">
-          <div className="w-[180px] h-[88px] flex items-center shrink-0">
+  return (
+    <div className="pt-8 pb-16">
+      <div className="max-w-7xl flex flex-row items-start justify-between gap-12">
+
+        {/* Left side: Akash logo + sliding name list */}
+        <div className="w-[45%] flex items-start">
+          {/* Akash logo — fixed, vertically centered to the first row */}
+          <div className="shrink-0 flex items-center" style={{ height: `${ROW_HEIGHT}px` }}>
             <img
               src="/akash.svg"
               alt="Akash"
-              className="h-[40px] w-auto object-contain invert dark:invert-0 select-none pointer-events-none"
+              className="h-[36px] w-auto object-contain invert dark:invert-0 select-none pointer-events-none"
             />
           </div>
 
-          <div className="flex flex-col">
-            {desktopItems.map((item, i) => {
-              const isActive = i === activeIndex;
+          {/* Name list with overflow hidden — only shows active + items below */}
+          <div
+            className="relative ml-3 overflow-hidden"
+            style={{ height: `${Math.min(desktopItems.length - activeIndex, 7) * ROW_HEIGHT}px`, transition: 'height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)' }}
+          >
+            <div
+              className="flex flex-col will-change-transform"
+              style={{
+                transform: `translateY(-${activeIndex * ROW_HEIGHT}px)`,
+                transition: 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
+              }}
+            >
+              {desktopItems.map((item, i) => {
+                const isActive = i === activeIndex;
 
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveIndex(i)}
-                  className="flex items-center h-[60px] cursor-pointer text-left group"
-                >
-                  <div className="flex items-baseline gap-3">
-                    <h2
-                      className="text-[48px] font-normal tracking-tighter leading-none font-Satoshi text-[#171717] dark:text-white"
-                      style={{
-                        transition: 'opacity 0.3s ease-out',
-                        opacity: isActive ? 1 : 0.3,
-                      }}
-                    >
-                      {item.name}
-                    </h2>
-                    {item.label && (
-                      <span
-                        className="text-base lowercase font-normal font-jetBrainsMono -translate-y-5 text-[#171717] dark:text-white"
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveIndex(i)}
+                    className="flex items-center cursor-pointer text-left"
+                    style={{ height: `${ROW_HEIGHT}px` }}
+                  >
+                    <div className="flex items-baseline gap-2">
+                      <h2
+                        className="text-[44px] font-normal tracking-tighter leading-none font-Satoshi text-[#171717] dark:text-white"
                         style={{
-                          transition: 'opacity 0.3s ease-out',
+                          transition: 'opacity 0.35s ease-out',
                           opacity: isActive ? 1 : 0.3,
                         }}
                       >
-                         ({item.label})
-                      </span>
-                    )}
-                  </div>
-                </button>
-              );
-            })}
+                        {item.name}
+                      </h2>
+                      {item.label && (
+                        <span
+                          className="text-sm lowercase font-normal font-jetBrainsMono -translate-y-4 text-[#171717] dark:text-white"
+                          style={{
+                            transition: 'opacity 0.35s ease-out',
+                            opacity: isActive ? 0.7 : 0.25,
+                          }}
+                        >
+                          ({item.label})
+                        </span>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Right: Image + details */}
-        <div className="w-1/2 flex items-start justify-end">
+        {/* Right side: Image card + details */}
+        <div className="w-[55%] flex items-start justify-end">
           <div className="w-full max-w-[560px] flex flex-col">
 
             <div className="bg-[#212123] border border-[#2C2C2E] rounded-[24px] overflow-hidden aspect-[4/3] flex items-center justify-center relative">
