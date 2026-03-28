@@ -107,7 +107,7 @@ const navContainerClass = hideContainer ? "" : "container";
 
     <div class="block overflow-hidden slg:hidden">
       <HamburgerMenu
-        client:load
+        client:media="(max-width: 1099px)"
         currentPath={pathname}
         latestRoadmapYear={latestRoadmapYear}
         hideDarkToggle={hideDarkToggle}
@@ -152,7 +152,7 @@ const navContainerClass = hideContainer ? "" : "container";
           Get in Touch
         </ButtonLink>
 
-        <TryAkashForm client:load type="headerDeploy" />
+        <TryAkashForm client:idle type="headerDeploy" />
       </div>
       {!hideDarkToggle && <DarkModeToggle client:idle />}
     </div>
