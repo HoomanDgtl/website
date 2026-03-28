@@ -1,7 +1,7 @@
 ---
-advert: 
-  title: "The BME Incentivized Testnet is live - earn up to $10k in bounties."
-  link: "https://akash.network/docs/testnet/testplan/"
+advert:
+  title: "BME and WASM Smart Contracts are Now Live."
+  link: "/"
 
 # hero section content
 heroSection:
@@ -123,7 +123,7 @@ aiModelsAndAppsSection:
   subtitle2: "Deployed on Akash"
   cards1:
     - title: "AkashML"
-      image: "./assets/tools/akashML.png"
+      image: "./assets/tools/akashML.webp"
       description: "High-performance, low latency AI inference service built on Akash Network"
       link: "https://akashml.com/"
       button: "Get Started"
