@@ -138,15 +138,16 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
   const ROW_HEIGHT = 72;
   const activeItem = desktopItems[activeIndex];
   const isComingSoon = activeItem.label === "coming-soon";
+  const visibleRows = desktopItems.length - activeIndex;
 
   return (
     <div className="pt-8 pb-16">
       <div className="max-w-7xl flex flex-row items-start justify-between gap-12">
 
-        {/* Left side: Akash logo + full item list */}
-        <div className="w-[45%] flex items-start">
-          {/* Akash logo — aligned to first row */}
-          <div className="shrink-0 flex items-center" style={{ height: `${ROW_HEIGHT}px` }}>
+        {/* Left side: Akash logo + sliding item list */}
+        <div className="w-[45%] relative" style={{ height: `${visibleRows * ROW_HEIGHT}px`, transition: 'height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)' }}>
+          {/* Akash logo — stays pinned at top */}
+          <div className="absolute top-0 left-0 shrink-0 flex items-center z-10" style={{ height: `${ROW_HEIGHT}px` }}>
             <img
               src="/akash.svg"
               alt="Akash"
@@ -154,17 +155,29 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
             />
           </div>
 
-          {/* All items always visible and clickable */}
-          <div className="flex flex-col ml-3">
+          {/* Item list — translates up so active item aligns to top row */}
+          <div
+            className="absolute top-0 left-[160px] will-change-transform"
+            style={{
+              transform: `translateY(-${activeIndex * ROW_HEIGHT}px)`,
+              transition: 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)',
+            }}
+          >
             {desktopItems.map((item, i) => {
               const isActive = i === activeIndex;
+              const isAbove = i < activeIndex;
 
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveIndex(i)}
                   className="flex items-center cursor-pointer text-left"
-                  style={{ height: `${ROW_HEIGHT}px` }}
+                  style={{
+                    height: `${ROW_HEIGHT}px`,
+                    opacity: isAbove ? 0 : 1,
+                    pointerEvents: isAbove ? 'none' : 'auto',
+                    transition: 'opacity 0.3s ease-out',
+                  }}
                 >
                   <div className="flex items-baseline gap-2">
                     <h2
@@ -192,6 +205,19 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
               );
             })}
           </div>
+
+          {/* Up arrow — visible when not at first item */}
+          {activeIndex > 0 && (
+            <button
+              onClick={() => setActiveIndex(activeIndex - 1)}
+              className="absolute left-[160px] z-20 flex items-center justify-center w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 transition-colors cursor-pointer"
+              style={{ top: `${ROW_HEIGHT + (visibleRows - 1) * ROW_HEIGHT + 8}px` }}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 10L8 6L4 10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          )}
         </div>
 
         {/* Right side: Image card + details (fixed height to prevent layout shift) */}
