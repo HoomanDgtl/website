@@ -215,7 +215,7 @@ const shouldHide = shouldHideCta(pathname);
         {
           !hideDarkToggle && (
             <>
-              <DarkModeToggle footer client:load />
+              <DarkModeToggle footer client:idle />
               <div class="h-7 w-[1.5px] bg-gray-200 dark:bg-[#3B3B3B] " />
             </>
           )
@@ -303,7 +303,7 @@ const shouldHide = shouldHideCta(pathname);
           {
             !hideDarkToggle && (
               <>
-                <DarkModeToggle footer client:load />
+                <DarkModeToggle footer client:idle />
                 <div class="h-7 w-[1.5px] bg-gray-300 dark:bg-[#3B3B3B] " />
               </>
             )
@@ -349,7 +349,7 @@ const shouldHide = shouldHideCta(pathname);
       class="flex flex-col items-center gap-3 border-b pb-6 md:items-start md:border-b-0 md:pb-0"
     >
       <p class="text-sm text-linkText">Not sure where to start?</p>
-      <SpeakToExpert size="small" client:load />
+      <SpeakToExpert size="small" client:idle />
     </div>
     <div class="flex flex-col items-center gap-3 pt-6 md:items-end md:pt-0">
       <p class="text-sm text-linkText">Stay up to date with Akash Newsletter</p>
