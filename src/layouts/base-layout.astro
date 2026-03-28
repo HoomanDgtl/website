@@ -20,6 +20,8 @@ interface Props {
 const { title, description, image, classname, noIndex } = Astro.props;
 
 const isProd = import.meta.env.PROD;
+const pathname = Astro.url.pathname;
+const needsMathJax = pathname.startsWith("/docs") || pathname.startsWith("/blog");
 
 const onlyDark = false;
 
@@ -94,45 +96,49 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       image={image}
       noIndex={noIndex}
     />
-    <script is:inline>
-      const queueMathTypeset = () => {
-        if (window.MathJax?.typesetPromise) {
-          window.MathJax.typesetClear?.();
-          window.MathJax.typesetPromise();
-        }
-      };
+    {needsMathJax && (
+      <script is:inline>
+        const queueMathTypeset = () => {
+          if (window.MathJax?.typesetPromise) {
+            window.MathJax.typesetClear?.();
+            window.MathJax.typesetPromise();
+          }
+        };
 
-      window.MathJax = {
-        tex: {
-          inlineMath: [["\\(", "\\)"]],
-          displayMath: [["\\[", "\\]"]],
-          processEscapes: true,
-        },
-        options: {
-          skipHtmlTags: [
-            "script",
-            "noscript",
-            "style",
-            "textarea",
-            "pre",
-            "code",
-          ],
-        },
-        startup: {
-          ready: () => {
-            const { MathJax } = window;
-            MathJax.startup.defaultReady();
-            queueMathTypeset();
+        window.MathJax = {
+          tex: {
+            inlineMath: [["\\(", "\\)"]],
+            displayMath: [["\\[", "\\]"]],
+            processEscapes: true,
           },
-        },
-      };
+          options: {
+            skipHtmlTags: [
+              "script",
+              "noscript",
+              "style",
+              "textarea",
+              "pre",
+              "code",
+            ],
+          },
+          startup: {
+            ready: () => {
+              const { MathJax } = window;
+              MathJax.startup.defaultReady();
+              queueMathTypeset();
+            },
+          },
+        };
 
-      document.addEventListener("astro:after-swap", queueMathTypeset);
-    </script>
-    <script
-      defer
-      id="mathjax"
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+        document.addEventListener("astro:after-swap", queueMathTypeset);
+      </script>
+    )}
+    {needsMathJax && (
+      <script
+        defer
+        id="mathjax"
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    )}
     <ViewTransitions />
     <slot name="head" />
   </head>
