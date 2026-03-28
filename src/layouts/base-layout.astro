@@ -20,8 +20,6 @@ interface Props {
 const { title, description, image, classname, noIndex } = Astro.props;
 
 const isProd = import.meta.env.PROD;
-const pathname = Astro.url.pathname;
-const needsMathJax = pathname.startsWith("/docs") || pathname.startsWith("/blog");
 
 const onlyDark = false;
 
@@ -96,49 +94,56 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       image={image}
       noIndex={noIndex}
     />
-    {needsMathJax && (
-      <script is:inline>
-        const queueMathTypeset = () => {
-          if (window.MathJax?.typesetPromise) {
-            window.MathJax.typesetClear?.();
-            window.MathJax.typesetPromise();
-          }
-        };
+    <script is:inline>
+      var queueMathTypeset = function () {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          window.MathJax.typesetClear && window.MathJax.typesetClear();
+          window.MathJax.typesetPromise();
+        }
+      };
 
-        window.MathJax = {
-          tex: {
-            inlineMath: [["\\(", "\\)"]],
-            displayMath: [["\\[", "\\]"]],
-            processEscapes: true,
+      window.MathJax = {
+        tex: {
+          inlineMath: [["\\(", "\\)"]],
+          displayMath: [["\\[", "\\]"]],
+          processEscapes: true,
+        },
+        options: {
+          skipHtmlTags: [
+            "script",
+            "noscript",
+            "style",
+            "textarea",
+            "pre",
+            "code",
+          ],
+        },
+        startup: {
+          ready: function () {
+            window.MathJax.startup.defaultReady();
+            queueMathTypeset();
           },
-          options: {
-            skipHtmlTags: [
-              "script",
-              "noscript",
-              "style",
-              "textarea",
-              "pre",
-              "code",
-            ],
-          },
-          startup: {
-            ready: () => {
-              const { MathJax } = window;
-              MathJax.startup.defaultReady();
-              queueMathTypeset();
-            },
-          },
-        };
+        },
+      };
 
-        document.addEventListener("astro:after-swap", queueMathTypeset);
-      </script>
-    )}
-    {needsMathJax && (
-      <script
-        defer
-        id="mathjax"
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    )}
+      function loadMathJaxIfNeeded() {
+        if (document.getElementById("mathjax-script")) return;
+        var body = document.body.innerHTML;
+        if (body.indexOf("\\(") !== -1 || body.indexOf("\\[") !== -1 || body.indexOf("class=\"mermaid") !== -1) {
+          var s = document.createElement("script");
+          s.id = "mathjax-script";
+          s.defer = true;
+          s.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
+          document.head.appendChild(s);
+        }
+      }
+
+      document.addEventListener("astro:after-swap", function () {
+        queueMathTypeset();
+        loadMathJaxIfNeeded();
+      });
+      document.addEventListener("DOMContentLoaded", loadMathJaxIfNeeded);
+    </script>
     <ViewTransitions />
     <slot name="head" />
   </head>
