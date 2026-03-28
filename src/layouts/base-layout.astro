@@ -127,22 +127,21 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       };
 
       function loadMathJaxIfNeeded() {
-        if (document.getElementById("mathjax-script")) return;
+        if (document.getElementById("mathjax-script")) {
+          queueMathTypeset();
+          return;
+        }
         var body = document.body.innerHTML;
         if (body.indexOf("\\(") !== -1 || body.indexOf("\\[") !== -1 || body.indexOf("class=\"mermaid") !== -1) {
           var s = document.createElement("script");
           s.id = "mathjax-script";
-          s.defer = true;
           s.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
           document.head.appendChild(s);
         }
       }
 
-      document.addEventListener("astro:after-swap", function () {
-        queueMathTypeset();
-        loadMathJaxIfNeeded();
-      });
-      document.addEventListener("DOMContentLoaded", loadMathJaxIfNeeded);
+      document.addEventListener("astro:page-load", loadMathJaxIfNeeded);
+      document.addEventListener("astro:after-swap", loadMathJaxIfNeeded);
     </script>
     <ViewTransitions />
     <slot name="head" />
