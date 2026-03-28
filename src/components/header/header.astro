@@ -57,8 +57,7 @@ const latestRoadmapYear = getYearToUse();
 const isDevPath = visibility.development.includes(pathname);
 const isPathInNavigation = pathnames.includes(pathname);
 const needsBorder = !isDevPath ? "border-b border-defaultBorder" : "";
-const stickyClass =
-  !disableSticky && !isPathInNavigation ? "top-0 sticky z-[30]" : "";
+const stickyClass = !disableSticky ? "top-0 sticky z-[30]" : "";
 const headerBaseClass = "bg-white dark:bg-[#242424]";
 
 const headerClass =
@@ -69,8 +68,11 @@ const navContainerBaseClass = "bg-white dark:bg-[#242424]";
 const navContainerVisibility = disableSticky
   ? "hidden"
   : pathnames.includes(pathname)
-    ? "top-0 sticky z-[30]"
+    ? "sticky z-[30]"
     : "hidden";
+
+// Sub-nav top offset: sits below header (56px mobile, 84px desktop)
+const navContainerTop = "top-[56px] md:top-[84px]";
 
 // Navigation styling
 const navBaseClass =
@@ -169,7 +171,7 @@ const navContainerClass = hideContainer ? "" : "container";
   </nav>
 </header>
 
-<div class={clsx(navContainerBaseClass, navContainerVisibility)}>
+<div class={clsx(navContainerBaseClass, navContainerVisibility, navContainerTop)}>
   {
     visibility.network.includes(pathname) && (
       <SubNavbar pathname={Astro.url.pathname} client:load type="network" />
