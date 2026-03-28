@@ -131,8 +131,11 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
           queueMathTypeset();
           return;
         }
-        var body = document.body.innerHTML;
-        if (body.indexOf("\\(") !== -1 || body.indexOf("\\[") !== -1 || body.indexOf("class=\"mermaid") !== -1) {
+        if (
+          document.querySelector(".math-inline") ||
+          document.querySelector(".math-display") ||
+          document.querySelector(".mermaid")
+        ) {
           var s = document.createElement("script");
           s.id = "mathjax-script";
           s.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
@@ -140,6 +143,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         }
       }
 
+      window.addEventListener("load", loadMathJaxIfNeeded);
       document.addEventListener("astro:page-load", loadMathJaxIfNeeded);
       document.addEventListener("astro:after-swap", loadMathJaxIfNeeded);
     </script>
