@@ -15,11 +15,13 @@ type Item = {
 };
 
 export default function AkashApps({ desktopItems, mobileItems }: { desktopItems: Item[]; mobileItems: Item[] }) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [windowWidth, setWindowWidth] = useState(0);
   const activeIndexRef = useRef(0);
   const scrollCooldown = useRef(false);
+  const isLockedRef = useRef(false);
+  const accumulatedDelta = useRef(0);
 
   useEffect(() => {
     activeIndexRef.current = activeIndex;
@@ -33,32 +35,48 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
   }, []);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el || windowWidth < 1200) return;
+    const section = sectionRef.current;
+    if (!section || windowWidth < 1200) return;
 
-    let accumulatedDelta = 0;
-    const DELTA_THRESHOLD = 50;
+    const lockScroll = () => {
+      isLockedRef.current = true;
+    };
+
+    const unlockScroll = () => {
+      isLockedRef.current = false;
+      accumulatedDelta.current = 0;
+    };
 
     const handleWheel = (e: WheelEvent) => {
+      const rect = section.getBoundingClientRect();
+      const isAtTop = rect.top <= 200 && rect.top >= -50 && rect.bottom > 200;
+
+      if (!isAtTop && !isLockedRef.current) return;
+
       const idx = activeIndexRef.current;
       const atStart = idx === 0 && e.deltaY < 0;
       const atEnd = idx === desktopItems.length - 1 && e.deltaY > 0;
 
       if (atStart || atEnd) {
-        accumulatedDelta = 0;
+        unlockScroll();
         return;
       }
 
       e.preventDefault();
+      if (!isLockedRef.current) {
+        const targetTop = 130;
+        window.scrollTo(0, window.scrollY + rect.top - targetTop);
+      }
+      lockScroll();
 
       if (scrollCooldown.current) return;
 
-      accumulatedDelta += e.deltaY;
+      accumulatedDelta.current += e.deltaY;
 
-      if (Math.abs(accumulatedDelta) >= DELTA_THRESHOLD) {
+      if (Math.abs(accumulatedDelta.current) >= 50) {
         scrollCooldown.current = true;
-        const direction = accumulatedDelta > 0 ? 1 : -1;
-        accumulatedDelta = 0;
+        const direction = accumulatedDelta.current > 0 ? 1 : -1;
+        accumulatedDelta.current = 0;
 
         setActiveIndex((prev) => {
           const next = Math.max(0, Math.min(desktopItems.length - 1, prev + direction));
@@ -72,8 +90,21 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
       }
     };
 
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    return () => el.removeEventListener("wheel", handleWheel);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isLockedRef.current) return;
+      const scrollKeys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"];
+      if (scrollKeys.includes(e.key)) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("wheel", handleWheel, { passive: false });
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("wheel", handleWheel);
+      document.removeEventListener("keydown", handleKeyDown);
+      unlockScroll();
+    };
   }, [desktopItems.length, windowWidth]);
 
   const isMobile = windowWidth < 1200;
@@ -184,11 +215,8 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
   }
 
   return (
-    <div
-      ref={containerRef}
-      className="relative"
-    >
-      <div className="sticky top-24 max-w-7xl flex items-center overflow-hidden">
+    <div ref={sectionRef}>
+      <div className="max-w-7xl overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start h-full justify-between">
 
           <div className="w-full md:w-1/2 flex items-start gap-[10px]">
