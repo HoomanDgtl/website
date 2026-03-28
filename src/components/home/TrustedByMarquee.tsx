@@ -116,6 +116,8 @@ const TrustedByMarquee = ({
                 <img
                   src={item.image}
                   alt={item.title}
+                  width="120"
+                  height="34"
                   className="w-auto object-contain"
                   style={{ height, opacity: isLoaded ? 1 : 0 }}
                 />

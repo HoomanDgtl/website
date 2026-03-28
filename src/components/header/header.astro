@@ -2,7 +2,6 @@
 import NavLink from "@/components/header/nav-link.astro";
 import Logo from "@/components/ui/logo.astro";
 import { getYearToUse } from "@/utils/redirects";
-import { getCollection } from "astro:content";
 import clsx from "clsx";
 
 import DarkModeToggle from "../dark-mode-toggle";
@@ -41,15 +40,6 @@ const visibility = {
 
 const pathnames = Object.values(visibility).flat();
 
-const posts = (await getCollection("Blog"))
-  .filter((post) => {
-    return post.data.archive !== true;
-  })
-  .sort((a, b) => {
-    const dateA = new Date(a.data.pubDate);
-    const dateB = new Date(b.data.pubDate);
-    return dateB.getTime() - dateA.getTime();
-  });
 
 const latestRoadmapYear = getYearToUse();
 
@@ -98,7 +88,7 @@ const navContainerClass = hideContainer ? "" : "container";
           type="development"
           latestRoadmapYear={latestRoadmapYear}
         />
-        <PopOverNavItemEcosystem client:idle posts={posts} />
+        <PopOverNavItemEcosystem client:idle />
         <NavLink href="/blog/" currentPath={pathname}>Blog</NavLink>
         <NavLink href="/docs/" currentPath={pathname}>Docs</NavLink>
         <NavLink href="/pricing/gpus" currentPath={pathname}>
