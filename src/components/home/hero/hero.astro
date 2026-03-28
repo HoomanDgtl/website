@@ -161,11 +161,11 @@ const tiles = [
       {/* Desktop: image container */}
       <div class="hidden md:block">
         <div class="mx-auto max-w-[1136px] px-4 pb-0 pt-4">
-          <div class="relative group">
+          <div class="relative group" style="aspect-ratio: 2274/962;">
             {
               tiles.map((tile, i) => (
                 <div
-                  class={`hero-desktop-image-container overflow-hidden rounded-t-[20px] transition-opacity duration-500 ease-in-out ${i === 0 ? "relative opacity-100" : "absolute inset-0 opacity-0"}`}
+                  class={`hero-desktop-image-container absolute inset-0 overflow-hidden rounded-t-[20px] transition-opacity duration-500 ease-in-out ${i === 0 ? "opacity-100" : "opacity-0"}`}
                   data-tile={i}
                 >
                   <picture>
@@ -377,14 +377,14 @@ const tiles = [
         }
       });
 
-      // Desktop images — crossfade via opacity
+      // Desktop images — crossfade via opacity only (no layout changes)
       desktopImages.forEach((img, i) => {
         if (i === index) {
-          img.classList.remove("opacity-0", "absolute", "inset-0");
-          img.classList.add("opacity-100", "relative");
+          img.classList.remove("opacity-0");
+          img.classList.add("opacity-100");
         } else {
-          img.classList.remove("opacity-100", "relative");
-          img.classList.add("opacity-0", "absolute", "inset-0");
+          img.classList.remove("opacity-100");
+          img.classList.add("opacity-0");
         }
       });
 
