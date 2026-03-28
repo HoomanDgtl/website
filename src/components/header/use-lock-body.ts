@@ -1,31 +1,24 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export function useLockBody(open: any) {
-  const scrollYRef = useRef(0);
-
   useEffect(() => {
     if (open) {
-      scrollYRef.current = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollYRef.current}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
+      document.body.style.overscrollBehavior = "none";
+      document.body.style.touchAction = "none";
     } else {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
-      window.scrollTo(0, scrollYRef.current);
+      document.body.style.overscrollBehavior = "";
+      document.body.style.touchAction = "";
     }
 
     return () => {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
+      document.body.style.overscrollBehavior = "";
+      document.body.style.touchAction = "";
     };
   }, [open]);
 }
