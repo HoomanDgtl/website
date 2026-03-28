@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Disclosure, Transition } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import {
   AkashLogo,
   DiscordIcon,
@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/accordion-arrow";
 import clsx from "clsx";
 import { ArrowRightCircle, ChevronDown } from "lucide-react";
-import { Fragment } from "react";
 import DarkModeToggle from "../dark-mode-toggle";
 import TryAkashForm from "../ui/try-akash-form";
 import {
@@ -57,40 +56,41 @@ export default function HamburgerMenu({
   hideDarkToggle?: boolean;
 }) {
   return (
-    <Disclosure as="nav" className="">
+    <Disclosure as="nav">
       {({ open }) => (
         <>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 z-[51] bg-slate-900/25 backdrop-blur will-change-[opacity] md:block" />
-          </Transition.Child>
           <Disclosure.Button className="mt-1.5 inline-flex items-center justify-center">
             <span className="sr-only">Open main menu</span>
             {open ? <XMarkIcon /> : <HamburgerIcon />}
           </Disclosure.Button>
-          <Transition
-            enter="transition-transform ease-out duration-300"
-            enterFrom="translate-x-full"
-            enterTo="translate-x-0"
-            leave="transition-transform ease-in duration-200"
-            leaveFrom="translate-x-0"
-            leaveTo="translate-x-full"
-            className="fixed inset-0 z-[52] w-full overflow-y-auto bg-background will-change-transform [backface-visibility:hidden] [-webkit-overflow-scrolling:touch] md:left-auto md:right-0 md:w-1/2 slg:hidden"
+
+          {/* Backdrop */}
+          <div
+            className={clsx(
+              "fixed inset-0 z-[51] bg-slate-900/25 backdrop-blur transition-opacity duration-300 ease-out",
+              open
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0",
+            )}
+          />
+
+          {/* Slide-in panel */}
+          <div
+            className={clsx(
+              "fixed inset-0 z-[52] w-full bg-background transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform [backface-visibility:hidden] [-webkit-overflow-scrolling:touch] md:left-auto md:right-0 md:w-1/2 slg:hidden",
+              open ? "translate-x-0" : "translate-x-full",
+              !open && "pointer-events-none",
+            )}
           >
-            <Panel
-              currentPath={currentPath}
-              open={open}
-              latestRoadmapYear={latestRoadmapYear}
-              hideDarkToggle={hideDarkToggle}
-            />
-          </Transition>
+            <div className="h-full overflow-y-auto overscroll-contain">
+              <Panel
+                currentPath={currentPath}
+                open={open}
+                latestRoadmapYear={latestRoadmapYear}
+                hideDarkToggle={hideDarkToggle}
+              />
+            </div>
+          </div>
         </>
       )}
     </Disclosure>
@@ -129,7 +129,7 @@ const Panel = ({
   });
 
   return (
-    <Disclosure.Panel className="h-full slg:hidden overscroll-contain">
+    <div className="h-full slg:hidden">
       <div className="box-border flex h-full flex-col justify-between gap-y-6 px-6">
         <div className="flex flex-col gap-10">
           <div className="flex justify-between pb-4 pt-4 md:pt-6">
@@ -302,6 +302,6 @@ const Panel = ({
           </div>
         </div>
       </div>
-    </Disclosure.Panel>
+    </div>
   );
 };
