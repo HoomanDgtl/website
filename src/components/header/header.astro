@@ -190,15 +190,14 @@ const navContainerClass = hideContainer ? "" : "container";
 {isPathInNavigation && (
   <style>
     #sub-nav-container {
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
-      border-bottom: 1px solid transparent;
+      transition: box-shadow 0.25s ease;
     }
     #sub-nav-container.header-away {
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      border-bottom-color: hsl(216, 11%, 91%);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
-    :root.dark #sub-nav-container.header-away {
-      border-bottom-color: hsl(0, 0%, 18%);
+    /* Prevent layout shift before SubNavbar island hydrates */
+    #sub-nav-container {
+      min-height: 57px;
     }
   </style>
   <script is:inline>
@@ -206,7 +205,6 @@ const navContainerClass = hideContainer ? "" : "container";
       var currentObserver = null;
 
       function setupSubNavObserver() {
-        // Clean up previous observer to prevent stacking
         if (currentObserver) {
           currentObserver.disconnect();
           currentObserver = null;
@@ -216,22 +214,30 @@ const navContainerClass = hideContainer ? "" : "container";
         var subNav = document.getElementById("sub-nav-container");
         if (!header || !subNav) return;
 
+        // Reset state on setup
+        subNav.classList.remove("header-away");
+
         currentObserver = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
+          // Use rAF to batch with browser paint and avoid flicker
+          requestAnimationFrame(function() {
+            var isVisible = entries[entries.length - 1].isIntersecting;
+            if (isVisible) {
               subNav.classList.remove("header-away");
             } else {
               subNav.classList.add("header-away");
             }
           });
-        }, { threshold: 0 });
+        }, {
+          threshold: 0,
+          // Buffer zone: only trigger when header is fully out of view
+          rootMargin: "0px 0px 0px 0px"
+        });
 
         currentObserver.observe(header);
       }
 
       document.addEventListener("astro:page-load", setupSubNavObserver);
       document.addEventListener("astro:after-swap", function() {
-        // Reset state immediately after DOM swap to prevent flash
         var subNav = document.getElementById("sub-nav-container");
         if (subNav) subNav.classList.remove("header-away");
       });
