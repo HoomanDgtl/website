@@ -206,6 +206,7 @@ const shouldHide = shouldHideCta(pathname);
       : "bg-white dark:bg-background container"
   )}
 >
+  <div class={clsx(overrideClassName && "container-nav-3")}>
   <div class="border-b pb-6 md:pb-20">
     <div class="justify-between md:mx-auto lg:flex lg:gap-5">
       <Superclound className="flex border-b pb-6 md:hidden" />
@@ -402,5 +403,6 @@ const shouldHide = shouldHideCta(pathname);
         </p>
       </div>
     </div>
+  </div>
   </div>
 </footer>
