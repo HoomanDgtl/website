@@ -1,20 +1,31 @@
-// use-lock-body.js
-
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function useLockBody(open: any) {
+  const scrollYRef = useRef(0);
+
   useEffect(() => {
     if (open) {
-      // Disable scrolling on the body element when the mobile menu is open
+      scrollYRef.current = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollYRef.current}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
       document.body.style.overflow = "hidden";
     } else {
-      // Re-enable scrolling when the mobile menu is closed
-      document.body.style.overflow = "auto";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, scrollYRef.current);
     }
 
-    // Clean up the effect
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
     };
   }, [open]);
 }

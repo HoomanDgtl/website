@@ -57,7 +57,7 @@ export default function HamburgerMenu({
   hideDarkToggle?: boolean;
 }) {
   return (
-    <Disclosure as="nav" className=" overflow-hidden">
+    <Disclosure as="nav" className="">
       {({ open }) => (
         <>
           <Transition.Child
@@ -69,20 +69,20 @@ export default function HamburgerMenu({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 z-[51] hidden bg-slate-900/25 opacity-100 backdrop-blur transition-opacity md:block" />
+            <div className="fixed inset-0 z-[51] bg-slate-900/25 backdrop-blur will-change-[opacity] md:block" />
           </Transition.Child>
           <Disclosure.Button className="mt-1.5 inline-flex items-center justify-center">
             <span className="sr-only">Open main menu</span>
             {open ? <XMarkIcon /> : <HamburgerIcon />}
           </Disclosure.Button>
           <Transition
-            enter="transition ease duration-500 transform"
-            enterFrom="opacity-100 translate-x-full"
-            enterTo="opacity-100 translate-x-0"
-            leave="transition ease duration-300 transform"
-            leaveFrom="opacity-100 translate-x-0"
-            leaveTo="opacity-100 translate-x-full"
-            className="fixed  inset-0 z-[52]  w-full overflow-y-auto  bg-background md:left-auto md:right-0  md:w-1/2 slg:hidden"
+            enter="transition-transform ease-out duration-300"
+            enterFrom="translate-x-full"
+            enterTo="translate-x-0"
+            leave="transition-transform ease-in duration-200"
+            leaveFrom="translate-x-0"
+            leaveTo="translate-x-full"
+            className="fixed inset-0 z-[52] w-full overflow-y-auto bg-background will-change-transform [backface-visibility:hidden] [-webkit-overflow-scrolling:touch] md:left-auto md:right-0 md:w-1/2 slg:hidden"
           >
             <Panel
               currentPath={currentPath}
@@ -129,8 +129,8 @@ const Panel = ({
   });
 
   return (
-    <Disclosure.Panel className="h-full slg:hidden">
-      <div className="box-border flex h-full  flex-col justify-between gap-y-6  px-6">
+    <Disclosure.Panel className="h-full slg:hidden overscroll-contain">
+      <div className="box-border flex h-full flex-col justify-between gap-y-6 px-6">
         <div className="flex flex-col gap-10">
           <div className="flex justify-between pb-4 pt-4 md:pt-6">
             <a href="/">
