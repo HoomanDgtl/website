@@ -190,20 +190,33 @@ const navContainerClass = hideContainer ? "" : "container";
 {isPathInNavigation && (
   <style>
     #sub-nav-container {
-      transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      border-bottom: 1px solid transparent;
     }
     #sub-nav-container.header-away {
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      border-bottom-color: hsl(216, 11%, 91%);
+    }
+    :root.dark #sub-nav-container.header-away {
+      border-bottom-color: hsl(0, 0%, 18%);
     }
   </style>
   <script is:inline>
     (function() {
+      var currentObserver = null;
+
       function setupSubNavObserver() {
+        // Clean up previous observer to prevent stacking
+        if (currentObserver) {
+          currentObserver.disconnect();
+          currentObserver = null;
+        }
+
         var header = document.querySelector("header");
         var subNav = document.getElementById("sub-nav-container");
         if (!header || !subNav) return;
 
-        var observer = new IntersectionObserver(function(entries) {
+        currentObserver = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
               subNav.classList.remove("header-away");
@@ -213,9 +226,15 @@ const navContainerClass = hideContainer ? "" : "container";
           });
         }, { threshold: 0 });
 
-        observer.observe(header);
+        currentObserver.observe(header);
       }
+
       document.addEventListener("astro:page-load", setupSubNavObserver);
+      document.addEventListener("astro:after-swap", function() {
+        // Reset state immediately after DOM swap to prevent flash
+        var subNav = document.getElementById("sub-nav-container");
+        if (subNav) subNav.classList.remove("header-away");
+      });
       if (document.readyState !== "loading") setupSubNavObserver();
     })();
   </script>
