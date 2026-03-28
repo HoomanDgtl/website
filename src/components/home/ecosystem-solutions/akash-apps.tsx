@@ -34,7 +34,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
       if (rect.top <= 0 && rect.bottom >= viewportHeight) {
         const totalHeight = rect.height - viewportHeight;
         const scrolled = Math.abs(rect.top);
-        const progress = scrolled / totalHeight;
+        const progress = Math.min(Math.max(scrolled / totalHeight, 0), 0.999);
 
         const newIndex = Math.min(
           Math.floor(progress * desktopItems.length),
@@ -166,7 +166,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
     <div
       ref={containerRef}
       className="relative"
-      style={{ height: `${desktopItems.length * 80}vh` }}
+      style={{ height: `${desktopItems.length * 50}vh` }}
     >
       <div className="sticky top-24 max-w-7xl h-[700px] flex items-center overflow-hidden">
         <div className="w-full flex flex-col md:flex-row items-start h-full justify-between">
@@ -182,7 +182,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
 
             <div className="relative overflow-visible">
               <div 
-                className="flex flex-col transition-transform duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+                className="flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform"
                 style={{
                   transform: `translateY(-${activeIndex * (isMobile ? 64 : 88)}px)`
                 }}
@@ -193,7 +193,7 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center h-16 md:h-[88px] transition-colors duration-500"
+                      className="flex items-center h-16 md:h-[88px] transition-colors duration-300 ease-out"
                     >
                       <div className="flex items-baseline gap-3">
                         <h2 className={`text-[32px] md:text-[48px] font-normal tracking-tighter leading-none font-Satoshi ${isActive ? "text-[#171717] dark:text-white" : "text-[#171717]/40 dark:text-white/40"}`}>
@@ -230,8 +230,8 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
                       key={item.id}
                       src={item.image}
                       alt={item.title}
-                      className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-700 ${
-                        i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-110"
+                      className={`absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-[opacity,transform] ${
+                        i === activeIndex ? "opacity-100 scale-100" : "opacity-0 scale-105"
                       }`}
                     />
                   ))}
@@ -247,10 +247,10 @@ export default function AkashApps({ desktopItems, mobileItems }: { desktopItems:
               </div>
 
               <div className="mt-5">
-                <h3 className="text-xl md:text-[24px] font-semibold transition-all duration-500 tracking-tight">
+                <h3 className="text-xl md:text-[24px] font-semibold transition-all duration-300 ease-out tracking-tight">
                   {desktopItems[activeIndex].title}
                 </h3>
-                <p className="text-[#86868B] text-sm md:text-base leading-relaxed transition-all duration-500 line-clamp-2 mt-2.5">
+                <p className="text-[#86868B] text-sm md:text-base leading-relaxed transition-all duration-300 ease-out line-clamp-2 mt-2.5">
                   {desktopItems[activeIndex].description}
                 </p>
                 
