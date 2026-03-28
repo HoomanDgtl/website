@@ -116,8 +116,7 @@ const tiles = [
                           <img
                             src={tile.image}
                             alt=""
-                            loading={i === 0 ? "eager" : "lazy"}
-                            decoding={i === 0 ? "auto" : "async"}
+                            loading="eager"
                             class="h-[350px] w-full block rounded-tl-2xl object-cover object-left-top"
                           />
                         </picture>
@@ -166,7 +165,7 @@ const tiles = [
             {
               tiles.map((tile, i) => (
                 <div
-                  class={`hero-desktop-image-container relative overflow-hidden rounded-t-[20px] ${i > 0 ? "hidden" : ""}`}
+                  class={`hero-desktop-image-container overflow-hidden rounded-t-[20px] transition-opacity duration-500 ease-in-out ${i === 0 ? "relative opacity-100" : "absolute inset-0 opacity-0"}`}
                   data-tile={i}
                 >
                   <picture>
@@ -174,9 +173,8 @@ const tiles = [
                     <img
                       src={tile.image}
                       alt=""
-                      loading={i === 0 ? "eager" : "lazy"}
-                      decoding={i === 0 ? "auto" : "async"}
-                      fetchpriority={i === 0 ? "high" : "low"}
+                      loading="eager"
+                      fetchpriority={i === 0 ? "high" : "auto"}
                       class="w-full block"
                     />
                   </picture>
@@ -379,9 +377,15 @@ const tiles = [
         }
       });
 
-      // Desktop images
+      // Desktop images — crossfade via opacity
       desktopImages.forEach((img, i) => {
-        img.classList.toggle("hidden", i !== index);
+        if (i === index) {
+          img.classList.remove("opacity-0", "absolute", "inset-0");
+          img.classList.add("opacity-100", "relative");
+        } else {
+          img.classList.remove("opacity-100", "relative");
+          img.classList.add("opacity-0", "absolute", "inset-0");
+        }
       });
 
       // Mobile blocks
