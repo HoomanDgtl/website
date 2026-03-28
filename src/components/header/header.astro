@@ -91,14 +91,14 @@ const navContainerClass = hideContainer ? "" : "container";
       <div
         class="mt-1 hidden lg:w-full lg:justify-center lg:gap-x-[20px] slg:flex xl:gap-x-[24px]"
       >
-        <PopOverNavItemNetwork client:load />
-        <PopOverCommunity client:load type="community" />
+        <PopOverNavItemNetwork client:idle />
+        <PopOverCommunity client:idle type="community" />
         <PopOverCommunity
-          client:load
+          client:idle
           type="development"
           latestRoadmapYear={latestRoadmapYear}
         />
-        <PopOverNavItemEcosystem client:load posts={posts} />
+        <PopOverNavItemEcosystem client:idle posts={posts} />
         <NavLink href="/blog/" currentPath={pathname}>Blog</NavLink>
         <NavLink href="/docs/" currentPath={pathname}>Docs</NavLink>
         <NavLink href="/pricing/gpus" currentPath={pathname}>
@@ -164,7 +164,7 @@ const navContainerClass = hideContainer ? "" : "container";
 
         <TryAkashForm client:load type="headerDeploy" />
       </div>
-      {!hideDarkToggle && <DarkModeToggle client:load />}
+      {!hideDarkToggle && <DarkModeToggle client:idle />}
     </div>
   </nav>
 </header>

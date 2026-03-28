@@ -41,10 +41,6 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
   data-theme={htmlDataTheme}
 >
   <head>
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-LFRGN2J2RV"></script>
     <script is:inline>
       const doc = document.documentElement;
       if (doc.dataset.onlyDark === "true") {
@@ -61,31 +57,45 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-LFRGN2J2RV");
     </script>
 
-    <!-- Start of HubSpot Embed Code -->
-    <script
-      is:inline
-      type="text/javascript"
-      id="hs-script-loader"
-      async
-      defer
-      src="//js.hs-scripts.com/47519938.js"
-    ></script><!-- End of HubSpot Embed Code -->
-
+    <!-- GA & GTM & HubSpot - deferred until after page load -->
     <script is:inline>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-573RDG5H");
+      function _loadAnalytics() {
+        // Google Analytics
+        var ga = document.createElement('script');
+        ga.async = true;
+        ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-LFRGN2J2RV';
+        document.head.appendChild(ga);
+
+        // GTM (GTM-573RDG5H)
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+          j.async = true;
+          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", "GTM-573RDG5H");
+
+        // HubSpot
+        var hs = document.createElement('script');
+        hs.async = true;
+        hs.id = 'hs-script-loader';
+        hs.src = '//js.hs-scripts.com/47519938.js';
+        document.head.appendChild(hs);
+      }
+
+      if (document.readyState === 'complete') {
+        setTimeout(_loadAnalytics, 0);
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(_loadAnalytics, 100);
+        });
+      }
     </script>
 
     <BaseHead
@@ -379,10 +389,25 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       observer.observe(document.documentElement, { attributes: true });
       observer.observe(document.body, { attributes: true });
     </script>
-    <script
-      is:inline
-      async
-      src="https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8"
-    ></script>
+    <!-- Growth channel pixel - deferred -->
+    <script is:inline>
+      if (document.readyState === 'complete') {
+        setTimeout(function() {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8';
+          document.body.appendChild(s);
+        }, 0);
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8';
+            document.body.appendChild(s);
+          }, 200);
+        });
+      }
+    </script>
   </body>
 </html>
