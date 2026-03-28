@@ -81,7 +81,7 @@ const features: Feature[] = [
     <!-- Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-2 -mx-4">
       {features.map((feature) => (
-        <div class="relative overflow-hidden">
+        <div class="feature-card relative overflow-hidden">
 
           <!-- Desktop / Tablet -->
           <picture class="feature-img-desktop">
@@ -89,6 +89,8 @@ const features: Feature[] = [
             <img
               src={feature.image}
               alt={feature.title}
+              width="1437"
+              height="892"
               loading="lazy"
               decoding="async"
               class="w-full h-auto select-none pointer-events-none max-w-2xs md:max-w-full"
@@ -101,9 +103,11 @@ const features: Feature[] = [
             <img
               src={feature.mobileImage}
               alt={feature.title}
+              width="770"
+              height="800"
               loading="lazy"
               decoding="async"
-              class="w-full h-full object-cover select-none pointer-events-none"
+              class="w-full h-auto object-cover select-none pointer-events-none"
             />
           </picture>
 
@@ -134,6 +138,11 @@ const features: Feature[] = [
     left: 7%;
   }
 
+  /* Reserve space for images before they load to prevent layout shift */
+  .feature-card {
+    aspect-ratio: 1437 / 892;
+  }
+
   @media (max-width: 450px) {
     picture.feature-img-mobile {
       display: block;
@@ -143,6 +152,9 @@ const features: Feature[] = [
     }
     .feature-content {
       left: 10%;
+    }
+    .feature-card {
+      aspect-ratio: 770 / 800;
     }
   }
 </style>
