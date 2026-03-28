@@ -92,6 +92,7 @@ const TrustedByMarquee = ({
     <div
       ref={containerRef}
       className="w-full overflow-hidden"
+      role="marquee"
       aria-label="Trusted By Logos Carousel"
     >
       <div ref={trackRef} className="flex items-center gap-24">

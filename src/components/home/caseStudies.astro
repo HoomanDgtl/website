@@ -1,4 +1,6 @@
 ---
+import { caseStudyIcons } from "./caseStudyIcons";
+
 interface CaseStudy {
   icon: string;
   title: string;
@@ -8,7 +10,7 @@ interface CaseStudy {
 
 const caseStudies: CaseStudy[] = [
   {
-    icon: "/images/case-icon-1.svg",
+    icon: caseStudyIcons[0],
     title:
       "Eliminating Cloud Cost Opacity: How Sigea Cloud Labs Rebuilt Enterprise Storage on Akash",
     description:
@@ -16,7 +18,7 @@ const caseStudies: CaseStudy[] = [
     link: "/blog/eliminating-cloud-cost-opacity-how-sigea-cloud-labs-rebuilt-enterprise-storage-on-decentralized-infrastructure",
   },
   {
-    icon: "/images/case-icon-2.svg",
+    icon: caseStudyIcons[1],
     title:
       "Why Levangie Labs Chose Akash to Power the First Semi-Autonomous AI Organization",
     description:
@@ -24,7 +26,7 @@ const caseStudies: CaseStudy[] = [
     link: "/blog/why-levangie-labs-chose-akash-to-power-the-first-semi-autonomous-ai-organization",
   },
   {
-    icon: "/images/case-icon-3.svg",
+    icon: caseStudyIcons[2],
     title:
       "How Flashback Labs Scaled Privacy-First AI on Akash",
     description:
@@ -56,17 +58,10 @@ const caseStudies: CaseStudy[] = [
         <div class="rounded-[20px] border border-black/10 dark:border-white/10 p-6 flex flex-col h-full">
 
           <!-- Icon -->
-          <div class="w-[48px] h-[48px] flex-shrink-0">
-            <img
-              src={study.icon}
-              alt=""
-              width="68"
-              height="68"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-full"
-            />
-          </div>
+          <div
+            class="aspect-square w-[48px] bg-[#EEEEEE] dark:bg-[#101010] border-[#e3e3e3] dark:border-white/10"
+            set:html={study.icon}
+          />
 
           <!-- Content -->
           <div class="my-4 md:my-8 space-y-2 flex-grow">
