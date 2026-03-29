@@ -18,6 +18,7 @@ const tiles = [
     description: "Run AI Inference models on a high-performance managed API.",
     image: "/images/heroNew1.png",
     imageWebp: "/images/heroNew1.webp",
+    imageWebpSmall: "/images/heroNew1-1200w.webp",
     url: "https://akashml.com",
     buttonText: "Explore AkashML Playground",
   },
@@ -27,6 +28,7 @@ const tiles = [
       "Explore pre-configured environments for Llama-3, DeepSeek, and more.",
     image: "/images/heroNew2.png",
     imageWebp: "/images/heroNew2.webp",
+    imageWebpSmall: "/images/heroNew2-1200w.webp",
     url: "https://console.akash.network/templates",
     buttonText: "Explore Templates",
   },
@@ -35,6 +37,7 @@ const tiles = [
     description: "Monetize your servers by joining the network.",
     image: "/images/heroNew3.png",
     imageWebp: "/images/heroNew3.webp",
+    imageWebpSmall: "/images/heroNew3-1200w.webp",
     url: "https://provider-console.akash.network",
     buttonText: "Become an Akash Provider",
   },
@@ -112,7 +115,11 @@ const tiles = [
                         data-tile={i}
                       >
                         <picture>
-                          <source srcset={tile.imageWebp} type="image/webp" />
+                          <source
+                            srcset={`${tile.imageWebpSmall} 1200w, ${tile.imageWebp} 2274w`}
+                            sizes="100vw"
+                            type="image/webp"
+                          />
                           <img
                             src={tile.image}
                             alt=""
@@ -172,7 +179,11 @@ const tiles = [
                   data-tile={i}
                 >
                   <picture>
-                    <source srcset={tile.imageWebp} type="image/webp" />
+                    <source
+                      srcset={`${tile.imageWebpSmall} 1200w, ${tile.imageWebp} 2274w`}
+                      sizes="(max-width: 1136px) 100vw, 1136px"
+                      type="image/webp"
+                    />
                     <img
                       src={tile.image}
                       alt=""

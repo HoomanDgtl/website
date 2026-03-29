@@ -1,36 +1,4 @@
-import React, { useEffect, useRef } from "react";
-
-const useAutoScroll = (speed: number = 50) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-
-  useEffect(() => {
-    if (!containerRef.current || !trackRef.current) return;
-
-    const track = trackRef.current;
-    let animationFrameId: number;
-    let position = 0;
-
-    const animate = () => {
-      position -= speed / 80;
-      if (position <= -track.scrollWidth / 3) {
-        position = 0;
-      }
-      track.style.transform = `translateX(${position}px)`;
-      animationFrameId = requestAnimationFrame(animate);
-    };
-
-    setIsLoaded(true);
-    animationFrameId = requestAnimationFrame(animate);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [speed]);
-
-  return { containerRef, trackRef, isLoaded };
-};
+import React from "react";
 
 interface TrustedByItem {
   image: string;
@@ -40,27 +8,20 @@ interface TrustedByItem {
 
 const TrustedByMarquee = ({
   trustedBySection,
-  speed = 50,
 }: {
   trustedBySection: TrustedByItem[];
   speed?: number;
 }) => {
-  const { containerRef, trackRef, isLoaded } = useAutoScroll(speed);
-
-  const displayItems = [
-    ...trustedBySection,
-    ...trustedBySection,
-    ...trustedBySection,
-  ];
+  // Duplicate items for seamless loop (CSS animation scrolls one set width then resets)
+  const displayItems = [...trustedBySection, ...trustedBySection];
 
   return (
     <div
-      ref={containerRef}
-      className="w-full overflow-hidden"
+      className="marquee-container w-full overflow-hidden"
       role="marquee"
       aria-label="Trusted By Logos Carousel"
     >
-      <div ref={trackRef} className="flex items-center gap-24">
+      <div className="marquee-track flex items-center gap-24">
         {displayItems.map((item, index) => {
           const height = item.height
             ? typeof item.height === "number"
@@ -80,12 +41,22 @@ const TrustedByMarquee = ({
                 loading="lazy"
                 decoding="async"
                 className="w-auto object-contain dark:invert"
-                style={{ height, opacity: isLoaded ? 1 : 0 }}
+                style={{ height }}
               />
             </div>
           );
         })}
       </div>
+      <style>{`
+        .marquee-track {
+          animation: marquee-scroll 30s linear infinite;
+          will-change: transform;
+        }
+        @keyframes marquee-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 };
