@@ -112,29 +112,32 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         }
       };
 
-      window.MathJax = {
-        tex: {
-          inlineMath: [["\\(", "\\)"]],
-          displayMath: [["\\[", "\\]"]],
-          processEscapes: true,
-        },
-        options: {
-          skipHtmlTags: [
-            "script",
-            "noscript",
-            "style",
-            "textarea",
-            "pre",
-            "code",
-          ],
-        },
-        startup: {
-          ready: function () {
-            window.MathJax.startup.defaultReady();
-            queueMathTypeset();
+      // Only set MathJax config if it hasn't been loaded yet
+      if (!window.MathJax || !window.MathJax.typesetPromise) {
+        window.MathJax = {
+          tex: {
+            inlineMath: [["\\(", "\\)"]],
+            displayMath: [["\\[", "\\]"]],
+            processEscapes: true,
           },
-        },
-      };
+          options: {
+            skipHtmlTags: [
+              "script",
+              "noscript",
+              "style",
+              "textarea",
+              "pre",
+              "code",
+            ],
+          },
+          startup: {
+            ready: function () {
+              window.MathJax.startup.defaultReady();
+              queueMathTypeset();
+            },
+          },
+        };
+      }
 
       function hasMathContent() {
         return document.querySelector(".math-inline") ||
@@ -156,8 +159,21 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
           var s = document.createElement("script");
           s.id = "mathjax-script";
           s.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js";
+          s.async = true;
           document.head.appendChild(s);
         }
+
+        // Poll for MathJax readiness while CDN script is loading
+        var attempts = 0;
+        var poll = setInterval(function () {
+          attempts++;
+          if (window.MathJax && window.MathJax.typesetPromise) {
+            clearInterval(poll);
+            queueMathTypeset();
+          } else if (attempts >= 50) {
+            clearInterval(poll);
+          }
+        }, 200);
       }
 
       window.addEventListener("load", loadMathJaxIfNeeded);
