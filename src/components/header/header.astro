@@ -189,59 +189,9 @@ const navContainerClass = hideContainer ? "" : "container";
 
 {isPathInNavigation && (
   <style>
-    #sub-nav-container {
-      transition: box-shadow 0.25s ease;
-    }
-    #sub-nav-container.header-away {
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
     /* Prevent layout shift before SubNavbar island hydrates */
     #sub-nav-container {
       min-height: 57px;
     }
   </style>
-  <script is:inline>
-    (function() {
-      var currentObserver = null;
-
-      function setupSubNavObserver() {
-        if (currentObserver) {
-          currentObserver.disconnect();
-          currentObserver = null;
-        }
-
-        var header = document.querySelector("header");
-        var subNav = document.getElementById("sub-nav-container");
-        if (!header || !subNav) return;
-
-        // Reset state on setup
-        subNav.classList.remove("header-away");
-
-        currentObserver = new IntersectionObserver(function(entries) {
-          // Use rAF to batch with browser paint and avoid flicker
-          requestAnimationFrame(function() {
-            var isVisible = entries[entries.length - 1].isIntersecting;
-            if (isVisible) {
-              subNav.classList.remove("header-away");
-            } else {
-              subNav.classList.add("header-away");
-            }
-          });
-        }, {
-          threshold: 0,
-          // Buffer zone: only trigger when header is fully out of view
-          rootMargin: "0px 0px 0px 0px"
-        });
-
-        currentObserver.observe(header);
-      }
-
-      document.addEventListener("astro:page-load", setupSubNavObserver);
-      document.addEventListener("astro:after-swap", function() {
-        var subNav = document.getElementById("sub-nav-container");
-        if (subNav) subNav.classList.remove("header-away");
-      });
-      if (document.readyState !== "loading") setupSubNavObserver();
-    })();
-  </script>
 )}
