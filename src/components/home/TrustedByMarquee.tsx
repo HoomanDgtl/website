@@ -8,7 +8,6 @@ const useAutoScroll = (speed: number = 50) => {
   useEffect(() => {
     if (!containerRef.current || !trackRef.current) return;
 
-    const container = containerRef.current;
     const track = trackRef.current;
     let animationFrameId: number;
     let position = 0;
@@ -34,20 +33,17 @@ const useAutoScroll = (speed: number = 50) => {
 };
 
 interface TrustedByItem {
-  image?: string;
+  image: string;
   title: string;
-  svg?: string;
   height?: number | string;
 }
 
 const TrustedByMarquee = ({
   trustedBySection,
   speed = 50,
-  gap = 0,
 }: {
   trustedBySection: TrustedByItem[];
   speed?: number;
-  gap?: number;
 }) => {
   const { containerRef, trackRef, isLoaded } = useAutoScroll(speed);
 
@@ -56,37 +52,6 @@ const TrustedByMarquee = ({
     ...trustedBySection,
     ...trustedBySection,
   ];
-
-  // Process SVG string to fix height attribute
-  const processSvg = (svgString: string) => {
-    return svgString.replace(/height="100%"/g, "").replace(/width="100%"/g, "");
-  };
-
-  useEffect(() => {
-    // Use a small delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      if (trackRef.current) {
-        const svgs = trackRef.current.querySelectorAll("svg");
-        svgs.forEach((svg, index) => {
-          const itemIndex = index % trustedBySection.length;
-          const item = trustedBySection[itemIndex];
-          const height = item.height
-            ? typeof item.height === "number"
-              ? `${item.height}px`
-              : item.height
-            : "34px";
-
-          svg.removeAttribute("width");
-          svg.removeAttribute("height");
-          svg.style.height = height;
-          svg.style.width = "auto";
-          svg.style.display = "block";
-        });
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [trustedBySection, isLoaded]);
 
   return (
     <div
@@ -107,22 +72,16 @@ const TrustedByMarquee = ({
               key={`${item.title}-${index}`}
               className="flex shrink-0 items-center justify-center"
             >
-              {item.svg ? (
-                <div
-                  dangerouslySetInnerHTML={{ __html: processSvg(item.svg) }}
-                  className="flex items-center justify-center [&>svg]:block [&>svg]:w-auto"
-                  style={{ height }}
-                />
-              ) : (
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  width="120"
-                  height="34"
-                  className="w-auto object-contain"
-                  style={{ height, opacity: isLoaded ? 1 : 0 }}
-                />
-              )}
+              <img
+                src={item.image}
+                alt={item.title}
+                width="120"
+                height="34"
+                loading="lazy"
+                decoding="async"
+                className="w-auto object-contain dark:invert"
+                style={{ height, opacity: isLoaded ? 1 : 0 }}
+              />
             </div>
           );
         })}
