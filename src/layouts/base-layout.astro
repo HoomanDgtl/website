@@ -25,7 +25,6 @@ const onlyDark = false;
 
 const htmlClasses = [
   "scroll-pt-[137px]",
-  "scroll-smooth",
   ...(onlyDark ? ["dark"] : []),
 ];
 
@@ -179,6 +178,21 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       window.addEventListener("load", loadMathJaxIfNeeded);
       document.addEventListener("astro:page-load", loadMathJaxIfNeeded);
       document.addEventListener("astro:after-swap", loadMathJaxIfNeeded);
+    </script>
+    <!-- Smooth-scroll for anchor links only (CSS scroll-smooth breaks
+         position:sticky in Safari, so we handle it in JS instead) -->
+    <script is:inline>
+      document.addEventListener("click", function(e) {
+        var link = e.target.closest("a[href^='#']");
+        if (!link) return;
+        var id = link.getAttribute("href").slice(1);
+        var target = id && document.getElementById(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: "smooth" });
+          history.pushState(null, "", "#" + id);
+        }
+      });
     </script>
     <ViewTransitions />
     <slot name="head" />
