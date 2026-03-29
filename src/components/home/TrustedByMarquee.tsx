@@ -1,10 +1,15 @@
 import React from "react";
 
 interface TrustedByItem {
-  image: string;
+  image?: string;
+  svg?: string;
   title: string;
   height?: number | string;
 }
+
+const processSvg = (svgString: string) => {
+  return svgString.replace(/height="100%"/g, "").replace(/width="100%"/g, "");
+};
 
 const TrustedByMarquee = ({
   trustedBySection,
@@ -33,16 +38,24 @@ const TrustedByMarquee = ({
               key={`${item.title}-${index}`}
               className="flex shrink-0 items-center justify-center"
             >
-              <img
-                src={item.image}
-                alt={item.title}
-                width="120"
-                height="34"
-                loading="lazy"
-                decoding="async"
-                className="w-auto object-contain dark:invert"
-                style={{ height }}
-              />
+              {item.svg ? (
+                <div
+                  dangerouslySetInnerHTML={{ __html: processSvg(item.svg) }}
+                  className="flex items-center justify-center [&>svg]:block [&>svg]:w-auto [&>svg]:h-[var(--logo-h)]"
+                  style={{ height, "--logo-h": height } as React.CSSProperties}
+                />
+              ) : (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  width="120"
+                  height="34"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-auto object-contain dark:invert"
+                  style={{ height }}
+                />
+              )}
             </div>
           );
         })}
