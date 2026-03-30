@@ -162,14 +162,18 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         }
 
         // Poll for MathJax readiness while CDN script is loading
+        // Clear any previous poll from prior navigation
+        if (window._mathJaxPoll) clearInterval(window._mathJaxPoll);
         var attempts = 0;
-        var poll = setInterval(function () {
+        window._mathJaxPoll = setInterval(function () {
           attempts++;
           if (window.MathJax && window.MathJax.typesetPromise) {
-            clearInterval(poll);
+            clearInterval(window._mathJaxPoll);
+            window._mathJaxPoll = null;
             queueMathTypeset();
           } else if (attempts >= 50) {
-            clearInterval(poll);
+            clearInterval(window._mathJaxPoll);
+            window._mathJaxPoll = null;
           }
         }, 200);
       }
