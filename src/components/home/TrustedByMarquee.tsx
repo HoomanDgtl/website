@@ -12,7 +12,7 @@ const processSvg = (svgString: string) => {
 };
 
 // Consistent speed in pixels per second across all screen sizes
-const PIXELS_PER_SECOND = 100;
+const PIXELS_PER_SECOND = 350;
 
 const TrustedByMarquee = ({
   trustedBySection,
