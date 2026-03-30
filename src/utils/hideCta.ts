@@ -5,6 +5,7 @@ export const hiddenPaths = [
   "/gpus-on-demand",
   "/case-studies/",
   "/blog/",
+  "/meetingconfirmation",
 ];
 
 export const shouldHideCta = (pathname: string) => {
