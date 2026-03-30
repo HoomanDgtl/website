@@ -10,28 +10,12 @@ import ReadyToDeploy from "@/components/home/ready-to-deploy.astro";
 import Permissionless from "@/components/home/permissionless.astro";
 import TrustedBy from "@/components/home/trustedby/trusted-by.astro";
 import Layout from "@/layouts/layout.astro";
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
 
 const homepage = await getEntry("Homepage", "index");
 
-type BlogPost = CollectionEntry<"Blog">;
-
-const posts = (await getCollection("Blog"))
-  .filter((post) => {
-    return post.data.archive !== true;
-  })
-  .sort((a, b) => {
-    const dateA = new Date(a.data.pubDate);
-    const dateB = new Date(b.data.pubDate);
-    return dateB.getTime() - dateA.getTime();
-  });
 const {
-  advert,
   heroSection,
-  infrastructureSection,
-  featureSection,
-  aiModelsAndAppsSection,
-  testimonialsSection,
 } = homepage?.data;
 ---
 

@@ -4,6 +4,7 @@ interface CaseStudy {
   title: string;
   description: string;
   link: string;
+  alt: string;
 }
 
 const caseStudies: CaseStudy[] = [
@@ -14,6 +15,7 @@ const caseStudies: CaseStudy[] = [
     description:
       "Sigea Cloud Labs deployed privacy-first cloud storage on Akash Network's decentralized GPU infrastructure.",
     link: "/blog/eliminating-cloud-cost-opacity-how-sigea-cloud-labs-rebuilt-enterprise-storage-on-decentralized-infrastructure",
+    alt: "Sigea Cloud Labs",
   },
   {
     icon: "/images/case-studies/levangie.svg",
@@ -22,6 +24,7 @@ const caseStudies: CaseStudy[] = [
     description:
       "Levangie Laboratories built cognitive architecture that enables AI agents to operate independently.",
     link: "/blog/why-levangie-labs-chose-akash-to-power-the-first-semi-autonomous-ai-organization",
+    alt: "Levangie Labs",
   },
   {
     icon: "/images/case-studies/flashback.svg",
@@ -30,6 +33,7 @@ const caseStudies: CaseStudy[] = [
     description:
       "Flashback Labs built a privacy-first AI platform that lets users create lifelike AI twins trained entirely on their own data.",
     link: "/blog/how-flashback-labs-scaled-privacy-first-ai-on-akash/",
+    alt: "Flashback Labs",
   },
 ];
 ---
@@ -61,7 +65,7 @@ const caseStudies: CaseStudy[] = [
           >
             <img
               src={study.icon}
-              alt=""
+              alt={study.alt}
               width="24"
               height="24"
               loading="lazy"

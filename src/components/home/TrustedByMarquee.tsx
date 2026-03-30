@@ -15,7 +15,6 @@ const TrustedByMarquee = ({
   trustedBySection,
 }: {
   trustedBySection: TrustedByItem[];
-  speed?: number;
 }) => {
   // Triple items for seamless loop (CSS animation scrolls one set width then resets)
   const displayItems = [...trustedBySection, ...trustedBySection, ...trustedBySection];
@@ -33,6 +32,8 @@ const TrustedByMarquee = ({
               ? `${item.height}px`
               : item.height
             : "34px";
+          // First set of logos is above the fold — load eagerly
+          const isFirstSet = index < trustedBySection.length;
           return (
             <div
               key={`${item.title}-${index}`}
@@ -50,7 +51,7 @@ const TrustedByMarquee = ({
                   alt={item.title}
                   width="120"
                   height="34"
-                  loading="lazy"
+                  loading={isFirstSet ? "eager" : "lazy"}
                   decoding="async"
                   className="w-auto object-contain dark:invert"
                   style={{ height }}

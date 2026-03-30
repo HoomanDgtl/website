@@ -20,7 +20,7 @@ const {
 <meta charset="utf-8" />
 <meta
   name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1"
+  content="width=device-width,initial-scale=1"
 />
 <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
 <meta name="generator" content={Astro.generator} />
@@ -28,35 +28,34 @@ const {
 <!-- Preconnect & DNS prefetch for third-party domains -->
 <!-- preconnect performs DNS + TCP + TLS handshake ahead of time (stronger hint); -->
 <!-- dns-prefetch only resolves DNS but is supported by older browsers as a fallback. -->
-<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
 <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
 
-<link rel="preconnect" href="https://connect.facebook.net" />
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin />
 <link rel="dns-prefetch" href="https://connect.facebook.net" />
 
-<link rel="preconnect" href="https://static.ads-twitter.com" />
+<link rel="preconnect" href="https://static.ads-twitter.com" crossorigin />
 <link rel="dns-prefetch" href="https://static.ads-twitter.com" />
 
-<link rel="preconnect" href="https://js.hsforms.net" />
+<link rel="preconnect" href="https://js.hsforms.net" crossorigin />
 <link rel="dns-prefetch" href="https://js.hsforms.net" />
 
-<link rel="preconnect" href="https://js.hs-scripts.com" />
+<link rel="preconnect" href="https://js.hs-scripts.com" crossorigin />
 <link rel="dns-prefetch" href="https://js.hs-scripts.com" />
 
 <!-- HubSpot Form Script - deferred until idle -->
 <script is:inline>
+  function _loadHubSpotForms() {
+    if (window._hubSpotFormsLoaded) return;
+    window._hubSpotFormsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://js.hsforms.net/forms/embed/47519938.js';
+    document.head.appendChild(s);
+  }
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(function() {
-      var s = document.createElement('script');
-      s.src = 'https://js.hsforms.net/forms/embed/47519938.js';
-      document.head.appendChild(s);
-    });
+    requestIdleCallback(_loadHubSpotForms);
   } else {
-    setTimeout(function() {
-      var s = document.createElement('script');
-      s.src = 'https://js.hsforms.net/forms/embed/47519938.js';
-      document.head.appendChild(s);
-    }, 2000);
+    setTimeout(_loadHubSpotForms, 2000);
   }
 </script>
 
@@ -112,6 +111,9 @@ const {
 <!-- Third-party tracking scripts - deferred until after page load -->
 <script is:inline>
   function _loadThirdPartyTrackers() {
+    if (window._thirdPartyTrackersLoaded) return;
+    window._thirdPartyTrackersLoaded = true;
+
     // Facebook Pixel
     !(function (f, b, e, v, n, t, s) {
       if (f.fbq) return;

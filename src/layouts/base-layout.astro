@@ -61,6 +61,9 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
     <!-- GA & GTM & HubSpot - deferred until after page load -->
     <script is:inline>
       function _loadAnalytics() {
+        if (window._analyticsLoaded) return;
+        window._analyticsLoaded = true;
+
         // Google Analytics
         var ga = document.createElement('script');
         ga.async = true;
@@ -445,21 +448,19 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
     </script>
     <!-- Growth channel pixel - deferred -->
     <script is:inline>
+      function _loadGrowthChannel() {
+        if (window._growthChannelLoaded) return;
+        window._growthChannelLoaded = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8';
+        document.body.appendChild(s);
+      }
       if (document.readyState === 'complete') {
-        setTimeout(function() {
-          var s = document.createElement('script');
-          s.async = true;
-          s.src = 'https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8';
-          document.body.appendChild(s);
-        }, 0);
+        setTimeout(_loadGrowthChannel, 0);
       } else {
         window.addEventListener('load', function() {
-          setTimeout(function() {
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8';
-            document.body.appendChild(s);
-          }, 200);
+          setTimeout(_loadGrowthChannel, 200);
         });
       }
     </script>
