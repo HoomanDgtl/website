@@ -12,8 +12,8 @@ const processSvg = (svgString: string) => {
 };
 
 // Fixed speed: pixels moved per animation frame (~60fps)
-// 200px/s ÷ 60fps ≈ 3.33px per frame
-const PX_PER_FRAME = 3.33;
+// Matches original: speed(50) / 80 = 0.625px per frame
+const PX_PER_FRAME = 0.625;
 
 const TrustedByMarquee = ({
   trustedBySection,
