@@ -11,8 +11,9 @@ const processSvg = (svgString: string) => {
   return svgString.replace(/height="100%"/g, "").replace(/width="100%"/g, "");
 };
 
-// Consistent speed in pixels per second across all screen sizes
-const PIXELS_PER_SECOND = 350;
+// Fixed speed: pixels moved per animation frame (~60fps)
+// 200px/s ÷ 60fps ≈ 3.33px per frame
+const PX_PER_FRAME = 3.33;
 
 const TrustedByMarquee = ({
   trustedBySection,
@@ -28,17 +29,22 @@ const TrustedByMarquee = ({
     const track = trackRef.current;
     if (!track) return;
 
-    const setDuration = () => {
-      // One-third of the track = one set of logos
+    let position = 0;
+    let rafId: number;
+
+    const animate = () => {
+      position -= PX_PER_FRAME;
+      // Reset when one-third (one full set) has scrolled past
       const oneSetWidth = track.scrollWidth / 3;
-      const duration = oneSetWidth / PIXELS_PER_SECOND;
-      track.style.animationDuration = `${duration}s`;
+      if (Math.abs(position) >= oneSetWidth) {
+        position += oneSetWidth;
+      }
+      track.style.transform = `translateX(${position}px)`;
+      rafId = requestAnimationFrame(animate);
     };
 
-    setDuration();
-
-    window.addEventListener("resize", setDuration);
-    return () => window.removeEventListener("resize", setDuration);
+    rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
   }, [trustedBySection.length]);
 
   return (
@@ -47,14 +53,13 @@ const TrustedByMarquee = ({
       role="marquee"
       aria-label="Trusted By Logos Carousel"
     >
-      <div ref={trackRef} className="marquee-track flex items-center gap-24">
+      <div ref={trackRef} className="marquee-track flex items-center gap-24" style={{ willChange: "transform" }}>
         {displayItems.map((item, index) => {
           const height = item.height
             ? typeof item.height === "number"
               ? `${item.height}px`
               : item.height
             : "34px";
-          // First set of logos is above the fold — load eagerly
           const isFirstSet = index < trustedBySection.length;
           return (
             <div
@@ -83,16 +88,6 @@ const TrustedByMarquee = ({
           );
         })}
       </div>
-      <style>{`
-        .marquee-track {
-          animation: marquee-scroll 1s linear infinite;
-          will-change: transform;
-        }
-        @keyframes marquee-scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.333%); }
-        }
-      `}</style>
     </div>
   );
 };
