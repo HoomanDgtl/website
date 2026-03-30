@@ -56,15 +56,19 @@ const caseStudies: CaseStudy[] = [
         <div class="rounded-[20px] border border-black/10 dark:border-white/10 p-6 flex flex-col h-full">
 
           <!-- Icon -->
-          <img
-            src={study.icon}
-            alt=""
-            width="48"
-            height="48"
-            loading="lazy"
-            decoding="async"
-            class="aspect-square w-[48px]"
-          />
+          <div
+            class="flex items-center justify-center aspect-square w-[48px] rounded-[10px] bg-[#EEEEEE] dark:bg-[#101010] border border-[#e3e3e3] dark:border-white/10"
+          >
+            <img
+              src={study.icon}
+              alt=""
+              width="24"
+              height="24"
+              loading="lazy"
+              decoding="async"
+              class="w-6 h-6 object-contain"
+            />
+          </div>
 
           <!-- Content -->
           <div class="my-4 md:my-8 space-y-2 flex-grow">

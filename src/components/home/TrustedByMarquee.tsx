@@ -17,8 +17,8 @@ const TrustedByMarquee = ({
   trustedBySection: TrustedByItem[];
   speed?: number;
 }) => {
-  // Duplicate items for seamless loop (CSS animation scrolls one set width then resets)
-  const displayItems = [...trustedBySection, ...trustedBySection];
+  // Triple items for seamless loop (CSS animation scrolls one set width then resets)
+  const displayItems = [...trustedBySection, ...trustedBySection, ...trustedBySection];
 
   return (
     <div
@@ -62,12 +62,12 @@ const TrustedByMarquee = ({
       </div>
       <style>{`
         .marquee-track {
-          animation: marquee-scroll 30s linear infinite;
+          animation: marquee-scroll 20s linear infinite;
           will-change: transform;
         }
         @keyframes marquee-scroll {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.333%); }
         }
       `}</style>
     </div>
