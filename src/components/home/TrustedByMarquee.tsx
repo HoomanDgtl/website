@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface TrustedByItem {
   image?: string;
@@ -11,13 +11,35 @@ const processSvg = (svgString: string) => {
   return svgString.replace(/height="100%"/g, "").replace(/width="100%"/g, "");
 };
 
+// Consistent speed in pixels per second across all screen sizes
+const PIXELS_PER_SECOND = 100;
+
 const TrustedByMarquee = ({
   trustedBySection,
 }: {
   trustedBySection: TrustedByItem[];
 }) => {
-  // Triple items for seamless loop (CSS animation scrolls one set width then resets)
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Triple items for seamless loop
   const displayItems = [...trustedBySection, ...trustedBySection, ...trustedBySection];
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const setDuration = () => {
+      // One-third of the track = one set of logos
+      const oneSetWidth = track.scrollWidth / 3;
+      const duration = oneSetWidth / PIXELS_PER_SECOND;
+      track.style.animationDuration = `${duration}s`;
+    };
+
+    setDuration();
+
+    window.addEventListener("resize", setDuration);
+    return () => window.removeEventListener("resize", setDuration);
+  }, [trustedBySection.length]);
 
   return (
     <div
@@ -25,7 +47,7 @@ const TrustedByMarquee = ({
       role="marquee"
       aria-label="Trusted By Logos Carousel"
     >
-      <div className="marquee-track flex items-center gap-24">
+      <div ref={trackRef} className="marquee-track flex items-center gap-24">
         {displayItems.map((item, index) => {
           const height = item.height
             ? typeof item.height === "number"
@@ -63,7 +85,7 @@ const TrustedByMarquee = ({
       </div>
       <style>{`
         .marquee-track {
-          animation: marquee-scroll 20s linear infinite;
+          animation: marquee-scroll 1s linear infinite;
           will-change: transform;
         }
         @keyframes marquee-scroll {
