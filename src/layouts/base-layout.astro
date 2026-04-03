@@ -49,6 +49,12 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         } catch {}
       }
     </script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+    </script>
 
     <!-- Start of HubSpot Embed Code -->
     <script
