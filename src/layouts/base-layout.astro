@@ -39,10 +39,6 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
   data-theme={htmlDataTheme}
 >
   <head>
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-LFRGN2J2RV"></script>
     <script is:inline>
       const doc = document.documentElement;
       if (doc.dataset.onlyDark === "true") {
@@ -52,15 +48,6 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
           localStorage.setItem("theme", "dark");
         } catch {}
       }
-    </script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-LFRGN2J2RV");
     </script>
 
     <!-- Start of HubSpot Embed Code -->
@@ -194,7 +181,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-WT4KSXNQ"
+        src="https://www.googletagmanager.com/ns.html?id=GTM-MSF384N3"
         height="0"
         width="0"
         style="display:none;visibility:hidden"></iframe></noscript
