@@ -215,7 +215,10 @@ const {
 
     // Twitter
     if (typeof twq !== "undefined") {
-      twq("track", "PageView");
+      twq("event", "page_view", {
+        page_path: window.location.pathname + window.location.search,
+        page_title: document.title,
+      });
     }
   });
 </script>
