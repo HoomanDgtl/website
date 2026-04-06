@@ -22,10 +22,7 @@ const isProd = import.meta.env.PROD;
 
 const onlyDark = false;
 
-const htmlClasses = [
-  "scroll-pt-[137px]",
-  ...(onlyDark ? ["dark"] : []),
-];
+const htmlClasses = ["scroll-pt-[137px]", ...(onlyDark ? ["dark"] : [])];
 
 const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
 ---
@@ -108,9 +105,11 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       }
 
       function hasMathContent() {
-        return document.querySelector(".math-inline") ||
+        return (
+          document.querySelector(".math-inline") ||
           document.querySelector(".math-display") ||
-          document.querySelector(".mermaid");
+          document.querySelector(".mermaid")
+        );
       }
 
       function loadMathJaxIfNeeded() {
@@ -155,7 +154,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
     <!-- Smooth-scroll for anchor links only (CSS scroll-smooth breaks
          position:sticky in Safari, so we handle it in JS instead) -->
     <script is:inline>
-      document.addEventListener("click", function(e) {
+      document.addEventListener("click", function (e) {
         var link = e.target.closest("a[href^='#']");
         if (!link) return;
         var id = link.getAttribute("href").slice(1);
@@ -172,13 +171,15 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
   </head>
   <body class="bg-background" class:list={classname}>
     <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
+    <noscript>
+      <iframe
         src="https://www.googletagmanager.com/ns.html?id=GTM-MSF384N3"
         height="0"
         width="0"
-        style="display:none;visibility:hidden"></iframe></noscript
-    >
+        style="display:none;visibility:hidden"
+      >
+      </iframe>
+    </noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <slot />
@@ -235,7 +236,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         localStorage.setItem("theme", isDark ? "dark" : "light");
         document.documentElement.setAttribute(
           "data-theme",
-          isDark ? "dark-plus" : "light-plus"
+          isDark ? "dark-plus" : "light-plus",
         );
       };
 
@@ -243,18 +244,18 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
         document
           .querySelectorAll("#header-toggle")
           .forEach((el) =>
-            el.addEventListener("click", handleHeaderToggleClick)
+            el.addEventListener("click", handleHeaderToggleClick),
           );
 
         document
           .querySelectorAll("#header-toggle-footer")
           .forEach((el) =>
-            el.addEventListener("click", handleHeaderToggleClick)
+            el.addEventListener("click", handleHeaderToggleClick),
           );
         document
           .querySelectorAll("#header-toggle-nav")
           .forEach((el) =>
-            el.addEventListener("click", handleHeaderToggleClick)
+            el.addEventListener("click", handleHeaderToggleClick),
           );
       }
     </script>
@@ -297,7 +298,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
 
       async function renderDiagrams(
         graphs: HTMLCollectionOf<Element>,
-        theme?: Theme
+        theme?: Theme,
       ) {
         const { default: mermaid } = await import("mermaid");
 
@@ -363,7 +364,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
 
       // Watch for system theme changes
       const darkModeMediaQuery = window.matchMedia(
-        "(prefers-color-scheme: dark)"
+        "(prefers-color-scheme: dark)",
       );
       darkModeMediaQuery.addEventListener(
         "change",
@@ -379,7 +380,7 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
               renderDiagrams(graphs, nextTheme);
             }
           }
-        }
+        },
       );
 
       // Function to handle manual theme changes
@@ -418,15 +419,16 @@ const htmlDataTheme = onlyDark ? "dark-plus" : undefined;
       function _loadGrowthChannel() {
         if (window._growthChannelLoaded) return;
         window._growthChannelLoaded = true;
-        var s = document.createElement('script');
+        var s = document.createElement("script");
         s.async = true;
-        s.src = 'https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8';
+        s.src =
+          "https://pxl.growth-channel.net/s/8d425860-cf3c-49cf-a459-069a7dc7b1f8";
         document.body.appendChild(s);
       }
-      if (document.readyState === 'complete') {
+      if (document.readyState === "complete") {
         setTimeout(_loadGrowthChannel, 0);
       } else {
-        window.addEventListener('load', function() {
+        window.addEventListener("load", function () {
           setTimeout(_loadGrowthChannel, 200);
         });
       }

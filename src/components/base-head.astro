@@ -177,6 +177,8 @@ const {
   })(window, document, "script", "dataLayer", "GTM-MSF384N3");
 </script>
 
+<!-- Astro View Transitions Tracking Fix -->
+
 <noscript>
   <img
     height="1"
@@ -192,25 +194,26 @@ const {
   document.addEventListener("astro:page-load", () => {
     if (isFirstLoad) {
       isFirstLoad = false;
-      return; // dont touch the initial page load since gtm script will handle it
+      return;
     }
 
-    // ga4 via gtm
+    // GA4 via GTM (using custom event to avoid duplication)
     if (typeof window.dataLayer !== "undefined") {
       window.dataLayer.push({
-        event: "page_view",
+        event: "astro_page_view",
         page_path: window.location.pathname + window.location.search,
         page_title: document.title,
         page_location: window.location.href,
+        page_referrer: document.referrer || undefined,
       });
     }
 
-    // facebook pixel
+    // Facebook Pixel
     if (typeof fbq !== "undefined") {
       fbq("track", "PageView");
     }
 
-    // twitter conversion tracking
+    // Twitter
     if (typeof twq !== "undefined") {
       twq("event", "page_view", {
         page_path: window.location.pathname + window.location.search,
