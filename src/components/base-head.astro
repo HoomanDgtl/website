@@ -18,7 +18,6 @@ const {
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta
   name="viewport"
   content="width=device-width,initial-scale=1"
 />
@@ -177,3 +176,37 @@ const {
     src="https://www.facebook.com/tr?id=654184647412382&ev=PageView&noscript=1"
   />
 </noscript>
+
+<script is:inline>
+  let isFirstLoad = true;
+
+  document.addEventListener("astro:page-load", () => {
+    if (isFirstLoad) {
+      isFirstLoad = false;
+      return; // dont touch the initial page load since gtm script will handle it
+    }
+
+    // ga4 via gtm
+    if (typeof window.dataLayer !== "undefined") {
+      window.dataLayer.push({
+        event: "page_view",
+        page_path: window.location.pathname + window.location.search,
+        page_title: document.title,
+        page_location: window.location.href,
+      });
+    }
+
+    // facebook pixel
+    if (typeof fbq !== "undefined") {
+      fbq("track", "PageView");
+    }
+
+    // twitter conversion tracking
+    if (typeof twq !== "undefined") {
+      twq("event", "page_view", {
+        page_path: window.location.pathname + window.location.search,
+        page_title: document.title,
+      });
+    }
+  });
+</script>
