@@ -18,9 +18,7 @@ const {
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-  name="viewport"
-  content="width=device-width,initial-scale=1"
-/>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
 <meta name="generator" content={Astro.generator} />
 
@@ -47,11 +45,11 @@ const {
   function _loadHubSpotForms() {
     if (window._hubSpotFormsLoaded) return;
     window._hubSpotFormsLoaded = true;
-    var s = document.createElement('script');
-    s.src = 'https://js.hsforms.net/forms/embed/47519938.js';
+    var s = document.createElement("script");
+    s.src = "https://js.hsforms.net/forms/embed/47519938.js";
     document.head.appendChild(s);
   }
-  if ('requestIdleCallback' in window) {
+  if ("requestIdleCallback" in window) {
     requestIdleCallback(_loadHubSpotForms);
   } else {
     setTimeout(_loadHubSpotForms, 2000);
@@ -67,14 +65,24 @@ const {
   href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
   onload="this.rel='stylesheet'"
 />
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" /></noscript>
+<noscript
+  ><link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+  /></noscript
+>
 <link
   rel="preload"
   as="style"
   href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
   onload="this.rel='stylesheet'"
 />
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" /></noscript>
+<noscript
+  ><link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+  /></noscript
+>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -128,7 +136,7 @@ const {
     window,
     document,
     "script",
-    "https://connect.facebook.net/en_US/fbevents.js"
+    "https://connect.facebook.net/en_US/fbevents.js",
   );
   fbq("init", "654184647412382");
   fbq("track", "PageView");
@@ -168,6 +176,7 @@ const {
     f.parentNode.insertBefore(j, f);
   })(window, document, "script", "dataLayer", "GTM-MSF384N3");
 </script>
+
 <noscript>
   <img
     height="1"
