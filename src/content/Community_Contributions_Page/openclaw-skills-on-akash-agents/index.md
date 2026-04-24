@@ -197,8 +197,6 @@ Notice what that prompt includes: the skill name, exact steps, where files go, w
 
 ![Creating a skill request](./images/image11.png)
 
-![Skill creation confirmation](./images/image10.png)
-
 ### Step 3 — Review the Generated SKILL.md
 
 After OpenClaw creates the skill, review it before relying on it. On Akash Agents, use one of these methods:
@@ -251,8 +249,6 @@ An example is shown below:
 ![Skill output](./images/image4.png)
 
 ![Skill results](./images/image8.png)
-
-![Complete skill output](./images/image1.png)
 
 ![Final results](./images/image6.png)
 
