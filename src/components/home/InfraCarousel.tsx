@@ -60,6 +60,9 @@ const WIDE_STATIC_MIN_WIDTH = 2850;
 
 const SCROLL_TARGETS = [4, 5];
 
+const getCenteredScrollLeft = (el: HTMLElement) =>
+  Math.max(0, (el.scrollWidth - el.clientWidth) / 2);
+
 export function InfraCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(0);
@@ -79,7 +82,8 @@ export function InfraCarousel() {
 
   const isMobileView = viewport.width < DESKTOP_SCROLL_MIN_WIDTH;
   const isStaticWideView = viewport.width >= WIDE_STATIC_MIN_WIDTH;
-  const componentPadding = isStaticWideView
+  const headerPadding = CONTAINER_PADDING;
+  const carouselPadding = isStaticWideView
     ? WIDE_CONTAINER_PADDING
     : CONTAINER_PADDING;
 
@@ -160,7 +164,7 @@ export function InfraCarousel() {
       setIsStickyScrollEnabled(shouldUseStickyScroll);
 
       if (!shouldUseStickyScroll) {
-        el.scrollLeft = 0;
+        el.scrollLeft = isStaticWideView ? getCenteredScrollLeft(el) : 0;
       }
     };
 
@@ -232,8 +236,8 @@ export function InfraCarousel() {
       <div
         className="mb-10"
         style={{
-          paddingLeft: componentPadding,
-          paddingRight: componentPadding,
+          paddingLeft: headerPadding,
+          paddingRight: headerPadding,
           marginLeft: "auto",
           marginRight: "auto",
         }}
@@ -253,12 +257,12 @@ export function InfraCarousel() {
         className={cn(
           "flex gap-6 pb-1 [-ms-overflow-style:none] [scrollbar-width:none] lg:gap-8 [&::-webkit-scrollbar]:hidden",
           isStaticWideView
-            ? "cursor-default justify-center overflow-x-visible"
+            ? "cursor-default overflow-x-hidden"
             : "cursor-grab overflow-x-auto active:cursor-grabbing",
         )}
         style={{
-          paddingLeft: componentPadding,
-          paddingRight: componentPadding,
+          paddingLeft: carouselPadding,
+          paddingRight: carouselPadding,
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -310,8 +314,8 @@ export function InfraCarousel() {
       <div
         className="mt-8 flex justify-center lg:hidden"
         style={{
-          paddingLeft: componentPadding,
-          paddingRight: componentPadding,
+          paddingLeft: headerPadding,
+          paddingRight: headerPadding,
         }}
       >
         <div className="flex items-center gap-2">
