@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/akash-network/awesome-akash/tree/master/zcash-zebra"
 categories:
-  - Guides
+  - Student Ambassadors
 tags:
-  - Guides
+  - Student Ambassadors
 contributors:
   - "Alex Diaz"
 bannerImage: ./project-banner.png

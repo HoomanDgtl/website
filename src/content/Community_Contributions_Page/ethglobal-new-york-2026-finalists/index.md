@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/tharune/cumulant"
 categories:
-  - News
+  - Student Ambassadors
 tags:
-  - News
+  - Student Ambassadors
 contributors:
   - "Tharun Ekambaram"
 bannerImage: ./project-banner.png

@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/akash-network/awesome-akash/tree/master/gradio-demo"
 categories:
-  - Guides
+  - Student Ambassadors
 tags:
-  - Guides
+  - Student Ambassadors
 contributors:
   - "Ensar Burrja"
 bannerImage: ./project-banner.png

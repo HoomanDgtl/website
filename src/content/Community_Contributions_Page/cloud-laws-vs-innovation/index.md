@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://akash.network/community/contributions/cloud-war/"
 categories:
-  - Articles
+  - Student Ambassadors
 tags:
-  - Articles
+  - Student Ambassadors
 contributors:
   - "Hugo David"
 bannerImage: ./project-banner.png

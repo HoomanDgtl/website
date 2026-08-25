@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/hrishabhayush/awesome-akash/tree/templates/autoresearch/autoresearch"
 categories:
-  - Guides
+  - Student Ambassadors
 tags:
-  - Guides
+  - Student Ambassadors
 contributors:
   - "Hrishabh Ayush"
 bannerImage: ./project-banner.png

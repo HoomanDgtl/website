@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/tharune/agenthire"
 categories:
-  - News
+  - Student Ambassadors
 tags:
-  - News
+  - Student Ambassadors
 contributors:
   - "Nick Hardy & Tharun Ekambaram"
 bannerImage: ./project-banner.png

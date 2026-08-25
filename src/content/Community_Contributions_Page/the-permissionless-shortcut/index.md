@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://akash.network/blog/the-permissionless-shortcut-why-ambassador-program-are-the-new-web3-internship/"
 categories:
-  - Articles
+  - Student Ambassadors
 tags:
-  - Articles
+  - Student Ambassadors
 contributors:
   - "Shelby Peris"
 bannerImage: ./project-banner.png

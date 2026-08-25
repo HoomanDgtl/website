@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/akash-network/website/pulls?q=is%3Apr+author%3Ahrishabhayush"
 categories:
-  - News
+  - Student Ambassadors
 tags:
-  - News
+  - Student Ambassadors
 contributors:
   - "Hrishabh Ayush"
 bannerImage: ./project-banner.png

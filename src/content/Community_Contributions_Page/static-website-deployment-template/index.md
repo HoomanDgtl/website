@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/hdavid-13/static-akash-website"
 categories:
-  - Guides
+  - Student Ambassadors
 tags:
-  - Guides
+  - Student Ambassadors
 contributors:
   - "Hugo David"
 bannerImage: ./project-banner.png

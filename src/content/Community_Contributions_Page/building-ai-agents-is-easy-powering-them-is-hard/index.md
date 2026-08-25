@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://www.linkedin.com/posts/deepthimor_akashnetwork-akashambassadors-decentralizedai-share-7467340439088590848-9Zbm/"
 categories:
-  - Articles
+  - Student Ambassadors
 tags:
-  - Articles
+  - Student Ambassadors
 contributors:
   - "Deepthi Morusupalli"
 bannerImage: ./project-banner.png

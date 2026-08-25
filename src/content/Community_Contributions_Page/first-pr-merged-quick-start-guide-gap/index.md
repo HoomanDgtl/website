@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://github.com/akash-network/console/tree/main?tab=readme-ov-file#quick-start"
 categories:
-  - News
+  - Student Ambassadors
 tags:
-  - News
+  - Student Ambassadors
 contributors:
   - "Hrishabh Ayush"
 bannerImage: ./project-banner.png

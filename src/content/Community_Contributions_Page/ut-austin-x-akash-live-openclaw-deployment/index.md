@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://x.com/AkashStudents/status/2024979453240377674?s=20"
 categories:
-  - News
+  - Student Ambassadors
 tags:
-  - News
+  - Student Ambassadors
 contributors:
   - "Ayesha Satpathy & Lucas Botbol"
 bannerImage: ./project-banner.png

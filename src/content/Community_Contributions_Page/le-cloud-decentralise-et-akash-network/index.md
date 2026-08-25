@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://zestlab.hashnode.dev/le-cloud-d-centralis-et-akash-network-une-alternative-innovante-pour-l-europe"
 categories:
-  - Articles
+  - Student Ambassadors
 tags:
-  - Articles
+  - Student Ambassadors
 contributors:
   - "Hugo David"
 bannerImage: ./project-banner.png

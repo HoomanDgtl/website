@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://x.com/AkashStudents/status/2026782629736100162?s=20"
 categories:
-  - News
+  - Student Ambassadors
 tags:
-  - News
+  - Student Ambassadors
 contributors:
   - "Helen Hui"
 bannerImage: ./project-banner.png

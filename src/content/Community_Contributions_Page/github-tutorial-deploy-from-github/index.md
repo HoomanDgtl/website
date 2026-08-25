@@ -5,9 +5,9 @@ draft: false
 external: true
 link: "https://www.youtube.com/watch?v=KrhQFXzmqS8"
 categories:
-  - Guides
+  - Student Ambassadors
 tags:
-  - Guides
+  - Student Ambassadors
 contributors:
   - "Hugo David"
 bannerImage: ./project-banner.png
