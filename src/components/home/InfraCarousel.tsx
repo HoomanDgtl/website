@@ -119,8 +119,8 @@ export function InfraCarousel() {
         children.forEach((child, i) => {
           const dist = Math.abs(
             child.getBoundingClientRect().left +
-              child.offsetWidth / 2 -
-              containerMid,
+            child.offsetWidth / 2 -
+            containerMid,
           );
           if (dist < minDist) {
             minDist = dist;
@@ -157,8 +157,7 @@ export function InfraCarousel() {
       const shouldUseStickyScroll =
         !isMobileView &&
         !isStaticWideView &&
-        maxScroll > 0 &&
-        window.innerHeight < trackHeight;
+        maxScroll > 0
 
       outer.style.height = shouldUseStickyScroll ? `${trackHeight}px` : "";
       setIsStickyScrollEnabled(shouldUseStickyScroll);
